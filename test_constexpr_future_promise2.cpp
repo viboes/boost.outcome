@@ -1,3 +1,8 @@
+/* NOTE YOU *NEED* libstdc++ 4.9 for this to compile
+ * 
+ * AND EITHER GCC >= 4.9 OR clang >= 3.4 WITH -std=c++1y
+*/
+
 #include <stdio.h>
 #include <utility>
 #include <atomic>
@@ -50,7 +55,7 @@ template<class... Continuations> class continuations
   typedef std::tuple<Continuations...> tuple_type;
   tuple_type _value;
 public:
-  continuations() = default;
+  //continuations() = default;
   continuations(const continuations &) = default;
   continuations(continuations &&) = default;
 private:
@@ -203,14 +208,21 @@ protected:
   before_type _before;
   future_type *_other;
 public:
-  basic_promise() : _other(nullptr) { }
+  template<class _=std::enable_if<std::is_default_constructible<before_type>::value>> BOOST_CONSTEXPR basic_promise() : _before(), _other(nullptr) { }
   template<class U, class _=std::enable_if<std::is_constructible<before_type, U>::value>> BOOST_CONSTEXPR basic_promise(U &&v) : _before(std::forward<U>(v)), _other(nullptr) { }
-  BOOST_CONSTEXPR basic_promise(basic_promise &&o) : _before(std::move(o._before)), _other(std::move(o._other)) { o._other=nullptr; if(_other) _other->_other=static_cast<promise_type *>(this); }
+  BOOST_RELAXED_CONSTEXPR basic_promise(basic_promise &&o) : _before(std::move(o._before)), _other(std::move(o._other)) { o._other=nullptr; if(_other) _other->_other=static_cast<promise_type *>(this); }
   ~basic_promise() { if(_other) _other->_other=nullptr; }
-  //! Gets a future whose after_type will be called with an inputtype
-  BOOST_CONSTEXPR basic_future<basic_promise> get_future(after_type &&a)
+  //! Gets a future whose after_type will be called with a transfer_type
+  BOOST_CONSTEXPR basic_future<basic_promise> get_future()
   {
-    basic_future<basic_promise> ret(this, std::move(a));
+    basic_future<basic_promise> ret(this, after_type());
+    _other=&ret;
+    return ret;
+  }
+  //! Gets a future whose after_type will be called with a transfer_type
+  template<class U, class _=std::enable_if<std::is_constructible<after_type, U>::value>> BOOST_RELAXED_CONSTEXPR basic_future<basic_promise> get_future(U &&a)
+  {
+    basic_future<basic_promise> ret(this, std::forward<U>(a));
     _other=&ret;
     return ret;
   }
@@ -242,15 +254,16 @@ protected:
   transfer_type _v;
   after_type _after;
   promise_type *_other;
-  BOOST_CONSTEXPR basic_future(promise_type *parent, after_type &&v) : _after(std::move(v)), _other(parent) { }
-  BOOST_CONSTEXPR void _set_value(transfer_type &&v)
+  template<class U, class _=std::enable_if<std::is_constructible<after_type, U>::value>> BOOST_CONSTEXPR basic_future(promise_type *parent, U &&v) : _v(), _after(std::forward<U>(v)), _other(parent) { }
+  BOOST_RELAXED_CONSTEXPR void _set_value(transfer_type &&v)
   {
     _v=std::move(v);
   }
 public:
-  BOOST_CONSTEXPR basic_future(basic_future &&o) : _v(std::move(o._v)), _after(std::move(o._after)), _other(std::move(o._other)) { o._other=nullptr; if(_other) _other->_other=static_cast<future_type *>(this); }  
+  BOOST_RELAXED_CONSTEXPR basic_future(basic_future &&o) : _v(std::move(o._v)), _after(std::move(o._after)), _other(std::move(o._other)) { o._other=nullptr; if(_other) _other->_other=static_cast<future_type *>(this); }  
   ~basic_future() { if(_other) _other->_other=nullptr; }
-  BOOST_CONSTEXPR auto get()
+  //! Continue the paused execution of continuations, cleaning up resources afterwards
+  BOOST_RELAXED_CONSTEXPR auto operator()() &&
   {
     if(!_other) throw std::runtime_error("Promise detached or value already retrieved.");
     _other->_other=nullptr;
@@ -275,6 +288,11 @@ template<class T> class future : public basic_future<promise<T>>
   BOOST_CONSTEXPR future(typename Base::promise_type *parent) : Base(parent, detail::then_continuation<T>()) { }
 public:
   future(future &&) = default;
+  //! For compatibility
+  BOOST_RELAXED_CONSTEXPR auto get()
+  {
+    return std::move(*this)();
+  }
   //! Has another future continue after this one becomes ready. TODO: It's currently then(R(T)) not then(R(future<T>))
   template<class U> auto then(U &&c)
   {
@@ -283,16 +301,13 @@ public:
 };
 namespace detail
 {
-  struct null_continuation
+  template<class T> struct null_continuation
   {
-    // Passes through
-    template<class T> BOOST_CONSTEXPR T operator()(T v) const { return v; }
+    BOOST_CONSTEXPR T operator()(T v) const { return v; }
   };
   template<class T> struct then_continuation
   {
-    bool _contsused;
     std::vector<std::function<void(T)>> _conts;
-    BOOST_CONSTEXPR then_continuation() : _contsused(false) { }
     template<class U> auto then(U &&c)
     {
       typedef decltype(c(std::declval<T>())) result_type;
@@ -301,39 +316,81 @@ namespace detail
       // Unfortunately libstdc++'s std::function currently always tries to copy lambda types
       //_conts.emplace_back([p=std::move(p), c=std::forward<U>(c)](T v){p.set_value(c(v));});
       _conts.push_back([p=std::make_shared<promise<result_type>>(std::move(p)), c=std::forward<U>(c)](T v){p->set_value(c(v));});
-      _contsused=true;
       return ret;
     }
     BOOST_CONSTEXPR T operator()(T v) const
     {
-      if(_contsused)
-      {
-        for(auto &i : _conts)
-          i(v);
-      }
+      for(auto &i : _conts)
+        i(v);
       return v;
     }
   };
-  // Tell basic_promise to use a future<T> for basic_promise<detail::null_continuation, T, detail::then_continuation<T>>
-  template<class T> struct future_type_for_basic_promise<basic_promise<detail::null_continuation, T, detail::then_continuation<T>>> { typedef future<T> type; };
-  // Tell basic_promise to use a promise<T> for basic_promise<detail::null_continuation, T, detail::then_continuation<T>>
-  template<class T> struct promise_type_for_basic_promise<basic_promise<detail::null_continuation, T, detail::then_continuation<T>>> { typedef promise<T> type; };
+  // Tell basic_promise to use a future<T> for basic_promise<detail::null_continuation<T>, T, detail::then_continuation<T>>
+  template<class T> struct future_type_for_basic_promise<basic_promise<detail::null_continuation<T>, T, detail::then_continuation<T>>> { typedef future<T> type; };
+  // Tell basic_promise to use a promise<T> for basic_promise<detail::null_continuation<T>, T, detail::then_continuation<T>>
+  template<class T> struct promise_type_for_basic_promise<basic_promise<detail::null_continuation<T>, T, detail::then_continuation<T>>> { typedef promise<T> type; };
 }
-template<class T> class promise : public basic_promise<detail::null_continuation, T, detail::then_continuation<T>>
+template<class T> class promise : public basic_promise<detail::null_continuation<T>, T, detail::then_continuation<T>>
 {
-  typedef basic_promise<detail::null_continuation, T, detail::then_continuation<T>> Base;
+  typedef basic_promise<detail::null_continuation<T>, T, detail::then_continuation<T>> Base;
 public:
   promise() = default;
   promise(promise &&) = default;
   //! For compatibility
   BOOST_CONSTEXPR void set_value(T v) const { Base::operator()(v); }
-  BOOST_CONSTEXPR future<T> get_future()
+  BOOST_RELAXED_CONSTEXPR future<T> get_future()
   {
     future<T> ret(this);
     Base::_other=&ret;
     return ret;
   }
 };
+
+
+
+
+
+/*********************** Purely for debugging loss of constexpr ***********************/
+template<class T> class promise2;
+template<class T> class future2 : public basic_future<promise2<T>>
+{
+  template<class> friend class promise2;
+  typedef basic_future<promise2<T>> Base;
+  BOOST_CONSTEXPR future2(typename Base::promise_type *parent) : Base(parent, detail::null_continuation<T>()) { }
+public:
+  future2(future2 &&) = default;
+  //! For compatibility
+  BOOST_CONSTEXPR auto get()
+  {
+    return std::move(*this)();
+  }
+};
+namespace detail
+{
+  template<class T> struct future_type_for_basic_promise<basic_promise<detail::null_continuation<T>, T, detail::null_continuation<T>>> { typedef future2<T> type; };
+  template<class T> struct promise_type_for_basic_promise<basic_promise<detail::null_continuation<T>, T, detail::null_continuation<T>>> { typedef promise2<T> type; };
+}
+template<class T> class promise2 : public basic_promise<detail::null_continuation<T>, T, detail::null_continuation<T>>
+{
+  typedef basic_promise<detail::null_continuation<T>, T, detail::null_continuation<T>> Base;
+public:
+  promise2() = default;
+  promise2(promise2 &&) = default;
+  //! For compatibility
+  template<class U> BOOST_CONSTEXPR void set_value(U &&v) const { Base::operator()(std::forward<U>(v)); }
+  BOOST_RELAXED_CONSTEXPR future2<T> get_future()
+  {
+    future2<T> ret(this);
+    Base::_other=&ret;
+    return ret;
+  }
+};
+
+
+
+
+
+
 
 __attribute__((noinline)) void test_futurepromise1(int &a, int &b, double &c, double &d)
 {
@@ -345,7 +402,7 @@ __attribute__((noinline)) void test_futurepromise1(int &a, int &b, double &c, do
     // Execute promise
     fp.first(1);
     // Execute future
-    b=fp.second.get();
+    b=std::move(fp.second)();
   }
   {
     // Make a future promise pair for if we called c(double)
@@ -353,20 +410,41 @@ __attribute__((noinline)) void test_futurepromise1(int &a, int &b, double &c, do
     // Execute promise
     fp.first(1.0);
     // Execute future
-    d=fp.second.get();
+    d=std::move(fp.second)();
   }
   a=ct(1);
   c=ct(1.0);
 }
 __attribute__((noinline)) int test_futurepromise2()
 {
+  // Apparent clang can't constexpr reduce a non-immediately defined lambda type
+  // So this reduces to a single instruction on both GCC and clang
+  auto l([](int x){return x;});
+  typedef decltype(l) null_continuation;
+  basic_promise<null_continuation, int, null_continuation> p(l);
+  auto f(p.get_future(l));
+  p(5);
+  return std::move(f)();
+}
+__attribute__((noinline)) int test_futurepromise3()
+{
+  // Without then_continuation, should reduce to single instruction on GCC (not clang)
+  promise2<int> p;
+  future2<int> f(p.get_future());
+  p(5);
+  return std::move(f)();
+}
+__attribute__((noinline)) int test_futurepromise4()
+{
+  // With then_continuation but not using it, should reduce to single instruction on GCC (not clang)
   promise<int> p;
   future<int> f(p.get_future());
   p.set_value(5);
   return f.get();
 }
-__attribute__((noinline)) double test_futurepromise3()
+__attribute__((noinline)) double test_futurepromise5()
 {
+  // Using then_continuation
   promise<int> p;
   future<int> f(p.get_future());
   future<double> f2(f.then([](int a){return a+1.0;}));
@@ -385,6 +463,8 @@ int main(void)
   test_futurepromise1(a, b, c, d);
   printf("should be(int)=%d, future(int)=%d, should be(double)=%f, future(double)=%f\n", a, b, c, d);
   printf("should be 5 v=%d\n", test_futurepromise2());
-  printf("should be 6 v=%f\n", test_futurepromise3());
+  printf("should be 5 v=%d\n", test_futurepromise3());
+  printf("should be 5 v=%d\n", test_futurepromise4());
+  printf("should be 6 v=%f\n", test_futurepromise5());
   return 0;
 }
