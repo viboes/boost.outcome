@@ -446,7 +446,9 @@ __attribute__((noinline)) int test_futurepromise3()
 }
 __attribute__((noinline)) int test_futurepromise4()
 {
-  // With then_continuation but not using it, should reduce to single instruction on GCC (not clang)
+  // With then_continuation but not using it, should reduce to single instruction, but
+  // does not on either GCC (10 instructions) or clang (full expansion). This may be
+  // the fault of libstdc++'s std::vector<> implementation.
   promise<int> p;
   future<int> f(p.get_future());
   p.set_value(5);
