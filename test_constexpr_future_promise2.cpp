@@ -276,6 +276,12 @@ public:
 
 
 /*********************** Purely for demonstrating equivalence to std future/promise. Missing atomic locking ***********************/
+enum class launch
+{
+  immediate,
+  async,
+  deferred
+};
 namespace detail
 {
   template<class T> struct then_continuation;
@@ -293,10 +299,13 @@ public:
   {
     return std::move(*this)();
   }
-  //! Has another future continue after this one becomes ready. TODO: It's currently then(R(T)) not then(R(future<T>))
-  template<class U> auto then(U &&c)
+  //! Has another future continue after this one becomes ready. TODO: It's supposed to be then(R(future<T>))
+  template<class U> auto then(launch policy, U &&c)
   {
-    return Base::_after.then(std::forward<U>(c));
+    if(policy==launch::deferred)
+      return Base::_after.then(std::forward<U>(c));
+    else if(Base::_other)
+      return Base::_other->_before.then(std::forward<U>(c));
   }
 };
 namespace detail
@@ -325,14 +334,15 @@ namespace detail
       return v;
     }
   };
-  // Tell basic_promise to use a future<T> for basic_promise<detail::null_continuation<T>, T, detail::then_continuation<T>>
-  template<class T> struct future_type_for_basic_promise<basic_promise<detail::null_continuation<T>, T, detail::then_continuation<T>>> { typedef future<T> type; };
-  // Tell basic_promise to use a promise<T> for basic_promise<detail::null_continuation<T>, T, detail::then_continuation<T>>
-  template<class T> struct promise_type_for_basic_promise<basic_promise<detail::null_continuation<T>, T, detail::then_continuation<T>>> { typedef promise<T> type; };
+  // Tell basic_promise to use a future<T> for basic_promise<detail::then_continuation<T>, T, detail::then_continuation<T>>
+  template<class T> struct future_type_for_basic_promise<basic_promise<detail::then_continuation<T>, T, detail::then_continuation<T>>> { typedef future<T> type; };
+  // Tell basic_promise to use a promise<T> for basic_promise<detail::then_continuation<T>, T, detail::then_continuation<T>>
+  template<class T> struct promise_type_for_basic_promise<basic_promise<detail::then_continuation<T>, T, detail::then_continuation<T>>> { typedef promise<T> type; };
 }
-template<class T> class promise : public basic_promise<detail::null_continuation<T>, T, detail::then_continuation<T>>
+template<class T> class promise : public basic_promise<detail::then_continuation<T>, T, detail::then_continuation<T>>
 {
-  typedef basic_promise<detail::null_continuation<T>, T, detail::then_continuation<T>> Base;
+  template<class> friend class future;
+  typedef basic_promise<detail::then_continuation<T>, T, detail::then_continuation<T>> Base;
 public:
   promise() = default;
   promise(promise &&) = default;
@@ -447,10 +457,8 @@ __attribute__((noinline)) double test_futurepromise5()
   // Using then_continuation
   promise<int> p;
   future<int> f(p.get_future());
-  future<double> f2(f.then([](int a){return a+1.0;}));
+  future<double> f2(f.then(launch(), [](int a){return a+1.0;}));
   p.set_value(5);
-  // Cause invocation of continuations as per Concurrency TS
-  f.get();
   return f2.get();
 }
 int main(void)
