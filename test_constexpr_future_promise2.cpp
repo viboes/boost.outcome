@@ -456,7 +456,7 @@ __attribute__((noinline)) int test_futurepromise4()
 }
 __attribute__((noinline)) double test_futurepromise5()
 {
-  // Using then_continuation
+  // Using then_continuation. Many hundreds of instructions.
   promise<int> p;
   future<int> f(p.get_future());
   future<double> f2(f.then(launch(), [](int a){return a+1.0;}));

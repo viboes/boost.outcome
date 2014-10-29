@@ -159,6 +159,135 @@ BOOST_EXPECTED_FUTURE_V1_NAMESPACE_BEGIN
       }
     };
   }
+
+  /*! \class basic_promise
+   * \brief Provides a sink of an instance of some type T
+   */
+  template<class T, class... Continuations> class basic_promise
+  {
+    template<class me_type, class other_type> friend struct detail::future_promise_unlocker;
+    template<class S, class D> friend detail::future_promise_unlocker<S, D> detail::lock_future_promise(S *) BOOST_NOEXCEPT;
+    friend class basic_future<consuming, expected<T, E>>;
+  public:
+    typedef basic_future<consuming, expected<T, E>> future_type;
+    typedef basic_promise<future_type> promise_type;
+    typedef future_type other_type;
+  private:
+    spinlock<bool> _lock;
+    atomic<bool> _ready, _retrieved;
+    future_type *_other;
+    void _abandon() BOOST_NOEXCEPT
+    {
+      if(_other)
+      {
+         if(!_other->is_ready())
+           _other->_abandon();
+         else
+           _other->_detach();
+      }
+    }
+    template<class U> void _set(U &&v)
+    {
+      if(_ready)
+        throw future_error(future_errc::promise_already_satisfied);
+      auto lock=detail::lock_future_promise(this);
+      // If no future exists yet, set myself to the value and we'll set the future on creation
+      if(!_other)
+        expected<T, E>::operator=(std::forward<U>(v));
+      else
+        _other->_set(std::forward<U>(v));
+      _ready=true;
+    }
+  public:
+    BOOST_CONSTEXPR basic_promise() BOOST_NOEXCEPT_IF((std::is_nothrow_default_constructible<expected<T, E>>::value)) : _ready(false), _retrieved(false), _other(nullptr)
+    {
+      static_assert(!std::uses_allocator<basic_promise, std::allocator<T>>::value, "Non-allocating future-promise cannot make use of allocators");
+      static_assert(!std::uses_allocator<basic_promise, std::allocator<E>>::value, "Non-allocating future-promise cannot make use of allocators");
+    }
+    basic_promise(basic_promise &&o) BOOST_NOEXCEPT_IF((std::is_nothrow_move_assignable<expected<T, E>>::value)) : basic_promise() { this->operator=(std::move(o)); }
+    basic_promise(const basic_promise &) = delete;
+    ~basic_promise()
+    {
+      auto lock=detail::lock_future_promise(this);
+      _abandon();
+    }
+    basic_promise &operator=(basic_promise &&o) BOOST_NOEXCEPT_IF((std::is_nothrow_move_assignable<expected<T, E>>::value))
+    {
+      // First lock myself and detach/abandon any future of mine
+      auto lock1=detail::lock_future_promise(this);
+      _abandon();
+      // Lock source and his future
+      auto lock2=detail::lock_future_promise(&o);
+      _ready.store(o._ready.load(memory_order_relaxed), memory_order_relaxed);
+      _retrieved.store(o._retrieved.load(memory_order_relaxed), memory_order_relaxed);
+      _other=o._other;
+      expected<T, E>::operator=(std::move(o));
+      _other->_other=this;
+      o._ready.store(false, memory_order_relaxed);
+      o._retrieved.store(false, memory_order_relaxed);
+      o._other=nullptr;
+      return *this;
+    }
+    basic_promise &operator=(const basic_promise &) = delete;
+    BOOST_CONSTEXPR bool is_ready() const BOOST_NOEXCEPT { return _ready; }
+    BOOST_CONSTEXPR bool is_future_retrieved() const BOOST_NOEXCEPT { return _retrieved || _other; }
+    void swap(basic_promise &o) BOOST_NOEXCEPT;
+    future_type get_future() BOOST_NOEXCEPT_IF((!consuming && std::is_nothrow_default_constructible<future_type>::value && std::is_nothrow_move_constructible<future_type>::value))
+    {
+      // If I am consuming semantics, never allow a new future after the first is fetched
+      if(consuming && _retrieved)
+        throw future_error(future_errc::future_already_retrieved);
+      auto lock1=detail::lock_future_promise(this);
+      // If I am non-consuming semantics, there can be only one future associated with this promise at a time
+      // As basic_shared_future<> will never fetch a future twice, this will terminate the process if get_future() is noexcept
+      if((consuming && _retrieved) || _other)
+        throw future_error(future_errc::future_already_retrieved);      
+      bool ready=_ready.load(memory_order_relaxed);
+      if(consuming)
+        _retrieved.store(true, memory_order_relaxed);
+      if(ready)
+      {
+        future_type ret(this, ready, std::move(*this));
+        _other=&ret;
+        // The move constructor will try to lock me, so preempt
+        lock1.unlock();
+        return ret;
+      }
+      else
+      {
+        future_type ret(this, ready, expected<T, E>());
+        _other=&ret;
+        // The move constructor will try to lock me, so preempt
+        lock1.unlock();
+        return ret;
+      }
+    }
+    void set_value(const T &v)
+    {
+      _set(v);
+    }
+    void set_value(T &&v)
+    {
+      _set(std::move(v));
+    }
+    // set_value_at_thread_exit() not possible with this design
+    void set_exception(const E &v)
+    {
+      _set(make_unexpected(v));
+    }
+    void set_exception(E &&v)
+    {
+      _set(make_unexpected(std::move(v)));
+    }
+    // set_exception_at_thread_exit() not possible with this design
+  };
+  
+  
+  
+  
+  
+  
+  
   template<bool consuming, class T, class E> class basic_future<consuming, expected<T, E>> : protected expected<T, E>
   {
     template<class me_type, class other_type> friend struct detail::future_promise_unlocker;
@@ -315,127 +444,6 @@ BOOST_EXPECTED_FUTURE_V1_NAMESPACE_BEGIN
     return basic_future_ref<basic_future<consuming, expected<T, E>>>(std::move(*this));
   }
 
-  /*! \class basic_promise
-   * \brief Provides a sink of an instance of some type FutureType
-   */
-  template<bool consuming, class T, class E> class basic_promise<basic_future<consuming, expected<T, E>>> : protected expected<T, E>
-  {
-    template<class me_type, class other_type> friend struct detail::future_promise_unlocker;
-    template<class S, class D> friend detail::future_promise_unlocker<S, D> detail::lock_future_promise(S *) BOOST_NOEXCEPT;
-    friend class basic_future<consuming, expected<T, E>>;
-  public:
-    typedef basic_future<consuming, expected<T, E>> future_type;
-    typedef basic_promise<future_type> promise_type;
-    typedef future_type other_type;
-  private:
-    spinlock<bool> _lock;
-    atomic<bool> _ready, _retrieved;
-    future_type *_other;
-    void _abandon() BOOST_NOEXCEPT
-    {
-      if(_other)
-      {
-         if(!_other->is_ready())
-           _other->_abandon();
-         else
-           _other->_detach();
-      }
-    }
-    template<class U> void _set(U &&v)
-    {
-      if(_ready)
-        throw future_error(future_errc::promise_already_satisfied);
-      auto lock=detail::lock_future_promise(this);
-      // If no future exists yet, set myself to the value and we'll set the future on creation
-      if(!_other)
-        expected<T, E>::operator=(std::forward<U>(v));
-      else
-        _other->_set(std::forward<U>(v));
-      _ready=true;
-    }
-  public:
-    BOOST_CONSTEXPR basic_promise() BOOST_NOEXCEPT_IF((std::is_nothrow_default_constructible<expected<T, E>>::value)) : _ready(false), _retrieved(false), _other(nullptr)
-    {
-      static_assert(!std::uses_allocator<basic_promise, std::allocator<T>>::value, "Non-allocating future-promise cannot make use of allocators");
-      static_assert(!std::uses_allocator<basic_promise, std::allocator<E>>::value, "Non-allocating future-promise cannot make use of allocators");
-    }
-    basic_promise(basic_promise &&o) BOOST_NOEXCEPT_IF((std::is_nothrow_move_assignable<expected<T, E>>::value)) : basic_promise() { this->operator=(std::move(o)); }
-    basic_promise(const basic_promise &) = delete;
-    ~basic_promise()
-    {
-      auto lock=detail::lock_future_promise(this);
-      _abandon();
-    }
-    basic_promise &operator=(basic_promise &&o) BOOST_NOEXCEPT_IF((std::is_nothrow_move_assignable<expected<T, E>>::value))
-    {
-      // First lock myself and detach/abandon any future of mine
-      auto lock1=detail::lock_future_promise(this);
-      _abandon();
-      // Lock source and his future
-      auto lock2=detail::lock_future_promise(&o);
-      _ready.store(o._ready.load(memory_order_relaxed), memory_order_relaxed);
-      _retrieved.store(o._retrieved.load(memory_order_relaxed), memory_order_relaxed);
-      _other=o._other;
-      expected<T, E>::operator=(std::move(o));
-      _other->_other=this;
-      o._ready.store(false, memory_order_relaxed);
-      o._retrieved.store(false, memory_order_relaxed);
-      o._other=nullptr;
-      return *this;
-    }
-    basic_promise &operator=(const basic_promise &) = delete;
-    BOOST_CONSTEXPR bool is_ready() const BOOST_NOEXCEPT { return _ready; }
-    BOOST_CONSTEXPR bool is_future_retrieved() const BOOST_NOEXCEPT { return _retrieved || _other; }
-    void swap(basic_promise &o) BOOST_NOEXCEPT;
-    future_type get_future() BOOST_NOEXCEPT_IF((!consuming && std::is_nothrow_default_constructible<future_type>::value && std::is_nothrow_move_constructible<future_type>::value))
-    {
-      // If I am consuming semantics, never allow a new future after the first is fetched
-      if(consuming && _retrieved)
-        throw future_error(future_errc::future_already_retrieved);
-      auto lock1=detail::lock_future_promise(this);
-      // If I am non-consuming semantics, there can be only one future associated with this promise at a time
-      // As basic_shared_future<> will never fetch a future twice, this will terminate the process if get_future() is noexcept
-      if((consuming && _retrieved) || _other)
-        throw future_error(future_errc::future_already_retrieved);      
-      bool ready=_ready.load(memory_order_relaxed);
-      if(consuming)
-        _retrieved.store(true, memory_order_relaxed);
-      if(ready)
-      {
-        future_type ret(this, ready, std::move(*this));
-        _other=&ret;
-        // The move constructor will try to lock me, so preempt
-        lock1.unlock();
-        return ret;
-      }
-      else
-      {
-        future_type ret(this, ready, expected<T, E>());
-        _other=&ret;
-        // The move constructor will try to lock me, so preempt
-        lock1.unlock();
-        return ret;
-      }
-    }
-    void set_value(const T &v)
-    {
-      _set(v);
-    }
-    void set_value(T &&v)
-    {
-      _set(std::move(v));
-    }
-    // set_value_at_thread_exit() not possible with this design
-    void set_exception(const E &v)
-    {
-      _set(make_unexpected(v));
-    }
-    void set_exception(E &&v)
-    {
-      _set(make_unexpected(std::move(v)));
-    }
-    // set_exception_at_thread_exit() not possible with this design
-  };
   template<class T, class E=exception_ptr> using future = basic_future<true, expected<T, E>>;
   template<class T, class E=exception_ptr> using promise = basic_promise<future<T, E>>;
   template<class T, class E=exception_ptr> using shared_future = basic_future_ref<basic_future<false, expected<T, E>>>;
