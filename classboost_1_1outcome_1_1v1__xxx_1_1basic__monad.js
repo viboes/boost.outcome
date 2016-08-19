@@ -60,7 +60,7 @@ var classboost_1_1outcome_1_1v1__xxx_1_1basic__monad =
     [ "operator>>", "classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a0c6a061540ef408c34fda68df81a7a60", null ],
     [ "set_error", "classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#aa5a4abcfd96e927a29a760c378c31e82", null ],
     [ "set_exception", "classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a30b436d50f046d03ea7c0a7b29ccb932", null ],
-    [ "set_exception", "classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#ab10e69e825ea5c14aececd40f0fb27e2", null ],
+    [ "set_exception", "classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#ab6a21b9e02682cce364a5620ae43d82b", null ],
     [ "set_state", "classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#ab1bea10b1a9ad4e242a4362117059f30", null ],
     [ "set_value", "classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#ad603a2c6917f749ba1fe54b5b54a8c20", null ],
     [ "set_value", "classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#ac034ad9dbba63f28e5f47cf0a1cc3fa6", null ],
