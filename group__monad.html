@@ -562,11 +562,11 @@ constexpr error_t&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 <p>Attempt to fetch an error state when the monad is in an exceptioned state. </p>
 </td></tr>
 </table>
-<div class="fragment"><div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160;{</div>
-<div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160;  <a class="code" href="group__monad.html#ggaf5abc43f8d09588556c4c65b53485c0da25621f93230ec01ef6ead2516f3613ce" title="Attempt to store a value into the monad twice.">already_set</a> = 1,        </div>
-<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;  <a class="code" href="group__monad.html#ggaf5abc43f8d09588556c4c65b53485c0dac537dcef56fd6ff75592c0220fd3dae1" title="Attempt to use without a state.">no_state</a> = 2,           </div>
-<div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160;  <a class="code" href="group__monad.html#ggaf5abc43f8d09588556c4c65b53485c0da621bbc00c646a321b70c18a067da2eb2" title="Attempt to fetch an error state when the monad is in an exceptioned state.">exception_present</a> = 3,  </div>
-<div class="line"><a name="l00640"></a><span class="lineno">  640</span>&#160;};</div>
+<div class="fragment"><div class="line"><a name="l00632"></a><span class="lineno">  632</span>&#160;{</div>
+<div class="line"><a name="l00633"></a><span class="lineno">  633</span>&#160;  <a class="code" href="group__monad.html#ggaf5abc43f8d09588556c4c65b53485c0da25621f93230ec01ef6ead2516f3613ce" title="Attempt to store a value into the monad twice.">already_set</a> = 1,        </div>
+<div class="line"><a name="l00634"></a><span class="lineno">  634</span>&#160;  <a class="code" href="group__monad.html#ggaf5abc43f8d09588556c4c65b53485c0dac537dcef56fd6ff75592c0220fd3dae1" title="Attempt to use without a state.">no_state</a> = 2,           </div>
+<div class="line"><a name="l00635"></a><span class="lineno">  635</span>&#160;  <a class="code" href="group__monad.html#ggaf5abc43f8d09588556c4c65b53485c0da621bbc00c646a321b70c18a067da2eb2" title="Attempt to fetch an error state when the monad is in an exceptioned state.">exception_present</a> = 3,  </div>
+<div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160;};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -597,9 +597,9 @@ template&lt;class T &gt; </div>
 
 <p>Makes an outcome from a result. </p>
 <p>Makes an outcome from an option. </p>
-<div class="fragment"><div class="line"><a name="l02167"></a><span class="lineno"> 2167</span>&#160;{</div>
-<div class="line"><a name="l02168"></a><span class="lineno"> 2168</span>&#160;  <span class="keywordflow">return</span> outcome&lt;T&gt;(std::move(v));</div>
-<div class="line"><a name="l02169"></a><span class="lineno"> 2169</span>&#160;}</div>
+<div class="fragment"><div class="line"><a name="l02163"></a><span class="lineno"> 2163</span>&#160;{</div>
+<div class="line"><a name="l02164"></a><span class="lineno"> 2164</span>&#160;  <span class="keywordflow">return</span> outcome&lt;T&gt;(std::move(v));</div>
+<div class="line"><a name="l02165"></a><span class="lineno"> 2165</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -629,9 +629,9 @@ template&lt;class T &gt; </div>
 
 <p>Makes an outcome from a result. </p>
 <p>Makes an outcome from an option. </p>
-<div class="fragment"><div class="line"><a name="l02172"></a><span class="lineno"> 2172</span>&#160;{</div>
-<div class="line"><a name="l02173"></a><span class="lineno"> 2173</span>&#160;  <span class="keywordflow">return</span> outcome&lt;T&gt;(v);</div>
-<div class="line"><a name="l02174"></a><span class="lineno"> 2174</span>&#160;}</div>
+<div class="fragment"><div class="line"><a name="l02168"></a><span class="lineno"> 2168</span>&#160;{</div>
+<div class="line"><a name="l02169"></a><span class="lineno"> 2169</span>&#160;  <span class="keywordflow">return</span> outcome&lt;T&gt;(v);</div>
+<div class="line"><a name="l02170"></a><span class="lineno"> 2170</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
