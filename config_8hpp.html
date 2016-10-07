@@ -118,6 +118,7 @@ $(document).ready(function(){initNavTree('config_8hpp.html','');});
 <code>#include &quot;../boost-lite/include/bind/stl11/std/system_error&quot;</code><br/>
 <code>#include &lt;cassert&gt;</code><br/>
 <code>#include &lt;ostream&gt;</code><br/>
+<code>#include &lt;stdio.h&gt;</code><br/>
 </div>
 <p><a href="config_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -182,10 +183,32 @@ Macros</h2></td></tr>
 <tr class="memitem:aced1bb539dfee0d867a3df0e328d264f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aced1bb539dfee0d867a3df0e328d264f"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>BOOST_OUTCOME_CONVINCE_MSVC</b></td></tr>
 <tr class="separator:aced1bb539dfee0d867a3df0e328d264f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8fefe8516997eb0f7c649834d298044a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>BOOST_OUTCOME_THROW</b>(expr)</td></tr>
+<tr class="separator:a8fefe8516997eb0f7c649834d298044a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Configures a compiler environment for Outcome header code. </p>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="a8fefe8516997eb0f7c649834d298044a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BOOST_OUTCOME_THROW</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">expr</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">fprintf(stderr, <span class="stringliteral">&quot;FATAL: Boost.Outcome throws exception &quot;</span> #expr <span class="stringliteral">&quot; with exceptions disabled\n&quot;</span>);                                                                                                                                                                                                                               \</div>
+<div class="line">  assert((<span class="stringliteral">&quot;throw &quot;</span> #expr, <span class="keyword">false</span>));                                                                                                                                                                                                                                                                                             \</div>
+<div class="line">  std::terminate()</div>
+</div><!-- fragment -->
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

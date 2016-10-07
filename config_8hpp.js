@@ -6,6 +6,7 @@ var config_8hpp =
     [ "BOOST_OUTCOME_NEED_DEFINE", "config_8hpp.html#a85249d76d565e22c63fd2ee1df63c0e7", null ],
     [ "BOOST_OUTCOME_NEED_DEFINE_00", "config_8hpp.html#ae92084d355192450db1b1adfd10e6ace", null ],
     [ "BOOST_OUTCOME_NEED_DEFINE_DESCRIPTION", "config_8hpp.html#a7a5af0b99b2d7b61b148ae30e90d7465", null ],
+    [ "BOOST_OUTCOME_THROW", "config_8hpp.html#a8fefe8516997eb0f7c649834d298044a", null ],
     [ "BOOST_OUTCOME_USE_BOOST_THREAD", "config_8hpp.html#gabc8cb04401f569ef10408b72de836d85", null ],
     [ "BOOST_OUTCOME_V1", "config_8hpp.html#ga2d9d168bf427341b5e635a05aa720277", null ],
     [ "BOOST_OUTCOME_V1_ERROR_CODE_IMPL", "config_8hpp.html#ga323ac8757a62f64bcc20bd496b29a413", null ],
