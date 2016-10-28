@@ -19,5 +19,5 @@ var config_8hpp =
     [ "BOOST_OUTCOME_V1_NAMESPACE_END", "config_8hpp.html#gab3e267fb24a8ce5fe29ddf36f4f3c10b", null ],
     [ "BOOST_OUTCOME_V1_NAMESPACE_EXPORT_BEGIN", "config_8hpp.html#gaf9fedf88f681cae78a5f73a4194ce083", null ],
     [ "BOOST_OUTCOME_V1_STL11_IMPL", "config_8hpp.html#ga587a1ae144f7e50e52a3340457ac9e26", null ],
-    [ "do_fatal_exit", "config_8hpp.html#ab2054a39a69be7aef1fdf693be221020", null ]
+    [ "do_fatal_exit", "config_8hpp.html#a922e3f6ae34d8dae64899ad6051522f0", null ]
 ];

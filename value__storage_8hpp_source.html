@@ -522,33 +522,35 @@ $(document).ready(function(){initNavTree('value__storage_8hpp_source.html','');}
 <div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;    <span class="keywordflow">case</span> <a class="code" href="group__monad.html#ga1a1a8470c4efc3a52412f3ecc79a0060" title="Variable of type error_t.">value_storage&lt;_value_type, _error_type, _exception_type&gt;::storage_type::error</a>:</div>
 <div class="line"><a name="l00442"></a><span class="lineno">  442</span>&#160;      <span class="keywordflow">return</span> s &lt;&lt; v.error;</div>
 <div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;    <span class="keywordflow">case</span> value_storage&lt;_value_type, _error_type, _exception_type&gt;::storage_type::exception:</div>
-<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;      <span class="keywordflow">try</span></div>
-<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;      {</div>
-<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;        rethrow_exception(v.exception);</div>
-<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;      }</div>
-<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;      <span class="keywordflow">catch</span>(<span class="keyword">const</span> system_error &amp;e)</div>
-<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;      {</div>
-<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;        <span class="keywordflow">return</span> s &lt;&lt; <span class="stringliteral">&quot;std::system_error code &quot;</span> &lt;&lt; e.code() &lt;&lt; <span class="stringliteral">&quot;: &quot;</span> &lt;&lt; e.what();</div>
-<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;      }</div>
-<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;      <span class="comment">/*catch(const future_error &amp;e)</span></div>
-<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;<span class="comment">      {</span></div>
-<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;<span class="comment">      return s &lt;&lt; &quot;(std::future_error code &quot; &lt;&lt; e.code() &lt;&lt; &quot;: &quot; &lt;&lt; e.what() &lt;&lt; &quot;)&quot;;</span></div>
-<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;<span class="comment">      }*/</span></div>
-<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;      <span class="keywordflow">catch</span>(<span class="keyword">const</span> exception &amp;e)</div>
-<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;      {</div>
-<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;        <span class="keywordflow">return</span> s &lt;&lt; <span class="stringliteral">&quot;std::exception: &quot;</span> &lt;&lt; e.what();</div>
-<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;      }</div>
-<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;      <span class="keywordflow">catch</span>(...)</div>
-<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;      {</div>
-<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;        <span class="keywordflow">return</span> s &lt;&lt; <span class="stringliteral">&quot;unknown exception&quot;</span>;</div>
-<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;      }</div>
-<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;    <span class="keywordflow">default</span>:</div>
-<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;      <span class="keywordflow">return</span> s &lt;&lt; <span class="stringliteral">&quot;(unknown)&quot;</span>;</div>
-<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;    }</div>
-<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;  }</div>
-<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;}</div>
-<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;</div>
-<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;<span class="preprocessor">#ifdef __cpp_exceptions</span></div>
+<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;<span class="preprocessor"></span>      <span class="keywordflow">try</span></div>
+<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;      {</div>
+<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;        rethrow_exception(v.exception);</div>
+<div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;      }</div>
+<div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;      <span class="keywordflow">catch</span>(<span class="keyword">const</span> system_error &amp;e)</div>
+<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;      {</div>
+<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;        <span class="keywordflow">return</span> s &lt;&lt; <span class="stringliteral">&quot;std::system_error code &quot;</span> &lt;&lt; e.code() &lt;&lt; <span class="stringliteral">&quot;: &quot;</span> &lt;&lt; e.what();</div>
+<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;      }</div>
+<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;      <span class="comment">/*catch(const future_error &amp;e)</span></div>
+<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;<span class="comment">      {</span></div>
+<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;<span class="comment">      return s &lt;&lt; &quot;(std::future_error code &quot; &lt;&lt; e.code() &lt;&lt; &quot;: &quot; &lt;&lt; e.what() &lt;&lt; &quot;)&quot;;</span></div>
+<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;<span class="comment">      }*/</span></div>
+<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;      <span class="keywordflow">catch</span>(<span class="keyword">const</span> exception &amp;e)</div>
+<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;      {</div>
+<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;        <span class="keywordflow">return</span> s &lt;&lt; <span class="stringliteral">&quot;std::exception: &quot;</span> &lt;&lt; e.what();</div>
+<div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160;      }</div>
+<div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;      <span class="keywordflow">catch</span>(...)</div>
+<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;<span class="preprocessor"></span>      {</div>
+<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;        <span class="keywordflow">return</span> s &lt;&lt; <span class="stringliteral">&quot;unknown exception&quot;</span>;</div>
+<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;      }</div>
+<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;    <span class="keywordflow">default</span>:</div>
+<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;      <span class="keywordflow">return</span> s &lt;&lt; <span class="stringliteral">&quot;(unknown)&quot;</span>;</div>
+<div class="line"><a name="l00468"></a><span class="lineno">  468</span>&#160;    }</div>
+<div class="line"><a name="l00469"></a><span class="lineno">  469</span>&#160;  }</div>
+<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;}</div>
+<div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;</div>
+<div class="line"><a name="l00472"></a><span class="lineno">  472</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
