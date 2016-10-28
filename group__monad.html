@@ -430,14 +430,15 @@ constexpr error_t&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 <p>Features:</p>
 <ul>
 <li>Very lightweight on build times and run times up to the point of zero execution cost and a one to eight byte space overhead. See below for benchmarks. Requires min clang 3.7, GCC 5.0 or VS2015 Update 2.</li>
-<li>Just enough monad, nothing more, nothing fancy. Replicates the future API, so if you know how to use a future you already know how to use this.</li>
+<li>Just enough monad, nothing more, nothing fancy. Replicates the <code>future&lt;T&gt;</code>, <code>optional&lt;T&gt;</code> and <code>expected&lt;T, E&gt;</code> API, so if you know how to use one of those you already know how to use this.</li>
 <li>Enables convenient and easy all-<code>noexcept</code> coding and design, giving you powerful error handling facilities with automatic exception safety.</li>
-<li>Works just fine with exceptions and RTTI disabled. You may wish to replace the <code>BOOST_OUTCOME_THROW()</code> macro however with what to do when an exception would have been thrown e.g. trying to get a value from an errored or excepted monad.</li>
-<li>Can replace most uses of <code>optional&lt;T&gt;</code> with seamless interop with more expressive forms e.g. <code>monad&lt;int&gt; != option&lt;int&gt;</code>.</li>
+<li>Works just fine with exceptions and RTTI disabled. You may wish to replace the <code><a class="el" href="config_8hpp.html#a8fefe8516997eb0f7c649834d298044a" title="Redefine to have something else occur when Outcome throws an exception.">BOOST_OUTCOME_THROW()</a></code> macro with what to do when an exception would have been thrown e.g. trying to get a value from an errored or excepted monad.</li>
+<li>Can replace most uses of <code>optional&lt;T&gt;</code> with seamless interop with more expressive forms e.g. <code>outcome&lt;int&gt; != option&lt;int&gt;</code>.</li>
 <li>Comprehensive unit testing and validation suite.</li>
 <li>Mirrors <code>noexcept</code> and trivial destructiveness of type R.</li>
 <li>Type R can have no default constructor, move nor copy.</li>
 <li>Works inside a STL container, and type R can be a STL container.</li>
+<li>If type R throws during moves, receiving monad is left in empty state having destructing anything it had before. This behaviour, which was considered undesirable for <code>variant&lt;&gt;</code>, is optimal for the compiler's optimiser.</li>
 <li>Equivalence and non-equivalence operators provided. These can compare disparate monads.<ul>
 <li>Relational operators NOT provided to keep things simple.</li>
 </ul>
@@ -510,8 +511,8 @@ constexpr error_t&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 <div class="line"><span class="preprocessor"></span>  BOOST_CHECK(b);</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;$HOME=&quot;</span> &lt;&lt; b.value() &lt;&lt; std::endl;</div>
 </div><!-- fragment --><p> The API is actually not too distant from <code>optional&lt;T&gt;</code>, so with a bit of regex find and replace you could use <code>option&lt;T&gt;</code> instead.</p>
-<p>The need for <code>monad&lt;T&gt;</code> to be able to be empty was to make exception throws by T during copy and move construction lightweight. If that happens, the monad always has empty state afterwards.</p>
-<h2>Supplying your own implementations of <code>basic_monad&lt;T&gt;</code></h2>
+<p>The need for <code>basic_monad&lt;T, EC, E&gt;</code> to be able to be empty was to make exception throws by T during copy and move construction lightweight. If that happens, the monad always has empty state afterwards.</p>
+<h2>Supplying your own implementations of <code>basic_monad&lt;T, EC, E&gt;</code></h2>
 <p>To do this, simply supply a policy type of the following form: </p>
 <div class="fragment"><div class="line">  <span class="comment">// An implementation policy for basic_monad</span></div>
 <div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> R&gt; <span class="keyword">struct </span>BOOST_OUTCOME_MONAD_POLICY_NAME</div>
@@ -563,11 +564,11 @@ constexpr error_t&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 <p>Attempt to fetch an error state when the monad is in an exceptioned state. </p>
 </td></tr>
 </table>
-<div class="fragment"><div class="line"><a name="l00635"></a><span class="lineno">  635</span>&#160;{</div>
-<div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160;  <a class="code" href="group__monad.html#ggaf5abc43f8d09588556c4c65b53485c0da25621f93230ec01ef6ead2516f3613ce" title="Attempt to store a value into the monad twice.">already_set</a> = 1,        </div>
-<div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160;  <a class="code" href="group__monad.html#ggaf5abc43f8d09588556c4c65b53485c0dac537dcef56fd6ff75592c0220fd3dae1" title="Attempt to use without a state.">no_state</a> = 2,           </div>
-<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;  <a class="code" href="group__monad.html#ggaf5abc43f8d09588556c4c65b53485c0da621bbc00c646a321b70c18a067da2eb2" title="Attempt to fetch an error state when the monad is in an exceptioned state.">exception_present</a> = 3,  </div>
-<div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160;};</div>
+<div class="fragment"><div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160;{</div>
+<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;  <a class="code" href="group__monad.html#ggaf5abc43f8d09588556c4c65b53485c0da25621f93230ec01ef6ead2516f3613ce" title="Attempt to store a value into the monad twice.">already_set</a> = 1,        </div>
+<div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160;  <a class="code" href="group__monad.html#ggaf5abc43f8d09588556c4c65b53485c0dac537dcef56fd6ff75592c0220fd3dae1" title="Attempt to use without a state.">no_state</a> = 2,           </div>
+<div class="line"><a name="l00640"></a><span class="lineno">  640</span>&#160;  <a class="code" href="group__monad.html#ggaf5abc43f8d09588556c4c65b53485c0da621bbc00c646a321b70c18a067da2eb2" title="Attempt to fetch an error state when the monad is in an exceptioned state.">exception_present</a> = 3,  </div>
+<div class="line"><a name="l00641"></a><span class="lineno">  641</span>&#160;};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -598,9 +599,9 @@ template&lt;class T &gt; </div>
 
 <p>Makes an outcome from a result. </p>
 <p>Makes an outcome from an option. </p>
-<div class="fragment"><div class="line"><a name="l02166"></a><span class="lineno"> 2166</span>&#160;{</div>
-<div class="line"><a name="l02167"></a><span class="lineno"> 2167</span>&#160;  <span class="keywordflow">return</span> outcome&lt;T&gt;(std::move(v));</div>
-<div class="line"><a name="l02168"></a><span class="lineno"> 2168</span>&#160;}</div>
+<div class="fragment"><div class="line"><a name="l02168"></a><span class="lineno"> 2168</span>&#160;{</div>
+<div class="line"><a name="l02169"></a><span class="lineno"> 2169</span>&#160;  <span class="keywordflow">return</span> outcome&lt;T&gt;(std::move(v));</div>
+<div class="line"><a name="l02170"></a><span class="lineno"> 2170</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -630,9 +631,9 @@ template&lt;class T &gt; </div>
 
 <p>Makes an outcome from a result. </p>
 <p>Makes an outcome from an option. </p>
-<div class="fragment"><div class="line"><a name="l02171"></a><span class="lineno"> 2171</span>&#160;{</div>
-<div class="line"><a name="l02172"></a><span class="lineno"> 2172</span>&#160;  <span class="keywordflow">return</span> outcome&lt;T&gt;(v);</div>
-<div class="line"><a name="l02173"></a><span class="lineno"> 2173</span>&#160;}</div>
+<div class="fragment"><div class="line"><a name="l02173"></a><span class="lineno"> 2173</span>&#160;{</div>
+<div class="line"><a name="l02174"></a><span class="lineno"> 2174</span>&#160;  <span class="keywordflow">return</span> outcome&lt;T&gt;(v);</div>
+<div class="line"><a name="l02175"></a><span class="lineno"> 2175</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
