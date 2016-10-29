@@ -101,17 +101,77 @@ $(document).ready(function(){initNavTree('index.html','');});
 <div class="title">boost.outcome Documentation</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>This is the proposed Boost.Outcome library, a Boost C++ 14 library providing <a class="el" href="group__monad.html">Configurable lightweight simple monadic value transport with the same semantics and API as a future</a>, a factory and family of policy driven lightweight monads with the specialisations of <code>outcome&lt;T&gt;</code>, <code>result&lt;T&gt;</code> and <code>option&lt;T&gt;</code>.</p>
-<p>Its github source code repository lives at <a href="https://github.com/ned14/boost.outcome">https://github.com/ned14/boost.outcome</a>.</p>
-<p>Linux: <a href="https://travis-ci.org/ned14/boost.outcome">![Build Status](https://travis-ci.org/ned14/boost.outcome.svg?branch=master)</a> Windows: <a href="https://ci.appveyor.com/project/ned14/boost-outcome/branch/master">![Build status](https://ci.appveyor.com/api/projects/status/roe4dacos4gnlu66/branch/master?svg=true)</a> Coverage: <a href="https://coveralls.io/r/ned14/boost.outcome?branch=master">![Coverage Status](https://coveralls.io/repos/ned14/boost.outcome/badge.svg?branch=master)</a> CTest dashboard: <a href="http://my.cdash.org/index.php?project=Boost.Outcome">http://my.cdash.org/index.php?project=Boost.Outcome</a></p>
-<p>You need these compilers or better:</p>
+<div class="toc"><h3>Table of Contents</h3>
+<ul><li class="level1"><a href="#description">Description</a></li>
+<li class="level1"><a href="#prerequisites">Prerequisites and Installation</a><ul><li class="level2"><a href="#windows">Installing on Windows</a></li>
+<li class="level2"><a href="#linux">Installing on Ubuntu/Debian</a></li>
+<li class="level2"><a href="#osx">Installing on OS X</a></li>
+<li class="level2"><a href="#source">Installing via source archive</a></li>
+<li class="level2"><a href="#repo">Installing via git subrepository</a></li>
+</ul>
+</li>
+<li class="level1"><a href="#support">Support</a></li>
+</ul>
+</div>
+<div class="textblock"><center><table  border="0">
+<tr>
+<td align="center"><a href="http://my.cdash.org/index.php?project=Boost.Outcome">CTest summary</a><br/>
+<a href="http://my.cdash.org/index.php?project=Boost.Outcome">dashboard</a>  </td><td align="center"><a href="https://travis-ci.org/ned14/boost.outcome">Linux CI:</a><div class="image">
+<img src="https://travis-ci.org/ned14/boost.outcome.svg?branch=master" />
+</div>
+  </td><td align="center"><a href="https://ci.appveyor.com/project/ned14/boost-outcome/branch/master">Windows CI:</a><div class="image">
+<img src="https://ci.appveyor.com/api/projects/status/roe4dacos4gnlu66/branch/master?svg=true" />
+</div>
+  </td><td align="center"><a href="https://coveralls.io/r/ned14/boost.outcome?branch=master">Coverage:</a><div class="image">
+<img src="https://coveralls.io/repos/ned14/boost.outcome/badge.svg?branch=master" />
+</div>
+   </td></tr>
+</table>
+</center><h1><a class="anchor" id="description"></a>
+Description</h1>
+<p>This is the proposed Boost.Outcome library, a Boost C++ 14 library providing a factory and family of policy driven lightweight monadic value-or-error transports with the convenience specialisations of <code>outcome&lt;T&gt;</code>, <code>result&lt;T&gt;</code> and <code>option&lt;T&gt;</code>. Its main intended usage is as an ultra light weight error handling framework, providing a more expressive and type safe alternative to error code integers or enums, yet much lower overhead than exception throws, and unlike alternatives it works perfectly with exceptions and RTTI disabled. It may be lower overhead than the <code>expected&lt;T, E&gt;</code> heading for standardisation, if not then it is certainly more convenient to program with for error handling than using <code>expected&lt;T, E&gt;</code> as it was specifically designed and tailored for this purpose.</p>
+<p>If you are familiar with C++ 17's <code>optional&lt;T&gt;</code> or Rust's <code>Result&lt;T&gt;</code> and <code>Option&lt;T&gt;</code>, you will find almost identical semantics in the transports provided here. One can therefore write systems programming code using these transports in C++ in the same design pattern as when writing in Rust or Swift.</p>
+<h1><a class="anchor" id="prerequisites"></a>
+Prerequisites and Installation</h1>
+<p>Boost.Outcome is a header only library known to work on these compilers or better:</p>
 <ul>
 <li>GCC 5.0</li>
 <li>clang 3.7</li>
 <li>VS2015 Update 2</li>
 <li>clang 3.7 with Microsoft Codegen ("winclang")</li>
 </ul>
-<p>Its sole mandatory dependency is on <a href="https://github.com/ned14/boost-lite,">https://github.com/ned14/boost-lite,</a> a minimal emulation of Boost for C++ 11. </p>
+<p>Its sole mandatory dependency is on <a href="https://github.com/ned14/boost-lite,">https://github.com/ned14/boost-lite,</a> a minimal emulation of Boost for C++ 14. A copy is embedded internally so a copy of Boost is <b>not</b> required to use this library. You can simply drop Outcome into your project and go, including Outcome using one of these depending on how you install Outcome:</p>
+<ul>
+<li><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;boost/outcome.hpp&gt;</span> </div>
+</div><!-- fragment --></li>
+<li><div class="fragment"><div class="line"><span class="preprocessor">#include &quot;boost.outcome/include/boost/outcome.hpp&quot;</span> </div>
+</div><!-- fragment --></li>
+</ul>
+<p>Each commit is tested by Travis and Appveyor. A nightly cronjob figures out which latest commit all tests passed for and pushes a distribution to the following package repositories:</p>
+<h2><a class="anchor" id="windows"></a>
+Installing on Windows</h2>
+<p>If you are using VS15 or better it comes with VCPkg, a package manager. Open a Developer Tools prompt and type:</p>
+<p><code>vcpkg install <a class="el" href="namespaceboost_1_1outcome.html" title="The Outcome namespace.">boost.outcome</a></code></p>
+<p>Once installed it is available for usage in any Visual Studio project.</p>
+<h2><a class="anchor" id="linux"></a>
+Installing on Ubuntu/Debian</h2>
+<pre>add-apt-repository ppa:ned14/boost.outcome
+apt-get install <a class="el" href="namespaceboost_1_1outcome.html" title="The Outcome namespace.">boost.outcome</a></pre><h2><a class="anchor" id="osx"></a>
+Installing on OS X</h2>
+<p>Assuming you have <a href="http://brew.sh/">homebrew</a> installed, then:</p>
+<pre>brew tap ned14/tap
+brew install <a class="el" href="namespaceboost_1_1outcome.html" title="The Outcome namespace.">boost.outcome</a></pre><h2><a class="anchor" id="source"></a>
+Installing via source archive</h2>
+<p>Visit <a href="https://dedi4.nedprod.com/static/files/">https://dedi4.nedprod.com/static/files/</a> and download the latest <a class="el" href="namespaceboost_1_1outcome.html" title="The Outcome namespace.">boost.outcome</a> tarball. Tarballs are only uploaded if everything built and all tests passed.</p>
+<h2><a class="anchor" id="repo"></a>
+Installing via git subrepository</h2>
+<p><code>git submodule add <a href="https://github.com/ned14/boost.outcome">https://github.com/ned14/boost.outcome</a></code></p>
+<p>The master branch is automatically set to whichever was the last commit on develop branch to pass all unit tests.</p>
+<h1><a class="anchor" id="support"></a>
+Support</h1>
+<p><a href="https://stackoverflow.com/">StackOverflow</a> with the boost-outcome tag is the preferred place to ask questions on usage.</p>
+<p>If you have a problem, please review the FAQ and the wiki. Searching <a href="https://github.com/ned14/boost.outcome/issues">the issues</a> for your problem is also a good idea. If you are encountering what you think is a bug, please open an issue.</p>
+<p>To be continued ... </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

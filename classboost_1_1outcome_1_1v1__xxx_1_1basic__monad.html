@@ -435,13 +435,13 @@ const <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1value__storage.htm
 <div class="line">{</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;The value of my input monad is &quot;</span>;</div>
 <div class="line">  <span class="keywordflow">if</span>(m)</div>
-<div class="line">    std::cout &lt;&lt; m.get() &lt;&lt; std::endl;</div>
+<div class="line">    std::cout &lt;&lt; m.value() &lt;&lt; std::endl;</div>
 <div class="line">  <span class="keywordflow">else</span></div>
 <div class="line">    std::cout &lt;&lt; (m.has_error() ? <span class="stringliteral">&quot;errored&quot;</span> : m.has_exception() ? <span class="stringliteral">&quot;excepted&quot;</span> : <span class="stringliteral">&quot;empty&quot;</span>) &lt;&lt; std::endl;</div>
 <div class="line">  </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;  or via bind(), my value is &quot;</span>;</div>
 <div class="line">  <span class="keyword">auto</span> o(m &gt;&gt; [](T v) { std::cout &lt;&lt; v; <span class="keywordflow">return</span> v; }</div>
-<div class="line">           &gt;&gt; [](std::error_code e) { std::cout &lt;&lt; <span class="stringliteral">&quot;errored&quot;</span>; <span class="keywordflow">return</span> e; }</div>
+<div class="line">           &gt;&gt; [](error_code_extended e) { std::cout &lt;&lt; <span class="stringliteral">&quot;errored&quot;</span>; <span class="keywordflow">return</span> e; }</div>
 <div class="line">           &gt;&gt; [](std::exception_ptr e) { std::cout &lt;&lt; <span class="stringliteral">&quot;excepted&quot;</span>; <span class="keywordflow">return</span> e; }</div>
 <div class="line">           &gt;&gt; [](<span class="keyword">typename</span> decltype(m)::empty_type) { std::cout &lt;&lt; <span class="stringliteral">&quot;empty&quot;</span>; });</div>
 <div class="line">  std::cout &lt;&lt; std::endl;</div>

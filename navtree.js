@@ -1,6 +1,15 @@
 var NAVTREE =
 [
   [ "boost.outcome", "index.html", [
+    [ "Description", "index.html#description", null ],
+    [ "Prerequisites and Installation", "index.html#prerequisites", [
+      [ "Installing on Windows", "index.html#windows", null ],
+      [ "Installing on Ubuntu/Debian", "index.html#linux", null ],
+      [ "Installing on OS X", "index.html#osx", null ],
+      [ "Installing via source archive", "index.html#source", null ],
+      [ "Installing via git subrepository", "index.html#repo", null ]
+    ] ],
+    [ "Support", "index.html#support", null ],
     [ "Modules", "modules.html", "modules" ],
     [ "Namespaces", null, [
       [ "Namespace List", "namespaces.html", "namespaces" ],
@@ -37,7 +46,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 ".html",
-"monad_8hpp.html#a0fa9459e56c72cf0f21eca8a8f363d2f"
+"index.html#source"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
