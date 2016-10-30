@@ -462,8 +462,10 @@ constexpr error_t&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 <div class="fragment"><div class="line">  <span class="keyword">auto</span> openfile = [](std::string path) noexcept-&gt;outcome&lt;<span class="keywordtype">int</span>&gt;</div>
 <div class="line">  {</div>
 <div class="line">    <span class="keywordtype">int</span> fd;</div>
-<div class="line">    <span class="keywordflow">while</span>(-1 == (fd = BOOST_OUTCOME_POSIX_OPEN(path.c_str(), 0)) &amp;&amp; EINTR == errno)</div>
-<div class="line">      ;</div>
+<div class="line">    <span class="keywordflow">do</span></div>
+<div class="line">    {</div>
+<div class="line">      fd = BOOST_OUTCOME_POSIX_OPEN(path.c_str(), 0);</div>
+<div class="line">    } <span class="keywordflow">while</span>(-1 == fd &amp;&amp; EINTR == errno);</div>
 <div class="line">    <span class="keywordflow">try</span></div>
 <div class="line">    {</div>
 <div class="line">      <span class="keywordflow">if</span>(-1 == fd)</div>
@@ -471,8 +473,9 @@ constexpr error_t&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 <div class="line">        <span class="keywordtype">int</span> code = errno;</div>
 <div class="line">        <span class="comment">// If a temporary failure, this is an expected unexpected outcome</span></div>
 <div class="line">        <span class="keywordflow">if</span>(EBUSY == code || EISDIR == code || ELOOP == code || ENOENT == code || ENOTDIR == code || EPERM == code || EACCES == code)</div>
+<div class="line">        {</div>
 <div class="line">          <span class="keywordflow">return</span> error_code_extended(code, stl11::generic_category());</div>
-<div class="line"></div>
+<div class="line">        }</div>
 <div class="line">        <span class="comment">// If a non-temporary failure, this is an unexpected outcome</span></div>
 <div class="line">        <span class="keywordflow">return</span> std::make_exception_ptr(stl11::system_error(code, stl11::generic_category(), strerror(code)));</div>
 <div class="line">      }</div>
@@ -494,14 +497,16 @@ constexpr error_t&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 </div><!-- fragment --> <h3>As an alternative to <code>optional&lt;T&gt;</code></h3>
 <p>Something not so obvious is that this monad can have an empty state, and therefore can stand in for <code>optional&lt;T&gt;</code> like this:</p>
 <div class="fragment"><div class="line">  <span class="keyword">auto</span> maybe_getenv = [](<span class="keyword">const</span> <span class="keywordtype">char</span> *n) -&gt; option&lt;const char *&gt; {</div>
-<div class="line">    <span class="keywordflow">if</span>(<span class="keyword">const</span> <span class="keywordtype">char</span> *x = std::getenv(n))</div>
+<div class="line">    <span class="keyword">const</span> <span class="keywordtype">char</span> *x = std::getenv(n);</div>
+<div class="line">    <span class="keywordflow">if</span>(x != <span class="keyword">nullptr</span>)</div>
+<div class="line">    {</div>
 <div class="line">      <span class="keywordflow">return</span> x;</div>
-<div class="line">    <span class="keywordflow">else</span></div>
-<div class="line">      <span class="keywordflow">return</span> {};</div>
+<div class="line">    }</div>
+<div class="line">    <span class="keywordflow">return</span> {};</div>
 <div class="line">  };</div>
 <div class="line">  <span class="keyword">auto</span> a = maybe_getenv(<span class="stringliteral">&quot;SHOULDNEVEREXIST&quot;</span>);</div>
 <div class="line">  BOOST_CHECK(!a);</div>
-<div class="line">  BOOST_CHECK_THROW(a.value(), monad_error);</div>
+<div class="line">  BOOST_CHECK_THROW(a.value(), <span class="keyword">const</span> monad_error &amp;);</div>
 <div class="line">  BOOST_CHECK(a.value_or(<span class="keyword">nullptr</span>) == <span class="keyword">nullptr</span>);</div>
 <div class="line"><span class="preprocessor">#ifdef _WIN32</span></div>
 <div class="line"><span class="preprocessor"></span>  <span class="keyword">auto</span> b = maybe_getenv(<span class="stringliteral">&quot;HOMEPATH&quot;</span>);</div>
