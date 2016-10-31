@@ -10,6 +10,12 @@ var NAVTREE =
       [ "Installing via git subrepository", "index.html#repo", null ]
     ] ],
     [ "Support", "index.html#support", null ],
+    [ "Introduction and Design Rationale", "index.html#introduction", [
+      [ "C style error handling: integer returns", "index.html#enums", null ],
+      [ "C++ 98 style error handling: throwing exceptions", "index.html#exceptions", null ],
+      [ "C++ 11 style error handling: `error_code` and `noexcept`", "index.html#error_code", null ],
+      [ "C++ 17 style error handling: `optional<T>` and `expected<T, E>`", "index.html#sea_of_noexcept", null ]
+    ] ],
     [ "Modules", "modules.html", "modules" ],
     [ "Namespaces", null, [
       [ "Namespace List", "namespaces.html", "namespaces" ],
@@ -46,7 +52,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 ".html",
-"index.html#source"
+"index.html#linux"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
