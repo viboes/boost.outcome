@@ -13,8 +13,11 @@ var NAVTREE =
     [ "Introduction and Design Rationale", "index.html#introduction", [
       [ "C style error handling: integer returns", "index.html#enums", null ],
       [ "C++ 98 style error handling: throwing exceptions", "index.html#exceptions", null ],
-      [ "C++ 11 style error handling: `error_code` and `noexcept`", "index.html#error_code", null ],
-      [ "C++ 17 style error handling: `optional<T>` and `expected<T, E>`", "index.html#sea_of_noexcept", null ]
+      [ "C++ 11 style error handling: `error_code` and `noexcept`", "index.html#error_code", [
+        [ "Returning `optional<T>`", "index.html#optional", null ],
+        [ "`expected<T, E>`", "index.html#expected", null ]
+      ] ],
+      [ "Islands of exception throw in a sea of `noexcept`", "index.html#islands", null ]
     ] ],
     [ "Modules", "modules.html", "modules" ],
     [ "Namespaces", null, [
@@ -52,7 +55,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 ".html",
-"index.html#linux"
+"index.html#introduction"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
