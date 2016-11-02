@@ -1471,7 +1471,7 @@ $(document).ready(function(){initNavTree('monad_8hpp_source.html','');});
 <div class="line"><a name="l01747"></a><span class="lineno"> 1747</span>&#160;<span class="preprocessor">#define BOOST_OUTCOME_MONAD_NAME option</span></div>
 <div class="line"><a name="l01748"></a><span class="lineno"> 1748</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &quot;detail/monad_policy.ipp&quot;</span></div>
 <div class="line"><a name="l01749"></a><span class="lineno"> 1749</span>&#160;</div>
-<div class="line"><a name="l01750"></a><span class="lineno"> 1750</span>&#160;<span class="preprocessor">#if defined(_WIN32)</span></div>
+<div class="line"><a name="l01750"></a><span class="lineno"> 1750</span>&#160;<span class="preprocessor">#if defined(_WIN32) &amp;&amp; 0  // Disabled as win32 error code mapping is to be discouraged!</span></div>
 <div class="line"><a name="l01751"></a><span class="lineno"> 1751</span>&#160;<span class="preprocessor"></span><span class="keyword">namespace </span>detail</div>
 <div class="line"><a name="l01752"></a><span class="lineno"> 1752</span>&#160;{</div>
 <div class="line"><a name="l01753"></a><span class="lineno"> 1753</span>&#160;  <span class="keyword">inline</span> <span class="keywordtype">int</span> win32_to_posix_error(<span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> e) noexcept</div>
