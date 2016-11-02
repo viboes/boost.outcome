@@ -113,11 +113,11 @@ $(document).ready(function(){initNavTree('index.html','');});
 <li class="level1"><a href="#support">Support</a></li>
 <li class="level1"><a href="#introduction">Introduction and Design Rationale</a><ul><li class="level2"><a href="#enums">C style error handling: integer returns</a></li>
 <li class="level2"><a href="#exceptions">C++ 98 style error handling: throwing exceptions</a></li>
-<li class="level2"><a href="#error_code">C++ 11 style error handling: `error_code` and `noexcept`</a><ul><li class="level3"><a href="#optional">Returning `optional<T>`</a></li>
-<li class="level3"><a href="#expected">`expected<T, E>`</a></li>
+<li class="level2"><a href="#error_code">C++ 11 style error handling: <tt>error_code</tt> and <tt>noexcept</tt></a><ul><li class="level3"><a href="#optional">Returning <tt>optional<T></tt></a></li>
+<li class="level3"><a href="#expected">Returning <tt>expected<T, E></tt></a></li>
 </ul>
 </li>
-<li class="level2"><a href="#islands">Islands of exception throw in a sea of `noexcept`</a></li>
+<li class="level2"><a href="#islands">Islands of exception throw in a sea of <tt>noexcept</tt></a></li>
 </ul>
 </li>
 </ul>
@@ -252,7 +252,7 @@ C++ 98 style error handling: throwing exceptions</h2>
 <div class="line">}</div>
 </div><!-- fragment --><p>Experts will quite correctly chafe at the use of <code>std::runtime_error</code> to report a file not found, but nevertheless such a design pattern is very common in the wild.</p>
 <h2><a class="anchor" id="error_code"></a>
-C++ 11 style error handling: `error_code` and `noexcept`</h2>
+C++ 11 style error handling: &lt;tt&gt;error_code&lt;/tt&gt; and &lt;tt&gt;noexcept&lt;/tt&gt;</h2>
 <p>C++ 11 brought in two new features to help bridge the gap between the over use of exception throws to report routine failures and C error handling: (i) <code>noexcept</code> and (ii) the standardisation of <code>error_code</code> from Boost. <code>noexcept</code> lets you mark functions with the guarantee that they shall <b>never</b> throw exceptions. This is commonly described as a feature enabling the compiler and standard library to use faster algorithms which can assume that operations never need to undone part way through, however it also enables a whole new way of writing C++ which we shall call *"islands of exception throw in a sea
 of noexcept"* which will be described later.</p>
 <p>Both the Boost and C++ 11 <code>error_code</code> consists of an integer and a reference to an <code>error_category</code> instance. This allows one to set a <em>domain</em> for an integer error code such that <code>NOTFOUND</code> in library A can have a different integer value to <code>NOTFOUND</code> in library B. Because the reference to the domain of the error code is transported with the error code, integer error codes can be propagated <em>without losing information</em> into other code which need have no knowledge whatsover of libraries A nor B. <code>error_code</code> and the other machinery in <code>&lt;system_error&gt;</code> lets you handle errors from unknown libraries via <code>error_condition</code> which lets you inspect unknown third party <code>error_code</code>'s for whether they have semantic equivalence to the standard POSIX errors, and therefore handle a file-not-found situation based on semantic equivalence rather than losing information from the original source by doing an error code conversion. Therefore as with exception types deriving from <code>std::exception</code>, a central error handling routine can understand just enough of unknown third party error codes to act appropriately.</p>
@@ -317,11 +317,11 @@ of noexcept"* which will be described later.</p>
 <li>It allows one to segment truly exceptional events into exception throws with stack unwinds and to handle ordinary and common failures in normal forward execution program logic. This is exactly the error handling model used by the new systems languages Swift and Rust.</li>
 </ol>
 <h2><a class="anchor" id="optional"></a>
-Returning `optional&lt;T&gt;`</h2>
+Returning &lt;tt&gt;optional&lt;T&gt;&lt;/tt&gt;</h2>
 <p>C++ 17 isn't finished at the time of writing, but we are very sure that at least <a href="http://en.cppreference.com/w/cpp/utility/optional"><code>std::optional&lt;T&gt;</code></a> will be in it. It remains to be seen if LEWG's <code>expected&lt;T, E&gt;</code> will make it, if not then most STL implementations will probably ship an implementation as an experimental and if your STL does not, there is always the reference implementation at <a href="https://github.com/viboes/std-make">https://github.com/viboes/std-make</a> which ought to work on any C++ 14 compiler.</p>
-<p>The following discussion is based on <code>expected&lt;T, E&gt;</code> as detailed by <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0323r1.pdf">P0323R1</a> which is the latest LEWG proposal paper at the time of writing (Nov 2016) and indeed one where <code>expected&lt;T, E&gt;</code> was pared down significantly from its original proposal. It should be noted that C++ may yet end up adopting something quite different, though given how long <code>expected&lt;T, E&gt;</code> has been around by now, and how it is getting to fitting nicely between <code>optional&lt;T&gt;</code> and <code>variant&lt;T, E&gt;</code>, it would seem unlikely. <code>expected&lt;T, E&gt;</code> is intended as a strict superset of <code>optional&lt;T&gt;</code> with aspects of <code>std::variant&lt;T, E&gt;</code>, indeed much of LEWG's remaining work on the proposal is on reconciling the small remaining semantic differences between <code>expected&lt;T, nullopt_t&gt;</code> and <code>optional&lt;T&gt;</code>.</p>
+<p>The following discussion is based on <code>expected&lt;T, E&gt;</code> as detailed by <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0323r1.pdf">P0323R1</a> which is the latest LEWG proposal paper at the time of writing (Nov 2016) and indeed one where <code>expected&lt;T, E&gt;</code> was pared down significantly from its original proposal. It should be noted that C++ may yet end up adopting something quite different, though given how long <code>expected&lt;T, E&gt;</code> has been around by now, and how it is getting to fitting nicely between <code>optional&lt;T&gt;</code> and <code>variant&lt;T, E&gt;</code>, it would seem unlikely. <code>expected&lt;T, E&gt;</code> is intended as a strict superset of <code>optional&lt;T&gt;</code> with aspects of <a href="http://en.cppreference.com/w/cpp/utility/variant"><code>std::variant&lt;T, E&gt;</code></a>, indeed much of LEWG's remaining work on the proposal is on reconciling the small remaining semantic differences between <code>expected&lt;T, nullopt_t&gt;</code> and <code>optional&lt;T&gt;</code>.</p>
 <h3><a class="anchor" id="optional"></a>
-Returning `optional&lt;T&gt;`</h3>
+Returning &lt;tt&gt;optional&lt;T&gt;&lt;/tt&gt;</h3>
 <p>In some programming contexts we don't need to know why an operation failed, only that it did. Throwing an exception after failing to find a file is a good example of the kind of failure which is very common and where throwing an exception to handle that event is excessive and inappropriate. One might therefore design a routine expected to frequently fail in C++ as:</p>
 <div class="fragment"><div class="line"><span class="comment">// Returns true for success and fills \em out with the opened file, else false</span></div>
 <div class="line"><span class="keywordtype">bool</span> openfile(handle_ref &amp;out, <span class="keyword">const</span> <span class="keywordtype">char</span> *path) noexcept;</div>
@@ -337,7 +337,7 @@ Returning `optional&lt;T&gt;`</h3>
 <div class="line">}</div>
 </div><!-- fragment --><p><code>optional&lt;T&gt;</code> is pretty boring and unsurprising like any good primitive. It's also fairly intuitive, almost any C++ programmer will immediately understand what the code above does from inspection.</p>
 <h3><a class="anchor" id="expected"></a>
-`expected&lt;T, E&gt;`</h3>
+Returning &lt;tt&gt;expected&lt;T, E&gt;&lt;/tt&gt;</h3>
 <p>Many familiar with the filesystem will find the above use case of <code>optional&lt;T&gt;</code> unsettling because there are many reasons why one couldn't open a file rather than merely it was not found. Imagine, for example, that a program is attempting to open a few thousand files on a networked drive which has broken its connection - in this case every single failure will take considerable time to return and there is zero chance <em>any</em> file open will ever succeed, so what the user sees is an apparently hanged program. Far better would be if the <code>openfile()</code> function could return the cause of its failure, and we could then treat all errors which are different to file not found as reason to abort.</p>
 <p>Enter LEWG's proposed <code>expected&lt;T, E&gt;</code> which can hold either an expected value of type <code>T</code> or an unexpected value of type <code>E</code>. Like <code>variant&lt;T, E&gt;</code>, <code>expected&lt;T, E&gt;</code> is a discrimated union storing either <code>T</code> or <code>E</code> in the same storage space.</p>
 <div class="fragment"><div class="line"><span class="comment">// Returns the expected opened handle on success, or an unexpected cause of failure</span></div>
@@ -417,7 +417,7 @@ Returning `optional&lt;T&gt;`</h3>
 <div class="line">}</div>
 </div><!-- fragment --><p>This looks much more like how <code>expected&lt;T, E&gt;</code> is supposed to be used. It also demonstrates for the first time a design pattern which Outcome is designed to ease writing: <em>islands of exception throw in a sea of noexcept</em>.</p>
 <h2><a class="anchor" id="islands"></a>
-Islands of exception throw in a sea of `noexcept`</h2>
+Islands of exception throw in a sea of &lt;tt&gt;noexcept&lt;/tt&gt;</h2>
 <p>To be continued ... </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->

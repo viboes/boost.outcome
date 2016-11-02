@@ -13,11 +13,11 @@ var NAVTREE =
     [ "Introduction and Design Rationale", "index.html#introduction", [
       [ "C style error handling: integer returns", "index.html#enums", null ],
       [ "C++ 98 style error handling: throwing exceptions", "index.html#exceptions", null ],
-      [ "C++ 11 style error handling: `error_code` and `noexcept`", "index.html#error_code", [
-        [ "Returning `optional<T>`", "index.html#optional", null ],
-        [ "`expected<T, E>`", "index.html#expected", null ]
+      [ "C++ 11 style error handling: <tt>error_code</tt> and <tt>noexcept</tt>", "index.html#error_code", [
+        [ "Returning <tt>optional<T></tt>", "index.html#optional", null ],
+        [ "Returning <tt>expected<T, E></tt>", "index.html#expected", null ]
       ] ],
-      [ "Islands of exception throw in a sea of `noexcept`", "index.html#islands", null ]
+      [ "Islands of exception throw in a sea of <tt>noexcept</tt>", "index.html#islands", null ]
     ] ],
     [ "Modules", "modules.html", "modules" ],
     [ "Namespaces", null, [
