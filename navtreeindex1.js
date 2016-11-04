@@ -1,6 +1,5 @@
 var NAVTREEINDEX1 =
 {
-"index.html#cpp_error_handling_history":[3],
 "index.html#description":[0],
 "index.html#design_differences":[4,0],
 "index.html#expected":[3,3,1],
@@ -13,6 +12,7 @@ var NAVTREEINDEX1 =
 "index.html#sea-of-noexcept":[3,4],
 "index.html#source":[1,3],
 "index.html#support":[2],
+"index.html#when_outcome_expected":[4,1],
 "index.html#windows":[1,0],
 "modules.html":[5],
 "monad_8hpp.html":[8,0,0,0,0,0,1],

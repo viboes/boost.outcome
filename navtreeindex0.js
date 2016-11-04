@@ -245,9 +245,9 @@ var NAVTREEINDEX0 =
 "group__monad.html#ggaf5abc43f8d09588556c4c65b53485c0dac537dcef56fd6ff75592c0220fd3dae1":[5,1,13,1],
 "hierarchy.html":[7,2],
 "index.html":[],
-"index.html#When":[4,1],
 "index.html#c-style":[3,0],
 "index.html#cpp11-style":[3,2],
 "index.html#cpp17-style":[3,3],
-"index.html#cpp98-style":[3,1]
+"index.html#cpp98-style":[3,1],
+"index.html#cpp_error_handling_history":[3]
 };

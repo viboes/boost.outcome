@@ -21,8 +21,8 @@ var NAVTREE =
       [ "\"Islands of exception throw in a sea of noexcept\"", "index.html#sea-of-noexcept", null ]
     ] ],
     [ "Introduction and Design Rationale of Outcome", "index.html#introduction", [
-      [ "Design differences between `expected<T, E>` and Outcomes", "index.html#design_differences", null ],
-      [ "should you use Outcome instead of Expected?", "index.html#When", null ]
+      [ "Design differences between Expected and Outcomes", "index.html#design_differences", null ],
+      [ "When to use Outcome and when to use Expected?", "index.html#when_outcome_expected", null ]
     ] ],
     [ "Modules", "modules.html", "modules" ],
     [ "Namespaces", null, [
@@ -60,7 +60,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 ".html",
-"index.html#cpp_error_handling_history"
+"index.html#description"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
