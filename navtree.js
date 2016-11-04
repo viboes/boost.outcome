@@ -10,7 +10,7 @@ var NAVTREE =
       [ "Installing via git subrepository", "index.html#repo", null ]
     ] ],
     [ "Support", "index.html#support", null ],
-    [ "Introduction and Design Rationale", "index.html#introduction", [
+    [ "Quick history of error handling design patterns from C++ 98 to C++ 17", "index.html#cpp_error_handling_history", [
       [ "C style error handling: integer returns", "index.html#c-style", null ],
       [ "C++ 98 style error handling: throwing exceptions", "index.html#cpp98-style", null ],
       [ "C++ 11 style error handling: error_code and noexcept", "index.html#cpp11-style", null ],
@@ -19,6 +19,10 @@ var NAVTREE =
         [ "Returning expected<T, E>", "index.html#expected", null ]
       ] ],
       [ "\"Islands of exception throw in a sea of noexcept\"", "index.html#sea-of-noexcept", null ]
+    ] ],
+    [ "Introduction and Design Rationale of Outcome", "index.html#introduction", [
+      [ "Design differences between `expected<T, E>` and Outcomes", "index.html#design_differences", null ],
+      [ "should you use Outcome instead of Expected?", "index.html#When", null ]
     ] ],
     [ "Modules", "modules.html", "modules" ],
     [ "Namespaces", null, [
@@ -56,7 +60,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 ".html",
-"index.html#expected"
+"index.html#cpp_error_handling_history"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
