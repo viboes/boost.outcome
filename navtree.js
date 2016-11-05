@@ -16,14 +16,15 @@ var NAVTREE =
       [ "C++ 11 style error handling: error_code and noexcept", "index.html#cpp11-style", null ],
       [ "C++ 17/20 style error handling: optional<T> and expected<T, E>", "index.html#cpp17-style", [
         [ "Returning optional<T>", "index.html#optional", null ],
-        [ "Returning expected<T, E>", "index.html#expected", null ]
-      ] ],
-      [ "\"Islands of exception throw in a sea of noexcept\"", "index.html#sea-of-noexcept", null ]
+        [ "Returning expected<T, E>", "index.html#expected", null ],
+        [ "\"Islands of exception throw in a sea of noexcept\"", "index.html#sea-of-noexcept", null ],
+        [ "\"Exceptions are exceptional, errors are not failure\"", "index.html#exceptions-are-exceptional", null ]
+      ] ]
     ] ],
     [ "Introduction and Design Rationale of Outcome", "index.html#introduction", [
-      [ "Design differences between Expected and Outcomes", "index.html#design_differences", null ],
-      [ "When to use Outcome and when to use Expected?", "index.html#when_outcome_expected", null ]
+      [ "Design differences between Expected and Outcomes", "index.html#design_differences", null ]
     ] ],
+    [ "Synopsis of basic_monad<> and outcome<T>, result<T> and option<T>", "index.html#synopsis", null ],
     [ "Modules", "modules.html", "modules" ],
     [ "Namespaces", null, [
       [ "Namespace List", "namespaces.html", "namespaces" ],
