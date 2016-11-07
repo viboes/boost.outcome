@@ -128,6 +128,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html">basic_monad</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements a configurable lightweight simple monadic value transport with the same semantics and API as a future.  <a href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1inplace__t.html">inplace_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tag type for inplace construction.  <a href="structboost_1_1outcome_1_1v1__xxx_1_1inplace__t.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1is__monad.html">is_monad</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">True if the type passed is a monad or a reference to a monad.  <a href="structboost_1_1outcome_1_1v1__xxx_1_1is__monad.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -256,27 +259,22 @@ template&lt;class T &gt; </td></tr>
 <tr class="memdesc:gaedb38ac1fcaae9fdc019a82d76ffdd9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an outcome from the type passed. <br/></td></tr>
 <tr class="separator:gaedb38ac1fcaae9fdc019a82d76ffdd9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2cbada16dcc6af63be3da3910cf991c9"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga2cbada16dcc6af63be3da3910cf991c9"></a>
-template&lt;class T &gt; </td></tr>
+template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:ga2cbada16dcc6af63be3da3910cf991c9"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="group__monad.html#gaab2ff6220205017226794529c863b336">outcome</a>&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga2cbada16dcc6af63be3da3910cf991c9">make_outcome</a> (<a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1error__code__extended.html">error_code_extended</a> v)</td></tr>
 <tr class="memdesc:ga2cbada16dcc6af63be3da3910cf991c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an errored outcome of type T. <br/></td></tr>
 <tr class="separator:ga2cbada16dcc6af63be3da3910cf991c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5ff527de79abd9d31bbd96057ff58f1c"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga5ff527de79abd9d31bbd96057ff58f1c"></a>
-template&lt;class T &gt; </td></tr>
+template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:ga5ff527de79abd9d31bbd96057ff58f1c"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="group__monad.html#gaab2ff6220205017226794529c863b336">outcome</a>&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga5ff527de79abd9d31bbd96057ff58f1c">make_outcome</a> (std::exception_ptr v)</td></tr>
 <tr class="memdesc:ga5ff527de79abd9d31bbd96057ff58f1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an excepted outcome of type T. <br/></td></tr>
 <tr class="separator:ga5ff527de79abd9d31bbd96057ff58f1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5c8a609f3c8813c0908690fefc9f61b8"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga5c8a609f3c8813c0908690fefc9f61b8"></a>
-template&lt;class T &gt; </td></tr>
+template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:ga5c8a609f3c8813c0908690fefc9f61b8"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="group__monad.html#gaab2ff6220205017226794529c863b336">outcome</a>&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga5c8a609f3c8813c0908690fefc9f61b8">make_outcome</a> ()</td></tr>
 <tr class="memdesc:ga5c8a609f3c8813c0908690fefc9f61b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an empty outcome of type T. <br/></td></tr>
 <tr class="separator:ga5c8a609f3c8813c0908690fefc9f61b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0f3dd7f42b5448b7291e3deab8f17184"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga0f3dd7f42b5448b7291e3deab8f17184"></a>
-template&lt;&gt; </td></tr>
-<tr class="memitem:ga0f3dd7f42b5448b7291e3deab8f17184"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="group__monad.html#gaab2ff6220205017226794529c863b336">outcome</a>&lt; void &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga0f3dd7f42b5448b7291e3deab8f17184">make_outcome&lt; void &gt;</a> ()</td></tr>
-<tr class="memdesc:ga0f3dd7f42b5448b7291e3deab8f17184"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an empty outcome of type void. <br/></td></tr>
-<tr class="separator:ga0f3dd7f42b5448b7291e3deab8f17184"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gadfda8cccf3a09f8ee574f3eee65db59e"><td class="memTemplParams" colspan="2"><a class="anchor" id="gadfda8cccf3a09f8ee574f3eee65db59e"></a>
-template&lt;class T &gt; </td></tr>
+template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:gadfda8cccf3a09f8ee574f3eee65db59e"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="group__monad.html#gaab2ff6220205017226794529c863b336">outcome</a>&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#gadfda8cccf3a09f8ee574f3eee65db59e">make_empty_outcome</a> ()</td></tr>
 <tr class="memdesc:gadfda8cccf3a09f8ee574f3eee65db59e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an empty outcome of type T. <br/></td></tr>
 <tr class="separator:gadfda8cccf3a09f8ee574f3eee65db59e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -291,7 +289,7 @@ template&lt;class T &gt; </td></tr>
 <tr class="memdesc:gaa3cd6f5fc64ec44431c9a130368e486f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a ready outcome from the type passed. <br/></td></tr>
 <tr class="separator:gaa3cd6f5fc64ec44431c9a130368e486f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaafac3f1531826af2115f7259e0f993cf"><td class="memTemplParams" colspan="2"><a class="anchor" id="gaafac3f1531826af2115f7259e0f993cf"></a>
-template&lt;class T &gt; </td></tr>
+template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:gaafac3f1531826af2115f7259e0f993cf"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="group__monad.html#gaab2ff6220205017226794529c863b336">outcome</a>&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#gaafac3f1531826af2115f7259e0f993cf">make_ready_outcome</a> ()</td></tr>
 <tr class="memdesc:gaafac3f1531826af2115f7259e0f993cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a ready outcome from the type passed. <br/></td></tr>
 <tr class="separator:gaafac3f1531826af2115f7259e0f993cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -300,22 +298,22 @@ template&lt;&gt; </td></tr>
 <tr class="memitem:a9e486ae6d2d538e63e21d8d49009810f"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="group__monad.html#gaab2ff6220205017226794529c863b336">outcome</a>&lt; void &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>make_ready_outcome&lt; void &gt;</b> ()</td></tr>
 <tr class="separator:a9e486ae6d2d538e63e21d8d49009810f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga32c259d35a71b8a671e062519c2a0465"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga32c259d35a71b8a671e062519c2a0465"></a>
-template&lt;class T &gt; </td></tr>
+template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:ga32c259d35a71b8a671e062519c2a0465"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="group__monad.html#gaab2ff6220205017226794529c863b336">outcome</a>&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga32c259d35a71b8a671e062519c2a0465">make_errored_outcome</a> (<a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1error__code__extended.html">error_code_extended</a> v)</td></tr>
 <tr class="memdesc:ga32c259d35a71b8a671e062519c2a0465"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make an errored outcome from the type passed. <br/></td></tr>
 <tr class="separator:ga32c259d35a71b8a671e062519c2a0465"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5fac7ed72343290e26a84b8022aa1952"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga5fac7ed72343290e26a84b8022aa1952"></a>
-template&lt;class T &gt; </td></tr>
-<tr class="memitem:ga5fac7ed72343290e26a84b8022aa1952"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="group__monad.html#gaab2ff6220205017226794529c863b336">outcome</a>&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga5fac7ed72343290e26a84b8022aa1952">make_errored_outcome</a> (int e, const char *extended=nullptr)</td></tr>
-<tr class="memdesc:ga5fac7ed72343290e26a84b8022aa1952"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a generic errored outcome from the errno passed. <br/></td></tr>
-<tr class="separator:ga5fac7ed72343290e26a84b8022aa1952"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga957407dac2e29027b1de74afba958e35"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga957407dac2e29027b1de74afba958e35"></a>
+template&lt;class T  = void&gt; </td></tr>
+<tr class="memitem:ga957407dac2e29027b1de74afba958e35"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="group__monad.html#gaab2ff6220205017226794529c863b336">outcome</a>&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga957407dac2e29027b1de74afba958e35">make_errored_outcome</a> (int e, const char *extended=nullptr)</td></tr>
+<tr class="memdesc:ga957407dac2e29027b1de74afba958e35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a generic errored outcome from the errno passed. <br/></td></tr>
+<tr class="separator:ga957407dac2e29027b1de74afba958e35"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga768281695a2f5e4fcad226c8bdbe4e2a"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga768281695a2f5e4fcad226c8bdbe4e2a"></a>
-template&lt;class T &gt; </td></tr>
+template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:ga768281695a2f5e4fcad226c8bdbe4e2a"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="group__monad.html#gaab2ff6220205017226794529c863b336">outcome</a>&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga768281695a2f5e4fcad226c8bdbe4e2a">make_errored_outcome</a> (unsigned long e, const char *extended=nullptr)</td></tr>
 <tr class="memdesc:ga768281695a2f5e4fcad226c8bdbe4e2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a system errored outcome from the code passed. <br/></td></tr>
 <tr class="separator:ga768281695a2f5e4fcad226c8bdbe4e2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0fefb54f3aeb9fd6340a5ecff3ec5931"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga0fefb54f3aeb9fd6340a5ecff3ec5931"></a>
-template&lt;class T &gt; </td></tr>
+template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:ga0fefb54f3aeb9fd6340a5ecff3ec5931"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="group__monad.html#gaab2ff6220205017226794529c863b336">outcome</a>&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga0fefb54f3aeb9fd6340a5ecff3ec5931">make_exceptional_outcome</a> (std::exception_ptr v)</td></tr>
 <tr class="memdesc:ga0fefb54f3aeb9fd6340a5ecff3ec5931"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make an excepted outcome from the type passed. <br/></td></tr>
 <tr class="separator:ga0fefb54f3aeb9fd6340a5ecff3ec5931"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -330,22 +328,17 @@ template&lt;class T &gt; </td></tr>
 <tr class="memdesc:ga6828dd2254d99a9759229733f52f60a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a result from the type passed. <br/></td></tr>
 <tr class="separator:ga6828dd2254d99a9759229733f52f60a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga00f295e5d9ea903b2477e631e46bea3e"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga00f295e5d9ea903b2477e631e46bea3e"></a>
-template&lt;class T &gt; </td></tr>
+template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:ga00f295e5d9ea903b2477e631e46bea3e"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="group__monad.html#ga91e1fe11dbebea15458d882d078d6eb5">result</a>&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga00f295e5d9ea903b2477e631e46bea3e">make_result</a> (<a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1error__code__extended.html">error_code_extended</a> v)</td></tr>
 <tr class="memdesc:ga00f295e5d9ea903b2477e631e46bea3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an errored result of type T. <br/></td></tr>
 <tr class="separator:ga00f295e5d9ea903b2477e631e46bea3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae9b39f9a3247cc669105aab8a414fd37"><td class="memTemplParams" colspan="2"><a class="anchor" id="gae9b39f9a3247cc669105aab8a414fd37"></a>
-template&lt;class T &gt; </td></tr>
+template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:gae9b39f9a3247cc669105aab8a414fd37"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="group__monad.html#ga91e1fe11dbebea15458d882d078d6eb5">result</a>&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#gae9b39f9a3247cc669105aab8a414fd37">make_result</a> ()</td></tr>
 <tr class="memdesc:gae9b39f9a3247cc669105aab8a414fd37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an empty result of type T. <br/></td></tr>
 <tr class="separator:gae9b39f9a3247cc669105aab8a414fd37"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf3b57f873a3db03d50b25653bdbb62a6"><td class="memTemplParams" colspan="2"><a class="anchor" id="gaf3b57f873a3db03d50b25653bdbb62a6"></a>
-template&lt;&gt; </td></tr>
-<tr class="memitem:gaf3b57f873a3db03d50b25653bdbb62a6"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="group__monad.html#ga91e1fe11dbebea15458d882d078d6eb5">result</a>&lt; void &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#gaf3b57f873a3db03d50b25653bdbb62a6">make_result&lt; void &gt;</a> ()</td></tr>
-<tr class="memdesc:gaf3b57f873a3db03d50b25653bdbb62a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an empty result of type void. <br/></td></tr>
-<tr class="separator:gaf3b57f873a3db03d50b25653bdbb62a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4bff5754b64adeb2708ab9bec52aff57"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga4bff5754b64adeb2708ab9bec52aff57"></a>
-template&lt;class T &gt; </td></tr>
+template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:ga4bff5754b64adeb2708ab9bec52aff57"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="group__monad.html#ga91e1fe11dbebea15458d882d078d6eb5">result</a>&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga4bff5754b64adeb2708ab9bec52aff57">make_empty_result</a> ()</td></tr>
 <tr class="memdesc:ga4bff5754b64adeb2708ab9bec52aff57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an empty result of type T. <br/></td></tr>
 <tr class="separator:ga4bff5754b64adeb2708ab9bec52aff57"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -360,7 +353,7 @@ template&lt;class T &gt; </td></tr>
 <tr class="memdesc:gad3860813fcb7c13a46cad332133cfc25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a result from the type passed. <br/></td></tr>
 <tr class="separator:gad3860813fcb7c13a46cad332133cfc25"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabc05b498031064ec9e6ed4cca732c5d3"><td class="memTemplParams" colspan="2"><a class="anchor" id="gabc05b498031064ec9e6ed4cca732c5d3"></a>
-template&lt;class T &gt; </td></tr>
+template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:gabc05b498031064ec9e6ed4cca732c5d3"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="group__monad.html#ga91e1fe11dbebea15458d882d078d6eb5">result</a>&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#gabc05b498031064ec9e6ed4cca732c5d3">make_ready_result</a> ()</td></tr>
 <tr class="memdesc:gabc05b498031064ec9e6ed4cca732c5d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a result from the type passed. <br/></td></tr>
 <tr class="separator:gabc05b498031064ec9e6ed4cca732c5d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -369,17 +362,17 @@ template&lt;&gt; </td></tr>
 <tr class="memitem:abdd2455df8724ffa1efb9943f29ebb6d"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="group__monad.html#ga91e1fe11dbebea15458d882d078d6eb5">result</a>&lt; void &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>make_ready_result&lt; void &gt;</b> ()</td></tr>
 <tr class="separator:abdd2455df8724ffa1efb9943f29ebb6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6175fc3a5c4bb5ab9f782654e96bb354"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga6175fc3a5c4bb5ab9f782654e96bb354"></a>
-template&lt;class T &gt; </td></tr>
+template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:ga6175fc3a5c4bb5ab9f782654e96bb354"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="group__monad.html#ga91e1fe11dbebea15458d882d078d6eb5">result</a>&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga6175fc3a5c4bb5ab9f782654e96bb354">make_errored_result</a> (<a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1error__code__extended.html">error_code_extended</a> v)</td></tr>
 <tr class="memdesc:ga6175fc3a5c4bb5ab9f782654e96bb354"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make an errored result from the type passed. <br/></td></tr>
 <tr class="separator:ga6175fc3a5c4bb5ab9f782654e96bb354"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0f57f84218bf0e13f6319609adc7e03c"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga0f57f84218bf0e13f6319609adc7e03c"></a>
-template&lt;class T &gt; </td></tr>
+template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:ga0f57f84218bf0e13f6319609adc7e03c"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="group__monad.html#ga91e1fe11dbebea15458d882d078d6eb5">result</a>&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga0f57f84218bf0e13f6319609adc7e03c">make_errored_result</a> (int e, const char *extended=nullptr)</td></tr>
 <tr class="memdesc:ga0f57f84218bf0e13f6319609adc7e03c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a generic errored outcome from the errno passed. <br/></td></tr>
 <tr class="separator:ga0f57f84218bf0e13f6319609adc7e03c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0ee9f3b12c9f643bea51b050836f9115"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga0ee9f3b12c9f643bea51b050836f9115"></a>
-template&lt;class T &gt; </td></tr>
+template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:ga0ee9f3b12c9f643bea51b050836f9115"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="group__monad.html#ga91e1fe11dbebea15458d882d078d6eb5">result</a>&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga0ee9f3b12c9f643bea51b050836f9115">make_errored_result</a> (unsigned long e, const char *extended=nullptr)</td></tr>
 <tr class="memdesc:ga0ee9f3b12c9f643bea51b050836f9115"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a system errored outcome from the code passed. <br/></td></tr>
 <tr class="separator:ga0ee9f3b12c9f643bea51b050836f9115"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -394,17 +387,12 @@ template&lt;class T &gt; </td></tr>
 <tr class="memdesc:ga65efd2af5ed17063df929d7d4d354f3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a option from the type passed. <br/></td></tr>
 <tr class="separator:ga65efd2af5ed17063df929d7d4d354f3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga91bdd5cc02fbeeb47fe28099a0b9a5b8"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga91bdd5cc02fbeeb47fe28099a0b9a5b8"></a>
-template&lt;class T &gt; </td></tr>
+template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:ga91bdd5cc02fbeeb47fe28099a0b9a5b8"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="group__monad.html#ga0d0fd5ca15cb339df9aa8e829a8ea5e0">option</a>&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga91bdd5cc02fbeeb47fe28099a0b9a5b8">make_option</a> ()</td></tr>
 <tr class="memdesc:ga91bdd5cc02fbeeb47fe28099a0b9a5b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an empty option of type T. <br/></td></tr>
 <tr class="separator:ga91bdd5cc02fbeeb47fe28099a0b9a5b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga64f26b0a1c93ce1b46f4fad214cb84fa"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga64f26b0a1c93ce1b46f4fad214cb84fa"></a>
-template&lt;&gt; </td></tr>
-<tr class="memitem:ga64f26b0a1c93ce1b46f4fad214cb84fa"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="group__monad.html#ga0d0fd5ca15cb339df9aa8e829a8ea5e0">option</a>&lt; void &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga64f26b0a1c93ce1b46f4fad214cb84fa">make_option&lt; void &gt;</a> ()</td></tr>
-<tr class="memdesc:ga64f26b0a1c93ce1b46f4fad214cb84fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an empty option of type void. <br/></td></tr>
-<tr class="separator:ga64f26b0a1c93ce1b46f4fad214cb84fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga85a0d8107c763a68a4705ed56d0d5fdf"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga85a0d8107c763a68a4705ed56d0d5fdf"></a>
-template&lt;class T &gt; </td></tr>
+template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:ga85a0d8107c763a68a4705ed56d0d5fdf"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="group__monad.html#ga0d0fd5ca15cb339df9aa8e829a8ea5e0">option</a>&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga85a0d8107c763a68a4705ed56d0d5fdf">make_empty_option</a> ()</td></tr>
 <tr class="memdesc:ga85a0d8107c763a68a4705ed56d0d5fdf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an empty option of type T. <br/></td></tr>
 <tr class="separator:ga85a0d8107c763a68a4705ed56d0d5fdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -419,7 +407,7 @@ template&lt;class T &gt; </td></tr>
 <tr class="memdesc:ga12a691944097d95764a03cf4f498eaee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a option from the type passed. <br/></td></tr>
 <tr class="separator:ga12a691944097d95764a03cf4f498eaee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga80952fc111f8ff64dddb86ed7edaa306"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga80952fc111f8ff64dddb86ed7edaa306"></a>
-template&lt;class T &gt; </td></tr>
+template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:ga80952fc111f8ff64dddb86ed7edaa306"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="group__monad.html#ga0d0fd5ca15cb339df9aa8e829a8ea5e0">option</a>&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga80952fc111f8ff64dddb86ed7edaa306">make_ready_option</a> ()</td></tr>
 <tr class="memdesc:ga80952fc111f8ff64dddb86ed7edaa306"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a option from the type passed. <br/></td></tr>
 <tr class="separator:ga80952fc111f8ff64dddb86ed7edaa306"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -445,6 +433,21 @@ template&lt;class T &gt; </td></tr>
 <tr class="memitem:ga45531f0b41d78b899d1f6d286842eb8a"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="group__monad.html#ga91e1fe11dbebea15458d882d078d6eb5">result</a>&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga45531f0b41d78b899d1f6d286842eb8a">as_result</a> (const <a class="el" href="group__monad.html#ga0d0fd5ca15cb339df9aa8e829a8ea5e0">option</a>&lt; T &gt; &amp;v)</td></tr>
 <tr class="memdesc:ga45531f0b41d78b899d1f6d286842eb8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a result from an option. <br/></td></tr>
 <tr class="separator:ga45531f0b41d78b899d1f6d286842eb8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga31623e855d816d8be8b796107e29d4f7"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga31623e855d816d8be8b796107e29d4f7"></a>
+template&lt;class T &gt; </td></tr>
+<tr class="memitem:ga31623e855d816d8be8b796107e29d4f7"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="group__monad.html#gaab2ff6220205017226794529c863b336">outcome</a>&lt; void &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga31623e855d816d8be8b796107e29d4f7">as_void</a> (const <a class="el" href="group__monad.html#gaab2ff6220205017226794529c863b336">outcome</a>&lt; T &gt; &amp;v)</td></tr>
+<tr class="memdesc:ga31623e855d816d8be8b796107e29d4f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a void outcome from an input outcome, forwarding any emptiness, error or exception. <br/></td></tr>
+<tr class="separator:ga31623e855d816d8be8b796107e29d4f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga31623e855d816d8be8b796107e29d4f7"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga31623e855d816d8be8b796107e29d4f7"></a>
+template&lt;class T &gt; </td></tr>
+<tr class="memitem:ga31623e855d816d8be8b796107e29d4f7"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="group__monad.html#ga91e1fe11dbebea15458d882d078d6eb5">result</a>&lt; void &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ga31623e855d816d8be8b796107e29d4f7">as_void</a> (const <a class="el" href="group__monad.html#ga91e1fe11dbebea15458d882d078d6eb5">result</a>&lt; T &gt; &amp;v)</td></tr>
+<tr class="memdesc:ga31623e855d816d8be8b796107e29d4f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a void result from an input result, forwarding any emptiness or error. <br/></td></tr>
+<tr class="separator:ga31623e855d816d8be8b796107e29d4f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga31623e855d816d8be8b796107e29d4f7"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga31623e855d816d8be8b796107e29d4f7"></a>
+template&lt;class T &gt; </td></tr>
+<tr class="memitem:ga31623e855d816d8be8b796107e29d4f7"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="group__monad.html#ga0d0fd5ca15cb339df9aa8e829a8ea5e0">option</a>&lt; void &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ga31623e855d816d8be8b796107e29d4f7">as_void</a> (const <a class="el" href="group__monad.html#ga0d0fd5ca15cb339df9aa8e829a8ea5e0">option</a>&lt; T &gt; &amp;v)</td></tr>
+<tr class="memdesc:ga31623e855d816d8be8b796107e29d4f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a void option from an input option, forwarding any emptiness. <br/></td></tr>
+<tr class="separator:ga31623e855d816d8be8b796107e29d4f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga93fd76af06145e1e6544d9c27bd080d0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga93fd76af06145e1e6544d9c27bd080d0"></a>
 constexpr <a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1exception__t.html">exception_t</a> exception&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__monad.html#ga93fd76af06145e1e6544d9c27bd080d0">exception_t</a> ()</td></tr>
 <tr class="memdesc:ga93fd76af06145e1e6544d9c27bd080d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable of type <a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1exception__t.html" title="Type tag for an excepted monad.">exception_t</a>. <br/></td></tr>

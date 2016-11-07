@@ -12,6 +12,7 @@ var namespaceboost_1_1outcome_1_1v1__xxx =
     [ "error_code_extended", "classboost_1_1outcome_1_1v1__xxx_1_1error__code__extended.html", "classboost_1_1outcome_1_1v1__xxx_1_1error__code__extended" ],
     [ "monad_error", "classboost_1_1outcome_1_1v1__xxx_1_1monad__error.html", "classboost_1_1outcome_1_1v1__xxx_1_1monad__error" ],
     [ "basic_monad", "classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html", "classboost_1_1outcome_1_1v1__xxx_1_1basic__monad" ],
+    [ "inplace_t", "structboost_1_1outcome_1_1v1__xxx_1_1inplace__t.html", null ],
     [ "is_monad", "structboost_1_1outcome_1_1v1__xxx_1_1is__monad.html", null ],
     [ "empty_t", "structboost_1_1outcome_1_1v1__xxx_1_1empty__t.html", "structboost_1_1outcome_1_1v1__xxx_1_1empty__t" ],
     [ "value_t", "structboost_1_1outcome_1_1v1__xxx_1_1value__t.html", "structboost_1_1outcome_1_1v1__xxx_1_1value__t" ],

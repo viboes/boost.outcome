@@ -155,6 +155,9 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1lightweight__futures_1_1basic__future.html">boost::outcome::v1_xxx::lightweight_futures::basic_future&lt; R &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1inplace__t.html">boost::outcome::v1_xxx::inplace_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tag type for inplace construction.  <a href="structboost_1_1outcome_1_1v1__xxx_1_1inplace__t.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1is__monad.html">boost::outcome::v1_xxx::is_monad&lt; M &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">True if the type passed is a monad or a reference to a monad.  <a href="structboost_1_1outcome_1_1v1__xxx_1_1is__monad.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -236,21 +239,6 @@ Macros</h2></td></tr>
 <tr class="memitem:a78c2bf36a933759c6cd003ab28f4caf6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a78c2bf36a933759c6cd003ab28f4caf6"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>BOOST_OUTCOME_MONAD_NAME</b>&#160;&#160;&#160;option</td></tr>
 <tr class="separator:a78c2bf36a933759c6cd003ab28f4caf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadfe048ad88bdf543066c6d870141e4d6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__macro__helpers.html#gadfe048ad88bdf543066c6d870141e4d6">BOOST_OUTCOME_PROPAGATE_ERROR</a>(m)</td></tr>
-<tr class="memdesc:gadfe048ad88bdf543066c6d870141e4d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Expands into { const auto &amp;__v=(m); if(__v.has_error()) return __v.get_error(); }.  <a href="group__macro__helpers.html#gadfe048ad88bdf543066c6d870141e4d6">More...</a><br/></td></tr>
-<tr class="separator:gadfe048ad88bdf543066c6d870141e4d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2a19b4cac62d09630624c8d95089fd64"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__macro__helpers.html#ga2a19b4cac62d09630624c8d95089fd64">BOOST_OUTCOME_PROPAGATE_EXCEPTION</a>(m)</td></tr>
-<tr class="memdesc:ga2a19b4cac62d09630624c8d95089fd64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Expands into { const auto &amp;__v=(m); if(__v.has_exception()) return __v.get_exception(); }.  <a href="group__macro__helpers.html#ga2a19b4cac62d09630624c8d95089fd64">More...</a><br/></td></tr>
-<tr class="separator:ga2a19b4cac62d09630624c8d95089fd64"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga891aeb89a1dfdc16bf534af44e838b44"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__macro__helpers.html#ga891aeb89a1dfdc16bf534af44e838b44">BOOST_OUTCOME_PROPAGATE_FAILURE</a>(m)</td></tr>
-<tr class="memdesc:ga891aeb89a1dfdc16bf534af44e838b44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Expands into { const auto &amp;__v=(m); if(__v.has_error()) return __v.get_error(); else if(__v.has_exception()) return __v.get_exception(); }.  <a href="group__macro__helpers.html#ga891aeb89a1dfdc16bf534af44e838b44">More...</a><br/></td></tr>
-<tr class="separator:ga891aeb89a1dfdc16bf534af44e838b44"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7abab3ba9a705b380b07be2489a21b7c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__macro__helpers.html#ga7abab3ba9a705b380b07be2489a21b7c">BOOST_OUTCOME_THROW_ERROR</a>(m)</td></tr>
-<tr class="memdesc:ga7abab3ba9a705b380b07be2489a21b7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Expands into { const auto &amp;__v = (m); if(__v.has_error()) throw std::system_error(__v.get_error()); }.  <a href="group__macro__helpers.html#ga7abab3ba9a705b380b07be2489a21b7c">More...</a><br/></td></tr>
-<tr class="separator:ga7abab3ba9a705b380b07be2489a21b7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga50aa6569c5f6ba2e480e7592f532a8c4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__macro__helpers.html#ga50aa6569c5f6ba2e480e7592f532a8c4">BOOST_OUTCOME_THROW_FAILURE</a>(m)</td></tr>
-<tr class="memdesc:ga50aa6569c5f6ba2e480e7592f532a8c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Expands into { const auto &amp;__v = (m); if(__v.has_error()) throw std::system_error(__v.get_error()); else if(__v.has_exception()) return std::rethrow_exception(__v.get_exception()); }.  <a href="group__macro__helpers.html#ga50aa6569c5f6ba2e480e7592f532a8c4">More...</a><br/></td></tr>
-<tr class="separator:ga50aa6569c5f6ba2e480e7592f532a8c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa1529abb5f924d8c459e295759628593"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa1529abb5f924d8c459e295759628593"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>BOOST_OUTCOME__GLUE2</b>(x, y)&#160;&#160;&#160;x##y</td></tr>
 <tr class="separator:aa1529abb5f924d8c459e295759628593"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -260,24 +248,12 @@ Macros</h2></td></tr>
 <tr class="memitem:a5c2ac34abcb99bc4934fc62e20a19bb7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5c2ac34abcb99bc4934fc62e20a19bb7"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>BOOST_OUTCOME_UNIQUE_NAME</b>&#160;&#160;&#160;BOOST_OUTCOME__GLUE(__t, __COUNTER__)</td></tr>
 <tr class="separator:a5c2ac34abcb99bc4934fc62e20a19bb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0fa9459e56c72cf0f21eca8a8f363d2f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>BOOST_OUTCOME_FILTER_ERROR2</b>(unique, v, m)</td></tr>
-<tr class="separator:a0fa9459e56c72cf0f21eca8a8f363d2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6365f9cc7fef38b424759063a8be3650"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>BOOST_OUTCOME_FILTER_EXCEPTION2</b>(unique, v, m)</td></tr>
-<tr class="separator:a6365f9cc7fef38b424759063a8be3650"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8956c2d61d088f5fb0fe6bd8e393fca0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>BOOST_OUTCOME_FILTER_FAILURE2</b>(unique, v, m)</td></tr>
-<tr class="separator:a8956c2d61d088f5fb0fe6bd8e393fca0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5be962c59d468fca6fc7b14bd903da0e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5be962c59d468fca6fc7b14bd903da0e"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__macro__helpers.html#ga5be962c59d468fca6fc7b14bd903da0e">BOOST_OUTCOME_FILTER_ERROR</a>(v, m)&#160;&#160;&#160;BOOST_OUTCOME_FILTER_ERROR2(BOOST_OUTCOME_UNIQUE_NAME, v, m)</td></tr>
-<tr class="memdesc:ga5be962c59d468fca6fc7b14bd903da0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Expands into <a class="el" href="group__macro__helpers.html#gadfe048ad88bdf543066c6d870141e4d6" title="Expands into { const auto &amp;__v=(m); if(__v.has_error()) return __v.get_error(); }.">BOOST_OUTCOME_PROPAGATE_ERROR(m)</a>; auto v((m).get()) <br/></td></tr>
-<tr class="separator:ga5be962c59d468fca6fc7b14bd903da0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga25568799603ea6510f825e44f1badee6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga25568799603ea6510f825e44f1badee6"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__macro__helpers.html#ga25568799603ea6510f825e44f1badee6">BOOST_OUTCOME_FILTER_EXCEPTION</a>(v, m)&#160;&#160;&#160;BOOST_OUTCOME_FILTER_EXCEPTION2(BOOST_OUTCOME_UNIQUE_NAME, v, m)</td></tr>
-<tr class="memdesc:ga25568799603ea6510f825e44f1badee6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Expands into <a class="el" href="group__macro__helpers.html#ga2a19b4cac62d09630624c8d95089fd64" title="Expands into { const auto &amp;__v=(m); if(__v.has_exception()) return __v.get_exception(); }...">BOOST_OUTCOME_PROPAGATE_EXCEPTION(m)</a>; auto v((m).get()) <br/></td></tr>
-<tr class="separator:ga25568799603ea6510f825e44f1badee6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0c598305c9ce4c1ce8e19b7a202d4150"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0c598305c9ce4c1ce8e19b7a202d4150"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__macro__helpers.html#ga0c598305c9ce4c1ce8e19b7a202d4150">BOOST_OUTCOME_FILTER_FAILURE</a>(v, m)&#160;&#160;&#160;BOOST_OUTCOME_FILTER_FAILURE2(BOOST_OUTCOME_UNIQUE_NAME, v, m)</td></tr>
-<tr class="memdesc:ga0c598305c9ce4c1ce8e19b7a202d4150"><td class="mdescLeft">&#160;</td><td class="mdescRight">Expands into <a class="el" href="group__macro__helpers.html#ga891aeb89a1dfdc16bf534af44e838b44" title="Expands into { const auto &amp;__v=(m); if(__v.has_error()) return __v.get_error(); else if(__v...">BOOST_OUTCOME_PROPAGATE_FAILURE(m)</a>; auto v((m).get()) <br/></td></tr>
-<tr class="separator:ga0c598305c9ce4c1ce8e19b7a202d4150"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1236fd35bfc1dd7e9d426f51ee26ee2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>BOOST_OUTCOME_TRY2</b>(unique, v, m)</td></tr>
+<tr class="separator:aa1236fd35bfc1dd7e9d426f51ee26ee2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa977bf0b7aded30c781c35f956edc1d7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa977bf0b7aded30c781c35f956edc1d7"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="monad_8hpp.html#aa977bf0b7aded30c781c35f956edc1d7">BOOST_OUTCOME_TRY</a>(v, m)&#160;&#160;&#160;BOOST_OUTCOME_TRY2(BOOST_OUTCOME_UNIQUE_NAME, v, m)</td></tr>
+<tr class="memdesc:aa977bf0b7aded30c781c35f956edc1d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">If the monad returned by expression <em>m</em> is empty, erroneous or excepted, propagate that by immediately returning a void immediately, else return the unwrapped value. <br/></td></tr>
+<tr class="separator:aa977bf0b7aded30c781c35f956edc1d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga68d5ad900e62b3ceb61f57c29e52b566"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga68d5ad900e62b3ceb61f57c29e52b566"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__macro__helpers.html#ga68d5ad900e62b3ceb61f57c29e52b566">BOOST_OUTCOME_CATCH_EXCEPTION_TO_RESULT</a>(type)</td></tr>
 <tr class="memdesc:ga68d5ad900e62b3ceb61f57c29e52b566"><td class="mdescLeft">&#160;</td><td class="mdescRight">A boilerplate sequence of <code>catch(exceptions...)</code> returning those exceptions as their equivalent <code>result&lt;T&gt;</code> <br/></td></tr>
@@ -421,27 +397,22 @@ template&lt;class T &gt; </td></tr>
 <tr class="memdesc:gaedb38ac1fcaae9fdc019a82d76ffdd9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an outcome from the type passed. <br/></td></tr>
 <tr class="separator:gaedb38ac1fcaae9fdc019a82d76ffdd9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2cbada16dcc6af63be3da3910cf991c9"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga2cbada16dcc6af63be3da3910cf991c9"></a>
-template&lt;class T &gt; </td></tr>
+template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:ga2cbada16dcc6af63be3da3910cf991c9"><td class="memTemplItemLeft" align="right" valign="top">outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga2cbada16dcc6af63be3da3910cf991c9">boost::outcome::v1_xxx::make_outcome</a> (error_code_extended v)</td></tr>
 <tr class="memdesc:ga2cbada16dcc6af63be3da3910cf991c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an errored outcome of type T. <br/></td></tr>
 <tr class="separator:ga2cbada16dcc6af63be3da3910cf991c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5ff527de79abd9d31bbd96057ff58f1c"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga5ff527de79abd9d31bbd96057ff58f1c"></a>
-template&lt;class T &gt; </td></tr>
+template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:ga5ff527de79abd9d31bbd96057ff58f1c"><td class="memTemplItemLeft" align="right" valign="top">outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga5ff527de79abd9d31bbd96057ff58f1c">boost::outcome::v1_xxx::make_outcome</a> (std::exception_ptr v)</td></tr>
 <tr class="memdesc:ga5ff527de79abd9d31bbd96057ff58f1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an excepted outcome of type T. <br/></td></tr>
 <tr class="separator:ga5ff527de79abd9d31bbd96057ff58f1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5c8a609f3c8813c0908690fefc9f61b8"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga5c8a609f3c8813c0908690fefc9f61b8"></a>
-template&lt;class T &gt; </td></tr>
+template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:ga5c8a609f3c8813c0908690fefc9f61b8"><td class="memTemplItemLeft" align="right" valign="top">constexpr outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga5c8a609f3c8813c0908690fefc9f61b8">boost::outcome::v1_xxx::make_outcome</a> ()</td></tr>
 <tr class="memdesc:ga5c8a609f3c8813c0908690fefc9f61b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an empty outcome of type T. <br/></td></tr>
 <tr class="separator:ga5c8a609f3c8813c0908690fefc9f61b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0f3dd7f42b5448b7291e3deab8f17184"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga0f3dd7f42b5448b7291e3deab8f17184"></a>
-template&lt;&gt; </td></tr>
-<tr class="memitem:ga0f3dd7f42b5448b7291e3deab8f17184"><td class="memTemplItemLeft" align="right" valign="top">outcome&lt; void &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga0f3dd7f42b5448b7291e3deab8f17184">boost::outcome::v1_xxx::make_outcome&lt; void &gt;</a> ()</td></tr>
-<tr class="memdesc:ga0f3dd7f42b5448b7291e3deab8f17184"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an empty outcome of type void. <br/></td></tr>
-<tr class="separator:ga0f3dd7f42b5448b7291e3deab8f17184"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gadfda8cccf3a09f8ee574f3eee65db59e"><td class="memTemplParams" colspan="2"><a class="anchor" id="gadfda8cccf3a09f8ee574f3eee65db59e"></a>
-template&lt;class T &gt; </td></tr>
+template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:gadfda8cccf3a09f8ee574f3eee65db59e"><td class="memTemplItemLeft" align="right" valign="top">constexpr outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#gadfda8cccf3a09f8ee574f3eee65db59e">boost::outcome::v1_xxx::make_empty_outcome</a> ()</td></tr>
 <tr class="memdesc:gadfda8cccf3a09f8ee574f3eee65db59e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an empty outcome of type T. <br/></td></tr>
 <tr class="separator:gadfda8cccf3a09f8ee574f3eee65db59e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -456,7 +427,7 @@ template&lt;class T &gt; </td></tr>
 <tr class="memdesc:gaa3cd6f5fc64ec44431c9a130368e486f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a ready outcome from the type passed. <br/></td></tr>
 <tr class="separator:gaa3cd6f5fc64ec44431c9a130368e486f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaafac3f1531826af2115f7259e0f993cf"><td class="memTemplParams" colspan="2"><a class="anchor" id="gaafac3f1531826af2115f7259e0f993cf"></a>
-template&lt;class T &gt; </td></tr>
+template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:gaafac3f1531826af2115f7259e0f993cf"><td class="memTemplItemLeft" align="right" valign="top">constexpr outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#gaafac3f1531826af2115f7259e0f993cf">boost::outcome::v1_xxx::make_ready_outcome</a> ()</td></tr>
 <tr class="memdesc:gaafac3f1531826af2115f7259e0f993cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a ready outcome from the type passed. <br/></td></tr>
 <tr class="separator:gaafac3f1531826af2115f7259e0f993cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -465,22 +436,22 @@ template&lt;&gt; </td></tr>
 <tr class="memitem:a9e486ae6d2d538e63e21d8d49009810f"><td class="memTemplItemLeft" align="right" valign="top">outcome&lt; void &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>boost::outcome::v1_xxx::make_ready_outcome&lt; void &gt;</b> ()</td></tr>
 <tr class="separator:a9e486ae6d2d538e63e21d8d49009810f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga32c259d35a71b8a671e062519c2a0465"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga32c259d35a71b8a671e062519c2a0465"></a>
-template&lt;class T &gt; </td></tr>
+template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:ga32c259d35a71b8a671e062519c2a0465"><td class="memTemplItemLeft" align="right" valign="top">outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga32c259d35a71b8a671e062519c2a0465">boost::outcome::v1_xxx::make_errored_outcome</a> (error_code_extended v)</td></tr>
 <tr class="memdesc:ga32c259d35a71b8a671e062519c2a0465"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make an errored outcome from the type passed. <br/></td></tr>
 <tr class="separator:ga32c259d35a71b8a671e062519c2a0465"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5fac7ed72343290e26a84b8022aa1952"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga5fac7ed72343290e26a84b8022aa1952"></a>
-template&lt;class T &gt; </td></tr>
-<tr class="memitem:ga5fac7ed72343290e26a84b8022aa1952"><td class="memTemplItemLeft" align="right" valign="top">constexpr outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga5fac7ed72343290e26a84b8022aa1952">boost::outcome::v1_xxx::make_errored_outcome</a> (int e, const char *extended=nullptr)</td></tr>
-<tr class="memdesc:ga5fac7ed72343290e26a84b8022aa1952"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a generic errored outcome from the errno passed. <br/></td></tr>
-<tr class="separator:ga5fac7ed72343290e26a84b8022aa1952"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga957407dac2e29027b1de74afba958e35"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga957407dac2e29027b1de74afba958e35"></a>
+template&lt;class T  = void&gt; </td></tr>
+<tr class="memitem:ga957407dac2e29027b1de74afba958e35"><td class="memTemplItemLeft" align="right" valign="top">outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga957407dac2e29027b1de74afba958e35">boost::outcome::v1_xxx::make_errored_outcome</a> (int e, const char *extended=nullptr)</td></tr>
+<tr class="memdesc:ga957407dac2e29027b1de74afba958e35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a generic errored outcome from the errno passed. <br/></td></tr>
+<tr class="separator:ga957407dac2e29027b1de74afba958e35"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga768281695a2f5e4fcad226c8bdbe4e2a"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga768281695a2f5e4fcad226c8bdbe4e2a"></a>
-template&lt;class T &gt; </td></tr>
+template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:ga768281695a2f5e4fcad226c8bdbe4e2a"><td class="memTemplItemLeft" align="right" valign="top">constexpr outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga768281695a2f5e4fcad226c8bdbe4e2a">boost::outcome::v1_xxx::make_errored_outcome</a> (unsigned long e, const char *extended=nullptr)</td></tr>
 <tr class="memdesc:ga768281695a2f5e4fcad226c8bdbe4e2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a system errored outcome from the code passed. <br/></td></tr>
 <tr class="separator:ga768281695a2f5e4fcad226c8bdbe4e2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0fefb54f3aeb9fd6340a5ecff3ec5931"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga0fefb54f3aeb9fd6340a5ecff3ec5931"></a>
-template&lt;class T &gt; </td></tr>
+template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:ga0fefb54f3aeb9fd6340a5ecff3ec5931"><td class="memTemplItemLeft" align="right" valign="top">outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga0fefb54f3aeb9fd6340a5ecff3ec5931">boost::outcome::v1_xxx::make_exceptional_outcome</a> (std::exception_ptr v)</td></tr>
 <tr class="memdesc:ga0fefb54f3aeb9fd6340a5ecff3ec5931"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make an excepted outcome from the type passed. <br/></td></tr>
 <tr class="separator:ga0fefb54f3aeb9fd6340a5ecff3ec5931"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -495,22 +466,17 @@ template&lt;class T &gt; </td></tr>
 <tr class="memdesc:ga6828dd2254d99a9759229733f52f60a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a result from the type passed. <br/></td></tr>
 <tr class="separator:ga6828dd2254d99a9759229733f52f60a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga00f295e5d9ea903b2477e631e46bea3e"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga00f295e5d9ea903b2477e631e46bea3e"></a>
-template&lt;class T &gt; </td></tr>
+template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:ga00f295e5d9ea903b2477e631e46bea3e"><td class="memTemplItemLeft" align="right" valign="top">result&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga00f295e5d9ea903b2477e631e46bea3e">boost::outcome::v1_xxx::make_result</a> (error_code_extended v)</td></tr>
 <tr class="memdesc:ga00f295e5d9ea903b2477e631e46bea3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an errored result of type T. <br/></td></tr>
 <tr class="separator:ga00f295e5d9ea903b2477e631e46bea3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae9b39f9a3247cc669105aab8a414fd37"><td class="memTemplParams" colspan="2"><a class="anchor" id="gae9b39f9a3247cc669105aab8a414fd37"></a>
-template&lt;class T &gt; </td></tr>
+template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:gae9b39f9a3247cc669105aab8a414fd37"><td class="memTemplItemLeft" align="right" valign="top">constexpr result&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#gae9b39f9a3247cc669105aab8a414fd37">boost::outcome::v1_xxx::make_result</a> ()</td></tr>
 <tr class="memdesc:gae9b39f9a3247cc669105aab8a414fd37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an empty result of type T. <br/></td></tr>
 <tr class="separator:gae9b39f9a3247cc669105aab8a414fd37"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf3b57f873a3db03d50b25653bdbb62a6"><td class="memTemplParams" colspan="2"><a class="anchor" id="gaf3b57f873a3db03d50b25653bdbb62a6"></a>
-template&lt;&gt; </td></tr>
-<tr class="memitem:gaf3b57f873a3db03d50b25653bdbb62a6"><td class="memTemplItemLeft" align="right" valign="top">result&lt; void &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#gaf3b57f873a3db03d50b25653bdbb62a6">boost::outcome::v1_xxx::make_result&lt; void &gt;</a> ()</td></tr>
-<tr class="memdesc:gaf3b57f873a3db03d50b25653bdbb62a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an empty result of type void. <br/></td></tr>
-<tr class="separator:gaf3b57f873a3db03d50b25653bdbb62a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4bff5754b64adeb2708ab9bec52aff57"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga4bff5754b64adeb2708ab9bec52aff57"></a>
-template&lt;class T &gt; </td></tr>
+template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:ga4bff5754b64adeb2708ab9bec52aff57"><td class="memTemplItemLeft" align="right" valign="top">constexpr result&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga4bff5754b64adeb2708ab9bec52aff57">boost::outcome::v1_xxx::make_empty_result</a> ()</td></tr>
 <tr class="memdesc:ga4bff5754b64adeb2708ab9bec52aff57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an empty result of type T. <br/></td></tr>
 <tr class="separator:ga4bff5754b64adeb2708ab9bec52aff57"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -525,7 +491,7 @@ template&lt;class T &gt; </td></tr>
 <tr class="memdesc:gad3860813fcb7c13a46cad332133cfc25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a result from the type passed. <br/></td></tr>
 <tr class="separator:gad3860813fcb7c13a46cad332133cfc25"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabc05b498031064ec9e6ed4cca732c5d3"><td class="memTemplParams" colspan="2"><a class="anchor" id="gabc05b498031064ec9e6ed4cca732c5d3"></a>
-template&lt;class T &gt; </td></tr>
+template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:gabc05b498031064ec9e6ed4cca732c5d3"><td class="memTemplItemLeft" align="right" valign="top">constexpr result&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#gabc05b498031064ec9e6ed4cca732c5d3">boost::outcome::v1_xxx::make_ready_result</a> ()</td></tr>
 <tr class="memdesc:gabc05b498031064ec9e6ed4cca732c5d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a result from the type passed. <br/></td></tr>
 <tr class="separator:gabc05b498031064ec9e6ed4cca732c5d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -534,17 +500,17 @@ template&lt;&gt; </td></tr>
 <tr class="memitem:abdd2455df8724ffa1efb9943f29ebb6d"><td class="memTemplItemLeft" align="right" valign="top">result&lt; void &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>boost::outcome::v1_xxx::make_ready_result&lt; void &gt;</b> ()</td></tr>
 <tr class="separator:abdd2455df8724ffa1efb9943f29ebb6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6175fc3a5c4bb5ab9f782654e96bb354"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga6175fc3a5c4bb5ab9f782654e96bb354"></a>
-template&lt;class T &gt; </td></tr>
+template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:ga6175fc3a5c4bb5ab9f782654e96bb354"><td class="memTemplItemLeft" align="right" valign="top">result&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga6175fc3a5c4bb5ab9f782654e96bb354">boost::outcome::v1_xxx::make_errored_result</a> (error_code_extended v)</td></tr>
 <tr class="memdesc:ga6175fc3a5c4bb5ab9f782654e96bb354"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make an errored result from the type passed. <br/></td></tr>
 <tr class="separator:ga6175fc3a5c4bb5ab9f782654e96bb354"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0f57f84218bf0e13f6319609adc7e03c"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga0f57f84218bf0e13f6319609adc7e03c"></a>
-template&lt;class T &gt; </td></tr>
+template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:ga0f57f84218bf0e13f6319609adc7e03c"><td class="memTemplItemLeft" align="right" valign="top">constexpr result&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga0f57f84218bf0e13f6319609adc7e03c">boost::outcome::v1_xxx::make_errored_result</a> (int e, const char *extended=nullptr)</td></tr>
 <tr class="memdesc:ga0f57f84218bf0e13f6319609adc7e03c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a generic errored outcome from the errno passed. <br/></td></tr>
 <tr class="separator:ga0f57f84218bf0e13f6319609adc7e03c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0ee9f3b12c9f643bea51b050836f9115"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga0ee9f3b12c9f643bea51b050836f9115"></a>
-template&lt;class T &gt; </td></tr>
+template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:ga0ee9f3b12c9f643bea51b050836f9115"><td class="memTemplItemLeft" align="right" valign="top">constexpr result&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga0ee9f3b12c9f643bea51b050836f9115">boost::outcome::v1_xxx::make_errored_result</a> (unsigned long e, const char *extended=nullptr)</td></tr>
 <tr class="memdesc:ga0ee9f3b12c9f643bea51b050836f9115"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a system errored outcome from the code passed. <br/></td></tr>
 <tr class="separator:ga0ee9f3b12c9f643bea51b050836f9115"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -559,17 +525,12 @@ template&lt;class T &gt; </td></tr>
 <tr class="memdesc:ga65efd2af5ed17063df929d7d4d354f3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a option from the type passed. <br/></td></tr>
 <tr class="separator:ga65efd2af5ed17063df929d7d4d354f3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga91bdd5cc02fbeeb47fe28099a0b9a5b8"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga91bdd5cc02fbeeb47fe28099a0b9a5b8"></a>
-template&lt;class T &gt; </td></tr>
+template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:ga91bdd5cc02fbeeb47fe28099a0b9a5b8"><td class="memTemplItemLeft" align="right" valign="top">constexpr option&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga91bdd5cc02fbeeb47fe28099a0b9a5b8">boost::outcome::v1_xxx::make_option</a> ()</td></tr>
 <tr class="memdesc:ga91bdd5cc02fbeeb47fe28099a0b9a5b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an empty option of type T. <br/></td></tr>
 <tr class="separator:ga91bdd5cc02fbeeb47fe28099a0b9a5b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga64f26b0a1c93ce1b46f4fad214cb84fa"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga64f26b0a1c93ce1b46f4fad214cb84fa"></a>
-template&lt;&gt; </td></tr>
-<tr class="memitem:ga64f26b0a1c93ce1b46f4fad214cb84fa"><td class="memTemplItemLeft" align="right" valign="top">constexpr option&lt; void &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga64f26b0a1c93ce1b46f4fad214cb84fa">boost::outcome::v1_xxx::make_option&lt; void &gt;</a> ()</td></tr>
-<tr class="memdesc:ga64f26b0a1c93ce1b46f4fad214cb84fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an empty option of type void. <br/></td></tr>
-<tr class="separator:ga64f26b0a1c93ce1b46f4fad214cb84fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga85a0d8107c763a68a4705ed56d0d5fdf"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga85a0d8107c763a68a4705ed56d0d5fdf"></a>
-template&lt;class T &gt; </td></tr>
+template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:ga85a0d8107c763a68a4705ed56d0d5fdf"><td class="memTemplItemLeft" align="right" valign="top">constexpr option&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga85a0d8107c763a68a4705ed56d0d5fdf">boost::outcome::v1_xxx::make_empty_option</a> ()</td></tr>
 <tr class="memdesc:ga85a0d8107c763a68a4705ed56d0d5fdf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an empty option of type T. <br/></td></tr>
 <tr class="separator:ga85a0d8107c763a68a4705ed56d0d5fdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -584,7 +545,7 @@ template&lt;class T &gt; </td></tr>
 <tr class="memdesc:ga12a691944097d95764a03cf4f498eaee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a option from the type passed. <br/></td></tr>
 <tr class="separator:ga12a691944097d95764a03cf4f498eaee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga80952fc111f8ff64dddb86ed7edaa306"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga80952fc111f8ff64dddb86ed7edaa306"></a>
-template&lt;class T &gt; </td></tr>
+template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:ga80952fc111f8ff64dddb86ed7edaa306"><td class="memTemplItemLeft" align="right" valign="top">constexpr option&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga80952fc111f8ff64dddb86ed7edaa306">boost::outcome::v1_xxx::make_ready_option</a> ()</td></tr>
 <tr class="memdesc:ga80952fc111f8ff64dddb86ed7edaa306"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a option from the type passed. <br/></td></tr>
 <tr class="separator:ga80952fc111f8ff64dddb86ed7edaa306"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -610,6 +571,21 @@ template&lt;class T &gt; </td></tr>
 <tr class="memitem:ga45531f0b41d78b899d1f6d286842eb8a"><td class="memTemplItemLeft" align="right" valign="top">constexpr result&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga45531f0b41d78b899d1f6d286842eb8a">boost::outcome::v1_xxx::as_result</a> (const option&lt; T &gt; &amp;v)</td></tr>
 <tr class="memdesc:ga45531f0b41d78b899d1f6d286842eb8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a result from an option. <br/></td></tr>
 <tr class="separator:ga45531f0b41d78b899d1f6d286842eb8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga31623e855d816d8be8b796107e29d4f7"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga31623e855d816d8be8b796107e29d4f7"></a>
+template&lt;class T &gt; </td></tr>
+<tr class="memitem:ga31623e855d816d8be8b796107e29d4f7"><td class="memTemplItemLeft" align="right" valign="top">outcome&lt; void &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga31623e855d816d8be8b796107e29d4f7">boost::outcome::v1_xxx::as_void</a> (const outcome&lt; T &gt; &amp;v)</td></tr>
+<tr class="memdesc:ga31623e855d816d8be8b796107e29d4f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a void outcome from an input outcome, forwarding any emptiness, error or exception. <br/></td></tr>
+<tr class="separator:ga31623e855d816d8be8b796107e29d4f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga31623e855d816d8be8b796107e29d4f7"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga31623e855d816d8be8b796107e29d4f7"></a>
+template&lt;class T &gt; </td></tr>
+<tr class="memitem:ga31623e855d816d8be8b796107e29d4f7"><td class="memTemplItemLeft" align="right" valign="top">result&lt; void &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ga31623e855d816d8be8b796107e29d4f7">boost::outcome::v1_xxx::as_void</a> (const result&lt; T &gt; &amp;v)</td></tr>
+<tr class="memdesc:ga31623e855d816d8be8b796107e29d4f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a void result from an input result, forwarding any emptiness or error. <br/></td></tr>
+<tr class="separator:ga31623e855d816d8be8b796107e29d4f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga31623e855d816d8be8b796107e29d4f7"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga31623e855d816d8be8b796107e29d4f7"></a>
+template&lt;class T &gt; </td></tr>
+<tr class="memitem:ga31623e855d816d8be8b796107e29d4f7"><td class="memTemplItemLeft" align="right" valign="top">option&lt; void &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ga31623e855d816d8be8b796107e29d4f7">boost::outcome::v1_xxx::as_void</a> (const option&lt; T &gt; &amp;v)</td></tr>
+<tr class="memdesc:ga31623e855d816d8be8b796107e29d4f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a void option from an input option, forwarding any emptiness. <br/></td></tr>
+<tr class="separator:ga31623e855d816d8be8b796107e29d4f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2ffab91838224f042fe7ed1b108e5ad7"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga2ffab91838224f042fe7ed1b108e5ad7"></a>
 template&lt;class Impl &gt; </td></tr>
 <tr class="memitem:ga2ffab91838224f042fe7ed1b108e5ad7"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga2ffab91838224f042fe7ed1b108e5ad7">std::swap</a> (<a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html">boost::outcome::v1_xxx::basic_monad</a>&lt; Impl &gt; &amp;a, <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html">boost::outcome::v1_xxx::basic_monad</a>&lt; Impl &gt; &amp;b)</td></tr>
@@ -619,12 +595,12 @@ template&lt;class Impl &gt; </td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Provides a lightweight simple monadic value transport. </p>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a class="anchor" id="a0fa9459e56c72cf0f21eca8a8f363d2f"></a>
+<a class="anchor" id="aa1236fd35bfc1dd7e9d426f51ee26ee2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BOOST_OUTCOME_FILTER_ERROR2</td>
+          <td class="memname">#define BOOST_OUTCOME_TRY2</td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">unique, </td>
@@ -649,82 +625,8 @@ template&lt;class Impl &gt; </td></tr>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line"><span class="keyword">auto</span> &amp;&amp;unique = (m);                                                                                                                                                                                                                                                                                                         \</div>
-<div class="line">  if(unique.has_error())                                                                                                                                                                                                                                                                                                       \</div>
-<div class="line">    <span class="keywordflow">return</span> unique.get_error();                                                                                                                                                                                                                                                                                                 \</div>
-<div class="line">  auto v(std::move(std::move(unique).<span class="keyword">get</span>()))</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a class="anchor" id="a6365f9cc7fef38b424759063a8be3650"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BOOST_OUTCOME_FILTER_EXCEPTION2</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">unique, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">v, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">m&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">auto</span> &amp;&amp;unique = (m);                                                                                                                                                                                                                                                                                                         \</div>
-<div class="line">  if(unique.has_exception())                                                                                                                                                                                                                                                                                                   \</div>
-<div class="line">    <span class="keywordflow">return</span> unique.get_exception();                                                                                                                                                                                                                                                                                             \</div>
-<div class="line">  auto v(std::move(std::move(unique).<span class="keyword">get</span>()))</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a class="anchor" id="a8956c2d61d088f5fb0fe6bd8e393fca0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BOOST_OUTCOME_FILTER_FAILURE2</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">unique, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">v, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">m&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">auto</span> &amp;&amp;unique = (m);                                                                                                                                                                                                                                                                                                         \</div>
-<div class="line">  if(unique.has_error())                                                                                                                                                                                                                                                                                                       \</div>
-<div class="line">    <span class="keywordflow">return</span> unique.get_error();                                                                                                                                                                                                                                                                                                 \</div>
-<div class="line">  else <span class="keywordflow">if</span>(unique.has_exception())                                                                                                                                                                                                                                                                                              \</div>
-<div class="line">    <span class="keywordflow">return</span> unique.get_exception();                                                                                                                                                                                                                                                                                             \</div>
+<div class="line">  if(!unique.has_value())                                                                                                                                                                                                                                                                                                      \</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__monad.html#ga31623e855d816d8be8b796107e29d4f7" title="Makes a void outcome from an input outcome, forwarding any emptiness, error or exception.">BOOST_OUTCOME_V1_NAMESPACE::as_void</a>(unique);                                                                                                                                                                                                                                                                        \</div>
 <div class="line">  auto v(std::move(std::move(unique).<span class="keyword">get</span>()))</div>
 </div><!-- fragment -->
 </div>

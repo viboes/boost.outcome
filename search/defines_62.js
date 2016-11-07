@@ -7,5 +7,6 @@ var searchData=
   ['boost_5foutcome_5fthrow',['BOOST_OUTCOME_THROW',['../config_8hpp.html#a8fefe8516997eb0f7c649834d298044a',1,'config.hpp']]],
   ['boost_5foutcome_5fthrow_5fdeserialisation_5ffailure',['BOOST_OUTCOME_THROW_DESERIALISATION_FAILURE',['../config_8hpp.html#a39e44c8ec617c859417ddf8960eca4de',1,'config.hpp']]],
   ['boost_5foutcome_5fthrow_5fmonad_5ferror',['BOOST_OUTCOME_THROW_MONAD_ERROR',['../config_8hpp.html#a10f1ea9f0f1205c24e106fb77cee19c3',1,'config.hpp']]],
-  ['boost_5foutcome_5fthrow_5fsystem_5ferror',['BOOST_OUTCOME_THROW_SYSTEM_ERROR',['../config_8hpp.html#af1d540bfb21e8b45eaeb3ec60686e91f',1,'config.hpp']]]
+  ['boost_5foutcome_5fthrow_5fsystem_5ferror',['BOOST_OUTCOME_THROW_SYSTEM_ERROR',['../config_8hpp.html#af1d540bfb21e8b45eaeb3ec60686e91f',1,'config.hpp']]],
+  ['boost_5foutcome_5ftry',['BOOST_OUTCOME_TRY',['../monad_8hpp.html#aa977bf0b7aded30c781c35f956edc1d7',1,'monad.hpp']]]
 ];

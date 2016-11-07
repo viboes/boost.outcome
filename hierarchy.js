@@ -33,6 +33,7 @@ var hierarchy =
         [ "boost::outcome::v1_xxx::is_monad< M >", "structboost_1_1outcome_1_1v1__xxx_1_1is__monad.html", null ]
       ] ]
     ] ],
+    [ "boost::outcome::v1_xxx::inplace_t", "structboost_1_1outcome_1_1v1__xxx_1_1inplace__t.html", null ],
     [ "boost::outcome::v1_xxx::traits::is_callable_is_well_formed< F, A >", "structboost_1_1outcome_1_1v1__xxx_1_1traits_1_1is__callable__is__well__formed.html", null ],
     [ "true_type", null, [
       [ "boost::outcome::v1_xxx::enable_single_byte_value_storage< bool >", "structboost_1_1outcome_1_1v1__xxx_1_1enable__single__byte__value__storage_3_01bool_01_4.html", null ],
