@@ -506,36 +506,39 @@ Synopsis of basic_monad&lt;&gt; and outcome&lt;T&gt;, result&lt;T&gt; and option
 <p>The following is a synopsis for <code>outcome&lt;T&gt;</code> which is configured with <code>value_type = T</code>, <code>error_type = std::error_code</code> and <code>exception_type = std::exception_ptr</code>. If it were a <code>result&lt;T&gt;</code>, only <code>value_type</code> and <code>error_type</code> functions would be present, similarly if it were an <code>option&lt;T&gt;</code> only <code>value_type</code> functions would be present.</p>
 <div class="fragment"><div class="line"><a class="code" href="group__config.html#ga40359992ba8aab1355cb97bf889d1929" title="Expands into the appropriate namespace markup to enter the Outcome v1 namespace.">BOOST_OUTCOME_V1_NAMESPACE_BEGIN</a></div>
 <div class="line"></div>
-<div class="line"><span class="comment">// Tag types for empty, valued, errored and excepted outcomes</span></div>
+<div class="line"><span class="comment">// Tag types for creating empty, valued, errored and excepted basic_monad&#39;s</span></div>
 <div class="line"><span class="keyword">struct </span>empty_t; constexpr empty_t <a class="code" href="group__monad.html#ga68770961e182715930ad64ca244b645e" title="Variable of type empty_t.">empty</a>;</div>
 <div class="line"><span class="keyword">struct </span>value_t; constexpr value_t <a class="code" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316" title="Variable of type value_t.">value</a>;</div>
 <div class="line"><span class="keyword">struct </span>error_t; constexpr error_t <a class="code" href="group__monad.html#ga1a1a8470c4efc3a52412f3ecc79a0060" title="Variable of type error_t.">error</a>;</div>
 <div class="line"><span class="keyword">struct </span><a class="code" href="group__monad.html#ga93fd76af06145e1e6544d9c27bd080d0" title="Variable of type exception_t.">exception_t</a>; constexpr <a class="code" href="group__monad.html#ga93fd76af06145e1e6544d9c27bd080d0" title="Variable of type exception_t.">exception_t</a> exception;</div>
 <div class="line"></div>
-<div class="line"><span class="comment">// Specialise to std::true_type for types you wish to store in a single byte</span></div>
+<div class="line"><span class="comment">// Specialise to std::true_type for types you wish to store in a packed single byte</span></div>
 <div class="line"><span class="comment">// (void and bool are done for you unless you define BOOST_OUTCOME_DISABLE_DEFAULT_SINGLE_BYTE_VALUE_STORAGE)</span></div>
 <div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> _value_type&gt; <span class="keyword">struct </span>enable_single_byte_value_storage;</div>
 <div class="line"></div>
-<div class="line"><span class="comment">// Remember &quot;class&quot; outcome is actually a template alias to basic_monad&lt;Policy&lt;...&gt;&gt;</span></div>
-<div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
-<div class="line"><span class="keyword">class </span><a class="code" href="group__monad.html#gaab2ff6220205017226794529c863b336" title="outcome&lt;R&gt; can hold a fixed variant list of empty, a type R, a lightweight std::error_code or a heavi...">outcome</a></div>
+<div class="line"><span class="comment">// Remember basic_monad&lt;Policy&lt;...&gt;&gt; is aliased to outcome&lt;T&gt;, result&lt;T&gt; and option&lt;T&gt;</span></div>
+<div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> EC = std::error_code, <span class="keyword">class</span> E = std::exception_ptr&gt;</div>
+<div class="line"><span class="keyword">class </span>basic_monad&lt;monad_policy&lt;T, EC, E&gt;&gt;</div>
 <div class="line">{</div>
 <div class="line"><span class="keyword">public</span>:</div>
 <div class="line">  <span class="comment">// true if configured to hold a value_type, an error_type or an exception_type</span></div>
 <div class="line">  <span class="keyword">static</span> constexpr <span class="keywordtype">bool</span> has_value_type;</div>
 <div class="line">  <span class="keyword">static</span> constexpr <span class="keywordtype">bool</span> has_error_type;</div>
 <div class="line">  <span class="keyword">static</span> constexpr <span class="keywordtype">bool</span> has_exception_type;</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// If configured with void, set to a helpfully named unusable type </span></div>
+<div class="line">  <span class="keyword">using</span> value_type = T | unusable;                                             <span class="comment">// similar in expected&lt;&gt; [3]</span></div>
+<div class="line">  <span class="keyword">using</span> error_type = EC | unusable;                                            <span class="comment">// similar in expected&lt;&gt; [3]</span></div>
+<div class="line">  <span class="keyword">using</span> exception_type = E | unusable;                                         <span class="comment">// [3]</span></div>
 <div class="line">  </div>
-<div class="line">  <span class="keyword">using</span> value_type = T;                                                        <span class="comment">// similar in expected&lt;&gt; [3]</span></div>
-<div class="line">  <span class="keyword">using</span> error_type = std::error_code;                                          <span class="comment">// similar in expected&lt;&gt; [3]</span></div>
-<div class="line">  <span class="keyword">using</span> exception_type = std::exception_ptr;                                   <span class="comment">// [3]</span></div>
-<div class="line">  </div>
-<div class="line">  <span class="keyword">using</span> raw_value_type = T;                                                    <span class="comment">// The actual type configured</span></div>
-<div class="line">  <span class="keyword">using</span> raw_error_type = std::error_code;                                      <span class="comment">// ditto</span></div>
-<div class="line">  <span class="keyword">using</span> raw_exception_type = std::exception_ptr;                               <span class="comment">// ditto</span></div>
+<div class="line">  <span class="comment">// The actual types configured</span></div>
+<div class="line">  <span class="keyword">using</span> raw_value_type = T | void;                                             <span class="comment">// The actual type configured</span></div>
+<div class="line">  <span class="keyword">using</span> raw_error_type = EC | void;                                            <span class="comment">// ditto</span></div>
+<div class="line">  <span class="keyword">using</span> raw_exception_type = E | void;                                         <span class="comment">// ditto</span></div>
 <div class="line"></div>
-<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> U&gt; <span class="keyword">using</span> rebind = outcome&lt;U&gt;;                                <span class="comment">// also in expected&lt;&gt;</span></div>
-<div class="line">  </div>
+<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> U&gt; <span class="keyword">using</span> rebind = basic_monad&lt;U&gt;;                            <span class="comment">// also in expected&lt;&gt;</span></div>
+<div class="line"></div>
+<div class="line">  <span class="comment">// The properties of this monad, and relative to other monads</span></div>
 <div class="line">  <span class="keyword">static</span> constexpr <span class="keywordtype">bool</span> is_nothrow_copy_constructible;</div>
 <div class="line">  <span class="keyword">static</span> constexpr <span class="keywordtype">bool</span> is_nothrow_move_constructible;</div>
 <div class="line">  <span class="keyword">static</span> constexpr <span class="keywordtype">bool</span> is_nothrow_copy_assignable;</div>
@@ -545,39 +548,59 @@ Synopsis of basic_monad&lt;&gt; and outcome&lt;T&gt;, result&lt;T&gt; and option
 <div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> OtherMonad&gt; <span class="keyword">static</span> constexpr <span class="keywordtype">bool</span> is_constructible;</div>
 <div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> OtherMonad&gt; <span class="keyword">static</span> constexpr <span class="keywordtype">bool</span> is_comparable;</div>
 <div class="line"></div>
-<div class="line">  constexpr <a class="code" href="group__monad.html#gaab2ff6220205017226794529c863b336" title="outcome&lt;R&gt; can hold a fixed variant list of empty, a type R, a lightweight std::error_code or a heavi...">outcome</a>() noexcept([1]);                                           <span class="comment">// also in expected&lt;&gt;, use make_outcome&lt;T&gt;() instead</span></div>
-<div class="line">  constexpr <a class="code" href="group__monad.html#gaab2ff6220205017226794529c863b336" title="outcome&lt;R&gt; can hold a fixed variant list of empty, a type R, a lightweight std::error_code or a heavi...">outcome</a>(const <a class="code" href="group__monad.html#gaab2ff6220205017226794529c863b336" title="outcome&lt;R&gt; can hold a fixed variant list of empty, a type R, a lightweight std::error_code or a heavi...">outcome</a>&amp;) noexcept([1]);                             <span class="comment">// also in expected&lt;&gt;</span></div>
-<div class="line">  constexpr <a class="code" href="group__monad.html#gaab2ff6220205017226794529c863b336" title="outcome&lt;R&gt; can hold a fixed variant list of empty, a type R, a lightweight std::error_code or a heavi...">outcome</a>(<a class="code" href="group__monad.html#gaab2ff6220205017226794529c863b336" title="outcome&lt;R&gt; can hold a fixed variant list of empty, a type R, a lightweight std::error_code or a heavi...">outcome</a>&amp;&amp;) noexcept([1]);                                  <span class="comment">// also in expected&lt;&gt;</span></div>
+<div class="line">  <span class="comment">// Default implicit construction and copy and move construction</span></div>
+<div class="line">  constexpr basic_monad() noexcept([1]);                                       <span class="comment">// also in expected&lt;&gt;, use make_basic_monad&lt;T&gt;() instead</span></div>
+<div class="line">  constexpr basic_monad(const basic_monad&amp;) noexcept([1]);                     <span class="comment">// also in expected&lt;&gt;</span></div>
+<div class="line">  constexpr basic_monad(basic_monad&amp;&amp;) noexcept([1]);                          <span class="comment">// also in expected&lt;&gt;</span></div>
 <div class="line"></div>
-<div class="line">  <span class="comment">// Constructing empty or with a value_type</span></div>
-<div class="line">  constexpr <a class="code" href="group__monad.html#gaab2ff6220205017226794529c863b336" title="outcome&lt;R&gt; can hold a fixed variant list of empty, a type R, a lightweight std::error_code or a heavi...">outcome</a>(empty_t) noexcept;                                         <span class="comment">// use make_outcome&lt;T&gt;() instead</span></div>
-<div class="line">  constexpr <a class="code" href="group__monad.html#gaab2ff6220205017226794529c863b336" title="outcome&lt;R&gt; can hold a fixed variant list of empty, a type R, a lightweight std::error_code or a heavi...">outcome</a>(value_t) noexcept(T);                                      <span class="comment">// use make_ready_outcome&lt;T&gt;() instead</span></div>
-<div class="line">  constexpr <a class="code" href="group__monad.html#gaab2ff6220205017226794529c863b336" title="outcome&lt;R&gt; can hold a fixed variant list of empty, a type R, a lightweight std::error_code or a heavi...">outcome</a>(const value_type&amp;) noexcept(T);                            <span class="comment">// also in expected&lt;&gt;</span></div>
-<div class="line">  constexpr <a class="code" href="group__monad.html#gaab2ff6220205017226794529c863b336" title="outcome&lt;R&gt; can hold a fixed variant list of empty, a type R, a lightweight std::error_code or a heavi...">outcome</a>(value_type&amp;&amp;) noexcept(T);                                 <span class="comment">// also in expected&lt;&gt;</span></div>
+<div class="line">  <span class="comment">// Implicit constructing empty or with a value_type</span></div>
+<div class="line">  constexpr basic_monad(empty_t) noexcept;                                     <span class="comment">// use make_basic_XXX&lt;T&gt;() instead</span></div>
+<div class="line">  constexpr basic_monad(value_t) noexcept(T);                                  <span class="comment">// use make_ready_XXX&lt;T&gt;() instead</span></div>
+<div class="line">  constexpr basic_monad(const value_type&amp;) noexcept(T);                        <span class="comment">// also in expected&lt;&gt;</span></div>
+<div class="line">  constexpr basic_monad(value_type&amp;&amp;) noexcept(T);                             <span class="comment">// also in expected&lt;&gt;</span></div>
+<div class="line">  </div>
+<div class="line">  <span class="comment">// Explicit emplacement of a value_type</span></div>
 <div class="line">  template &lt;class... Args&gt;</div>
-<div class="line">    constexpr explicit <a class="code" href="group__monad.html#gaab2ff6220205017226794529c863b336" title="outcome&lt;R&gt; can hold a fixed variant list of empty, a type R, a lightweight std::error_code or a heavi...">outcome</a>(in_place_t, Args&amp;&amp;...) noexcept(T);             <span class="comment">// also in expected&lt;&gt;</span></div>
+<div class="line">    constexpr explicit basic_monad(in_place_t, Args&amp;&amp;...) noexcept(T);         <span class="comment">// also in expected&lt;&gt;</span></div>
 <div class="line">  template &lt;class U&gt;</div>
-<div class="line">    constexpr <a class="code" href="group__monad.html#gaab2ff6220205017226794529c863b336" title="outcome&lt;R&gt; can hold a fixed variant list of empty, a type R, a lightweight std::error_code or a heavi...">outcome</a>(in_place_t, std::initializer_list&lt;U&gt;) noexcept(T);       <span class="comment">// also in expected&lt;&gt;</span></div>
+<div class="line">    constexpr basic_monad(in_place_t, std::initializer_list&lt;U&gt;) noexcept(T);   <span class="comment">// also in expected&lt;&gt;</span></div>
 <div class="line"></div>
-<div class="line">  <span class="comment">// Constructing from emptiness, error or excepted state of any other outcome</span></div>
-<div class="line">  constexpr <a class="code" href="group__monad.html#gaab2ff6220205017226794529c863b336" title="outcome&lt;R&gt; can hold a fixed variant list of empty, a type R, a lightweight std::error_code or a heavi...">outcome</a>(const rebind&lt;<span class="keywordtype">void</span>&gt;&amp;) noexcept([1]);                        <span class="comment">// use as_void() instead</span></div>
-<div class="line">  constexpr <a class="code" href="group__monad.html#gaab2ff6220205017226794529c863b336" title="outcome&lt;R&gt; can hold a fixed variant list of empty, a type R, a lightweight std::error_code or a heavi...">outcome</a>(rebind&lt;<span class="keywordtype">void</span>&gt;&amp;&amp;) noexcept([1]);                             <span class="comment">// use as_void() instead</span></div>
-<div class="line"></div>
+<div class="line">  <span class="comment">// Implicit construction from emptiness, error or excepted state of a void basic_monad</span></div>
+<div class="line">  constexpr basic_monad(const rebind&lt;<span class="keywordtype">void</span>&gt;&amp;) noexcept([1]);                    <span class="comment">// use as_void() to create a void monad</span></div>
+<div class="line">  constexpr basic_monad(rebind&lt;<span class="keywordtype">void</span>&gt;&amp;&amp;) noexcept([1]);                         <span class="comment">// use as_void() to create a void monad</span></div>
 <div class="line">  </div>
+<div class="line">  <span class="comment">// Implicit construction with error_type or exception_type</span></div>
+<div class="line">  constexpr basic_monad(const error_type&amp;) noexcept(EC);                       <span class="comment">// use make_errored_XXX() instead</span></div>
+<div class="line">  constexpr basic_monad(error_type&amp;&amp;) noexcept(EC);                            <span class="comment">// use make_errored_XXX() instead</span></div>
+<div class="line">  constexpr basic_monad(const exception_type&amp;) noexcept(E);                    <span class="comment">// use make_exceptional_XXX() instead</span></div>
+<div class="line">  constexpr basic_monad(exception_type&amp;&amp;) noexcept(E);                         <span class="comment">// use make_exceptional_XXX() instead</span></div>
 <div class="line">  </div>
-<div class="line">  ~<a class="code" href="group__monad.html#gaab2ff6220205017226794529c863b336" title="outcome&lt;R&gt; can hold a fixed variant list of empty, a type R, a lightweight std::error_code or a heavi...">outcome</a>() noexcept([1]);  <span class="comment">// Not implemented if value_type, error_type and exception_type are trivially destructible</span></div>
+<div class="line">  <span class="comment">// Explicit up converting move and copy constructors, only</span></div>
+<div class="line">  <span class="comment">// available if T, EC and E are constructible from T2, EC2 and E2</span></div>
+<div class="line">  <span class="comment">// and no information can ever be lost</span></div>
+<div class="line">  template &lt;class T2, class EC2, class E2&gt;</div>
+<div class="line">    constexpr explicit basic_monad(basic_monad&lt;monad_policy&lt;T2, EC2, E2&gt;&gt; &amp;&amp;) noexcept([1]);</div>
+<div class="line">  template &lt;class T2, class EC2, class E2&gt;</div>
+<div class="line">    constexpr explicit basic_monad(const basic_monad&lt;monad_policy&lt;T2, EC2, E2&gt;&gt; &amp;) noexcept([1]);</div>
+<div class="line">  </div>
+<div class="line">  <span class="comment">// Not implemented if value_type, error_type and exception_type are all trivially destructible</span></div>
+<div class="line">  <span class="comment">// thus making basic_monad a LiteralType (i.e. constexpr usable)</span></div>
+<div class="line">  ~basic_monad() noexcept([1]);</div>
 <div class="line"></div>
-<div class="line">  constexpr <a class="code" href="group__monad.html#gaab2ff6220205017226794529c863b336" title="outcome&lt;R&gt; can hold a fixed variant list of empty, a type R, a lightweight std::error_code or a heavi...">outcome</a>&amp; operator=(const <a class="code" href="group__monad.html#gaab2ff6220205017226794529c863b336" title="outcome&lt;R&gt; can hold a fixed variant list of empty, a type R, a lightweight std::error_code or a heavi...">outcome</a>&amp;) noexcept([1]);                  <span class="comment">// also in expected&lt;&gt;</span></div>
-<div class="line">  constexpr <a class="code" href="group__monad.html#gaab2ff6220205017226794529c863b336" title="outcome&lt;R&gt; can hold a fixed variant list of empty, a type R, a lightweight std::error_code or a heavi...">outcome</a>&amp; operator=(<a class="code" href="group__monad.html#gaab2ff6220205017226794529c863b336" title="outcome&lt;R&gt; can hold a fixed variant list of empty, a type R, a lightweight std::error_code or a heavi...">outcome</a>&amp;&amp;) noexcept([1]);                       <span class="comment">// also in expected&lt;&gt;</span></div>
-<div class="line">  template &lt;class... Args&gt;</div>
-<div class="line">    constexpr <span class="keywordtype">void</span> emplace(Args&amp;&amp;...) noexcept([1]);                           <span class="comment">// also in expected&lt;&gt;</span></div>
-<div class="line">  constexpr <span class="keywordtype">void</span> <a class="code" href="group__monad.html#ga2ffab91838224f042fe7ed1b108e5ad7" title="Specialise swap for basic_monad.">swap</a>(<a class="code" href="group__monad.html#gaab2ff6220205017226794529c863b336" title="outcome&lt;R&gt; can hold a fixed variant list of empty, a type R, a lightweight std::error_code or a heavi...">outcome</a>&amp;) noexcept([1]);                                 <span class="comment">// also in expected&lt;&gt;</span></div>
+<div class="line">  <span class="comment">// Assignment. Note exception throws during assignment leave the monad empty</span></div>
+<div class="line">  constexpr basic_monad&amp; operator=(const basic_monad&amp;) noexcept([1]);          <span class="comment">// also in expected&lt;&gt;</span></div>
+<div class="line">  constexpr basic_monad&amp; operator=(basic_monad&amp;&amp;) noexcept([1]);               <span class="comment">// also in expected&lt;&gt;</span></div>
 <div class="line"></div>
+<div class="line">  <span class="comment">// Observers</span></div>
 <div class="line">  constexpr explicit operator <span class="keywordtype">bool</span>() const noexcept;                           <span class="comment">// also in expected&lt;&gt;</span></div>
+<div class="line">  constexpr explicit operator boost_lite::tribool::tribool() const noexcept;   <span class="comment">// other if monad empty, false if monad errored/excepted</span></div>
+<div class="line">  constexpr <span class="keywordtype">bool</span> is_ready() const noexcept;                                    <span class="comment">// i.e. not empty</span></div>
+<div class="line">  constexpr <span class="keywordtype">bool</span> empty() const noexcept;</div>
 <div class="line">  constexpr <span class="keywordtype">bool</span> has_value() const noexcept;                                   <span class="comment">// also in expected&lt;&gt;</span></div>
 <div class="line">  constexpr <span class="keywordtype">bool</span> has_error() const noexcept;</div>
-<div class="line">  constexpr <span class="keywordtype">bool</span> has_exception() const noexcept;</div>
+<div class="line">  constexpr <span class="keywordtype">bool</span> has_exception(<span class="keywordtype">bool</span> only_exception = false) const noexcept;    <span class="comment">// NOTE defaults to true also if has_error()</span></div>
 <div class="line"></div>
+<div class="line">  <span class="comment">// For compatibility with expected&lt;T, E&gt; and optional&lt;T&gt;</span></div>
 <div class="line">  constexpr const value_type* operator -&gt;() const;                             <span class="comment">// also in expected&lt;&gt;, missing if [2]</span></div>
 <div class="line">  constexpr value_type* operator -&gt;();                                         <span class="comment">// also in expected&lt;&gt;, missing if [2]</span></div>
 <div class="line">  constexpr const value_type&amp; operator *() const&amp;;                             <span class="comment">// also in expected&lt;&gt;, returns by value if [2]</span></div>
@@ -585,6 +608,7 @@ Synopsis of basic_monad&lt;&gt; and outcome&lt;T&gt;, result&lt;T&gt; and option
 <div class="line">  constexpr const value_type&amp;&amp; operator *() const&amp;&amp;;                           <span class="comment">// also in expected&lt;&gt;, returns by value if [2]</span></div>
 <div class="line">  constexpr value_type&amp;&amp; operator *() &amp;&amp;;                                      <span class="comment">// also in expected&lt;&gt;, returns by value if [2]</span></div>
 <div class="line"></div>
+<div class="line">  <span class="comment">// Retrieving value_type</span></div>
 <div class="line">  constexpr const value_type&amp; value() const&amp;;                                  <span class="comment">// also in expected&lt;&gt;</span></div>
 <div class="line">  constexpr value_type&amp; value() &amp;;                                             <span class="comment">// also in expected&lt;&gt;</span></div>
 <div class="line">  constexpr const value_type&amp;&amp; value() const&amp;&amp;;                                <span class="comment">// also in expected&lt;&gt;</span></div>
@@ -594,18 +618,36 @@ Synopsis of basic_monad&lt;&gt; and outcome&lt;T&gt;, result&lt;T&gt; and option
 <div class="line">  constexpr const value_type&amp;&amp; value_or(const value_type&amp;&amp;) noexcept const&amp;&amp;;  <span class="comment">// similar in expected&lt;&gt;</span></div>
 <div class="line">  constexpr value_type&amp;&amp; value_or(value_type&amp;&amp;) noexcept &amp;&amp;;                   <span class="comment">// similar in expected&lt;&gt;</span></div>
 <div class="line"></div>
+<div class="line">  <span class="comment">// Setting value_type, disposes any previous state</span></div>
+<div class="line">  constexpr <span class="keywordtype">void</span> set_value(const value_type&amp;);</div>
+<div class="line">  constexpr <span class="keywordtype">void</span> set_value(value_type&amp;&amp;);</div>
+<div class="line">  constexpr <span class="keywordtype">void</span> set_value();</div>
+<div class="line">  template &lt;class... Args&gt;</div>
+<div class="line">    constexpr <span class="keywordtype">void</span> emplace(Args&amp;&amp;...) noexcept([1]);                           <span class="comment">// also in expected&lt;&gt;</span></div>
+<div class="line">  </div>
+<div class="line">  <span class="comment">// Retrieving and setting error_type and exception_type</span></div>
 <div class="line">  constexpr error_type error() const;                                          <span class="comment">// similar in expected&lt;&gt;</span></div>
-<div class="line">  constexpr const error_type &amp;error_or(const error_type &amp;) noexcept const&amp;;</div>
-<div class="line">  constexpr error_type&amp; error_or(error_type&amp;) noexcept &amp;;</div>
-<div class="line">  constexpr error_type&amp;&amp; error_or(error_type&amp;&amp;) noexcept &amp;&amp;;</div>
+<div class="line">  constexpr error_type error_or(error_type) noexcept const;</div>
+<div class="line">  constexpr <span class="keywordtype">void</span> set_error(error_type);</div>
+<div class="line">  constexpr exception_type exception() const;</div>
+<div class="line">  constexpr exception_type exception_or(exception_type) noexcept const;</div>
+<div class="line">  constexpr <span class="keywordtype">void</span> set_exception(exception_type);</div>
+<div class="line">  template&lt;class E&gt; <span class="keywordtype">void</span> set_exception(E&amp;&amp;);                                   <span class="comment">// via std::make_exception_ptr</span></div>
 <div class="line"></div>
-<div class="line">};</div>
+<div class="line">  <span class="comment">// Swap and clear to empty</span></div>
+<div class="line">  <span class="keywordtype">void</span> <a class="code" href="group__monad.html#ga2ffab91838224f042fe7ed1b108e5ad7" title="Specialise swap for basic_monad.">swap</a>(basic_monad&amp;) noexcept([1]);                                       <span class="comment">// also in expected&lt;&gt;</span></div>
+<div class="line">  <span class="keywordtype">void</span> clear() noexcept([1]);</div>
+<div class="line"></div>
+<div class="line"><span class="preprocessor">#ifdef BOOST_OUTCOME_ENABLE_OPERATORS                                          // defaults to disabled</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="preprocessor"></span>};</div>
+<div class="line"></div>
 <div class="line"><span class="comment">// NOTE requires state to be set to valued beforehand (and can only deserialise a value)</span></div>
-<div class="line">template&lt;class Policy&gt; inline std::istream &amp;operator&gt;&gt;(std::istream &amp;s, basic_monad&lt;Policy&gt; &amp;v);</div>
-<div class="line">template&lt;class Policy&gt; inline std::ostream &amp;operator&lt;&lt;(std::ostream &amp;s, const basic_monad&lt;Policy&gt; &amp;v);</div>
+<div class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> Policy&gt; <span class="keyword">inline</span> std::istream &amp;<a class="code" href="group__monad.html#ga70474a7831a5c7c7f045043ba554ff5a" title="Deserialise a value_storage value_type (only value_type)">operator&gt;&gt;</a>(std::istream &amp;s, basic_monad&lt;Policy&gt; &amp;v);</div>
+<div class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> Policy&gt; <span class="keyword">inline</span> std::ostream &amp;operator&lt;&lt;(std::ostream &amp;s, const basic_monad&lt;Policy&gt; &amp;v);</div>
 <div class="line"></div>
 <div class="line"><a class="code" href="group__config.html#gab3e267fb24a8ce5fe29ddf36f4f3c10b" title="Expands into the appropriate namespace markup to exit the Outcome v1 namespace.">BOOST_OUTCOME_V1_NAMESPACE_END</a></div>
-</div><!-- fragment --><p>[1]: The <code>noexcept</code> for each of these is determined by calculating the <code>noexcept</code> for the same operation in each of <code>T</code>, <code>EC</code> and <code>E</code>. If the same operation on any of those types can throw, so can the outcome's operation.</p>
+</div><!-- fragment --><p>[1]: The <code>noexcept</code> for each of these is determined by calculating the <code>noexcept</code> for the same operation in each of <code>T</code>, <code>EC</code> and <code>E</code>. If the same operation on any of those types can throw, so can the basic_monad's operation.</p>
 <p>[2]: The trait <code>boost::outcome::enable_single_byte_value_storage&lt;T&gt;</code> determines if a single byte is used to store <code>T</code>, in which case you will not be returned a pointer nor reference to <code>T</code>. It is enabled for <code>bool</code> and <code>void</code> unless the macro <code>BOOST_OUTCOME_DISABLE_DEFAULT_SINGLE_BYTE_VALUE_STORAGE</code> is defined.</p>
 <p>[3]: If the monad was configured with <code>void</code> in this place, this is configured with an internal non-accessible type usefully named to indicate you are trying to use something not possible which will generate a very obvious descriptive compiler error.</p>
 <p>To be continued ... </p>
