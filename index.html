@@ -127,7 +127,9 @@ $(document).ready(function(){initNavTree('index.html','');});
 </li>
 <li class="level1"><a href="#synopsis">Synopsis of basic_monad<> and outcome<T>, result<T> and option<T></a></li>
 <li class="level1"><a href="#examples">Examples of usage</a></li>
-<li class="level1"><a href="#functional">Functional programming extensions (optional)</a></li>
+<li class="level1"><a href="#advanced">More advanced usage</a><ul><li class="level2"><a href="#functional">Functional programming extensions (optional)</a></li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="textblock"><center><table  border="0">
@@ -146,7 +148,7 @@ $(document).ready(function(){initNavTree('index.html','');});
 </table>
 </center><h1><a class="anchor" id="description"></a>
 Description</h1>
-<p>This is the proposed Boost.Outcome library, a Boost C++ 14 library providing a factory and family of policy driven lightweight monadic value-or-error transports with the convenience specialisations of <code>outcome&lt;T&gt;</code>, <code>result&lt;T&gt;</code> and <code>option&lt;T&gt;</code>. Its main intended usage is as an ultra light weight error handling framework, providing a more expressive and type safe alternative to error code integers or enums, yet much lower overhead than exception throws, and unlike alternatives it works perfectly with exceptions and RTTI disabled. It may have lower compile and runtime overheads than the <code>expected&lt;T, E&gt;</code> heading for standardisation, if not then it is certainly more convenient to program with for error handling than using <code>expected&lt;T, E&gt;</code> as it was specifically designed and tailored for this purpose. One could view Outcome as a "hard coded for performance" <code>expected&lt;T, E&gt;</code>.</p>
+<p>This is the proposed Boost.Outcome library, a Boost C++ 14 library providing a factory and family of policy driven lightweight monadic value-or-error transports with the convenience simple specialisations of <code>outcome&lt;T&gt;</code>, <code>result&lt;T&gt;</code> and <code>option&lt;T&gt;</code>. Its main intended usage is as an ultra light weight error handling framework, providing a more expressive and type safe alternative to error code integers or enums, yet much lower overhead than exception throws, and unlike alternatives such as <code>expected&lt;T, E&gt;</code> it works perfectly with exceptions and RTTI disabled and thus is suitable for low-latency/games/finance users. One could view Outcome as a "hard coded" less generic <code>expected&lt;T, E&gt;</code> intended mainly as a universal outcome handling framework for C++, hence being named "Outcome".</p>
 <p>If you are familiar with Swift's error code throws or Rust's <code>Result&lt;T&gt;</code> and <code>Option&lt;T&gt;</code>, you will find almost identical semantics in the transports provided here. One can therefore write systems programming code using these transports in C++ in the same design pattern as when writing in Rust or Swift, and with a similarly low runtime overhead.</p>
 <h1><a class="anchor" id="prerequisites"></a>
 Prerequisites and Installation</h1>
@@ -499,7 +501,7 @@ Design differences between Expected and Outcomes</h2>
 <li>For the most part, <code>expected&lt;T, std::error_code&gt;</code> and <code>outcome::result&lt;T&gt;</code> ought to be close to interchangeable in most use cases, and could be configurably template alias swappable in most code. There is one glaring exception however, and that is that a default constructed Outcome is <b>empty</b>, not to a default constructed <code>T</code> which makes sense given the formal empty state.</li>
 <li>Outcomes implement equality/non-equality operators, but not ordering comparison nor hash operations. This is due to <a href="https://akrzemi1.wordpress.com/2014/12/02/a-gotcha-with-optional/">https://akrzemi1.wordpress.com/2014/12/02/a-gotcha-with-optional/</a> where you either choose implicit construction OR comparison operations or else risk surprising behaviours. That means you can only place Outcomes in non-mapped STL containers. It is trivial for users to write a simple wrapper class for Outcomes implementing comparison and hashing if they ever really needed to store Outcomes in associative maps.</li>
 <li><p class="startli">Finally, Outcome goes out of its way to be as cheap on compile time as possible by having the compiler do as little work as possible if not optimising. A lot of the hard coded rigidity above stems from systematically avoiding, whenever possible, metaprogramming, SFINAE, instantiation of helper types during deduction, or doing anything which would cause the compiler to not use <code>O(1)</code> constant time operations during non-optimising compilation. I have also found empirically that there is also a useful side effect of this simplicity of implementation on helping the compiler's optimiser "to do the right thing" when facing real world use cases.</p>
-<p class="startli">The reason for this minimum compile time load approach was due to my work experience with original prototype Boost.Expected in 2015 where we saw large increases in compile times once Expected was deployed at scale - remember <em>every single API</em> is returning an instance of one of these and much branch logic is working with them in every function, potentially instantiating lots of shim and helper deduction and introspection types each time. P0323R1 Expected removes a large chunk of metaprogrammed functionality, specifically the monadic operations which should help a great deal. Nevertheless, from my best reading, P0323R1 Expected still demands much more from the compiler than Outcome does. Deploying Outcome into a large C++ codebase ought to have as minimal a compile time impact as possible for a variant implementation, something which matters on code bases heading into the tens of millions of lines like many potential low latency/high performance users will have.</p>
+<p class="startli">The reason for this minimum compile time load approach was due to my work experience with original prototype Boost.Expected in 2015 where we saw large increases in compile times once Expected was deployed at scale - remember <em>every single API</em> is returning an instance of one of these and much branch logic is working with them in every function, potentially instantiating lots of shim and helper deduction and introspection types each time. P0323R1 Expected removes a large chunk of metaprogrammed functionality, specifically the monadic operations which should help a great deal. Nevertheless, from my best reading, P0323R1 Expected still demands more from the compiler than Outcome does. Deploying Outcome into a large C++ codebase ought to have as minimal a compile time impact as possible for a variant implementation, something which matters on code bases heading into the tens of millions of lines like many potential low latency/high performance users will have.</p>
 </li>
 </ol>
 <h1><a class="anchor" id="synopsis"></a>
@@ -734,7 +736,7 @@ Synopsis of basic_monad&lt;&gt; and outcome&lt;T&gt;, result&lt;T&gt; and option
 <p>[3]: If the monad was configured with <code>void</code> in this place, this is configured with an internal non-accessible type usefully named to indicate you are trying to use something not possible which will generate a very obvious descriptive compiler error.</p>
 <h1><a class="anchor" id="examples"></a>
 Examples of usage</h1>
-<p>The above synopsis of Outcome looks lengthy and complex, but almost all of it is convenience overloads of one form or other. In usage Outcome is generally "stupid easy" to program with. Here is a real world use case distilled from AFIO v2:</p>
+<p>The above synopsis of Outcome looks lengthy and complex, but almost all of it is convenience overloads of one form or other. In usage Outcome is generally "stupid easy" to program with, especially if you're already used to <code>std::optional</code>. Here is a real world use case distilled from AFIO v2's source code:</p>
 <div class="fragment"><div class="line">  <span class="keyword">using namespace </span>minimal_afio;</div>
 <div class="line">  <span class="keyword">using</span> boost_lite::ringbuffer_log::last190;</div>
 <div class="line">  <span class="keyword">extern</span> BOOST_SYMBOL_EXPORT result&lt;file_handle&gt; file_create(file_handle::path_type _path, file_handle::mode _mode = file_handle::mode::read, file_handle::creation _creation = file_handle::creation::open_existing, file_handle::caching _caching = file_handle::caching::all,</div>
@@ -788,9 +790,69 @@ Examples of usage</h1>
 <div class="line">    <span class="comment">// containing a system_error with the appropriate error_code.</span></div>
 <div class="line">    <a class="code" href="group__macro__helpers.html#gaacf14d3429ad0bc72a6ba40e7f283b43" title="A boilerplate sequence of catch(exceptions...) returning those exceptions as their equivalent result&lt;...">BOOST_OUTCOME_CATCH_EXCEPTION_TO_RESULT</a></div>
 <div class="line">  }</div>
-</div><!-- fragment --><p> To be continued ...</p>
-<h1><a class="anchor" id="functional"></a>
-Functional programming extensions (optional)</h1>
+</div><!-- fragment --><p> Unlike the earlier example functions opening a file, the above is not a toy use case and it covers almost all of the permutations of creating or opening a file which is common to POSIX and Windows. We make use of the fact that <code>basic_monad&lt;&gt;<a class="el" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316" title="Variable of type value_t.">value()</a></code> returns a non-const lvalue ref when the monad instance is a non-const stack allocated instance, binding it to the convenience lvalue ref <code>nativeh</code> which points at a union containing the <code>HANDLE</code> later filled with the opened handle.</p>
+<p>We make use of <code><a class="el" href="monad_8hpp.html#aa977bf0b7aded30c781c35f956edc1d7" title="If the monad returned by expression m is empty, erroneous or excepted, propagate that by immediately ...">BOOST_OUTCOME_TRY(var, expr)</a></code> which is a macro expanding to:</p>
+<div class="fragment"><div class="line"><span class="keyword">auto</span> &amp;&amp;unique = (expr);                                  <span class="comment">// &quot;unique&quot; is a preprocessor generated unique temporary identifier</span></div>
+<div class="line"><span class="keywordflow">if</span>(!unique.has_value())</div>
+<div class="line">  <span class="keywordflow">return</span> <a class="code" href="group__monad.html#ga31623e855d816d8be8b796107e29d4f7" title="Makes a void outcome from an input outcome, forwarding any emptiness, error or exception.">BOOST_OUTCOME_V1_NAMESPACE::as_void</a>(unique);</div>
+<div class="line"><span class="keyword">auto</span> var(std::move(std::move(unique).<a class="code" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316" title="Variable of type value_t.">value</a>()))</div>
+</div><!-- fragment --><p>This gets as close as is possible in C++ to the <code>try!</code> facility in Rust or Swift without using exception throws, and you'll find yourself using it a very great deal when writing code using Outcome. Like <code>try!</code>, the monad returning expression is executed and its returned monad checked to see if it has a value. If it does, the value is extracted out of the monad and placed in the variable you asked for. If it did not contain a value, the emptiness/errored/excepted state is converted into a void form monad and returned immediately from the calling function, thus propagating the errored state up the stack. You'll note we cast the stack allocated monad instance into a rvalue ref before asking for its value, this return a rvalue ref to the value. We then pass that rvalue ref through to the variable instance constructor so the value is moved and not copied.</p>
+<p>We also make use of a convenience overload of the <code>make_errored_XXX()</code> functions where a single <code>int</code> is assumed to be a POSIX code in the <code>errno</code> domain and a single <code>DWORD</code> is assumed to be a Win32 code in the <code>GetLastError()</code> domain. This allows very easy conversion of system error codes into the appropriate <code>std::error_code</code> thusly returned wrapped in a monad.</p>
+<p>Finally we also make use of the <code>BOOST_OUTCOME_CATCH_EXCEPTION_TO_RESULT</code> macro which is a long sequence of STL exception type catch clauses:</p>
+<div class="fragment"><div class="line"><span class="keywordflow">catch</span>(<span class="keyword">const</span> std::invalid_argument &amp;e)</div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordflow">return</span> BOOST_OUTCOME_V1_NAMESPACE::make_errored_result&lt;void&gt;(EINVAL, e.what());</div>
+<div class="line">}</div>
+<div class="line"><span class="keywordflow">catch</span>(<span class="keyword">const</span> std::domain_error &amp;e)</div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordflow">return</span> BOOST_OUTCOME_V1_NAMESPACE::make_errored_result&lt;void&gt;(EDOM, e.what());</div>
+<div class="line">}</div>
+<div class="line"><span class="keywordflow">catch</span>(<span class="keyword">const</span> std::length_error &amp;e)</div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordflow">return</span> BOOST_OUTCOME_V1_NAMESPACE::make_errored_result&lt;void&gt;(E2BIG, e.what());</div>
+<div class="line">}</div>
+<div class="line"><span class="keywordflow">catch</span>(<span class="keyword">const</span> std::out_of_range &amp;e)</div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordflow">return</span> BOOST_OUTCOME_V1_NAMESPACE::make_errored_result&lt;void&gt;(ERANGE, e.what());</div>
+<div class="line">}</div>
+<div class="line"><span class="keywordflow">catch</span>(<span class="keyword">const</span> std::logic_error &amp;e) <span class="comment">/* base class for this group */</span></div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordflow">return</span> BOOST_OUTCOME_V1_NAMESPACE::make_errored_result&lt;void&gt;(EINVAL, e.what());</div>
+<div class="line">}</div>
+<div class="line"><span class="keywordflow">catch</span>(<span class="keyword">const</span> std::system_error &amp;e) <span class="comment">/* also catches ios::failure */</span></div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordflow">return</span> BOOST_OUTCOME_V1_NAMESPACE::make_errored_result&lt;void&gt;(BOOST_OUTCOME_V1_NAMESPACE::error_code_extended(e.code(), e.what()));</div>
+<div class="line">}</div>
+<div class="line"><span class="keywordflow">catch</span>(<span class="keyword">const</span> std::overflow_error &amp;e)</div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordflow">return</span> BOOST_OUTCOME_V1_NAMESPACE::make_errored_result&lt;void&gt;(EOVERFLOW, e.what());</div>
+<div class="line">}</div>
+<div class="line"><span class="keywordflow">catch</span>(<span class="keyword">const</span> std::range_error &amp;e)</div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordflow">return</span> BOOST_OUTCOME_V1_NAMESPACE::make_errored_result&lt;void&gt;(ERANGE, e.what());</div>
+<div class="line">}</div>
+<div class="line"><span class="keywordflow">catch</span>(<span class="keyword">const</span> std::runtime_error &amp;e) <span class="comment">/* base class for this group */</span></div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordflow">return</span> BOOST_OUTCOME_V1_NAMESPACE::make_errored_result&lt;void&gt;(EAGAIN, e.what());</div>
+<div class="line">}</div>
+<div class="line"><span class="keywordflow">catch</span>(<span class="keyword">const</span> std::bad_alloc &amp;e)</div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordflow">return</span> BOOST_OUTCOME_V1_NAMESPACE::make_errored_result&lt;void&gt;(ENOMEM, e.what());</div>
+<div class="line">}</div>
+<div class="line"><span class="keywordflow">catch</span>(<span class="keyword">const</span> std::exception &amp;e)</div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordflow">return</span> BOOST_OUTCOME_V1_NAMESPACE::make_errored_result&lt;void&gt;(EINVAL, e.what());</div>
+<div class="line">}</div>
+<div class="line"><span class="keywordflow">catch</span>(...)</div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordflow">return</span> BOOST_OUTCOME_V1_NAMESPACE::make_errored_result&lt;void&gt;(EAGAIN, <span class="stringliteral">&quot;unknown exception&quot;</span>);</div>
+<div class="line">}</div>
+</div><!-- fragment --><p>You will surely note that the <code>make_errored_XXX()</code> functions actually take an <code>int</code> and an optional <code>const char *</code>. This is the purpose of <code>error_code_extended</code> which extends <code>std::error_code</code> with a pointer from which one can retrieve the original <code>what()</code> text message from the caught exception. This preserves all original information from caught exceptions, at least for the STL exception types. If you are throwing your own custom types with extra information, you should note that Outcome does provide a mechanism for the storage of arbitrary extra data in <code>error_code_extended</code>, it isn't limited at all to just a string. It is <b>safe</b> to slice <code>error_code_extended</code> into an <code>std::error_code</code>, so you can safely feed <code>error_code_extended</code> to anything consuming a <code>std::error_code</code>. Currently <code>error_code_extended</code> does not permit implicit construction from a <code>std::error_code</code>, so you need to either construct an <code>error_code_extended</code> directly or feed a <code>std::error_code</code> into the <code>error_code_extended</code> constructor.</p>
+<h1><a class="anchor" id="advanced"></a>
+More advanced usage</h1>
+<p>99% of Outcome users already have everything they will ever need - Outcome is a very simple library. However "full fat" monadic functional programming is also provided using a very clean and powerful API, albeit at a fair cost to compile times.</p>
+<h2><a class="anchor" id="functional"></a>
+Functional programming extensions (optional)</h2>
 <dl class="section note"><dt>Note</dt><dd>All code in this section can be enabled by defining <code>BOOST_OUTCOME_ENABLE_OPERATORS</code>. By default only <code>next()</code> is available. This prevents you writing code which impacts build times.</dd></dl>
 <p>It is assumed in this section that you already monadic functional programming. This section is simply to explain how these are implemented in Outcome.</p>
 <p>Classic monadic programming consists of a sequence of nested functional operations: </p>

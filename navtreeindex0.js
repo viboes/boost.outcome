@@ -231,6 +231,7 @@ var NAVTREEINDEX0 =
 "group__monad.html#ggaf5abc43f8d09588556c4c65b53485c0dac537dcef56fd6ff75592c0220fd3dae1":[8,1,13,1],
 "hierarchy.html":[10,2],
 "index.html":[],
+"index.html#advanced":[7],
 "index.html#c-style":[3,0],
 "index.html#cpp11-style":[3,2],
 "index.html#cpp17-style":[3,3],
@@ -241,13 +242,12 @@ var NAVTREEINDEX0 =
 "index.html#examples":[6],
 "index.html#exceptions-are-exceptional":[3,3,3],
 "index.html#expected":[3,3,1],
-"index.html#functional":[7],
+"index.html#functional":[7,0],
 "index.html#introduction":[4],
 "index.html#linux":[1,1],
 "index.html#optional":[3,3,0],
 "index.html#osx":[1,2],
 "index.html#prerequisites":[1],
 "index.html#repo":[1,4],
-"index.html#sea-of-noexcept":[3,3,2],
-"index.html#source":[1,3]
+"index.html#sea-of-noexcept":[3,3,2]
 };

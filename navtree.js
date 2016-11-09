@@ -26,7 +26,9 @@ var NAVTREE =
     ] ],
     [ "Synopsis of basic_monad<> and outcome<T>, result<T> and option<T>", "index.html#synopsis", null ],
     [ "Examples of usage", "index.html#examples", null ],
-    [ "Functional programming extensions (optional)", "index.html#functional", null ],
+    [ "More advanced usage", "index.html#advanced", [
+      [ "Functional programming extensions (optional)", "index.html#functional", null ]
+    ] ],
     [ "Modules", "modules.html", "modules" ],
     [ "Namespaces", null, [
       [ "Namespace List", "namespaces.html", "namespaces" ],
@@ -63,7 +65,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 ".html",
-"index.html#support"
+"index.html#source"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
