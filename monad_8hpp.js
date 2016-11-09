@@ -13,7 +13,7 @@ var monad_8hpp =
     [ "_is_comparable", "structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1__is__comparable.html", null ],
     [ "BOOST_OUTCOME__GLUE", "monad_8hpp.html#aa3085c7a0cc98823d6a2f7d35db9df29", null ],
     [ "BOOST_OUTCOME__GLUE2", "monad_8hpp.html#aa1529abb5f924d8c459e295759628593", null ],
-    [ "BOOST_OUTCOME_CATCH_EXCEPTION_TO_RESULT", "monad_8hpp.html#ga68d5ad900e62b3ceb61f57c29e52b566", null ],
+    [ "BOOST_OUTCOME_CATCH_EXCEPTION_TO_RESULT", "monad_8hpp.html#gaacf14d3429ad0bc72a6ba40e7f283b43", null ],
     [ "BOOST_OUTCOME_ERROR_CODE_EXTENDED_CREATION_HOOK", "monad_8hpp.html#a6eb2d78f2e3d039fefdd7bdd2c5336a1", null ],
     [ "BOOST_OUTCOME_INCLUDE_ALL", "monad_8hpp.html#a24c804b977b5ac995c71a182f39ed5e6", null ],
     [ "BOOST_OUTCOME_MODULE_NAME", "monad_8hpp.html#ad77a8bc47c3bc82a023d26980651975a", null ],

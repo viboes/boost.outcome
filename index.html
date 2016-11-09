@@ -126,6 +126,8 @@ $(document).ready(function(){initNavTree('index.html','');});
 </ul>
 </li>
 <li class="level1"><a href="#synopsis">Synopsis of basic_monad<> and outcome<T>, result<T> and option<T></a></li>
+<li class="level1"><a href="#examples">Examples of usage</a></li>
+<li class="level1"><a href="#functional">Functional programming extensions (optional)</a></li>
 </ul>
 </div>
 <div class="textblock"><center><table  border="0">
@@ -723,14 +725,177 @@ Synopsis of basic_monad&lt;&gt; and outcome&lt;T&gt;, result&lt;T&gt; and option
 <div class="line"></div>
 <div class="line"><span class="comment">// Equivalent to try! in Rust and Swift</span></div>
 <div class="line"><span class="preprocessor">#define BOOST_OUTCOME_TRY(variable_to_initialise, monad)</span></div>
-<div class="line"><span class="preprocessor"></span><span class="comment">// Boilerplate catching all the STL exceptions, returning a result&lt;type&gt;</span></div>
-<div class="line"><span class="preprocessor">#define BOOST_OUTCOME_CATCH_EXCEPTION_TO_RESULT(type)</span></div>
+<div class="line"><span class="preprocessor"></span><span class="comment">// Boilerplate catching all the STL exceptions, returning an equivalent result&lt;void&gt;</span></div>
+<div class="line"><span class="preprocessor">#define BOOST_OUTCOME_CATCH_EXCEPTION_TO_RESULT</span></div>
 <div class="line"><span class="preprocessor"></span></div>
 <div class="line"><a class="code" href="group__config.html#gab3e267fb24a8ce5fe29ddf36f4f3c10b" title="Expands into the appropriate namespace markup to exit the Outcome v1 namespace.">BOOST_OUTCOME_V1_NAMESPACE_END</a></div>
 </div><!-- fragment --><p>[1]: The <code>noexcept</code> for each of these is determined by calculating the <code>noexcept</code> for the same operation in each of <code>T</code>, <code>EC</code> and <code>E</code>. If the same operation on any of those types can throw, so can the basic_monad's operation.</p>
 <p>[2]: The trait <code>boost::outcome::enable_single_byte_value_storage&lt;T&gt;</code> determines if a single byte is used to store <code>T</code>, in which case you will not be returned a pointer nor reference to <code>T</code>. It is enabled for <code>bool</code> and <code>void</code> unless the macro <code>BOOST_OUTCOME_DISABLE_DEFAULT_SINGLE_BYTE_VALUE_STORAGE</code> is defined.</p>
 <p>[3]: If the monad was configured with <code>void</code> in this place, this is configured with an internal non-accessible type usefully named to indicate you are trying to use something not possible which will generate a very obvious descriptive compiler error.</p>
-<p>To be continued ... </p>
+<h1><a class="anchor" id="examples"></a>
+Examples of usage</h1>
+<p>The above synopsis of Outcome looks lengthy and complex, but almost all of it is convenience overloads of one form or other. In usage Outcome is generally "stupid easy" to program with. Here is a real world use case distilled from AFIO v2:</p>
+<div class="fragment"><div class="line">  <span class="keyword">using namespace </span>minimal_afio;</div>
+<div class="line">  <span class="keyword">using</span> boost_lite::ringbuffer_log::last190;</div>
+<div class="line">  <span class="keyword">extern</span> BOOST_SYMBOL_EXPORT result&lt;file_handle&gt; file_create(file_handle::path_type _path, file_handle::mode _mode = file_handle::mode::read, file_handle::creation _creation = file_handle::creation::open_existing, file_handle::caching _caching = file_handle::caching::all,</div>
+<div class="line">                                                             file_handle::flag flags = file_handle::flag::none) noexcept</div>
+<div class="line">  {</div>
+<div class="line">    <span class="comment">// noexcept functions should always wrap their innards in a try...catch,</span></div>
+<div class="line">    <span class="comment">// if you don&#39;t ever call a potentially throwing piece of code the compiler</span></div>
+<div class="line">    <span class="comment">// will completely elide this.</span></div>
+<div class="line">    <span class="keywordflow">try</span></div>
+<div class="line">    {</div>
+<div class="line">      result&lt;file_handle&gt; ret(file_handle(std::move(_path), _caching, flags));</div>
+<div class="line">      native_handle_type &amp;nativeh = ret.value()._v;</div>
+<div class="line">      <span class="comment">// access_mask_from_handle_mode() returns a result&lt;ACCESS_MASK&gt;,</span></div>
+<div class="line">      <span class="comment">// if it is signalled then propagate it immediately by returning it,</span></div>
+<div class="line">      <span class="comment">// else unwrap the return value into the variable access</span></div>
+<div class="line">      <a class="code" href="monad_8hpp.html#aa977bf0b7aded30c781c35f956edc1d7" title="If the monad returned by expression m is empty, erroneous or excepted, propagate that by immediately ...">BOOST_OUTCOME_TRY</a>(access, access_mask_from_handle_mode(_mode));</div>
+<div class="line">      DWORD creation = OPEN_EXISTING;</div>
+<div class="line">      <span class="keywordflow">switch</span>(_creation)</div>
+<div class="line">      {</div>
+<div class="line">      <span class="keywordflow">case</span> file_handle::creation::open_existing:</div>
+<div class="line">        <span class="keywordflow">break</span>;</div>
+<div class="line">      <span class="keywordflow">case</span> file_handle::creation::only_if_not_exist:</div>
+<div class="line">        creation = CREATE_NEW;</div>
+<div class="line">        <span class="keywordflow">break</span>;</div>
+<div class="line">      <span class="keywordflow">case</span> file_handle::creation::if_needed:</div>
+<div class="line">        creation = OPEN_ALWAYS;</div>
+<div class="line">        <span class="keywordflow">break</span>;</div>
+<div class="line">      <span class="keywordflow">case</span> file_handle::creation::truncate:</div>
+<div class="line">        creation = TRUNCATE_EXISTING;</div>
+<div class="line">        <span class="keywordflow">break</span>;</div>
+<div class="line">      }</div>
+<div class="line">      <span class="comment">// attributes_from_handle_caching_and_flags() returns a result&lt;DWORD&gt;,</span></div>
+<div class="line">      <span class="comment">// so if it errors the propagate immediately, else unpack DWORD into</span></div>
+<div class="line">      <span class="comment">// the variable attribs</span></div>
+<div class="line">      <a class="code" href="monad_8hpp.html#aa977bf0b7aded30c781c35f956edc1d7" title="If the monad returned by expression m is empty, erroneous or excepted, propagate that by immediately ...">BOOST_OUTCOME_TRY</a>(attribs, attributes_from_handle_caching_and_flags(_caching, flags));</div>
+<div class="line">      <span class="keywordflow">if</span>(INVALID_HANDLE_VALUE == (nativeh.h = CreateFile(ret.value()._path.c_str(), access, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, NULL, creation, attribs, NULL)))</div>
+<div class="line">      {</div>
+<div class="line">        DWORD errcode = GetLastError();</div>
+<div class="line">        <span class="comment">// make_errored_result() understands DWORDs on Windows. It also understands</span></div>
+<div class="line">        <span class="comment">// int for automatic errno conversion.</span></div>
+<div class="line">        <span class="keywordflow">return</span> make_errored_result&lt;file_handle&gt;(errcode, last190(ret.value()._path.u8string()));</div>
+<div class="line">      }</div>
+<div class="line">      <span class="keywordflow">if</span>(flags &amp; file_handle::flag::unlink_on_close)</div>
+<div class="line">      {</div>
+<div class="line">        <span class="comment">// Hide this item</span></div>
+<div class="line">        SetFileAttributes(ret.value()._path.c_str(), FILE_ATTRIBUTE_HIDDEN);</div>
+<div class="line">      }</div>
+<div class="line">      <span class="keywordflow">return</span> ret;</div>
+<div class="line">    }</div>
+<div class="line">    <span class="comment">// Catch all the STL exceptions, converting them to an equivalent result&lt;&gt;</span></div>
+<div class="line">    <span class="comment">// containing a system_error with the appropriate error_code.</span></div>
+<div class="line">    <a class="code" href="group__macro__helpers.html#gaacf14d3429ad0bc72a6ba40e7f283b43" title="A boilerplate sequence of catch(exceptions...) returning those exceptions as their equivalent result&lt;...">BOOST_OUTCOME_CATCH_EXCEPTION_TO_RESULT</a></div>
+<div class="line">  }</div>
+</div><!-- fragment --><p> To be continued ...</p>
+<h1><a class="anchor" id="functional"></a>
+Functional programming extensions (optional)</h1>
+<dl class="section note"><dt>Note</dt><dd>All code in this section can be enabled by defining <code>BOOST_OUTCOME_ENABLE_OPERATORS</code>. By default only <code>next()</code> is available. This prevents you writing code which impacts build times.</dd></dl>
+<p>It is assumed in this section that you already monadic functional programming. This section is simply to explain how these are implemented in Outcome.</p>
+<p>Classic monadic programming consists of a sequence of nested functional operations: </p>
+<dl>
+<dt>JOIN (single): <code>outcome&lt;outcome&lt;T&gt;&gt;.<a class="el" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316" title="Variable of type value_t.">value()</a></code> -&gt; <code>outcome&lt;T&gt;</code> </dt>
+<dd></dd>
+<dt>JOIN (maximum): <code>outcome&lt;outcome&lt;outcome&lt;outcome&lt;T&gt;&gt;&gt;&gt;.unwrap()</code> -&gt; <code>outcome&lt;T&gt;</code> </dt>
+<dd>Whatever is the first monad containing a non-monad is returned. </dd>
+<dt>MAP: <code>outcome&lt;T&gt;.map(R(T))</code> -&gt; <code>outcome&lt;R&gt;</code> </dt>
+<dd>If callable maps <code>T</code> to <code>R</code>, <code>map()</code> maps an <code>outcome&lt;T&gt;</code> to an <code>outcome&lt;R&gt;</code> if <code>outcome&lt;T&gt;</code> contains a <code>T</code>. If it contains an error or is empty, that is passed through. </dd>
+<dt>BIND: <code>outcome&lt;T&gt;.bind(outcome&lt;R&gt;(T))</code> -&gt; <code>outcome&lt;R&gt;</code> </dt>
+<dd></dd>
+<dt>BIND: <code>outcome&lt;T&gt;.bind(R(T))</code> -&gt; <code>outcome&lt;R&gt;</code> </dt>
+<dd>If callable maps <code>T</code> to <code>outcome&lt;R&gt;</code> and if <code>outcome&lt;T&gt;</code> contains a <code>T</code>, then <code>bind()</code> maps an <code>outcome&lt;T&gt;</code> to an <code>outcome&lt;R&gt;</code> else if callable maps <code>T</code> to <code>R</code> and if <code>outcome&lt;T&gt;</code> contains a <code>T</code>, <code>bind()</code> maps an <code>outcome&lt;T&gt;</code> to an <code>outcome&lt;R&gt;</code>. In other words, returning a monad from the callable does not wrap it in another monad. If the originating monad did not contain a <code>T</code>, that is passed through. </dd>
+</dl>
+<p>We also support <code>outcome&lt;T&gt;.next(R(outcome&lt;T&gt;))</code> for semantic equivalence to futures where the callable is called with the originating monad. This acts like <code>bind()</code>, so if the callable returns a monad it is not wrapped in another monad. Unlike <code>map()</code> or <code>bind()</code>, <code>next()</code> always calls the callable no matter what the monad contains, so it is up to you to interrogate the monad. Note that the originating monad is passed by const lvalue ref unless the callable takes a rvalue ref to the monad.</p>
+<p>A quick use example: </p>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; outcome&lt;T&gt; do_test(outcome&lt;T&gt; m)</div>
+<div class="line">{</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;The value of my input monad is &quot;</span>;</div>
+<div class="line">  <span class="keywordflow">if</span>(m)</div>
+<div class="line">    std::cout &lt;&lt; m.value() &lt;&lt; std::endl;</div>
+<div class="line">  <span class="keywordflow">else</span></div>
+<div class="line">    std::cout &lt;&lt; (m.has_error() ? <span class="stringliteral">&quot;errored&quot;</span> : m.has_exception() ? <span class="stringliteral">&quot;excepted&quot;</span> : <span class="stringliteral">&quot;empty&quot;</span>) &lt;&lt; std::endl;</div>
+<div class="line">  </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;  or via bind(), my value is &quot;</span>;</div>
+<div class="line">  <span class="keyword">auto</span> o(m &gt;&gt; [](T v) { std::cout &lt;&lt; v; <span class="keywordflow">return</span> v; }</div>
+<div class="line">           &gt;&gt; [](error_code_extended e) { std::cout &lt;&lt; <span class="stringliteral">&quot;errored&quot;</span>; <span class="keywordflow">return</span> e; }</div>
+<div class="line">           &gt;&gt; [](std::exception_ptr e) { std::cout &lt;&lt; <span class="stringliteral">&quot;excepted&quot;</span>; <span class="keywordflow">return</span> e; }</div>
+<div class="line">           &gt;&gt; [](<span class="keyword">typename</span> decltype(m)::empty_type) { std::cout &lt;&lt; <span class="stringliteral">&quot;empty&quot;</span>; });</div>
+<div class="line">  std::cout &lt;&lt; std::endl;</div>
+<div class="line">  <span class="keywordflow">return</span> o;</div>
+<div class="line">}</div>
+</div><!-- fragment --><div class="fragment"><div class="line">  <span class="keyword">struct </span>o_type</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordtype">int</span> expected;</div>
+<div class="line">    <span class="comment">// monad.match() will call an overload for each possible content it might have</span></div>
+<div class="line">    <span class="keywordtype">void</span> operator()(<span class="keywordtype">int</span> <span class="comment">/*unused*/</span>)<span class="keyword"> const </span>{ BOOST_CHECK(expected == 1); }</div>
+<div class="line">    <span class="keywordtype">void</span> operator()(error_code_extended <span class="comment">/*unused*/</span>)<span class="keyword"> const </span>{ BOOST_CHECK(expected == 2); }</div>
+<div class="line">    <span class="keywordtype">void</span> operator()(std::exception_ptr <span class="comment">/*unused*/</span>)<span class="keyword"> const </span>{ BOOST_CHECK(expected == 3); }  <span class="comment">// NOLINT</span></div>
+<div class="line">    <span class="keywordtype">void</span> operator()(outcome&lt;int&gt;::empty_type <span class="comment">/*unused*/</span>)<span class="keyword"> const </span>{ BOOST_CHECK(expected == 4); }</div>
+<div class="line">    o_type()</div>
+<div class="line">        : expected(0)</div>
+<div class="line">    {</div>
+<div class="line">    }</div>
+<div class="line">  } o;</div>
+<div class="line">  error_code_extended ec;</div>
+<div class="line">  std::exception_ptr e;</div>
+<div class="line">  outcome&lt;int&gt; a(5);</div>
+<div class="line">  o.expected = 1;</div>
+<div class="line">  (void) a.match(o);</div>
+<div class="line">  o.expected = 2;</div>
+<div class="line">  a = ec;</div>
+<div class="line">  (void) a.match(o);</div>
+<div class="line">  o.expected = 3;</div>
+<div class="line">  a = e;</div>
+<div class="line">  (void) a.match(o);</div>
+<div class="line">  o.expected = 4;</div>
+<div class="line">  a.clear();</div>
+<div class="line">  (void) a.match(o);</div>
+</div><!-- fragment --><div class="fragment"><div class="line">  {</div>
+<div class="line">    error_code_extended ec;</div>
+<div class="line">    outcome&lt;int&gt; a(5);</div>
+<div class="line">    outcome&lt;int&gt; b(a &amp; 6);   <span class="comment">// a has a value, so become 6</span></div>
+<div class="line">    outcome&lt;int&gt; c(b | 4);   <span class="comment">// b has a value, so remain at 6</span></div>
+<div class="line">    outcome&lt;int&gt; d(a &amp; ec);  <span class="comment">// a has a value, so become errored</span></div>
+<div class="line">    outcome&lt;int&gt; e(d &amp; 2);   <span class="comment">// d does not have a value, so remain errored</span></div>
+<div class="line">    outcome&lt;int&gt; f(d | 2);   <span class="comment">// d does not have a value, so become 2</span></div>
+<div class="line">    BOOST_CHECK(b.get() == 6);</div>
+<div class="line">    BOOST_CHECK(c.get() == 6);</div>
+<div class="line">    BOOST_CHECK(d.has_error());</div>
+<div class="line">    BOOST_CHECK(e.has_error());</div>
+<div class="line">    BOOST_CHECK(f.get() == 2);</div>
+<div class="line">  }</div>
+<div class="line"></div>
+<div class="line">  error_code_extended ec;</div>
+<div class="line">  {</div>
+<div class="line">    outcome&lt;std::string&gt; a(<span class="stringliteral">&quot;niall&quot;</span>);</div>
+<div class="line">    <span class="comment">// Does bind work with chains of value, error, exception and empty?</span></div>
+<div class="line">    <span class="keyword">auto</span> x(a &gt;&gt; [ec](std::string) { <span class="keywordflow">return</span> ec; } &gt;&gt; [](error_code_extended) { <span class="keywordflow">return</span> std::make_exception_ptr(5); } &gt;&gt; [](std::exception_ptr) { <span class="keywordflow">return</span>; } &gt;&gt; [](outcome&lt;std::string&gt;::empty_type) { <span class="keywordflow">return</span> std::string(<span class="stringliteral">&quot;douglas&quot;</span>); });</div>
+<div class="line">    BOOST_CHECK(x.get() == <span class="stringliteral">&quot;douglas&quot;</span>);</div>
+<div class="line">    <span class="keyword">auto</span> y(a &gt;&gt; [ec](std::string) -&gt; outcome&lt;int&gt; { <span class="keywordflow">return</span> ec; } &gt;&gt; [](error_code_extended) { <span class="keywordflow">return</span> std::make_exception_ptr(5); } &gt;&gt; [](std::exception_ptr) { <span class="keywordflow">return</span>; } &gt;&gt; [](outcome&lt;int&gt;::empty_type) { <span class="keywordflow">return</span> 5; });</div>
+<div class="line">    BOOST_CHECK(y.get() == 5);</div>
+<div class="line">    <span class="keyword">auto</span> z(a &gt;&gt; [](std::string &amp;&amp;v) { <span class="keywordflow">return</span> std::move(v); } &gt;&gt; [](std::string &amp;&amp;v) { <span class="keywordflow">return</span> std::move(v); } &gt;&gt; [](std::string &amp;&amp;v) { <span class="keywordflow">return</span> std::move(v); } &gt;&gt; [](std::string &amp;&amp;v) { <span class="keywordflow">return</span> std::move(v); });</div>
+<div class="line">    BOOST_CHECK(z.get() == <span class="stringliteral">&quot;niall&quot;</span>);</div>
+<div class="line">    BOOST_CHECK(a.get().empty());</div>
+<div class="line">  }</div>
+</div><!-- fragment --><p> You will note in the code example that the type of the callable for <code>bind()</code> and <code>map()</code> determines what operation happens. Here are the rules:</p>
+<ul>
+<li>If the monad contains a <code>T</code> and the callable takes a <code>T</code> or an <code>auto</code>, then:<ul>
+<li>If the callable takes a <code>T</code> or any reference to a <code>T</code> which isn't an rvalue reference, the <code>T</code> is passed by const lvalue reference (i.e. copy semantics).</li>
+<li>If the callable takes a <code>T</code> by non-const rvalue reference, the <code>T</code> is passed by rvalue ref. This lets you move from the value held by the originating monad if so desired.</li>
+<li>If the callable takes the originating monad or any reference to such which isn't a rvalue reference, then the originating monad is passed by const lvalue reference.</li>
+<li>If the callable takes the originating monad by non-const rvalue reference, the originating monad is passed by rvalue reference. The ability to take the originating monad makes <code>bind()</code> identical to <code>next()</code> though much harder on build times. Note that these options let you rebind the type of the monad, so if your callable returns a different type from the originating monad then the resulting monad is based on that different return type. <dl class="section warning"><dt>Warning</dt><dd>The current implementation requires you to specify a non-dependent return type for all generic lambdas, else you'll get compile errors where the compiler tried to insert <code>error_type</code>, <code>exception_type</code> etc when it was trying to figure out if the return type is correct. A future implementation (once MSVC has Expression SFINAE) may remove this restriction, until then just hard specify your return types if your lambdas take an <code>auto</code>, or use lambdas not taking <code>auto</code>.</dd></dl>
+</li>
+</ul>
+</li>
+<li>If the monad contains an <code>error_type</code> and the callable takes an <code>error_type</code>, then call the callable, else pass through the monad. For this reason, any callable taking an <code>error_type</code> must always return the same monad type as the originating monad.</li>
+<li>If the monad contains an <code>error_type</code> or an <code>exception_type</code> and the callable takes an <code>exception_type</code>, then call the callable, else pass through the monad. For this reason, any callable taking an <code>exception_type</code> must always return the same monad type as the originating monad.</li>
+<li>If the monad is empty and the callable takes an <code>empty_type</code>, then call the callable, else pass through the monad. For this reason, any callable with an <code>empty_type</code> parameter must always return the same monad type as the originating monad.</li>
+</ul>
+<p>Note that for nested monads e.g. <code>outcome&lt;outcome&lt;int&gt;&gt;</code>, either or both of the inner or outer monads can be with value or with error or empty. You should have your binds and maps work appropriately.</p>
+<p>For maximum build performance, try to avoid <code>bind()</code> and <code>map()</code> as these use some hefty metaprogramming to deduce what kind of bind and map you're doing based on the callables passed. <code>unwrap()</code> is implemented using a recursively expanded structure which is probably okay for low unwrap depths. <code>next()</code> is probably the least weighty of the monadic operators as it's relatively dumb and the only metaprogramming is to determine whether to wrap the return type with a monad or not. Because of this impact on compile times, by default all operations apart from <code>next()</code> are not compiled in without the <code>BOOST_OUTCOME_ENABLE_OPERATORS</code> macro being defined beforehand.</p>
+<h3>Acknowledgements</h3>
+<p>To T.C. on Stack Overflow for answering my question at <a href="https://stackoverflow.com/questions/30802404/how-to-detect-whether-some-callable-takes-a-rvalue-reference">https://stackoverflow.com/questions/30802404/how-to-detect-whether-some-callable-takes-a-rvalue-reference</a> and without whose excellent answer the intelligent <code>map()</code> and <code>bind()</code> above could not work. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
