@@ -127,6 +127,10 @@ $(document).ready(function(){initNavTree('index.html','');});
 </li>
 <li class="level1"><a href="#synopsis">Synopsis of basic_monad<> and outcome<T>, result<T> and option<T></a></li>
 <li class="level1"><a href="#examples">Examples of usage</a></li>
+<li class="level1"><a href="#when_use">When am I supposed to use what when?</a><ul><li class="level2"><a href="#outcome_vs_result">When should I use a result<T> instead of an outcome<T>?</a></li>
+<li class="level2"><a href="#result_vs_outcome">When should I use an outcome<T> instead of a result<T>?</a></li>
+</ul>
+</li>
 <li class="level1"><a href="#advanced">More advanced usage</a><ul><li class="level2"><a href="#functional">Functional programming extensions (optional)</a></li>
 </ul>
 </li>
@@ -743,11 +747,15 @@ Examples of usage</h1>
 <div class="line">  <span class="keyword">extern</span> BOOST_SYMBOL_EXPORT result&lt;file_handle&gt; file_create(file_handle::path_type _path, file_handle::mode _mode = file_handle::mode::read, file_handle::creation _creation = file_handle::creation::open_existing, file_handle::caching _caching = file_handle::caching::all,</div>
 <div class="line">                                                             file_handle::flag flags = file_handle::flag::none) noexcept</div>
 <div class="line">  {</div>
+<div class="line"><span class="preprocessor">#ifdef __cpp_exceptions</span></div>
+<div class="line"><span class="preprocessor"></span>    <span class="comment">// If exceptions are turned on (the above is the C++ 17 feature detection</span></div>
+<div class="line">    <span class="comment">// macro, Boost-lite provides a consistent set of these on all platforms)</span></div>
 <div class="line">    <span class="comment">// noexcept functions should always wrap their innards in a try...catch,</span></div>
 <div class="line">    <span class="comment">// if you don&#39;t ever call a potentially throwing piece of code the compiler</span></div>
-<div class="line">    <span class="comment">// will completely elide this.</span></div>
+<div class="line">    <span class="comment">// will completely elide the runtime try...catch overhead.</span></div>
 <div class="line">    <span class="keywordflow">try</span></div>
-<div class="line">    {</div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="preprocessor"></span>    {</div>
 <div class="line">      result&lt;file_handle&gt; ret(file_handle(std::move(_path), _caching, flags));</div>
 <div class="line">      native_handle_type &amp;nativeh = ret.value()._v;</div>
 <div class="line">      <span class="comment">// access_mask_from_handle_mode() returns a result&lt;ACCESS_MASK&gt;,</span></div>
@@ -787,10 +795,12 @@ Examples of usage</h1>
 <div class="line">      }</div>
 <div class="line">      <span class="keywordflow">return</span> ret;</div>
 <div class="line">    }</div>
-<div class="line">    <span class="comment">// Catch all the STL exceptions, converting them to an equivalent result&lt;&gt;</span></div>
+<div class="line"><span class="preprocessor">#ifdef __cpp_exceptions</span></div>
+<div class="line"><span class="preprocessor"></span>    <span class="comment">// Catch all the STL exceptions, converting them to an equivalent result&lt;&gt;</span></div>
 <div class="line">    <span class="comment">// containing a system_error with the appropriate error_code.</span></div>
 <div class="line">    <a class="code" href="group__macro__helpers.html#gaacf14d3429ad0bc72a6ba40e7f283b43" title="A boilerplate sequence of catch(exceptions...) returning those exceptions as their equivalent result&lt;...">BOOST_OUTCOME_CATCH_EXCEPTION_TO_RESULT</a></div>
-<div class="line">  }</div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="preprocessor"></span>  }</div>
 </div><!-- fragment --><p> Unlike the earlier example functions opening a file, the above is not a toy use case and it covers almost all of the permutations of creating or opening a file which is common to POSIX and Windows. We make use of the fact that <code>basic_monad&lt;&gt; <a class="el" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316" title="Variable of type value_t.">value()</a></code> returns a non-const lvalue ref when the monad instance is a non-const stack allocated instance, binding it to the convenience lvalue ref <code>nativeh</code> which points at a union containing the <code>HANDLE</code> later filled with the opened handle.</p>
 <p>We make use of <code><a class="el" href="monad_8hpp.html#aa977bf0b7aded30c781c35f956edc1d7" title="If the monad returned by expression m is empty, erroneous or excepted, propagate that by immediately ...">BOOST_OUTCOME_TRY(var, expr)</a></code> which is a macro expanding to:</p>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> &amp;&amp;unique = (expr);                                  <span class="comment">// &quot;unique&quot; is a preprocessor generated unique temporary identifier</span></div>
@@ -799,7 +809,7 @@ Examples of usage</h1>
 <div class="line"><span class="keyword">auto</span> var(std::move(std::move(unique).<a class="code" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316" title="Variable of type value_t.">value</a>()))</div>
 </div><!-- fragment --><p>This gets as close as is possible in C++ to the <code>try!</code> facility in Rust or Swift without using exception throws, and you'll find yourself using it a very great deal when writing code using Outcome. Like <code>try!</code>, the monad returning expression is executed and its returned monad checked to see if it has a value. If it does, the value is extracted out of the monad and placed in the variable you asked for. If it did not contain a value, the emptiness/errored/excepted state is converted into a void form monad and returned immediately from the calling function, thus propagating the errored state up the stack. You'll note we cast the stack allocated monad instance into a rvalue ref before asking for its value, this returns a rvalue ref to the value. We then pass that rvalue ref through to the variable instance constructor so the value is moved and not copied. I have disassembled this sequence on the main compilers and found that where the compiler knows for a fact that a value is being returned, all runtime overhead over a straight return of a value is eliminated.</p>
 <p>We also make use of a convenience overload of the <code>make_errored_XXX()</code> functions where a single <code>int</code> is assumed to be a POSIX code in the <code>errno</code> domain and a single <code>DWORD</code> is assumed to be a Win32 code in the <code>GetLastError()</code> domain. This allows very easy conversion of system error codes into the appropriate <code>std::error_code</code> thusly returned wrapped in a monad.</p>
-<p>Finally we also make use of the <code>BOOST_OUTCOME_CATCH_EXCEPTION_TO_RESULT</code> macro which is a long sequence of STL exception type catch clauses:</p>
+<p>Finally we also make use of the <code>BOOST_OUTCOME_CATCH_EXCEPTION_TO_RESULT</code> macro which is a long sequence of STL exception type catch clauses converting STL exception types into their equivalent error codes:</p>
 <div class="fragment"><div class="line"><span class="keywordflow">catch</span>(<span class="keyword">const</span> std::invalid_argument &amp;e)</div>
 <div class="line">{</div>
 <div class="line">  <span class="keywordflow">return</span> BOOST_OUTCOME_V1_NAMESPACE::make_errored_result&lt;void&gt;(EINVAL, e.what());</div>
@@ -848,7 +858,42 @@ Examples of usage</h1>
 <div class="line">{</div>
 <div class="line">  <span class="keywordflow">return</span> BOOST_OUTCOME_V1_NAMESPACE::make_errored_result&lt;void&gt;(EAGAIN, <span class="stringliteral">&quot;unknown exception&quot;</span>);</div>
 <div class="line">}</div>
-</div><!-- fragment --><p>You will surely note that the <code>make_errored_XXX()</code> functions actually take an <code>int</code> and an optional <code>const char *</code>. This is the purpose of <code>error_code_extended</code> which extends <code>std::error_code</code> with a pointer from which one can retrieve the original <code>what()</code> text message from the caught exception. This preserves all original information from caught exceptions, at least for the STL exception types. If you are throwing your own custom types with extra information, you should note that Outcome does provide a mechanism for the storage of arbitrary extra data in <code>error_code_extended</code>, it isn't limited at all to just a string. It is <b>safe</b> to slice <code>error_code_extended</code> into an <code>std::error_code</code>, so you can safely feed <code>error_code_extended</code> to anything consuming a <code>std::error_code</code>. Currently <code>error_code_extended</code> does not permit implicit construction from a <code>std::error_code</code>, so you need to either construct an <code>error_code_extended</code> directly or feed a <code>std::error_code</code> into the <code>error_code_extended</code> constructor.</p>
+</div><!-- fragment --><p>You will surely note that the <code>make_errored_XXX()</code> functions actually take an <code>int</code> and an optional <code>const char *</code>. This is the purpose of <code>error_code_extended</code> which extends <code>std::error_code</code> with the following synposis:</p>
+<div class="fragment"><div class="line"><span class="keyword">class </span>error_code_extended : <span class="keyword">public</span> std::error_code</div>
+<div class="line">{</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">  error_code_extended();</div>
+<div class="line">  error_code_extended(<span class="keywordtype">int</span> ec, <span class="keyword">const</span> std::error_category &amp;cat, <span class="keyword">const</span> <span class="keywordtype">char</span> *msg = <span class="keyword">nullptr</span>, <span class="keywordtype">unsigned</span> code1 = 0, <span class="keywordtype">unsigned</span> code2 = 0, <span class="keywordtype">bool</span> backtrace = <span class="keyword">false</span>);</div>
+<div class="line">  <a class="code" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316" title="Variable of type value_t.">template &lt;class ErrorCodeEnum, typename = typename std::enable_if&lt;std::is_error_code_enum&lt;ErrorCodeEnum&gt;::value</a>&gt;::type&gt;</div>
+<div class="line">  error_code_extended(ErrorCodeEnum e);</div>
+<div class="line">  <span class="keyword">explicit</span> error_code_extended(<span class="keyword">const</span> std::error_code &amp;e, <span class="keyword">const</span> <span class="keywordtype">char</span> *msg = <span class="keyword">nullptr</span>, <span class="keywordtype">unsigned</span> code1 = 0, <span class="keywordtype">unsigned</span> code2 = 0, <span class="keywordtype">bool</span> backtrace = <span class="keyword">false</span>);</div>
+<div class="line">  <span class="keyword">explicit</span> error_code_extended(std::error_code &amp;&amp;e, <span class="keyword">const</span> <span class="keywordtype">char</span> *msg = <span class="keyword">nullptr</span>, <span class="keywordtype">unsigned</span> code1 = 0, <span class="keywordtype">unsigned</span> code2 = 0, <span class="keywordtype">bool</span> backtrace = <span class="keyword">false</span>);</div>
+<div class="line">  <span class="keywordtype">void</span> assign(<span class="keywordtype">int</span> ec, <span class="keyword">const</span> std::error_category &amp;cat, <span class="keyword">const</span> <span class="keywordtype">char</span> *msg = <span class="keyword">nullptr</span>, <span class="keywordtype">unsigned</span> code1 = 0, <span class="keywordtype">unsigned</span> code2 = 0, <span class="keywordtype">bool</span> backtrace = <span class="keyword">false</span>);</div>
+<div class="line">  <span class="keywordtype">void</span> clear();</div>
+<div class="line">  </div>
+<div class="line">  <span class="comment">// New member functions</span></div>
+<div class="line">  <span class="keywordtype">size_t</span> extended_message(<span class="keywordtype">char</span> *buffer, <span class="keywordtype">size_t</span> len, <span class="keywordtype">unsigned</span> &amp;code1, <span class="keywordtype">unsigned</span> &amp;code2) <span class="keyword">const</span> noexcept;</div>
+<div class="line">  <span class="keywordtype">char</span> **backtrace() const noexcept;</div>
+<div class="line">};</div>
+<div class="line">inline std::ostream &amp;operator&lt;&lt;(std::ostream &amp;s, const error_code_extended &amp;ec);</div>
+</div><!-- fragment --><p><code>error_code_extended</code> is completely API compatible with <code>std::error_code</code> and all its member functions can be used the same way. You can supply a <code>std::error_code</code> to an extended error code, or else construct an extended error code the same way you would a STL error code. You should note that it is <b>always safe</b> to slice <code>error_code_extended</code> into an <code>std::error_code</code>, so you can safely feed <code>error_code_extended</code> to anything consuming a <code>std::error_code</code>.</p>
+<p>The main big additions are obviously the ability to add a custom string message to an extended error code, this allows the preservation of the original <code>what()</code> message when converting a thrown exception into an extended error code. You can also add two arbitrary unsigned integer codes and most interestingly, a backtrace. The extended message and backtrace can be later fetched using the new member functions, though note that the storage for these is kept in a statically allocated threadsafe ring buffer and so may vanish at some arbitrary later point when the storage gets recycled.</p>
+<p>If you are throwing your own custom types with custom information, you should note that you can create your own custom extended error code type using the same reusable microsecond fast threadsafe logging framework that Outcome uses. This won't be documented here as that framework (<code>ringbuffer_log</code>) lives in Boost-lite, but it's fairly easy to study Outcome's and Boost-lite's source code which is all on github.</p>
+<h1><a class="anchor" id="when_use"></a>
+When am I supposed to use what when?</h1>
+<p>The total available permutations may seem overwhelming at this point, but as with any fundamental primitive the possibilities are endless. However, here are some quick notes to help you decide what design pattern to use for your particular code base:</p>
+<h2><a class="anchor" id="outcome_vs_result"></a>
+When should I use a result&lt;T&gt; instead of an outcome&lt;T&gt;?</h2>
+<p><code>outcome&lt;T&gt;</code> has the potential to carry a <code>std::exception_ptr</code> which is implemented by any STL I can think of as something very similar to a <code>std::shared_ptr</code> i.e. it uses atomics to manage the reference count. Atomics are unavoidably a <em>compiler fence</em> i.e. the compiler <b>must</b> emit code at the point of the fence. Outcome has been very carefully written to let the compiler's optimiser <em>not</em> emit code thus leading to its stellar low runtime overhead. Whilst recent versions of GCC and clang seem reasonably good at eliding compiler fences caused by use of atomics in <code>std::exception_ptr</code> when the compiler is absolutely sure that no <code>std::exception_ptr</code> can be transported, where there is doubt the compiler has no choice but to generate a lot more output. <code>result&lt;T&gt;</code> cannot transport a <code>std::exception_ptr</code> and therefore doesn't force the compiler to generate output (except unfortunately on the Dinkumware STL where fetching a STL error category e.g. <code>std::generic_category()</code> uses atomics).</p>
+<p>So in short, always use <code>result&lt;T&gt;</code> where possible.</p>
+<h2><a class="anchor" id="result_vs_outcome"></a>
+When should I use an outcome&lt;T&gt; instead of a result&lt;T&gt;?</h2>
+<p>The main reason to use an <code>outcome&lt;T&gt;</code> is in the "sea of noexcept" design pattern where implementations may throw exceptions, but all public extern APIs are always noexcept. <code>outcome&lt;T&gt;</code> provides a lossless method of exporting the thrown exception but without loading the programmer with dealing with control flow reversal.</p>
+<p>However the role where <code>outcome&lt;T&gt;</code> really shines is in the "exceptions are exceptional" design pattern where the errored state means an expected error which was handled inline but the exceptioned state means an operation was aborted.</p>
+<p>The main reason I designed and wrote Outcome was to gain a universal error handling framework which could express <em>in the minimum possible overhead</em> the many error handling designs possible and even more importantly, that individual libraries could use the design pattern which best suited them whilst seamlessly interoperating with other libraries using different error handling designs. To go into a bit more detail:</p>
+<ul>
+<li>Proposed <a href="https://ned14.github.io/boost.afio/">Boost.AFIO v2</a></li>
+</ul>
 <h1><a class="anchor" id="advanced"></a>
 More advanced usage</h1>
 <p>99% of Outcome users already have everything they will ever need - Outcome is a very simple library. However "full fat" monadic functional programming is also provided using a very clean and powerful API, albeit at a fair cost to compile times.</p>

@@ -26,6 +26,10 @@ var NAVTREE =
     ] ],
     [ "Synopsis of basic_monad<> and outcome<T>, result<T> and option<T>", "index.html#synopsis", null ],
     [ "Examples of usage", "index.html#examples", null ],
+    [ "When am I supposed to use what when?", "index.html#when_use", [
+      [ "When should I use a result<T> instead of an outcome<T>?", "index.html#outcome_vs_result", null ],
+      [ "When should I use an outcome<T> instead of a result<T>?", "index.html#result_vs_outcome", null ]
+    ] ],
     [ "More advanced usage", "index.html#advanced", [
       [ "Functional programming extensions (optional)", "index.html#functional", null ]
     ] ],
@@ -65,7 +69,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 ".html",
-"index.html#source"
+"index.html#result_vs_outcome"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
