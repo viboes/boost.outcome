@@ -22,10 +22,10 @@ var NAVTREE =
       ] ]
     ] ],
     [ "Introducing Outcome", "index.html#introduction", [
-      [ "Design differences between Expected and Outcomes", "index.html#design_differences", null ]
+      [ "Design differences between Expected and Outcomes", "index.html#design_differences", null ],
+      [ "Synopsis of basic_monad<> and outcome<T>, result<T> and option<T>", "index.html#synopsis", null ],
+      [ "Examples of usage", "index.html#examples", null ]
     ] ],
-    [ "Synopsis of basic_monad<> and outcome<T>, result<T> and option<T>", "index.html#synopsis", null ],
-    [ "Examples of usage", "index.html#examples", null ],
     [ "When am I supposed to use what when?", "index.html#when_use", [
       [ "When should I use a result<T> instead of an outcome<T>?", "index.html#outcome_vs_result", null ],
       [ "When should I use an outcome<T> instead of a result<T>?", "index.html#result_vs_outcome", null ]

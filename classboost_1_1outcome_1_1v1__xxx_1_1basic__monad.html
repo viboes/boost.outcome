@@ -473,11 +473,20 @@ const <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1value__storage.htm
 <div class="line">  {</div>
 <div class="line">    outcome&lt;std::string&gt; a(<span class="stringliteral">&quot;niall&quot;</span>);</div>
 <div class="line">    <span class="comment">// Does bind work with chains of value, error, exception and empty?</span></div>
-<div class="line">    <span class="keyword">auto</span> x(a &gt;&gt; [ec](std::string) { <span class="keywordflow">return</span> ec; } &gt;&gt; [](error_code_extended) { <span class="keywordflow">return</span> std::make_exception_ptr(5); } &gt;&gt; [](std::exception_ptr) { <span class="keywordflow">return</span>; } &gt;&gt; [](outcome&lt;std::string&gt;::empty_type) { <span class="keywordflow">return</span> std::string(<span class="stringliteral">&quot;douglas&quot;</span>); });</div>
+<div class="line">    <span class="keyword">auto</span> x(a &gt;&gt; [ec](std::string) { <span class="keywordflow">return</span> ec; }                              <span class="comment">//</span></div>
+<div class="line">           &gt;&gt; [](error_code_extended) { <span class="keywordflow">return</span> std::make_exception_ptr(5); }  <span class="comment">//</span></div>
+<div class="line">           &gt;&gt; [](std::exception_ptr) { <span class="keywordflow">return</span>; }                              <span class="comment">//</span></div>
+<div class="line">           &gt;&gt; [](outcome&lt;std::string&gt;::empty_type) { <span class="keywordflow">return</span> std::string(<span class="stringliteral">&quot;douglas&quot;</span>); });</div>
 <div class="line">    BOOST_CHECK(x.get() == <span class="stringliteral">&quot;douglas&quot;</span>);</div>
-<div class="line">    <span class="keyword">auto</span> y(a &gt;&gt; [ec](std::string) -&gt; outcome&lt;int&gt; { <span class="keywordflow">return</span> ec; } &gt;&gt; [](error_code_extended) { <span class="keywordflow">return</span> std::make_exception_ptr(5); } &gt;&gt; [](std::exception_ptr) { <span class="keywordflow">return</span>; } &gt;&gt; [](outcome&lt;int&gt;::empty_type) { <span class="keywordflow">return</span> 5; });</div>
+<div class="line">    <span class="keyword">auto</span> y(a &gt;&gt; [ec](std::string) -&gt; outcome&lt;int&gt; { <span class="keywordflow">return</span> ec; }                                        <span class="comment">//</span></div>
+<div class="line">                                     &gt;&gt; [](error_code_extended) { <span class="keywordflow">return</span> std::make_exception_ptr(5); }  <span class="comment">//</span></div>
+<div class="line">                                     &gt;&gt; [](std::exception_ptr) { <span class="keywordflow">return</span>; }                              <span class="comment">//</span></div>
+<div class="line">                                     &gt;&gt; [](outcome&lt;int&gt;::empty_type) { <span class="keywordflow">return</span> 5; });</div>
 <div class="line">    BOOST_CHECK(y.get() == 5);</div>
-<div class="line">    <span class="keyword">auto</span> z(a &gt;&gt; [](std::string &amp;&amp;v) { <span class="keywordflow">return</span> std::move(v); } &gt;&gt; [](std::string &amp;&amp;v) { <span class="keywordflow">return</span> std::move(v); } &gt;&gt; [](std::string &amp;&amp;v) { <span class="keywordflow">return</span> std::move(v); } &gt;&gt; [](std::string &amp;&amp;v) { <span class="keywordflow">return</span> std::move(v); });</div>
+<div class="line">    <span class="keyword">auto</span> z(a &gt;&gt; [](std::string &amp;&amp;v) { <span class="keywordflow">return</span> std::move(v); }  <span class="comment">//</span></div>
+<div class="line">           &gt;&gt; [](std::string &amp;&amp;v) { <span class="keywordflow">return</span> std::move(v); }    <span class="comment">//</span></div>
+<div class="line">           &gt;&gt; [](std::string &amp;&amp;v) { <span class="keywordflow">return</span> std::move(v); }    <span class="comment">//</span></div>
+<div class="line">           &gt;&gt; [](std::string &amp;&amp;v) { <span class="keywordflow">return</span> std::move(v); });</div>
 <div class="line">    BOOST_CHECK(z.get() == <span class="stringliteral">&quot;niall&quot;</span>);</div>
 <div class="line">    BOOST_CHECK(a.get().empty());</div>
 <div class="line">  }</div>
