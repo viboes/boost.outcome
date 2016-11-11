@@ -45,6 +45,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li class="current"><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
@@ -87,7 +88,7 @@ $(document).ready(function(){initNavTree('index.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Groups</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(11)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -155,6 +156,12 @@ Description</h1>
 <p>This is the proposed Boost.Outcome library, a Boost C++ 14 library providing a factory and family of policy driven lightweight monadic value-or-error transports with the convenience simple specialisations of <code>outcome&lt;T&gt;</code>, <code>result&lt;T&gt;</code> and <code>option&lt;T&gt;</code>. Its main intended usage is as an ultra light weight error handling framework, providing a more expressive and type safe alternative to error code integers or enums, yet much lower overhead than exception throws. Unlike alternatives such as <code>expected&lt;T, E&gt;</code>, it works perfectly with exceptions and RTTI disabled and thus is suitable for low-latency/games/finance/SG14 users. One could view Outcome as a "hard coded", less generic <code>expected&lt;T, E&gt;</code> intended mainly as a minimum overhead universal outcome handling framework for C++, hence being named "Outcome".</p>
 <p>If you are familiar with Swift's error code throws or Rust's <code>Result&lt;T&gt;</code> and <code>Option&lt;T&gt;</code>, you will find almost identical semantics in the transports provided here. One can therefore write systems programming code using these transports in C++ in the same design pattern as when writing in Rust or Swift, and with a similarly low runtime overhead. Outcome even has a <code>try</code> macro doing the same thing as in Rust and Swift!</p>
 <dl class="section note"><dt>Note</dt><dd>Boost.Outcome has not been peer reviewed and is not part of the Boost libraries (yet). It is hoped it will enter the peer review queue in Q1 2017.</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>Add a vanilla use case snippet here</dd></dl>
+<p><br/>
+</p>
+<hr/>
+<p><br/>
+</p>
 <h1><a class="anchor" id="prerequisites"></a>
 Prerequisites and Installation</h1>
 <p>Boost.Outcome is a header only library known to work on these compilers or better:</p>
@@ -195,6 +202,11 @@ Installing via git subrepository</h2>
 Support</h2>
 <p><a href="https://stackoverflow.com/">StackOverflow</a> with the boost-outcome tag is the preferred place to ask questions on usage.</p>
 <p>If you have a problem, please review the FAQ and the wiki. Searching <a href="https://github.com/ned14/boost.outcome/issues">the issues</a> for your problem is also a good idea. If you are encountering what you think is a bug, please open an issue.</p>
+<p><br/>
+</p>
+<hr/>
+<p><br/>
+</p>
 <h1><a class="anchor" id="cpp_error_handling_history"></a>
 Design Rationale: Quick history of error handling design patterns from C++ 98 to C++ 17</h1>
 <h2><a class="anchor" id="c-style"></a>
@@ -334,6 +346,7 @@ of noexcept"* which will be described later.</p>
 <h2><a class="anchor" id="cpp17-style"></a>
 C++ 17/20 style error handling: optional&lt;T&gt; and expected&lt;T, E&gt;</h2>
 <p>C++ 17 isn't finished at the time of writing, but we are very sure that at least <a href="http://en.cppreference.com/w/cpp/utility/optional"><code>std::optional&lt;T&gt;</code></a> will be in it. It remains to be seen if LEWG's <code>expected&lt;T, E&gt;</code> will make it, if not then most STL implementations will probably ship an implementation as an experimental and if your STL does not, there is always the reference implementation at <a href="https://github.com/viboes/std-make">https://github.com/viboes/std-make</a> which ought to work on any C++ 14 compiler.</p>
+<dl class="section note"><dt>Note</dt><dd>LEWG is the C++ standard committee's Library Evolution Working Group. They work on improving the C++ standard runtime library which will gain <code>std::optional&lt;T&gt;</code> and <code>std::variant&lt;...&gt;</code> in C++ 17 and probably <code>std::expected&lt;T, E&gt;</code> in C++ 17 or C++ 20.</dd></dl>
 <p>The following discussion is based on <code>expected&lt;T, E&gt;</code> as detailed by <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0323r1.pdf">P0323R1</a> which is the latest LEWG proposal paper at the time of writing (Nov 2016) and indeed one where <code>expected&lt;T, E&gt;</code> was pared down significantly from its original proposal. It should be noted that C++ may yet end up adopting something quite different, though given how long <code>expected&lt;T, E&gt;</code> has been around by now, and how well it fits nicely between <code>optional&lt;T&gt;</code> and <code>variant&lt;T, E&gt;</code>, it would seem unlikely. <code>expected&lt;T, E&gt;</code> is intended as a strict superset of <code>optional&lt;T&gt;</code> with aspects of <a href="http://en.cppreference.com/w/cpp/utility/variant"><code>std::variant&lt;T, E&gt;</code></a>, indeed much of LEWG's remaining work on the proposal is on reconciling the small remaining semantic differences between <code>expected&lt;T, nullopt_t&gt;</code> and <code>optional&lt;T&gt;</code>.</p>
 <p>The original prototype Boost.Expected library was a large and very complex beastie - I was fortunate to be employed on a contract in 2015 where I saw it deployed at scale into a large C++ codebase. Indeed, much of what I witnessed there had a big impact in how Outcome ended up being designed. P0323R1 proposes an enormously simplified implementation which ought to fix all of the showstopper problems with the original that I am aware of, and P0323R1's reduced <code>expected&lt;T, E&gt;</code> has ended up having a huge resemblance to Outcome in every day usage. It is heartening that the committee have made most of the changes I also made in Outcome, as that suggests I am on the right track. Outcome's slightly different design still contributes a lot of value for the specific use of error handling in my opinion, as we shall hopefully see next.</p>
 <h3><a class="anchor" id="optional"></a>
@@ -481,6 +494,11 @@ The "Exceptions are exceptional, errors are not failure" design pattern</h3>
 <div class="line">}</div>
 </div><!-- fragment --><p>This "separation of concerns" pattern has a great aesthetic appeal to most, including myself. This is likely why Rust adopted it.</p>
 <p>However I must admit that after more than a year of using Outcome I haven't found myself using this design a great deal. It fits well for some codebases, but very much a minority. The problem in my opinion is that the cost of writing and maintaining correct and fully tested code which can invert control flow at any moment is high and typically very much underestimated. Therefore, it is only in some code bases that it is worth placing that high burden on the code, and in most code bases it is not. Hence in most code bases I write forwards only execution code where there is no possible way of inverting control flow at all i.e. no exceptions can be thrown, despite that exceptions are available.</p>
+<p><br/>
+</p>
+<hr/>
+<p><br/>
+</p>
 <h1><a class="anchor" id="introduction"></a>
 Introducing Outcome</h1>
 <p>After that literature review of how C++ has implemented error handling and how code might implement error handling from C++ 17/20 onwards, one might think that Outcome and Expected are interchangeable. They do cover substantially similar ground and in the semantic sense they are the same thing, however where Expected is intended as a generic fundamental type useful for many things, Outcome is specifically intended as a universal error handling framework capable of lossless propagation of all possible kinds of C++ error with the least possible runtime and compile time overhead. It could be considered as a "fixed feature" Expected specialised for the use case of handling errors only.</p>
@@ -812,7 +830,8 @@ Examples of usage</h2>
 <div class="line">    <a class="code" href="group__macro__helpers.html#gaacf14d3429ad0bc72a6ba40e7f283b43" title="A boilerplate sequence of catch(exceptions...) returning those exceptions as their equivalent result&lt;...">BOOST_OUTCOME_CATCH_EXCEPTION_TO_RESULT</a></div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"><span class="preprocessor"></span>  }</div>
-</div><!-- fragment --><p> Unlike the earlier example functions opening a file, the above is not a toy use case and it covers almost all of the permutations of creating or opening a file which are common to POSIX and Windows. We make use of the fact that <code>basic_monad&lt;&gt;</code><code>::</code><code><a class="el" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316" title="Variable of type value_t.">value()</a></code> returns a non-const lvalue ref when the monad instance is a non-const stack allocated instance, binding it to the convenience lvalue ref <code>nativeh</code> which points at a union containing the <code>HANDLE</code> later filled with the opened handle.</p>
+</div><!-- fragment --> <dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Todo:</a></b></dt><dd>Add link to whole source code in an online compiler explorer so end users can play with the use case</dd></dl>
+<p>Unlike the earlier example functions opening a file, the above is not a toy use case and it covers almost all of the permutations of creating or opening a file which are common to POSIX and Windows. We make use of the fact that <code>basic_monad&lt;&gt;</code><code>::</code><code><a class="el" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316" title="Variable of type value_t.">value()</a></code> returns a non-const lvalue ref when the monad instance is a non-const stack allocated instance, binding it to the convenience lvalue ref <code>nativeh</code> which points at a union containing the <code>HANDLE</code> later filled with the opened handle.</p>
 <p>We make use of <code><a class="el" href="monad_8hpp.html#aa977bf0b7aded30c781c35f956edc1d7" title="If the monad returned by expression m is empty, erroneous or excepted, propagate that by immediately ...">BOOST_OUTCOME_TRY(var, expr)</a></code> which is a macro expanding to:</p>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> &amp;&amp;unique = (expr);                                  <span class="comment">// &quot;unique&quot; is a preprocessor generated unique temporary identifier</span></div>
 <div class="line"><span class="keywordflow">if</span>(!unique.has_value())</div>
@@ -893,6 +912,11 @@ Examples of usage</h2>
 </div><!-- fragment --><p><code>error_code_extended</code> is completely API compatible with <code>std::error_code</code> and all its member functions can be used the same way. You can supply a <code>std::error_code</code> to an extended error code, or else construct an extended error code the same way you would a STL error code. You should note that it is <b>always safe</b> to slice <code>error_code_extended</code> into an <code>std::error_code</code>, so you can safely feed <code>error_code_extended</code> to anything consuming a <code>std::error_code</code>.</p>
 <p>The main big additions are obviously the ability to add a custom string message to an extended error code, this allows the preservation of the original <code>what()</code> message when converting a thrown exception into an extended error code. You can also add two arbitrary unsigned integer codes and most interestingly, a backtrace of the stack at the point of construction. The extended message and backtrace can be later fetched using the new member functions, though note that the storage for these is kept in a statically allocated threadsafe ring buffer and so may vanish at some arbitrary later point when the storage gets recycled. If this happens, <code>extended_message()</code> will return zero characters written and <code>backtrace()</code> will return a null pointer.</p>
 <p>If you are throwing your own custom types with custom information, you should note that you can create your own custom extended error code type using the same reusable microsecond fast threadsafe logging framework that Outcome uses. This won't be documented here as that framework (<code>ringbuffer_log</code>) lives in Boost-lite, but it's fairly easy to study Outcome's and Boost-lite's source code all of which is on github.</p>
+<p><br/>
+</p>
+<hr/>
+<p><br/>
+</p>
 <h1><a class="anchor" id="when_use"></a>
 When am I supposed to use what when?</h1>
 <p>The total available permutations may seem overwhelming at this point, because as with any fundamental primitive the possibilities are endless. However, here are some quick notes to help you decide what design pattern to use for your particular code base:</p>
@@ -911,6 +935,11 @@ are exceptional" combined with "sea of noexcept" design pattern where the errore
 <li>Proposed <a href="https://github.com/ned14/boost.kerneltest">Boost.KernelTest</a> is a kernel based testing infrastructure which uses Outcomes as the storage for each kernel permutation run in its permutation tables of preconditions, postconditions, parameters and outcomes. KernelTest itself is written using the "exceptions are exceptional" design pattern where expected errors are returned via outcomes but unexpected errors which abort the test use thrown exceptions which are collected into <code>outcome&lt;T&gt;</code>'s. AFIO v2's test suite is written using KernelTest.</li>
 <li>Planned Boost.BLOBStore will be a versioned, ACID transactional key to BLOB store written using AFIO v2 which will use both the "sea of noexcept" and the "exceptions are exceptional" design patterns together. This allows user supplied callbacks to throw exceptions which aborts the current transaction and for those exceptions to be propagated, if desired, out of BLOBStore whilst the internal implementation of BLOBStore and indeed its public API is all noexcept and never throws exceptions (writing correct filesystem code is hard enough without dealing with unexpected control flow reversal). BLOBStore will also use KernelTest for its test suite.</li>
 </ul>
+<p><br/>
+</p>
+<hr/>
+<p><br/>
+</p>
 <h1><a class="anchor" id="advanced"></a>
 More advanced usage</h1>
 <p>99% of Outcome users already have everything they will ever need - Outcome is a very simple library. However "full fat" monadic functional programming is also provided using a very clean and powerful API, albeit at a fair cost to compile times.</p>

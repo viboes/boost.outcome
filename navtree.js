@@ -33,6 +33,7 @@ var NAVTREE =
     [ "More advanced usage", "index.html#advanced", [
       [ "Functional programming extensions (optional)", "index.html#functional", null ]
     ] ],
+    [ "Todo List", "todo.html", null ],
     [ "Modules", "modules.html", "modules" ],
     [ "Namespaces", null, [
       [ "Namespace List", "namespaces.html", "namespaces" ],
