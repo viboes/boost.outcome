@@ -156,8 +156,34 @@ Description</h1>
 <p>This is the proposed Boost.Outcome library, a Boost C++ 14 library providing a factory and family of policy driven lightweight monadic value-or-error transports with the convenience simple specialisations of <code>outcome&lt;T&gt;</code>, <code>result&lt;T&gt;</code> and <code>option&lt;T&gt;</code>. Its main intended usage is as an ultra light weight error handling framework, providing a more expressive and type safe alternative to error code integers or enums, yet much lower overhead than exception throws. Unlike alternatives such as <code>expected&lt;T, E&gt;</code>, it works perfectly with exceptions and RTTI disabled and thus is suitable for low-latency/games/finance/SG14 users. One could view Outcome as a "hard coded", less generic <code>expected&lt;T, E&gt;</code> intended mainly as a minimum overhead universal outcome handling framework for C++, hence being named "Outcome".</p>
 <p>If you are familiar with Swift's error code throws or Rust's <code>Result&lt;T&gt;</code> and <code>Option&lt;T&gt;</code>, you will find almost identical semantics in the transports provided here. One can therefore write systems programming code using these transports in C++ in the same design pattern as when writing in Rust or Swift, and with a similarly low runtime overhead. Outcome even has a <code>try</code> macro doing the same thing as in Rust and Swift!</p>
 <dl class="section note"><dt>Note</dt><dd>Boost.Outcome has not been peer reviewed and is not part of the Boost libraries (yet). It is hoped it will enter the peer review queue in Q1 2017.</dd></dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>Add a vanilla use case snippet here</dd></dl>
-<p><br/>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span>bo = <a class="code" href="group__config.html#gab113de43db2cd2a4cf1e33b54294944a" title="The namespace of this Boost.Outcome v1 which will be some unknown inline namespace starting with v1_ ...">BOOST_OUTCOME_V1_NAMESPACE</a>;</div>
+<div class="line"></div>
+<div class="line"><span class="comment">// Returns either an int, an error code or an exception ptr.</span></div>
+<div class="line"><span class="comment">// One might model the error code as a programmer expected</span></div>
+<div class="line"><span class="comment">// failure e.g. name not found, whereas the exception ptr</span></div>
+<div class="line"><span class="comment">// might mean catastrophic unexpected failure e.g. storage</span></div>
+<div class="line"><span class="comment">// is missing. Typically you abort on exception, but handle</span></div>
+<div class="line"><span class="comment">// errors. Note the noexcept, this means that calling this</span></div>
+<div class="line"><span class="comment">// function will NEVER invert execution flow unexpectedly.</span></div>
+<div class="line">bo::outcome&lt;int&gt; getConfigParam(std::string name) noexcept;</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">extern</span> <span class="keywordtype">void</span> runWithMax(<span class="keywordtype">int</span>);</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <span class="comment">// Get what the user has set for the MaxValue parameter</span></div>
+<div class="line">  <span class="keyword">auto</span> oi = getConfigParam(<span class="stringliteral">&quot;MaxValue&quot;</span>);</div>
+<div class="line">  <span class="comment">// Did it return a valid integer?</span></div>
+<div class="line">  <span class="keywordflow">if</span>(oi)</div>
+<div class="line">    runWithMax(*oi);</div>
+<div class="line">  <span class="comment">// Did it return a catastrophic failure?</span></div>
+<div class="line">  <span class="keywordflow">else</span> <span class="keywordflow">if</span>(oi.has_exception())</div>
+<div class="line">    std::rethrow_exception(oi.exception());</div>
+<div class="line">  <span class="comment">// Did it return an expected failure?</span></div>
+<div class="line">  <span class="keywordflow">else</span></div>
+<div class="line">    std::cerr &lt;&lt; <span class="stringliteral">&quot;getConfigParam reports error &quot;</span> &lt;&lt; oi.error() &lt;&lt; std::endl;</div>
+<div class="line">}</div>
+</div><!-- fragment --><p> <br/>
 </p>
 <hr/>
 <p><br/>
@@ -345,7 +371,7 @@ of noexcept"* which will be described later.</p>
 </ol>
 <h2><a class="anchor" id="cpp17-style"></a>
 C++ 17/20 style error handling: optional&lt;T&gt; and expected&lt;T, E&gt;</h2>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Todo:</a></b></dt><dd>Relocate this entire discussion about Expected into a separate section outside the tutorial. Continue here with a purely Outcome based implementation of the toy open file function. There is too great a jump between the nice baby steps up until now and suddenly leaping into WG21 speak and future C++ 17 classes which tutorial users don't care about nor need to know about, they are here for Outcome, not Expected.</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>Relocate this entire discussion about Expected into a separate section outside the tutorial. Continue here with a purely Outcome based implementation of the toy open file function. There is too great a jump between the nice baby steps up until now and suddenly leaping into WG21 speak and future C++ 17 classes which tutorial users don't care about nor need to know about, they are here for Outcome, not Expected.</dd></dl>
 <p>C++ 17 isn't finished at the time of writing, but we are very sure that at least <a href="http://en.cppreference.com/w/cpp/utility/optional"><code>std::optional&lt;T&gt;</code></a> will be in it. It remains to be seen if LEWG's <code>expected&lt;T, E&gt;</code> will make it, if not then most STL implementations will probably ship an implementation as an experimental and if your STL does not, there is always the reference implementation at <a href="https://github.com/viboes/std-make">https://github.com/viboes/std-make</a> which ought to work on any C++ 14 compiler.</p>
 <dl class="section note"><dt>Note</dt><dd>LEWG is the C++ standard committee's Library Evolution Working Group. They work on improving the C++ standard runtime library which will gain <code>std::optional&lt;T&gt;</code> and <code>std::variant&lt;...&gt;</code> in C++ 17 and probably <code>std::expected&lt;T, E&gt;</code> in C++ 17 or C++ 20.</dd></dl>
 <p>The following discussion is based on <code>expected&lt;T, E&gt;</code> as detailed by <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0323r1.pdf">P0323R1</a> which is the latest LEWG proposal paper at the time of writing (Nov 2016) and indeed one where <code>expected&lt;T, E&gt;</code> was pared down significantly from its original proposal. It should be noted that C++ may yet end up adopting something quite different, though given how long <code>expected&lt;T, E&gt;</code> has been around by now, and how well it fits nicely between <code>optional&lt;T&gt;</code> and <code>variant&lt;T, E&gt;</code>, it would seem unlikely. <code>expected&lt;T, E&gt;</code> is intended as a strict superset of <code>optional&lt;T&gt;</code> with aspects of <a href="http://en.cppreference.com/w/cpp/utility/variant"><code>std::variant&lt;T, E&gt;</code></a>, indeed much of LEWG's remaining work on the proposal is on reconciling the small remaining semantic differences between <code>expected&lt;T, nullopt_t&gt;</code> and <code>optional&lt;T&gt;</code>.</p>
@@ -831,7 +857,7 @@ Examples of usage</h2>
 <div class="line">    <a class="code" href="group__macro__helpers.html#gaacf14d3429ad0bc72a6ba40e7f283b43" title="A boilerplate sequence of catch(exceptions...) returning those exceptions as their equivalent result&lt;...">BOOST_OUTCOME_CATCH_EXCEPTION_TO_RESULT</a></div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"><span class="preprocessor"></span>  }</div>
-</div><!-- fragment --> <dl class="todo"><dt><b><a class="el" href="todo.html#_todo000003">Todo:</a></b></dt><dd>Add link to whole source code in an online compiler explorer so end users can play with the use case</dd></dl>
+</div><!-- fragment --> <dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Todo:</a></b></dt><dd>Add link to whole source code in an online compiler explorer so end users can play with the use case</dd></dl>
 <p>Unlike the earlier example functions opening a file, the above is not a toy use case and it covers almost all of the permutations of creating or opening a file which are common to POSIX and Windows. We make use of the fact that <code>basic_monad&lt;&gt;</code><code>::</code><code><a class="el" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316" title="Variable of type value_t.">value()</a></code> returns a non-const lvalue ref when the monad instance is a non-const stack allocated instance, binding it to the convenience lvalue ref <code>nativeh</code> which points at a union containing the <code>HANDLE</code> later filled with the opened handle.</p>
 <p>We make use of <code><a class="el" href="monad_8hpp.html#aa977bf0b7aded30c781c35f956edc1d7" title="If the monad returned by expression m is empty, erroneous or excepted, propagate that by immediately ...">BOOST_OUTCOME_TRY(var, expr)</a></code> which is a macro expanding to:</p>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> &amp;&amp;unique = (expr);                                  <span class="comment">// &quot;unique&quot; is a preprocessor generated unique temporary identifier</span></div>
