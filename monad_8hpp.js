@@ -6,7 +6,7 @@ var monad_8hpp =
     [ "callable_argument_traits", "structboost_1_1outcome_1_1v1__xxx_1_1traits_1_1callable__argument__traits.html", "structboost_1_1outcome_1_1v1__xxx_1_1traits_1_1callable__argument__traits" ],
     [ "basic_promise", "classboost_1_1outcome_1_1v1__xxx_1_1lightweight__futures_1_1basic__promise.html", null ],
     [ "basic_future", "classboost_1_1outcome_1_1v1__xxx_1_1lightweight__futures_1_1basic__future.html", null ],
-    [ "inplace_t", "structboost_1_1outcome_1_1v1__xxx_1_1inplace__t.html", null ],
+    [ "inplace_t", "structboost_1_1outcome_1_1v1__xxx_1_1inplace__t.html", "structboost_1_1outcome_1_1v1__xxx_1_1inplace__t" ],
     [ "is_monad", "structboost_1_1outcome_1_1v1__xxx_1_1is__monad.html", null ],
     [ "empty_type", "structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1empty__type.html", "structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1empty__type" ],
     [ "_is_constructible", "structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1__is__constructible.html", null ],
