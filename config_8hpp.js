@@ -1,8 +1,8 @@
 var config_8hpp =
 [
     [ "BOOST_OUTCOME_CONFIGURED", "config_8hpp.html#af7506e91edc280b1ec1a2548fb24c767", null ],
+    [ "BOOST_OUTCOME_CONSTEXPR", "config_8hpp.html#a4bbc934272eb8d71032b5274826764fd", null ],
     [ "BOOST_OUTCOME_CONVINCE_MSVC", "config_8hpp.html#aced1bb539dfee0d867a3df0e328d264f", null ],
-    [ "BOOST_OUTCOME_CXX14_CONSTEXPR", "config_8hpp.html#a9d1a4c7393b3af2b36822fbb5dfe764c", null ],
     [ "BOOST_OUTCOME_NEED_DEFINE", "config_8hpp.html#a85249d76d565e22c63fd2ee1df63c0e7", null ],
     [ "BOOST_OUTCOME_NEED_DEFINE_00", "config_8hpp.html#ae92084d355192450db1b1adfd10e6ace", null ],
     [ "BOOST_OUTCOME_NEED_DEFINE_DESCRIPTION", "config_8hpp.html#a7a5af0b99b2d7b61b148ae30e90d7465", null ],
@@ -19,5 +19,5 @@ var config_8hpp =
     [ "BOOST_OUTCOME_V1_NAMESPACE_END", "config_8hpp.html#gab3e267fb24a8ce5fe29ddf36f4f3c10b", null ],
     [ "BOOST_OUTCOME_V1_NAMESPACE_EXPORT_BEGIN", "config_8hpp.html#gaf9fedf88f681cae78a5f73a4194ce083", null ],
     [ "BOOST_OUTCOME_V1_STL11_IMPL", "config_8hpp.html#ga587a1ae144f7e50e52a3340457ac9e26", null ],
-    [ "do_fatal_exit", "config_8hpp.html#a922e3f6ae34d8dae64899ad6051522f0", null ]
+    [ "do_fatal_exit", "config_8hpp.html#ad4c60996cec241c86c3732dd976c88d0", null ]
 ];

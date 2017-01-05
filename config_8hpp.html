@@ -115,7 +115,7 @@ $(document).ready(function(){initNavTree('config_8hpp.html','');});
 
 <p>Configures a compiler environment for Outcome header code.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;../boost-lite/include/boost/config.hpp&quot;</code><br/>
+<div class="textblock"><code>#include &quot;../boost-lite/include/config.hpp&quot;</code><br/>
 <code>#include &quot;../boost-lite/include/import.h&quot;</code><br/>
 <code>#include &quot;../boost-lite/include/bind/stl11/std/system_error&quot;</code><br/>
 <code>#include &lt;cassert&gt;</code><br/>
@@ -180,9 +180,9 @@ Macros</h2></td></tr>
 <tr class="memitem:a85249d76d565e22c63fd2ee1df63c0e7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a85249d76d565e22c63fd2ee1df63c0e7"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>BOOST_OUTCOME_NEED_DEFINE</b>&#160;&#160;&#160;1</td></tr>
 <tr class="separator:a85249d76d565e22c63fd2ee1df63c0e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9d1a4c7393b3af2b36822fbb5dfe764c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9d1a4c7393b3af2b36822fbb5dfe764c"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>BOOST_OUTCOME_CXX14_CONSTEXPR</b>&#160;&#160;&#160;BOOST_CXX14_CONSTEXPR</td></tr>
-<tr class="separator:a9d1a4c7393b3af2b36822fbb5dfe764c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4bbc934272eb8d71032b5274826764fd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4bbc934272eb8d71032b5274826764fd"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BOOST_OUTCOME_CONSTEXPR</b></td></tr>
+<tr class="separator:a4bbc934272eb8d71032b5274826764fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aced1bb539dfee0d867a3df0e328d264f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aced1bb539dfee0d867a3df0e328d264f"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>BOOST_OUTCOME_CONVINCE_MSVC</b></td></tr>
 <tr class="separator:aced1bb539dfee0d867a3df0e328d264f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -209,9 +209,9 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a922e3f6ae34d8dae64899ad6051522f0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a922e3f6ae34d8dae64899ad6051522f0"></a>
-BOOST_NORETURN void&#160;</td><td class="memItemRight" valign="bottom"><b>boost::outcome::v1_xxx::detail::do_fatal_exit</b> (const char *expr)</td></tr>
-<tr class="separator:a922e3f6ae34d8dae64899ad6051522f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4c60996cec241c86c3732dd976c88d0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad4c60996cec241c86c3732dd976c88d0"></a>
+BOOSTLITE_NORETURN void&#160;</td><td class="memItemRight" valign="bottom"><b>boost::outcome::v1_xxx::detail::do_fatal_exit</b> (const char *expr)</td></tr>
+<tr class="separator:ad4c60996cec241c86c3732dd976c88d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Configures a compiler environment for Outcome header code. </p>
