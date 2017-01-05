@@ -139,7 +139,7 @@ $(document).ready(function(){initNavTree('index.html','');});
 </div>
 <div class="textblock"><center><table  border="0">
 <tr>
-<td align="center"><a href="http://my.cdash.org/index.php?project=Boost.Outcome">CTest summary</a><br/>
+<td align="center"><a href="https://dedi4.nedprod.com/static/files/boost.outcome-v1.0-source-latest.tar.xz">Source Tarball</a>  </td><td align="center"><a href="https://github.com/ned14/boost.outcome">Boost.Outcome on GitHub</a>  </td><td align="center"><a href="http://my.cdash.org/index.php?project=Boost.Outcome">CTest summary</a><br/>
 <a href="http://my.cdash.org/index.php?project=Boost.Outcome">dashboard</a>  </td><td align="center"><a href="https://travis-ci.org/ned14/boost.outcome">Linux CI:</a><div class="image">
 <img src="https://travis-ci.org/ned14/boost.outcome.svg?branch=master" />
 </div>
@@ -207,23 +207,28 @@ Prerequisites and Installation</h1>
 <p>Each commit is tested by Travis and Appveyor. A nightly cronjob figures out which latest commit all tests passed for all supported platforms and pushes a distribution to the following package repositories:</p>
 <h2><a class="anchor" id="windows"></a>
 Installing on Windows</h2>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>This is yet to be implemented</dd></dl>
 <p>If you are using VS15 or better it comes with VCPkg, a package manager. Open a Developer Tools prompt and type:</p>
 <p><code>vcpkg install <a class="el" href="namespaceboost_1_1outcome.html" title="The Outcome namespace.">boost.outcome</a></code></p>
 <p>Once installed it is available for usage in any Visual Studio project.</p>
 <h2><a class="anchor" id="linux"></a>
 Installing on Ubuntu/Debian</h2>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Todo:</a></b></dt><dd>This is yet to be implemented</dd></dl>
 <pre>add-apt-repository ppa:ned14/boost.outcome
 apt-get install libboost-outcome-dev</pre><h2><a class="anchor" id="osx"></a>
 Installing on OS X</h2>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000003">Todo:</a></b></dt><dd>This is yet to be implemented</dd></dl>
 <p>Assuming you have <a href="http://brew.sh/">homebrew</a> installed, then:</p>
 <pre>brew tap ned14/tap
 brew install <a class="el" href="namespaceboost_1_1outcome.html" title="The Outcome namespace.">boost.outcome</a></pre><h2><a class="anchor" id="source"></a>
 Installing via source archive</h2>
-<p>Visit <a href="https://dedi4.nedprod.com/static/files/">https://dedi4.nedprod.com/static/files/</a> and download the latest <a class="el" href="namespaceboost_1_1outcome.html" title="The Outcome namespace.">boost.outcome</a> tarball. Tarballs are only uploaded if everything built and all tests passed.</p>
+<p><a href="https://dedi4.nedprod.com/static/files/boost.outcome-v1.0-source-latest.tar.xz">You can find the latest boost.outcome to build and pass on all the CIs here.</a> <a href="https://dedi4.nedprod.com/static/files/boost.outcome">https://dedi4.nedprod.com/static/files/boost.outcome</a> also retains the last month of CI passing tarballs.</p>
 <h2><a class="anchor" id="repo"></a>
 Installing via git subrepository</h2>
-<p><code>git submodule add <a href="https://github.com/ned14/boost.outcome">https://github.com/ned14/boost.outcome</a></code></p>
-<p>The master branch is automatically set to whichever was the last commit on develop branch to pass all unit tests.</p>
+<pre>git submodule add <a href="https://github.com/ned14/boost.outcome">https://github.com/ned14/boost.outcome</a>
+cd <a class="el" href="namespaceboost_1_1outcome.html" title="The Outcome namespace.">boost.outcome</a>
+git submodule update --init --recursive
+</pre><p>The master branch is automatically set to whichever was the last commit on develop branch to pass all unit tests on Linux and Windows.</p>
 <h2><a class="anchor" id="support"></a>
 Support</h2>
 <p><a href="https://stackoverflow.com/">StackOverflow</a> with the boost-outcome tag is the preferred place to ask questions on usage.</p>
@@ -371,7 +376,7 @@ of noexcept"* which will be described later.</p>
 </ol>
 <h2><a class="anchor" id="cpp17-style"></a>
 C++ 17/20 style error handling: optional&lt;T&gt; and expected&lt;T, E&gt;</h2>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>Relocate this entire discussion about Expected into a separate section outside the tutorial. Continue here with a purely Outcome based implementation of the toy open file function. There is too great a jump between the nice baby steps up until now and suddenly leaping into WG21 speak and future C++ 17 classes which tutorial users don't care about nor need to know about, they are here for Outcome, not Expected.</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000004">Todo:</a></b></dt><dd>Relocate this entire discussion about Expected into a separate section outside the tutorial. Continue here with a purely Outcome based implementation of the toy open file function. There is too great a jump between the nice baby steps up until now and suddenly leaping into WG21 speak and future C++ 17 classes which tutorial users don't care about nor need to know about, they are here for Outcome, not Expected.</dd></dl>
 <p>C++ 17 isn't finished at the time of writing, but we are very sure that at least <a href="http://en.cppreference.com/w/cpp/utility/optional"><code>std::optional&lt;T&gt;</code></a> will be in it. It remains to be seen if LEWG's <code>expected&lt;T, E&gt;</code> will make it, if not then most STL implementations will probably ship an implementation as an experimental and if your STL does not, there is always the reference implementation at <a href="https://github.com/viboes/std-make">https://github.com/viboes/std-make</a> which ought to work on any C++ 14 compiler.</p>
 <dl class="section note"><dt>Note</dt><dd>LEWG is the C++ standard committee's Library Evolution Working Group. They work on improving the C++ standard runtime library which will gain <code>std::optional&lt;T&gt;</code> and <code>std::variant&lt;...&gt;</code> in C++ 17 and probably <code>std::expected&lt;T, E&gt;</code> in C++ 17 or C++ 20.</dd></dl>
 <p>The following discussion is based on <code>expected&lt;T, E&gt;</code> as detailed by <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0323r1.pdf">P0323R1</a> which is the latest LEWG proposal paper at the time of writing (Nov 2016) and indeed one where <code>expected&lt;T, E&gt;</code> was pared down significantly from its original proposal. It should be noted that C++ may yet end up adopting something quite different, though given how long <code>expected&lt;T, E&gt;</code> has been around by now, and how well it fits nicely between <code>optional&lt;T&gt;</code> and <code>variant&lt;T, E&gt;</code>, it would seem unlikely. <code>expected&lt;T, E&gt;</code> is intended as a strict superset of <code>optional&lt;T&gt;</code> with aspects of <a href="http://en.cppreference.com/w/cpp/utility/variant"><code>std::variant&lt;T, E&gt;</code></a>, indeed much of LEWG's remaining work on the proposal is on reconciling the small remaining semantic differences between <code>expected&lt;T, nullopt_t&gt;</code> and <code>optional&lt;T&gt;</code>.</p>
@@ -857,7 +862,7 @@ Examples of usage</h2>
 <div class="line">    <a class="code" href="group__macro__helpers.html#gaacf14d3429ad0bc72a6ba40e7f283b43" title="A boilerplate sequence of catch(exceptions...) returning those exceptions as their equivalent result&lt;...">BOOST_OUTCOME_CATCH_EXCEPTION_TO_RESULT</a></div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"><span class="preprocessor"></span>  }</div>
-</div><!-- fragment --> <dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Todo:</a></b></dt><dd>Add link to whole source code in an online compiler explorer so end users can play with the use case</dd></dl>
+</div><!-- fragment --> <dl class="todo"><dt><b><a class="el" href="todo.html#_todo000005">Todo:</a></b></dt><dd>Add link to whole source code in an online compiler explorer so end users can play with the use case</dd></dl>
 <p>Unlike the earlier example functions opening a file, the above is not a toy use case and it covers almost all of the permutations of creating or opening a file which are common to POSIX and Windows. We make use of the fact that <code>basic_monad&lt;&gt;</code><code>::</code><code><a class="el" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316" title="Variable of type value_t.">value()</a></code> returns a non-const lvalue ref when the monad instance is a non-const stack allocated instance, binding it to the convenience lvalue ref <code>nativeh</code> which points at a union containing the <code>HANDLE</code> later filled with the opened handle.</p>
 <p>We make use of <code><a class="el" href="monad_8hpp.html#aa977bf0b7aded30c781c35f956edc1d7" title="If the monad returned by expression m is empty, erroneous or excepted, propagate that by immediately ...">BOOST_OUTCOME_TRY(var, expr)</a></code> which is a macro expanding to:</p>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> &amp;&amp;unique = (expr);                                  <span class="comment">// &quot;unique&quot; is a preprocessor generated unique temporary identifier</span></div>
