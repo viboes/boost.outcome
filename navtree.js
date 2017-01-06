@@ -2,12 +2,7 @@ var NAVTREE =
 [
   [ "boost.outcome", "index.html", [
     [ "Description", "index.html#description", null ],
-    [ "Prerequisites and Installation", "index.html#prerequisites", [
-      [ "Installing on Windows", "index.html#windows", null ],
-      [ "Installing on Ubuntu/Debian", "index.html#linux", null ],
-      [ "Installing on OS X", "index.html#osx", null ],
-      [ "Installing via source archive", "index.html#source", null ],
-      [ "Installing via git subrepository", "index.html#repo", null ],
+    [ "Prerequisites", "index.html#prerequisites", [
       [ "Support", "index.html#support", null ]
     ] ],
     [ "Design Rationale: Quick history of error handling design patterns from C++ 98 to C++ 17", "index.html#cpp_error_handling_history", [
@@ -32,6 +27,10 @@ var NAVTREE =
     ] ],
     [ "More advanced usage", "index.html#advanced", [
       [ "Functional programming extensions (optional)", "index.html#functional", null ]
+    ] ],
+    [ "installation", "md_installation.html", null ],
+    [ "Installing, building and testing Outcome", "installation.html", [
+      [ "Running the unit test suite", "installation.html#unittests", null ]
     ] ],
     [ "Todo List", "todo.html", null ],
     [ "Modules", "modules.html", "modules" ],
@@ -70,7 +69,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 ".html",
-"index.html#result_vs_outcome"
+"index.html#when_use"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

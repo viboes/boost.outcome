@@ -2,7 +2,6 @@ var config_8hpp =
 [
     [ "BOOST_OUTCOME_CONFIGURED", "config_8hpp.html#af7506e91edc280b1ec1a2548fb24c767", null ],
     [ "BOOST_OUTCOME_CONSTEXPR", "config_8hpp.html#a4bbc934272eb8d71032b5274826764fd", null ],
-    [ "BOOST_OUTCOME_CONVINCE_MSVC", "config_8hpp.html#aced1bb539dfee0d867a3df0e328d264f", null ],
     [ "BOOST_OUTCOME_NEED_DEFINE", "config_8hpp.html#a85249d76d565e22c63fd2ee1df63c0e7", null ],
     [ "BOOST_OUTCOME_NEED_DEFINE_00", "config_8hpp.html#ae92084d355192450db1b1adfd10e6ace", null ],
     [ "BOOST_OUTCOME_NEED_DEFINE_DESCRIPTION", "config_8hpp.html#a7a5af0b99b2d7b61b148ae30e90d7465", null ],

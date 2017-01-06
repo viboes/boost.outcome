@@ -104,12 +104,7 @@ $(document).ready(function(){initNavTree('index.html','');});
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
 <ul><li class="level1"><a href="#description">Description</a></li>
-<li class="level1"><a href="#prerequisites">Prerequisites and Installation</a><ul><li class="level2"><a href="#windows">Installing on Windows</a></li>
-<li class="level2"><a href="#linux">Installing on Ubuntu/Debian</a></li>
-<li class="level2"><a href="#osx">Installing on OS X</a></li>
-<li class="level2"><a href="#source">Installing via source archive</a></li>
-<li class="level2"><a href="#repo">Installing via git subrepository</a></li>
-<li class="level2"><a href="#support">Support</a></li>
+<li class="level1"><a href="#prerequisites">Prerequisites</a><ul><li class="level2"><a href="#support">Support</a></li>
 </ul>
 </li>
 <li class="level1"><a href="#cpp_error_handling_history">Design Rationale: Quick history of error handling design patterns from C++ 98 to C++ 17</a><ul><li class="level2"><a href="#c-style">C style error handling: integer returns</a></li>
@@ -137,9 +132,11 @@ $(document).ready(function(){initNavTree('index.html','');});
 </li>
 </ul>
 </div>
-<div class="textblock"><center><table  border="0">
+<div class="textblock"><center><table  border="0" cellpadding="4">
 <tr>
-<td align="center"><a href="https://dedi4.nedprod.com/static/files/boost.outcome-v1.0-source-latest.tar.xz">Source Tarball</a>  </td><td align="center"><a href="https://github.com/ned14/boost.outcome">Boost.Outcome on GitHub</a>  </td><td align="center"><a href="http://my.cdash.org/index.php?project=Boost.Outcome">CTest summary</a><br/>
+<td align="center"><a href="https://dedi4.nedprod.com/static/files/boost.outcome-v1.0-source-latest.tar.xz">Source</a><br/>
+<a href="https://dedi4.nedprod.com/static/files/boost.outcome-v1.0-source-latest.tar.xz">Tarball</a>  </td><td align="center"><a href="https://github.com/ned14/boost.outcome">Boost.Outcome</a><br/>
+<a href="https://github.com/ned14/boost.outcome">on GitHub</a>  </td><td align="center"><a href="http://my.cdash.org/index.php?project=Boost.Outcome">CTest summary</a><br/>
 <a href="http://my.cdash.org/index.php?project=Boost.Outcome">dashboard</a>  </td><td align="center"><a href="https://travis-ci.org/ned14/boost.outcome">Linux CI:</a><div class="image">
 <img src="https://travis-ci.org/ned14/boost.outcome.svg?branch=master" />
 </div>
@@ -189,46 +186,17 @@ Description</h1>
 <p><br/>
 </p>
 <h1><a class="anchor" id="prerequisites"></a>
-Prerequisites and Installation</h1>
-<p>Boost.Outcome is a header only library known to work on these compilers or better:</p>
+Prerequisites</h1>
+<p>Boost.Outcome is a header only C++ 14 library known to work on these compilers or better:</p>
 <ul>
 <li>GCC 5.0</li>
 <li>clang 3.7</li>
 <li>VS2015 Update 2</li>
 <li>clang 3.7 with Microsoft Codegen ("winclang")</li>
 </ul>
-<p>Its sole mandatory dependency is on <a href="https://github.com/ned14/boost-lite,">https://github.com/ned14/boost-lite,</a> a minimal emulation of Boost for C++ 14. A copy is embedded internally so a copy of Boost is <b>not</b> required to use this library. You can simply drop Outcome into your project and go, including Outcome using one of these depending on how you install Outcome:</p>
-<ul>
-<li><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;boost/outcome.hpp&gt;</span> </div>
-</div><!-- fragment --></li>
-<li><div class="fragment"><div class="line"><span class="preprocessor">#include &quot;boost.outcome/include/boost/outcome.hpp&quot;</span> </div>
-</div><!-- fragment --></li>
-</ul>
-<p>Each commit is tested by Travis and Appveyor. A nightly cronjob figures out which latest commit all tests passed for all supported platforms and pushes a distribution to the following package repositories:</p>
-<h2><a class="anchor" id="windows"></a>
-Installing on Windows</h2>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>This is yet to be implemented</dd></dl>
-<p>If you are using VS15 or better it comes with VCPkg, a package manager. Open a Developer Tools prompt and type:</p>
-<p><code>vcpkg install <a class="el" href="namespaceboost_1_1outcome.html" title="The Outcome namespace.">boost.outcome</a></code></p>
-<p>Once installed it is available for usage in any Visual Studio project.</p>
-<h2><a class="anchor" id="linux"></a>
-Installing on Ubuntu/Debian</h2>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Todo:</a></b></dt><dd>This is yet to be implemented</dd></dl>
-<pre>add-apt-repository ppa:ned14/boost.outcome
-apt-get install libboost-outcome-dev</pre><h2><a class="anchor" id="osx"></a>
-Installing on OS X</h2>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000003">Todo:</a></b></dt><dd>This is yet to be implemented</dd></dl>
-<p>Assuming you have <a href="http://brew.sh/">homebrew</a> installed, then:</p>
-<pre>brew tap ned14/tap
-brew install <a class="el" href="namespaceboost_1_1outcome.html" title="The Outcome namespace.">boost.outcome</a></pre><h2><a class="anchor" id="source"></a>
-Installing via source archive</h2>
-<p><a href="https://dedi4.nedprod.com/static/files/boost.outcome-v1.0-source-latest.tar.xz">You can find the latest boost.outcome to build and pass on all the CIs here.</a> <a href="https://dedi4.nedprod.com/static/files/boost.outcome">https://dedi4.nedprod.com/static/files/boost.outcome</a> also retains the last month of CI passing tarballs.</p>
-<h2><a class="anchor" id="repo"></a>
-Installing via git subrepository</h2>
-<pre>git submodule add <a href="https://github.com/ned14/boost.outcome">https://github.com/ned14/boost.outcome</a>
-cd <a class="el" href="namespaceboost_1_1outcome.html" title="The Outcome namespace.">boost.outcome</a>
-git submodule update --init --recursive
-</pre><p>The master branch is automatically set to whichever was the last commit on develop branch to pass all unit tests on Linux and Windows.</p>
+<p><b>A copy of Boost is not required to use this library</b>. You can simply drop Outcome into your project and go.</p>
+<dl class="section warning"><dt>Warning</dt><dd>VS2015 generates a lot of code bloat when using Outcome in large code bases. If you can use VS2017 which implements C++ 14 constexpr and has a better optimiser for modern C++, you will see much tigher executables. Execution speed is pretty similar between the two, and remains lower than GCC or clang which generate close to optimally minimum sized output with Outcome at all times.</dd></dl>
+<p><a class="el" href="installation.html">Installing, building and testing Outcome</a></p>
 <h2><a class="anchor" id="support"></a>
 Support</h2>
 <p><a href="https://stackoverflow.com/">StackOverflow</a> with the boost-outcome tag is the preferred place to ask questions on usage.</p>
