@@ -8,7 +8,7 @@ var NAVTREEINDEX1 =
 "installation.html#ubuntu":[1],
 "installation.html#unittests":[7,0],
 "installation.html#windows":[0],
-"md_installation.html":[6],
+"md_doc_md_installation.html":[6],
 "modules.html":[9],
 "monad_8hpp.html":[12,0,0,0,0,0,1],
 "monad_8hpp.html#a0a7bc1cab8017cd18146bb4b7ae7c27f":[12,0,0,0,0,0,1,23],
