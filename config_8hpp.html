@@ -191,9 +191,7 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a39e44c8ec617c859417ddf8960eca4de">BOOST_OUTCOME_THROW_DESERIALISATION_FAILURE</a>(m, expr)&#160;&#160;&#160;<a class="el" href="config_8hpp.html#a8fefe8516997eb0f7c649834d298044a">BOOST_OUTCOME_THROW</a>(expr)</td></tr>
 <tr class="memdesc:a39e44c8ec617c859417ddf8960eca4de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Predefine to have something else occur when Outcome throws an exception due to a deserialisation failure. <br/></td></tr>
 <tr class="separator:a39e44c8ec617c859417ddf8960eca4de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a10f1ea9f0f1205c24e106fb77cee19c3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a10f1ea9f0f1205c24e106fb77cee19c3"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a10f1ea9f0f1205c24e106fb77cee19c3">BOOST_OUTCOME_THROW_MONAD_ERROR</a>(ec, expr)&#160;&#160;&#160;<a class="el" href="config_8hpp.html#a8fefe8516997eb0f7c649834d298044a">BOOST_OUTCOME_THROW</a>(expr)</td></tr>
-<tr class="memdesc:a10f1ea9f0f1205c24e106fb77cee19c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Predefine to have something else occur when Outcome throws a monad_error due to being asked to do something not possible. <br/></td></tr>
+<tr class="memitem:a10f1ea9f0f1205c24e106fb77cee19c3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a10f1ea9f0f1205c24e106fb77cee19c3">BOOST_OUTCOME_THROW_MONAD_ERROR</a>(ec, expr)&#160;&#160;&#160;<a class="el" href="config_8hpp.html#a8fefe8516997eb0f7c649834d298044a">BOOST_OUTCOME_THROW</a>(expr), false</td></tr>
 <tr class="separator:a10f1ea9f0f1205c24e106fb77cee19c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af1d540bfb21e8b45eaeb3ec60686e91f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af1d540bfb21e8b45eaeb3ec60686e91f"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#af1d540bfb21e8b45eaeb3ec60686e91f">BOOST_OUTCOME_THROW_SYSTEM_ERROR</a>(ec, expr)&#160;&#160;&#160;<a class="el" href="config_8hpp.html#a8fefe8516997eb0f7c649834d298044a">BOOST_OUTCOME_THROW</a>(expr)</td></tr>
@@ -212,7 +210,36 @@ BOOSTLITE_NORETURN void&#160;</td><td class="memItemRight" valign="bottom"><b>bo
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Configures a compiler environment for Outcome header code. </p>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="a10f1ea9f0f1205c24e106fb77cee19c3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BOOST_OUTCOME_THROW_MONAD_ERROR</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">ec, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">expr&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;<a class="el" href="config_8hpp.html#a8fefe8516997eb0f7c649834d298044a">BOOST_OUTCOME_THROW</a>(expr), false</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Predefine to have something else occur when Outcome throws a monad_error due to being asked to do something not possible </p>
+<dl class="section return"><dt>Returns</dt><dd>Can return false to cancel the calling operation (see <code>_throw_error()</code> in monad_policy.ipp). </dd></dl>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
