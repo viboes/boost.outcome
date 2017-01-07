@@ -189,10 +189,11 @@ Description</h1>
 Prerequisites</h1>
 <p>Boost.Outcome is a header only C++ 14 library known to work on these compilers or better:</p>
 <ul>
+<li>clang 3.5 (LLVM)</li>
+<li>clang 3.7 (with Microsoft Codegen)</li>
 <li>GCC 6.0</li>
-<li>clang 3.5</li>
 <li>VS2015 Update 2</li>
-<li>clang 3.7 with Microsoft Codegen ("winclang")</li>
+<li>Xcode 7.3</li>
 </ul>
 <p><b>A copy of Boost is not required to use this library</b>. You can simply drop Outcome into your project and go.</p>
 <dl class="section warning"><dt>Warning</dt><dd>MSVC generates significant code bloat when using Outcome in large code bases. If you can use VS2017 which implements C++ 14 constexpr and has a better optimiser for modern C++, you will see tigher executables. Execution speed is not particularly different, though one would have thought the extra cache load caused by code bloat might affect some applications. In this situation, use LLVM clang targeting the MSVC ABI.</dd></dl>
