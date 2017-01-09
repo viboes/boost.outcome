@@ -1,10 +1,9 @@
 var searchData=
 [
-  ['value',['value',['../structboost_1_1outcome_1_1v1__xxx_1_1traits_1_1is__callable__is__well__formed.html#a3b78b885219c9c81d9ee193e3b5f5bf1',1,'boost::outcome::v1_xxx::traits::is_callable_is_well_formed::value()'],['../group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316',1,'boost::outcome::v1_xxx::value()']]],
-  ['value_5for',['value_or',['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a161ef82aa76b13b1fc60d47a4b5bc24d',1,'boost::outcome::v1_xxx::basic_monad::value_or(value_type &amp;v)&amp;noexcept'],['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#aae84a42f61397960cb6c24c2c322e659',1,'boost::outcome::v1_xxx::basic_monad::value_or(const value_type &amp;v) const &amp;noexcept'],['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#ae9d261d6f99e36854e19df03fd7fb2a4',1,'boost::outcome::v1_xxx::basic_monad::value_or(value_type &amp;&amp;v)&amp;&amp;noexcept'],['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a327a8a47796b8745bb9c86d6f194ab1f',1,'boost::outcome::v1_xxx::basic_monad::value_or(const value_type &amp;&amp;v) const &amp;&amp;noexcept']]],
-  ['value_5fstorage',['value_storage',['../classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html',1,'boost::outcome::v1_xxx']]],
-  ['value_5fstorage_2ehpp',['value_storage.hpp',['../value__storage_8hpp.html',1,'']]],
-  ['value_5ft',['value_t',['../structboost_1_1outcome_1_1v1__xxx_1_1value__t.html',1,'boost::outcome::v1_xxx']]],
-  ['value_5ftype',['value_type',['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a75005d345be5708ccfa2fcca44deb778',1,'boost::outcome::v1_xxx::basic_monad']]],
-  ['version_2ehpp',['version.hpp',['../version_8hpp.html',1,'']]]
+  ['set_5ferror',['set_error',['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#af7ac3f8cd9c867929e556b381c3b5e11',1,'boost::outcome::v1_xxx::basic_monad']]],
+  ['set_5fexception',['set_exception',['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a113e18cfb895b93632b9951960aada27',1,'boost::outcome::v1_xxx::basic_monad::set_exception(exception_type v)'],['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a6d1aaa3bf620e58b7007d1a14263be89',1,'boost::outcome::v1_xxx::basic_monad::set_exception(E &amp;&amp;e)']]],
+  ['set_5fstate',['set_state',['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a8cd5e78749578b7f2c605f51224371ce',1,'boost::outcome::v1_xxx::basic_monad']]],
+  ['set_5fvalue',['set_value',['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a358a2619d49f82069ccfccd2fc596e34',1,'boost::outcome::v1_xxx::basic_monad::set_value(const value_type &amp;v)'],['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#ac28e981cccad95fa40e7f8a1d28cea8d',1,'boost::outcome::v1_xxx::basic_monad::set_value(value_type &amp;&amp;v)'],['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a2e224fd8b81c22213e925819cf40e407',1,'boost::outcome::v1_xxx::basic_monad::set_value()']]],
+  ['support',['Support',['../support.html',1,'']]],
+  ['swap',['swap',['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a052e0e9921d7a93b87e87dbb5bb6a199',1,'boost::outcome::v1_xxx::basic_monad::swap()'],['../group__monad.html#ga2ffab91838224f042fe7ed1b108e5ad7',1,'std::swap()']]]
 ];

@@ -69,7 +69,7 @@ var monad_8hpp =
     [ "make_errored_result", "monad_8hpp.html#ga6175fc3a5c4bb5ab9f782654e96bb354", null ],
     [ "make_errored_result", "monad_8hpp.html#ga0f57f84218bf0e13f6319609adc7e03c", null ],
     [ "make_errored_result", "monad_8hpp.html#ga0ee9f3b12c9f643bea51b050836f9115", null ],
-    [ "make_exceptional_outcome", "monad_8hpp.html#ga0fefb54f3aeb9fd6340a5ecff3ec5931", null ],
+    [ "make_exceptional_outcome", "monad_8hpp.html#gadc7e203492bd1b5ee6f6ea0ae190a95e", null ],
     [ "make_function_ptr", "monad_8hpp.html#af451fc43ccb8cf396904dd9e271f0ba9", null ],
     [ "make_option", "monad_8hpp.html#ga7729448d32a8fd9ee4a34fc84152e165", null ],
     [ "make_option", "monad_8hpp.html#ga65efd2af5ed17063df929d7d4d354f3b", null ],

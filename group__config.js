@@ -1,10 +1,5 @@
 var group__config =
 [
-    [ "Installing on Windows", "installation.html#windows", null ],
-    [ "Installing on Ubuntu/Debian", "installation.html#ubuntu", null ],
-    [ "Installing on OS X", "installation.html#osx", null ],
-    [ "Installing via source tarball (all other platforms)", "installation.html#tarball", null ],
-    [ "Installing via git subrepository into your project's git repository", "installation.html#gitsubrepo", null ],
     [ "BOOST_OUTCOME_UNSTABLE_VERSION", "group__config.html#ga6c2679b16be5d07e59eeedb0ca02c9d2", null ],
     [ "BOOST_OUTCOME_USE_BOOST_THREAD", "group__config.html#gabc8cb04401f569ef10408b72de836d85", null ],
     [ "BOOST_OUTCOME_V1", "group__config.html#ga2d9d168bf427341b5e635a05aa720277", null ],

@@ -7,7 +7,7 @@
 
 var indexSectionsWithContent =
 {
-  0: "_abceghimnorstuv",
+  0: "_abcefghimnopqrstuv",
   1: "_bcehimv",
   2: "b",
   3: "cmov",
@@ -18,7 +18,7 @@ var indexSectionsWithContent =
   8: "aen",
   9: "b",
   10: "cu",
-  11: "it"
+  11: "afiopqst"
 };
 
 var indexSectionNames =

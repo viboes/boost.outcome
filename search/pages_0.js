@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['installing_2c_20building_20and_20testing_20outcome',['Installing, building and testing Outcome',['../installation.html',1,'']]],
-  ['installation',['installation',['../md_doc_md_installation.html',1,'']]]
+  ['advanced_20usage_3a_20outcome_20as_20a_20monad',['Advanced usage: Outcome as a Monad',['../md_doc_md_05-advanced.html',1,'']]]
 ];

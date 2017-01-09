@@ -156,7 +156,7 @@ var group__monad =
     [ "make_errored_result", "group__monad.html#ga6175fc3a5c4bb5ab9f782654e96bb354", null ],
     [ "make_errored_result", "group__monad.html#ga0f57f84218bf0e13f6319609adc7e03c", null ],
     [ "make_errored_result", "group__monad.html#ga0ee9f3b12c9f643bea51b050836f9115", null ],
-    [ "make_exceptional_outcome", "group__monad.html#ga0fefb54f3aeb9fd6340a5ecff3ec5931", null ],
+    [ "make_exceptional_outcome", "group__monad.html#gadc7e203492bd1b5ee6f6ea0ae190a95e", null ],
     [ "make_option", "group__monad.html#ga7729448d32a8fd9ee4a34fc84152e165", null ],
     [ "make_option", "group__monad.html#ga65efd2af5ed17063df929d7d4d354f3b", null ],
     [ "make_option", "group__monad.html#ga91bdd5cc02fbeeb47fe28099a0b9a5b8", null ],

@@ -8,6 +8,7 @@ var searchData=
   ['bind',['bind',['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a82ead6109f3d65ca4bc984208918f941',1,'boost::outcome::v1_xxx::basic_monad']]],
   ['boost',['boost',['../namespaceboost.html',1,'']]],
   ['boost_5foutcome_5fcatch_5fexception_5fto_5fresult',['BOOST_OUTCOME_CATCH_EXCEPTION_TO_RESULT',['../group__macro__helpers.html#gaacf14d3429ad0bc72a6ba40e7f283b43',1,'monad.hpp']]],
+  ['boost_5foutcome_5fdisable_5fdefault_5fsingle_5fbyte_5fvalue_5fstorage',['BOOST_OUTCOME_DISABLE_DEFAULT_SINGLE_BYTE_VALUE_STORAGE',['../value__storage_8hpp.html#ac2a2b810558f3103b7d9e24fe27bae7c',1,'value_storage.hpp']]],
   ['boost_5foutcome_5fheaders_5fpath',['BOOST_OUTCOME_HEADERS_PATH',['../outcome_8hpp.html#a1d85ad973aeb8736cf4bfd668821b6eb',1,'outcome.hpp']]],
   ['boost_5foutcome_5fmodule_5fname',['BOOST_OUTCOME_MODULE_NAME',['../monad_8hpp.html#ad77a8bc47c3bc82a023d26980651975a',1,'monad.hpp']]],
   ['boost_5foutcome_5fnamespace_5fversion',['BOOST_OUTCOME_NAMESPACE_VERSION',['../monad_8hpp.html#a5817c93352518ddd0c04cd3e89056352',1,'monad.hpp']]],

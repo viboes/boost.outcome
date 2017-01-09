@@ -3,6 +3,7 @@ var value__storage_8hpp =
     [ "enable_single_byte_value_storage", "structboost_1_1outcome_1_1v1__xxx_1_1enable__single__byte__value__storage.html", null ],
     [ "enable_single_byte_value_storage< void >", "structboost_1_1outcome_1_1v1__xxx_1_1enable__single__byte__value__storage_3_01void_01_4.html", null ],
     [ "enable_single_byte_value_storage< bool >", "structboost_1_1outcome_1_1v1__xxx_1_1enable__single__byte__value__storage_3_01bool_01_4.html", null ],
+    [ "BOOST_OUTCOME_DISABLE_DEFAULT_SINGLE_BYTE_VALUE_STORAGE", "value__storage_8hpp.html#ac2a2b810558f3103b7d9e24fe27bae7c", null ],
     [ "BOOST_OUTCOME_VALUE_STORAGE_IMPL", "value__storage_8hpp.html#aa50048982b693ae5045eb5f9fb95deae", null ],
     [ "BOOST_OUTCOME_VALUE_STORAGE_IMPL", "value__storage_8hpp.html#aa50048982b693ae5045eb5f9fb95deae", null ],
     [ "BOOST_OUTCOME_VALUE_STORAGE_NON_TRIVIAL_DESTRUCTOR", "value__storage_8hpp.html#a4352b627488d0b1906b138421bccaf7d", null ],
