@@ -108,8 +108,7 @@ $(document).ready(function(){initNavTree('md_doc_md_03-tutorial.html','');});
 <li class="level1"><a href="#cpp11-style">C++ 11 style error handling: error_code and noexcept</a><ul><li class="level2"><a href="#sea-of-noexcept">The "Islands of exception throw in a sea of noexcept" design pattern</a></li>
 </ul>
 </li>
-<li class="level1"><a href="#cpp17-style">C++ 17 style error handling: outcome<T>, result<T> and option<T></a><ul><ul><li class="level3"><a href="#exceptions-are-exceptional">The "Exceptions are exceptional, errors are not failure" design pattern</a></li>
-</ul>
+<li class="level1"><a href="#cpp17-style">C++ 17 style error handling: outcome<T>, result<T> and option<T></a><ul><li class="level2"><a href="#exceptions-are-exceptional">The "Exceptions are exceptional, errors are not failure" design pattern</a></li>
 <li class="level2"><a href="#try">The BOOST_OUTCOME_TRY(var, expression) macro</a></li>
 </ul>
 </li>
@@ -409,6 +408,77 @@ C++ 17 style error handling: outcome&lt;T&gt;, result&lt;T&gt; and option&lt;T&g
 <dl class="section note"><dt>Note</dt><dd>The Dinkumware STL supplied with Visual Studio makes any fetch of an error category an operation with globally visible consequences. Compilers using this STL therefore must emit a lot more assembler than with other STL implementations. This is part of the reason why MSVC generates code bloat unlike GCC or clang.</dd></dl>
 <p>So, to sum up, try to use <code>option&lt;T&gt;</code> where that's appropriate. <code>option&lt;T&gt;</code> is constexpr available and very often vanishes entirely from the assembler generated. Try to use <code>result&lt;T&gt;</code> where you don't need a full <code>outcome&lt;T&gt;</code> where that's appropriate. And remember a less expressive form always implicitly converts into a more expressive form, so you can always feed options into results or outcomes, or results into outcomes.</p>
 <p>Let's summarise all this into another new error handling design pattern:</p>
+<h2><a class="anchor" id="exceptions-are-exceptional"></a>
+The "Exceptions are exceptional, errors are not failure" design pattern</h2>
+<p>In addition to the pure "sea of noexcept" for low latency users mentioned earlier, there is one other new error handling design pattern to mention made possible by Outcomes which combines "sea of noexcept" with exception throws. The idea is that ordinarily speaking code never throws an exception, and returns all failures anticipated by the programmer through <code>result&lt;T&gt;</code> as an error_code. If however something very unexpected occurs, a truly <em>exceptional</em> event, we exclusively use exception throws to abort the current operation entirely. For anyone familiar with Rust, this is <b>exactly</b> the Rust error handling model: Rust's <code>Result&lt;T&gt;</code> and <code>Option&lt;T&gt;</code> return errors expected by the programmer whereas a stack unwinding panic of the current thread is how exceptional, programmer unanticipated events are handled.</p>
+<h2><a class="anchor" id="try"></a>
+The BOOST_OUTCOME_TRY(var, expression) macro</h2>
+<p>A very common operation with monadic transports is the <code>try</code> operation which means this boilerplate:</p>
+<div class="fragment"><div class="line"><span class="comment">// Some other function returning a monad</span></div>
+<div class="line">outcome&lt;handle_ref&gt; openfile(<span class="keyword">const</span> <span class="keywordtype">char</span> *path) noexcept;</div>
+<div class="line"><span class="comment">// This is the function we are in, it must be returning a monad too</span></div>
+<div class="line"><span class="comment">// and sometype is not going to be handle_ref</span></div>
+<div class="line">outcome&lt;sometype&gt; another_function()</div>
+<div class="line">{</div>
+<div class="line">  ...</div>
+<div class="line">  <span class="comment">// This is the &quot;try&quot; operation common in Rust or Swift</span></div>
+<div class="line">  <span class="comment">// It takes the form try! var = openfile(...);</span></div>
+<div class="line">  handle_ref var;</div>
+<div class="line">  {</div>
+<div class="line">    outcome&lt;handle_ref&gt; unique_temporary = openfile(...);</div>
+<div class="line">    <span class="keywordflow">if</span>(unique_temporary.has_error())</div>
+<div class="line">    {</div>
+<div class="line">      <span class="keywordflow">return</span> make_errored_outcome&lt;sometype&gt;(std::move(unique_temporary.error());</div>
+<div class="line">    }</div>
+<div class="line">    <span class="keywordflow">if</span>(unique_temporary.has_exception())</div>
+<div class="line">    {</div>
+<div class="line">      <span class="keywordflow">return</span> make_exceptional_outcome&lt;sometype&gt;(std::move(unique_temporary.exception());</div>
+<div class="line">    }</div>
+<div class="line">    var = std::move(unique_temporary.value());</div>
+<div class="line">  }</div>
+<div class="line">}</div>
+</div><!-- fragment --><p>In other words, the <code>try var = openfile(...)</code> operation examines the monad returned from calling <code>openfile(...)</code> to see if it is errored in some way. If it is, it extracts the error value, constructs a monad of the return type of the calling function and sets it to be errored to the same error value, returning immediately. If it is not errored, it extracts/unwraps the contained value in the monad into the <code>var</code> variable which is of the contained value type.</p>
+<p>Because of the limitations of C++, Outcome cannot provide a nice syntax like <code>try var = openfile(...)</code>. The best it can do is <code>BOOST_OUTCOME_TRY(var, openfile(...))</code> which will declare <code>var</code> using <code>auto</code> onto the stack.</p>
+<h1><a class="anchor" id="conclusion"></a>
+Conclusion</h1>
+<p>This tutorial has been kept deliberately as simple as possible after feedback from the Boost developers' mailing list, and it has intentionally not covered a large chunk of Outcome's detail. Further documentation includes <a class="el" href="md_doc_md_05-advanced.html#advanced">Advanced usage: Outcome as a Monad</a> and <a class="el" href="md_doc_md_06-std_expected.html#std-expected">Outcome and the upcoming std::expected&lt;T, E&gt;</a>.</p>
+<h2><a class="anchor" id="basic_monad"></a>
+What you need to know about basic_monad</h2>
+<p>There is some detail which you do need to know if you are to use Outcome in your own code though. During debugging sessions with code using Outcome you will find much reference <code>basic_monad&lt;&gt;</code> and you ought to understand the signature of its policy so you can read compiler warnings or debug prints: </p>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;</div>
+<div class="line">  <span class="keyword">class </span>monad_storage,</div>
+<div class="line">  <span class="keyword">class </span>value_type,</div>
+<div class="line">  <span class="keyword">class </span>error_type,</div>
+<div class="line">  <span class="keyword">class </span>exception_type&gt;</div>
+<div class="line"><span class="keyword">struct </span>BOOST_OUTCOME_MONAD_POLICY_BASE_NAME : <span class="keyword">public</span> monad_storage</div>
+<div class="line">{ ... };</div>
+</div><!-- fragment --><p> Any of <code>value_type</code>, <code>error_type</code> and <code>exception_type</code> can be <code>void</code>, in which case they are not in use in this instance. If you are using Microsoft Visual Studio, Outcome provides a debugging visualiser such that any <code>basic_monad&lt;&gt;</code> displays itself without any internal clutter. Just link into your final binary the <code>monad.natvis</code> file.</p>
+<h2><a class="anchor" id="error_codes"></a>
+What you need to know about error_code_extended</h2>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000004">Todo:</a></b></dt><dd>Talk about error_code_extended</dd></dl>
+<h2><a class="anchor" id="optimal"></a>
+A demonstration of how optimally tuned code using Outcome becomes</h2>
+<p>We shall end this tutorial with a demonstration of how little runtime overhead Outcome produces which was achieved after investing a lot of effort. Unlike many libraries which claim to care about runtime overhead, Outcome's CIs actually run per-commit a test suite which compiles various sequences of code using outcomes and counts the assembler instructions emitted. This ensures changes do not ruin Outcome's laboriously implemented tuning for current compiler optimisers to make sure they generate minimum runtime overhead. Here is a small program written using Outcome's monadic operators and lambda bind:</p>
+<div class="fragment"><div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">void</span>)</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">using namespace </span><a class="code" href="group__monad.html#gaab2ff6220205017226794529c863b336">boost::outcome</a>;</div>
+<div class="line">  result&lt;int&gt; f(5);</div>
+<div class="line">  <span class="keyword">auto</span> g = (f &amp; 6) &gt;&gt; [](<span class="keyword">auto</span> v) -&gt; <span class="keywordtype">int</span> { <span class="keywordflow">return</span> v==5 ? 2 : 8; } | 2; </div>
+<div class="line">  <span class="keywordflow">return</span> g.value();</div>
+<div class="line">}</div>
+</div><!-- fragment --><p> So this program will test if f is valued via the AND operator and if so returns a new <code>result&lt;int&gt;</code> containing a 6, that is then bound to the generic lambda which compares the value to 5, and because it is not returns 8, creating another new <code>result&lt;int&gt;</code> (because the lambda returned an <code>int</code>) containing the returned value. The OR operator creates yet another <code>result&lt;int&gt;</code> replacing the value with 2 if the monad were not valued, but because it is valued g will take on the type <code>result&lt;int&gt;</code> propagated from the front and the value 8. So that is at least four <code>result&lt;int&gt;</code> instances constructed and destructed above.</p>
+<p>Compiling this with GCC 6.2 with <code>-std=c++1z -S -O3</code> yields this assembler: </p>
+<div class="fragment"><div class="line">  .section  .text.startup,<span class="stringliteral">&quot;ax&quot;</span>,@progbits</div>
+<div class="line">  .p2align 4,,15</div>
+<div class="line">  .globl  main</div>
+<div class="line">  .type main, @<span class="keyword">function</span></div>
+<div class="line">main:</div>
+<div class="line">.LFB3280:</div>
+<div class="line">  .cfi_startproc</div>
+<div class="line">  movl  $8, %eax</div>
+<div class="line">  ret</div>
+<div class="line">  .cfi_endproc</div>
+</div><!-- fragment --><p> To achieve this level of optimiser strength reduction on the big three compilers took a great deal of tedious trial and error so your code using Outcome didn't have to. Enjoy! </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

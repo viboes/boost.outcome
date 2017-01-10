@@ -22,6 +22,7 @@ var NAVTREE =
         [ "The \"Islands of exception throw in a sea of noexcept\" design pattern", "md_doc_md_03-tutorial.html#sea-of-noexcept", null ]
       ] ],
       [ "C++ 17 style error handling: outcome<T>, result<T> and option<T>", "md_doc_md_03-tutorial.html#cpp17-style", [
+        [ "The \"Exceptions are exceptional, errors are not failure\" design pattern", "md_doc_md_03-tutorial.html#exceptions-are-exceptional", null ],
         [ "The BOOST_OUTCOME_TRY(var, expression) macro", "md_doc_md_03-tutorial.html#try", null ]
       ] ],
       [ "Conclusion", "md_doc_md_03-tutorial.html#conclusion", [

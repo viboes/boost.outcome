@@ -1,7 +1,7 @@
 var NAVTREEINDEX1 =
 {
 "md_doc_md_03-tutorial.html#sea-of-noexcept":[5,2,0],
-"md_doc_md_03-tutorial.html#try":[5,3,0],
+"md_doc_md_03-tutorial.html#try":[5,3,1],
 "md_doc_md_04-faq.html":[6],
 "md_doc_md_04-faq.html#outcome_vs_result":[6,0,0],
 "md_doc_md_04-faq.html#result_vs_outcome":[6,0,1],
@@ -64,8 +64,8 @@ var NAVTREEINDEX1 =
 "monad_8hpp.html#ga2cbada16dcc6af63be3da3910cf991c9":[13,0,0,0,0,0,1,72],
 "monad_8hpp.html#ga2e3dc2abb1f8c417f57826c578b5aea6":[13,0,0,0,0,0,1,46],
 "monad_8hpp.html#ga2ffab91838224f042fe7ed1b108e5ad7":[13,0,0,0,0,0,1,97],
-"monad_8hpp.html#ga31623e855d816d8be8b796107e29d4f7":[13,0,0,0,0,0,1,50],
 "monad_8hpp.html#ga31623e855d816d8be8b796107e29d4f7":[13,0,0,0,0,0,1,51],
+"monad_8hpp.html#ga31623e855d816d8be8b796107e29d4f7":[13,0,0,0,0,0,1,50],
 "monad_8hpp.html#ga31623e855d816d8be8b796107e29d4f7":[13,0,0,0,0,0,1,49],
 "monad_8hpp.html#ga32c259d35a71b8a671e062519c2a0465":[13,0,0,0,0,0,1,59],
 "monad_8hpp.html#ga45531f0b41d78b899d1f6d286842eb8a":[13,0,0,0,0,0,1,48],
@@ -161,8 +161,8 @@ var NAVTREEINDEX1 =
 "value__storage_8hpp.html#a414adb7e415fad8bdfb9725db89842e2":[13,0,0,0,0,0,2,12],
 "value__storage_8hpp.html#a4352b627488d0b1906b138421bccaf7d":[13,0,0,0,0,0,2,6],
 "value__storage_8hpp.html#a4352b627488d0b1906b138421bccaf7d":[13,0,0,0,0,0,2,7],
-"value__storage_8hpp.html#aa50048982b693ae5045eb5f9fb95deae":[13,0,0,0,0,0,2,4],
 "value__storage_8hpp.html#aa50048982b693ae5045eb5f9fb95deae":[13,0,0,0,0,0,2,5],
+"value__storage_8hpp.html#aa50048982b693ae5045eb5f9fb95deae":[13,0,0,0,0,0,2,4],
 "value__storage_8hpp.html#aaff7e458b6026a088b44a561cf1b820f":[13,0,0,0,0,0,2,10],
 "value__storage_8hpp.html#ab0651b54f6479a27a1c8a305de326dfa":[13,0,0,0,0,0,2,13],
 "value__storage_8hpp.html#ac2a2b810558f3103b7d9e24fe27bae7c":[13,0,0,0,0,0,2,3],

@@ -173,7 +173,7 @@ var NAVTREEINDEX0 =
 "group__config.html#gabc8cb04401f569ef10408b72de836d85":[10,0,1],
 "group__config.html#gaf9fedf88f681cae78a5f73a4194ce083":[10,0,7],
 "group__macro__helpers.html":[10,1,0],
-"group__macro__helpers.html#gaacf14d3429ad0bc72a6ba40e7f283b43":[10,1,0,1],
+"group__macro__helpers.html#gaacf14d3429ad0bc72a6ba40e7f283b43":[10,1,0,0],
 "group__monad.html":[10,1],
 "group__monad.html#ga00f295e5d9ea903b2477e631e46bea3e":[10,1,51],
 "group__monad.html#ga0d0fd5ca15cb339df9aa8e829a8ea5e0":[10,1,10],
@@ -248,6 +248,6 @@ var NAVTREEINDEX0 =
 "md_doc_md_03-tutorial.html#cpp17-style":[5,3],
 "md_doc_md_03-tutorial.html#cpp98-style":[5,1],
 "md_doc_md_03-tutorial.html#error_codes":[5,4,1],
-"md_doc_md_03-tutorial.html#exceptions-are-exceptional":[0],
+"md_doc_md_03-tutorial.html#exceptions-are-exceptional":[5,3,0],
 "md_doc_md_03-tutorial.html#optimal":[5,4,2]
 };
