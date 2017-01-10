@@ -261,7 +261,8 @@ of noexcept"</em> which will be described later.</p>
 <li>You only pay for what you use, so if you call the non-throwing overload you are guaranteed by the <code>noexcept</code> that execution flow will not unexpectedly invert. This makes writing correct exception safe code much easier, plus unpredictable execution times due to exception throws cannot occur. The compiler can also reduce executable bloat by not generating stack unwind tables around that call which is useful for some C++ users.</li>
 <li>Simple usage of the API will default to the throwing (i.e. abort this operation) overload which is probably what most users <em>think</em> they want. This does have the advantage that the error won't be lost, however in practice aborting partially completed operations can lose other people's data just as much as ignoring errors and proceeding regardless.</li>
 </ol>
-<p>Summarising this into a design pattern:</p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000004">Todo:</a></b></dt><dd>Mention disadvantages, like doubling the API count (needing double the API reference docs etc), forcing the caller to create an error code, not trapping when errors are not checked etc</dd></dl>
+<p>Summarising this section into a design pattern:</p>
 <h2><a class="anchor" id="sea-of-noexcept"></a>
 The "Islands of exception throw in a sea of noexcept" design pattern</h2>
 <p>This design pattern was intended by the committee in C++ 11 to be the method by which that large minority of C++ users who disable RTTI and exceptions entirely could be brought back into ISO standard C++. The pattern is easy:</p>
@@ -286,7 +287,7 @@ C++ 17 style error handling: outcome&lt;T&gt;, result&lt;T&gt; and option&lt;T&g
 <dt><code>outcome&lt;T&gt;</code> </dt>
 <dd>One of empty, an instance of type <code>T</code>, a <code>std::error_code</code> or a <code>std::exception_ptr</code>. </dd>
 </dl>
-<p>All three of these are actually the same <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html">basic_monad&lt;&gt;</a> class specialised with a policy which very closely matches <code>basic_monad&lt;&gt;</code>'s semantics to the C++ 17/20 utility classes <code>std::optional&lt;T&gt;</code> and <code>std::experimental::expected&lt;T, E&gt;</code> (this hasn't been approved yet by ISO WG21, but it's very close, likely later in 2017). In addition you gain a much more comprehensive monadic programming interface, and ultra low runtime overheads. But we will come back to that later.</p>
+<p>All three of these are actually the same <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html">basic_monad&lt;&gt;</a> class specialised with a policy which very closely matches <code>basic_monad&lt;&gt;</code>'s semantics to the C++ 17/20 utility classes <code>std::optional&lt;T&gt;</code> and <code>std::experimental::expected&lt;T, E&gt;</code> (this hasn't been approved yet by ISO WG21, but it's very close, likely later in 2017). In addition you gain a much more comprehensive monadic programming interface, and ultra low runtime overheads. But we will come back to that later. We won't labour the point, but you can absolutely substitute in most code an <code>option&lt;T&gt;</code> for a <code>std::optional&lt;T&gt;</code> and a <code>result&lt;T&gt;</code> for a <code>std::experimental::expected&lt;T, std::error_code&gt;</code>. There is no easy equivalent for <code>outcome&lt;T&gt;</code>.</p>
 <p>Each of <code>option&lt;T&gt;</code>, <code>result&lt;T&gt;</code> and <code>outcome&lt;T&gt;</code> being actually a <code>basic_monad&lt;&gt;</code> instance have a very straightforward API, and less expressive monads implicitly convert into more expressive forms on demand. We will call the type <code>T</code> the value type, the error type will be any <code>std::error_code</code> present and the exception type will be any <code>std::exception_ptr</code> present.</p>
 <ul>
 <li>You retrieve a value type using the <code><a class="el" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316" title="Variable of type value_t. ">value()</a></code> or <code>get()</code> member functions. These come with const lvalue ref, lvalue ref and rvalue ref overloads, so you can directly modify or move from a contained value.</li>
@@ -294,7 +295,7 @@ C++ 17 style error handling: outcome&lt;T&gt;, result&lt;T&gt; and option&lt;T&g
 <li>You retrieve an exception type use the <code>exception()</code> or <code>get_exception()</code> member functions.</li>
 <li>There are also state inspection member functions which have the entirely unsurprising nomenclature <code><a class="el" href="group__monad.html#ga68770961e182715930ad64ca244b645e" title="Variable of type empty_t. ">empty()</a></code>, <code>has_value()</code>, <code>has_error()</code> and <code>has_exception()</code>.</li>
 <li>Semantics of things like <code>emplace()</code>, <code>operator*()</code> and <code>operator-&gt;()</code> all behave exactly the same as <code>std::optional&lt;T&gt;</code> and <code>std::experimental::expected&lt;T, E&gt;</code>, and indeed exactly as you would intutively guess as they behave the same as anywhere in the STL.</li>
-<li><code>if(monad)</code> is true if and only if the monad contains an instance of <code>T</code>.</li>
+<li><code>if(monad)</code> is true if and only if the monad contains an instance of <code>T</code>, again exactly the same as anywhere else in the STL.</li>
 </ul>
 <p>What happens if you try retrieving a value from a monad not containing a value?</p>
 <ul>
@@ -305,15 +306,16 @@ C++ 17 style error handling: outcome&lt;T&gt;, result&lt;T&gt; and option&lt;T&g
 <p>What happens if you try retrieving an error from a monad not containing an error?</p>
 <ul>
 <li>If it is empty, same as for the retrieving a value from not a valued monad.</li>
-<li>If it is valued, returns a default constructed error code.</li>
+<li>If it is valued, returns a default constructed (i.e. null) error code.</li>
 <li>If it is excepted, returns an error code of <code><a class="el" href="group__monad.html#ga13e71a6619b46ebe84986aecb270ffa2" title="Returns a reference to a monad error category. Note the address of one of these may not be constant t...">monad_category()</a></code> with code <code>monad_errc::exception_present</code>.</li>
 </ul>
 <p>What happens if you try retrieving an exception from a monad not containing an exception?</p>
 <ul>
 <li>If it is empty, same as for the retrieving a value from not a valued monad.</li>
-<li>If it is valued, returns a default constructed exception ptr.</li>
+<li>If it is valued, returns a default constructed (i.e. null) exception ptr.</li>
 <li>If it is errored, returns an exception ptr to a <code>std::system_error</code> instance containing the monad's error code.</li>
 </ul>
+<p>And finally, if your compiler is in C++ 17 mode or later, monads are marked with the <a href="http://en.cppreference.com/w/cpp/language/attributes"><code>[[nodiscard]]</code></a> attribute. This means the compiler ought to warn if you forget to examine monads returned by functions. If you really mean to throw away a returned monad, make sure you cast it to void to tell the compiler you specifically intend to throw it away.</p>
 <p>Reusing the same <code>openfile()</code> example from the earlier examples, this is it written using Outcome's <code>result&lt;T&gt;</code>:</p>
 <div class="fragment"><div class="line"><span class="keyword">using namespace </span><a class="code" href="group__config.html#gab113de43db2cd2a4cf1e33b54294944a">BOOST_OUTCOME_V1_NAMESPACE</a>;</div>
 <div class="line"></div>
@@ -346,6 +348,7 @@ C++ 17 style error handling: outcome&lt;T&gt;, result&lt;T&gt; and option&lt;T&g
 <div class="line"><span class="comment">  converting the STL exception types into their corresponding std::error_code with</span></div>
 <div class="line"><span class="comment">  std::generic_category. At the end a catch all clause converts to EAGAIN.</span></div>
 <div class="line"><span class="comment">  The error code is then returned via make_errored_result&lt;&gt;. </span></div>
+<div class="line"><span class="comment"></span></div>
 <div class="line"><span class="comment">  BOOST_OUTCOME_CATCH_EXCEPTION_TO_RESULT</span></div>
 <div class="line"><span class="comment">}</span></div>
 <div class="line"><span class="comment">...</span></div>
@@ -403,8 +406,8 @@ C++ 17 style error handling: outcome&lt;T&gt;, result&lt;T&gt; and option&lt;T&g
 <div class="line">  handle_ref fh = std::move(fh_.value());  <span class="comment">// extract via move the value type</span></div>
 <div class="line">  fh-&gt;read(... etc</div>
 <div class="line">}</div>
-</div><!-- fragment --><p>This is a really elegant expression of error handling in C++: catastrophic errors are returned as exception ptrs, non serious errors are returned as error codes. All public APIs are <code>noexcept</code> and therefore calling them never causes an unexpected inversion of control flow. If this aesthetic appeals to you, then you need to be using Outcome in your code!</p>
-<p>You might wonder why one would ever use <code>result&lt;&gt;</code> instead of <code>outcome&lt;&gt;</code> seeing as it leads to simpler, more elegant and expressive code? The reason why is that the compiler's optimiser is required to treat a potential use of <code>exception_ptr</code> as a synchronisation event because like <code>shared_ptr</code>, it is implemented using an atomically incremented and decremented reference count. By "synchronisation event" I mean that the compiler is <em>required</em> to assume memory could be modified, and therefore <em>must</em> emit assembler to check the globally visible state rather than elide it. In other words, the compiler can entirely elide and fuse long sequences of <code>result&lt;&gt;</code> to a much greater extent than it can <code>outcome&lt;&gt;</code> because the only globally visible effects of potentially creating an error code is the effect on global state of instantiating its error category. Therefore the compiler can emit exactly one call of the error category function, and thereafter assume subsequent calls to it will not affect globally visible state.</p>
+</div><!-- fragment --><p>I think you'll agree that this is a really elegant expression of error handling in C++: catastrophic errors are returned as exception ptrs, non serious errors are returned as error codes. All public APIs are <code>noexcept</code> and therefore calling them never causes an unexpected inversion of control flow. If this aesthetic appeals to you, then you need to be using Outcome in your code!</p>
+<p>You might wonder why one would ever use <code>result&lt;&gt;</code> instead of <code>outcome&lt;&gt;</code> seeing as it leads to simpler, more elegant and expressive code? The reason why is that the compiler's optimiser is required to treat a potential use of <code>exception_ptr</code> as a synchronisation event because like <code>shared_ptr</code>, it is implemented using an atomically incremented and decremented reference count. By "synchronisation event" I mean that the compiler is <em>required</em> to emit changes visible to other threads, and therefore <em>must</em> emit assembler to read-modify-write the globally visible state rather than elide it. In other words, the compiler can entirely elide and fuse long sequences of <code>result&lt;&gt;</code> to a much greater extent than it can <code>outcome&lt;&gt;</code> because the only globally visible effects of potentially creating an error code is the effect on global state of instantiating its error category. Therefore the compiler can emit exactly one call of the error category function, and thereafter assume subsequent calls to it will not affect globally visible state.</p>
 <dl class="section note"><dt>Note</dt><dd>The Dinkumware STL supplied with Visual Studio makes any fetch of an error category an operation with globally visible consequences. Compilers using this STL therefore must emit a lot more assembler than with other STL implementations. This is part of the reason why MSVC generates code bloat unlike GCC or clang.</dd></dl>
 <p>So, to sum up, try to use <code>option&lt;T&gt;</code> where that's appropriate. <code>option&lt;T&gt;</code> is constexpr available and very often vanishes entirely from the assembler generated. Try to use <code>result&lt;T&gt;</code> where you don't need a full <code>outcome&lt;T&gt;</code> where that's appropriate. And remember a less expressive form always implicitly converts into a more expressive form, so you can always feed options into results or outcomes, or results into outcomes.</p>
 <p>Let's summarise all this into another new error handling design pattern:</p>
@@ -441,7 +444,7 @@ The BOOST_OUTCOME_TRY(var, expression) macro</h2>
 <p>Because of the limitations of C++, Outcome cannot provide a nice syntax like <code>try var = openfile(...)</code>. The best it can do is <code>BOOST_OUTCOME_TRY(var, openfile(...))</code> which will declare <code>var</code> using <code>auto</code> onto the stack.</p>
 <h1><a class="anchor" id="conclusion"></a>
 Conclusion</h1>
-<p>This tutorial has been kept deliberately as simple as possible after feedback from the Boost developers' mailing list, and it has intentionally not covered a large chunk of Outcome's detail. Further documentation includes <a class="el" href="md_doc_md_05-advanced.html#advanced">Advanced usage: Outcome as a Monad</a> and <a class="el" href="md_doc_md_06-std_expected.html#std-expected">Outcome and the upcoming std::expected&lt;T, E&gt;</a>.</p>
+<p>This tutorial has been kept deliberately as simple as possible after valuable feedback from the Boost developers' mailing list, and it has intentionally not covered a large chunk of Outcome's detail. Further documentation includes <a class="el" href="md_doc_md_05-advanced.html#advanced">Advanced usage: Outcome as a Monad</a> and <a class="el" href="md_doc_md_06-std_expected.html#std-expected">Outcome and the upcoming std::expected&lt;T, E&gt;</a>.</p>
 <h2><a class="anchor" id="basic_monad"></a>
 What you need to know about basic_monad</h2>
 <p>There is some detail which you do need to know if you are to use Outcome in your own code though. During debugging sessions with code using Outcome you will find much reference <code>basic_monad&lt;&gt;</code> and you ought to understand the signature of its policy so you can read compiler warnings or debug prints: </p>
@@ -455,10 +458,10 @@ What you need to know about basic_monad</h2>
 </div><!-- fragment --><p> Any of <code>value_type</code>, <code>error_type</code> and <code>exception_type</code> can be <code>void</code>, in which case they are not in use in this instance. If you are using Microsoft Visual Studio, Outcome provides a debugging visualiser such that any <code>basic_monad&lt;&gt;</code> displays itself without any internal clutter. Just link into your final binary the <code>monad.natvis</code> file.</p>
 <h2><a class="anchor" id="error_codes"></a>
 What you need to know about error_code_extended</h2>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000004">Todo:</a></b></dt><dd>Talk about error_code_extended</dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000005">Todo:</a></b></dt><dd>Talk about error_code_extended</dd></dl>
 <h2><a class="anchor" id="optimal"></a>
 A demonstration of how optimally tuned code using Outcome becomes</h2>
-<p>We shall end this tutorial with a demonstration of how little runtime overhead Outcome produces which was achieved after investing a lot of effort. Unlike many libraries which claim to care about runtime overhead, Outcome's CIs actually run per-commit a test suite which compiles various sequences of code using outcomes and counts the assembler instructions emitted. This ensures changes do not ruin Outcome's laboriously implemented tuning for current compiler optimisers to make sure they generate minimum runtime overhead. Here is a small program written using Outcome's monadic operators and lambda bind:</p>
+<p>We shall end this tutorial with a demonstration of how little runtime overhead Outcome produces which was achieved after investing a lot of effort by the author. Unlike many libraries which claim to care about runtime overhead, Outcome's CIs actually run per-commit a test suite which compiles various sequences of code using outcomes and counts the assembler instructions emitted. This ensures changes do not ruin Outcome's laboriously implemented tuning for current compiler optimisers to make sure they generate minimum runtime overhead. Here is a small program written using Outcome's monadic operators and lambda bind:</p>
 <div class="fragment"><div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">void</span>)</div>
 <div class="line">{</div>
 <div class="line">  <span class="keyword">using namespace </span><a class="code" href="group__monad.html#gaab2ff6220205017226794529c863b336">boost::outcome</a>;</div>
@@ -478,7 +481,8 @@ A demonstration of how optimally tuned code using Outcome becomes</h2>
 <div class="line">  movl  $8, %eax</div>
 <div class="line">  ret</div>
 <div class="line">  .cfi_endproc</div>
-</div><!-- fragment --><p> To achieve this level of optimiser strength reduction on the big three compilers took a great deal of tedious trial and error so your code using Outcome didn't have to. Enjoy! </p>
+</div><!-- fragment --><p> Yes, that's exactly one assembler instruction which simply returns 8. The fact you used Outcome has entirely disappeared from runtime overhead.</p>
+<p>To achieve this level of optimiser strength reduction on the big three compilers took a great deal of tedious trial and error structuring the implementation just right such that your code using Outcome doesn't have to. Enjoy! </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
