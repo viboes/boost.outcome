@@ -243,11 +243,11 @@ var NAVTREEINDEX0 =
 "md_doc_md_03-tutorial.html":[5],
 "md_doc_md_03-tutorial.html#c-style":[5,0],
 "md_doc_md_03-tutorial.html#cpp11-style":[5,2],
-"md_doc_md_03-tutorial.html#cpp17-stl":[5,3,3],
+"md_doc_md_03-tutorial.html#cpp17-stl":[5,3,5],
 "md_doc_md_03-tutorial.html#cpp17-style":[5,3],
 "md_doc_md_03-tutorial.html#cpp98-style":[5,1],
-"md_doc_md_03-tutorial.html#examples":[5,3,5],
-"md_doc_md_03-tutorial.html#exceptions-are-exceptional":[5,3,2],
-"md_doc_md_03-tutorial.html#outcome_example":[5,3,4],
-"md_doc_md_03-tutorial.html#outcome_vs_result":[5,4,0]
+"md_doc_md_03-tutorial.html#easy_usage":[5,3,1],
+"md_doc_md_03-tutorial.html#examples":[5,3,7],
+"md_doc_md_03-tutorial.html#exceptions-are-exceptional":[5,3,4],
+"md_doc_md_03-tutorial.html#outcome_example":[5,3,6]
 };
