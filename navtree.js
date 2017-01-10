@@ -18,23 +18,24 @@ var NAVTREE =
     [ "Tutorial", "md_doc_md_03-tutorial.html", [
       [ "C style error handling: integer returns", "md_doc_md_03-tutorial.html#c-style", null ],
       [ "C++ 98 style error handling: throwing exceptions", "md_doc_md_03-tutorial.html#cpp98-style", null ],
-      [ "C++ 11 style error handling: error_code and noexcept", "md_doc_md_03-tutorial.html#cpp11-style", null ],
-      [ "C++ 17 style error handling: outcome<T>, result<T> and option<T>, and their C++ standard near-equivalents optional<T> and expected<T, E>", "md_doc_md_03-tutorial.html#cpp17-style", [
-        [ "A small bit of detail before resuming the tutorial", "md_doc_md_03-tutorial.html#relation-to-cpp17", null ],
-        [ "Ach my head is hurting, make this easier!", "md_doc_md_03-tutorial.html#easy_usage", null ],
-        [ "The BOOST_OUTCOME_TRY() macro", "md_doc_md_03-tutorial.html#try", null ],
-        [ "The \"Islands of exception throw in a sea of noexcept\" design pattern", "md_doc_md_03-tutorial.html#sea-of-noexcept", null ],
-        [ "The \"Exceptions are exceptional, errors are not failure\" design pattern", "md_doc_md_03-tutorial.html#exceptions-are-exceptional", null ],
-        [ "Standardised optional<T> and expected<T, E>", "md_doc_md_03-tutorial.html#cpp17-stl", null ],
-        [ "Example function using Outcome's result<T>", "md_doc_md_03-tutorial.html#outcome_example", null ],
-        [ "Examples of usage", "md_doc_md_03-tutorial.html#examples", null ]
+      [ "C++ 11 style error handling: error_code and noexcept", "md_doc_md_03-tutorial.html#cpp11-style", [
+        [ "The \"Islands of exception throw in a sea of noexcept\" design pattern", "md_doc_md_03-tutorial.html#sea-of-noexcept", null ]
       ] ],
-      [ "When am I supposed to use what when?", "md_doc_md_03-tutorial.html#when_use", [
-        [ "When should I use a result<T> instead of an outcome<T>?", "md_doc_md_03-tutorial.html#outcome_vs_result", null ],
-        [ "When should I use an outcome<T> instead of a result<T>?", "md_doc_md_03-tutorial.html#result_vs_outcome", null ]
+      [ "C++ 17 style error handling: outcome<T>, result<T> and option<T>", "md_doc_md_03-tutorial.html#cpp17-style", [
+        [ "The BOOST_OUTCOME_TRY(var, expression) macro", "md_doc_md_03-tutorial.html#try", null ]
+      ] ],
+      [ "Conclusion", "md_doc_md_03-tutorial.html#conclusion", [
+        [ "What you need to know about basic_monad", "md_doc_md_03-tutorial.html#basic_monad", null ],
+        [ "What you need to know about error_code_extended", "md_doc_md_03-tutorial.html#error_codes", null ],
+        [ "A demonstration of how optimally tuned code using Outcome becomes", "md_doc_md_03-tutorial.html#optimal", null ]
       ] ]
     ] ],
-    [ "Frequently Asked Questions", "md_doc_md_04-faq.html", null ],
+    [ "Frequently Asked Questions", "md_doc_md_04-faq.html", [
+      [ "When am I supposed to use what when?", "md_doc_md_04-faq.html#when_use", [
+        [ "When should I use a result<T> instead of an outcome<T>?", "md_doc_md_04-faq.html#outcome_vs_result", null ],
+        [ "When should I use an outcome<T> instead of a result<T>?", "md_doc_md_04-faq.html#result_vs_outcome", null ]
+      ] ]
+    ] ],
     [ "Advanced usage: Outcome as a Monad", "md_doc_md_05-advanced.html", [
       [ "Functional programming extensions (optional)", "md_doc_md_05-advanced.html#functional", null ]
     ] ],
@@ -83,7 +84,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 ".html",
-"md_doc_md_03-tutorial.html#outcome_vs_result"
+"md_doc_md_03-tutorial.html#sea-of-noexcept"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

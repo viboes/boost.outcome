@@ -102,7 +102,26 @@ $(document).ready(function(){initNavTree('md_doc_md_03-tutorial.html','');});
 <div class="title">Tutorial </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="tutorial"></a> Outcome's utility cannot be fully understood without understanding how C++ does error handling. Due to C++'s maturity, error handling takes many forms which we will need to recap first.</p>
+<div class="toc"><h3>Table of Contents</h3>
+<ul><li class="level1"><a href="#c-style">C style error handling: integer returns</a></li>
+<li class="level1"><a href="#cpp98-style">C++ 98 style error handling: throwing exceptions</a></li>
+<li class="level1"><a href="#cpp11-style">C++ 11 style error handling: error_code and noexcept</a><ul><li class="level2"><a href="#sea-of-noexcept">The "Islands of exception throw in a sea of noexcept" design pattern</a></li>
+</ul>
+</li>
+<li class="level1"><a href="#cpp17-style">C++ 17 style error handling: outcome<T>, result<T> and option<T></a><ul><ul><li class="level3"><a href="#exceptions-are-exceptional">The "Exceptions are exceptional, errors are not failure" design pattern</a></li>
+</ul>
+<li class="level2"><a href="#try">The BOOST_OUTCOME_TRY(var, expression) macro</a></li>
+</ul>
+</li>
+<li class="level1"><a href="#conclusion">Conclusion</a><ul><li class="level2"><a href="#basic_monad">What you need to know about basic_monad</a></li>
+<li class="level2"><a href="#error_codes">What you need to know about error_code_extended</a></li>
+<li class="level2"><a href="#optimal">A demonstration of how optimally tuned code using Outcome becomes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="textblock"><p><a class="anchor" id="tutorial"></a></p>
+<p>Outcome's utility cannot be fully understood without understanding how C++ does error handling. Due to C++'s maturity, error handling takes many forms which we will need to recap first.</p>
 <h1><a class="anchor" id="c-style"></a>
 C style error handling: integer returns</h1>
 <p>Historically C++ 98 code has taken one of two design patterns when returning errors from functions. This pattern is taken from C, and indeed is pure C:</p>
@@ -243,44 +262,58 @@ of noexcept"</em> which will be described later.</p>
 <li>You only pay for what you use, so if you call the non-throwing overload you are guaranteed by the <code>noexcept</code> that execution flow will not unexpectedly invert. This makes writing correct exception safe code much easier, plus unpredictable execution times due to exception throws cannot occur. The compiler can also reduce executable bloat by not generating stack unwind tables around that call which is useful for some C++ users.</li>
 <li>Simple usage of the API will default to the throwing (i.e. abort this operation) overload which is probably what most users <em>think</em> they want. This does have the advantage that the error won't be lost, however in practice aborting partially completed operations can lose other people's data just as much as ignoring errors and proceeding regardless.</li>
 </ol>
+<p>Summarising this into a design pattern:</p>
+<h2><a class="anchor" id="sea-of-noexcept"></a>
+The "Islands of exception throw in a sea of noexcept" design pattern</h2>
+<p>This design pattern was intended by the committee in C++ 11 to be the method by which that large minority of C++ users who disable RTTI and exceptions entirely could be brought back into ISO standard C++. The pattern is easy:</p>
+<ol type="1">
+<li>Every <code>extern</code> API in your translation unit is marked <code>noexcept</code> and uses a non-throwing mechanism such as <code>std::error_code</code> or even a C-style integer to return errors.</li>
+<li>Functions within a translation unit not called from outside are generally not marked <code>noexcept</code>, or indeed may throw and catch exceptions before returning out of an extern <code>noexcept</code> API.</li>
+<li>Because all <code>extern</code> function calls are <code>noexcept</code> throughout the entire codebase, from any given translation unit it is never the case that implementation code will ever call a potentially throwing function (C APIs are assumed to never throw on most C++ compilers). Because no calls to unknown code will ever throw, the compiler's optimiser <em>ought</em> to elide emission of stack unwind code and all other exception throw handling overhead in any sequence of code inside the translation unit <em>as if</em> exceptions had been globally disabled at the command line.</li>
+<li>Where code inside a translation unit does call something which could throw e.g. much of the STL, exception handling overhead <em>ought</em> to be confined to the containing <code>try</code> ... <code>catch</code> <b>island</b> at best, at worst to that given translation unit.</li>
+<li>Consumers of your <code>extern</code> API need not care how that API is internally implemented as they shall never see an exception thrown out of that API, and the compiler will optimise your code which uses that <code>extern</code> API in its <b>sea</b> of <code>noexcept</code> accordingly.</li>
+</ol>
 <hr/>
 <p><br/>
 </p>
 <h1><a class="anchor" id="cpp17-style"></a>
-C++ 17 style error handling: outcome&lt;T&gt;, result&lt;T&gt; and option&lt;T&gt;, and their C++ standard near-equivalents optional&lt;T&gt; and expected&lt;T, E&gt;</h1>
-<h2><a class="anchor" id="relation-to-cpp17"></a>
-A small bit of detail before resuming the tutorial</h2>
-<p>We are finally onto Outcome! 95% of users will not need to know nor care about this, but readers should be aware (so they know what a debugger is showing them when debugging code using Outcome [1]) that Outcome is implemented as the policy driven utility class <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html">basic_monad&lt;&gt;</a>. The policy supplied has wide latitude to affect the semantics of the monad, but the policy this tutorial will cover is one which closely matches <code>basic_monad&lt;&gt;</code>'s semantics to the C++ 17/20 utility classes <code>std::optional&lt;T&gt;</code> and <code>std::experimental::expected&lt;T, E&gt;</code> (this hasn't been approved yet by ISO WG21, but it's very close, likely later in 2017). As a quick summary of what these C++ 17/20 utility classes (will) do:</p>
+C++ 17 style error handling: outcome&lt;T&gt;, result&lt;T&gt; and option&lt;T&gt;</h1>
+<p>We are finally onto Outcome. Outcome provides three simple utility classes: </p>
 <dl>
-<dt><a href="http://en.cppreference.com/w/cpp/utility/optional"><code>std::optional&lt;T&gt;</code></a> </dt>
-<dd>Utility class managing an optional contained value i.e. a value which may or may not be present. </dd>
-<dt><a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0323r1.pdf"><code>std::experimental::expected&lt;T, E&gt;</code> (P0323R1)</a> </dt>
-<dd>Utility class managing one of three variant states, an expected <code>T</code> or an unexpected <code>E</code> or no value (with the no value semantics matching <a href="http://en.cppreference.com/w/cpp/utility/variant">std::variant&lt;...&gt;</a>). </dd>
+<dt><code>option&lt;T&gt;</code> </dt>
+<dd>Either empty, or an instance of type <code>T</code>. </dd>
+<dt><code>result&lt;T&gt;</code> </dt>
+<dd>One of empty, an instance of type <code>T</code> or a <code>std::error_code</code>. </dd>
+<dt><code>outcome&lt;T&gt;</code> </dt>
+<dd>One of empty, an instance of type <code>T</code>, a <code>std::error_code</code> or a <code>std::exception_ptr</code>. </dd>
 </dl>
-<p>Outcome's near equivalents for these are supersets of the C++ standard utility classes adding monadic semantics (see <a class="el" href="md_doc_md_05-advanced.html#advanced">advanced</a>), but also with some minor semantic differences made for the purposes of improved performance and suitability for high performance/low latency/gaming/trading applications as per <a href="https://github.com/WG21-SG14">WG21 SG14</a>'s mandate. For a detailed list of the exact semantic differences see <a class="el" href="md_doc_md_06-std_expected.html#std-expected">std-expected</a>.</p>
-<p>The <code>basic_monad&lt;&gt;</code> policy this tutorial covers takes this form: </p>
-<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;</div>
-<div class="line">  <span class="keyword">class </span>monad_storage,</div>
-<div class="line">  <span class="keyword">class </span>value_type,</div>
-<div class="line">  <span class="keyword">class </span>error_type,</div>
-<div class="line">  <span class="keyword">class </span>exception_type&gt;</div>
-<div class="line"><span class="keyword">struct </span>BOOST_OUTCOME_MONAD_POLICY_BASE_NAME : <span class="keyword">public</span> monad_storage</div>
-<div class="line">{ ... };</div>
-</div><!-- fragment --><p> This policy implements variant storage of <code>value_type</code>, <code>error_type</code> and <code>exception_type</code>. You can use any type <code>error_type</code> or <code>exception_type</code> you like so long as they act as if a <code>std::error_code</code> and a <code>std::exception_ptr</code> respectively e.g. <code>boost::error_code</code> and <code>boost::exception_ptr</code>. <b>Unlike</b> the <code>E</code> in <code>expected&lt;T, E&gt;</code>, Outcome hard codes the model of <code>error_type</code> and <code>exception_type</code> in stone, so they <em>must</em> provide at least the same APIs and behaviours as an error code and an exception pointer or be <code>void</code>, in which case the specialisation doesn't provide the ability to store an instance of that type. You cannot use a <code>value_type</code>, an <code>error_type</code> or an <code>exception_type</code> which are constructible into one another.</p>
-<p>[1]: Outcome provides a debugging visualiser for Microsoft Visual Studio such that any <code>basic_monad&lt;&gt;</code> displays itself without any internal clutter. Just link into your final binary the <code>monad.natvis</code> file.</p>
-<h2><a class="anchor" id="easy_usage"></a>
-Ach my head is hurting, make this easier!</h2>
-<p>As mentioned earlier, 95% of Outcome's users won't need to know the above because they will be using these convenience typedefs in their code: </p>
-<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; <span class="keyword">using</span> <a class="code" href="group__monad.html#gaab2ff6220205017226794529c863b336">outcome</a> = basic_monad&lt;  monad_policy&lt;T, std::error_code, std::exception_ptr&gt; &gt;;</div>
-<div class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; <span class="keyword">using</span> <a class="code" href="group__monad.html#ga91e1fe11dbebea15458d882d078d6eb5">result</a>  = basic_monad&lt; result_policy&lt;T, std::error_code, void&gt; &gt;;</div>
-<div class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; <span class="keyword">using</span> <a class="code" href="group__monad.html#ga0d0fd5ca15cb339df9aa8e829a8ea5e0">option</a>  = basic_monad&lt; option_policy&lt;T, void, void&gt; &gt;;</div>
-</div><!-- fragment --><p> So, an <code>option&lt;T&gt;</code> can store either a <code>T</code> or empty, same as <code>std::optional&lt;T&gt;</code>. A <code>result&lt;T&gt;</code> can store any one of empty, a <code>T</code> or a <code>std::error_code</code>. And finally an <code>outcome&lt;T&gt;</code> can store any one of empty, a <code>T</code>, a <code>std::error_code</code> or an <code>std::exception_ptr</code>. The member functions on any of these three are a superset of the same member functions on <code>std::optional&lt;T&gt;</code>, <code>std::experimental::expected&lt;T, E&gt;</code> or indeed a <code>std::future&lt;T&gt;</code>, which is to say:</p>
+<p>All three of these are actually the same <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html">basic_monad&lt;&gt;</a> class specialised with a policy which very closely matches <code>basic_monad&lt;&gt;</code>'s semantics to the C++ 17/20 utility classes <code>std::optional&lt;T&gt;</code> and <code>std::experimental::expected&lt;T, E&gt;</code> (this hasn't been approved yet by ISO WG21, but it's very close, likely later in 2017). In addition you gain a much more comprehensive monadic programming interface, and ultra low runtime overheads. But we will come back to that later.</p>
+<p>Each of <code>option&lt;T&gt;</code>, <code>result&lt;T&gt;</code> and <code>outcome&lt;T&gt;</code> being actually a <code>basic_monad&lt;&gt;</code> instance have a very straightforward API, and less expressive monads implicitly convert into more expressive forms on demand. We will call the type <code>T</code> the value type, the error type will be any <code>std::error_code</code> present and the exception type will be any <code>std::exception_ptr</code> present.</p>
 <ul>
-<li>You retrieve a value type using the <code><a class="el" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316" title="Variable of type value_t. ">value()</a></code> or <code>get()</code> member functions.</li>
+<li>You retrieve a value type using the <code><a class="el" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316" title="Variable of type value_t. ">value()</a></code> or <code>get()</code> member functions. These come with const lvalue ref, lvalue ref and rvalue ref overloads, so you can directly modify or move from a contained value.</li>
 <li>You retrieve an error type using the <code><a class="el" href="group__monad.html#ga1a1a8470c4efc3a52412f3ecc79a0060" title="Variable of type error_t. ">error()</a></code> or <code>get_error()</code> member functions.</li>
 <li>You retrieve an exception type use the <code>exception()</code> or <code>get_exception()</code> member functions.</li>
-<li>There are also state inspection member functions which have the entirely unsurprising nomenclature <code>has_value()</code>, <code>has_error()</code> and <code>has_exception()</code>.</li>
-<li>Semantics of things like <code>operator bool()</code>, <code>operator*()</code> and <code>operator-&gt;()</code> all behave exactly the same as <code>std::optional&lt;T&gt;</code> and <code>std::experimental::expected&lt;T, E&gt;</code>, and indeed exactly as you would intutively guess.</li>
+<li>There are also state inspection member functions which have the entirely unsurprising nomenclature <code><a class="el" href="group__monad.html#ga68770961e182715930ad64ca244b645e" title="Variable of type empty_t. ">empty()</a></code>, <code>has_value()</code>, <code>has_error()</code> and <code>has_exception()</code>.</li>
+<li>Semantics of things like <code>emplace()</code>, <code>operator*()</code> and <code>operator-&gt;()</code> all behave exactly the same as <code>std::optional&lt;T&gt;</code> and <code>std::experimental::expected&lt;T, E&gt;</code>, and indeed exactly as you would intutively guess as they behave the same as anywhere in the STL.</li>
+<li><code>if(monad)</code> is true if and only if the monad contains an instance of <code>T</code>.</li>
+</ul>
+<p>What happens if you try retrieving a value from a monad not containing a value?</p>
+<ul>
+<li>If it is empty, the macro <code><a class="el" href="config_8hpp.html#a10f1ea9f0f1205c24e106fb77cee19c3">BOOST_OUTCOME_THROW_MONAD_ERROR(monad_error(monad_errc::no_state))</a></code> is executed. This can be user redefined to do anything, but the default implementation throws a C++ exception of type <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1monad__error.html">monad_error</a> with code <a class="el" href="group__monad.html#gaf5abc43f8d09588556c4c65b53485c0d">monad_errc::no_state</a> if C++ exceptions are enabled by the compiler. If they are not, it prints a stack backtrace to stderr and aborts the process.</li>
+<li>If it is errored, the macro <code><a class="el" href="config_8hpp.html#af1d540bfb21e8b45eaeb3ec60686e91f" title="Predefine to have something else occur when Outcome throws a system_error with an error_code from the...">BOOST_OUTCOME_THROW_SYSTEM_ERROR(std::system_error(ec))</a></code> is executed where <code>ec</code> is the <code>std::error_code</code> contained by the monad. Similarly to before, this can be redefined by the user to do anything, and its default implementation is exactly as earlier.</li>
+<li>If it is excepted, the macro <code><a class="el" href="config_8hpp.html#a9f8f080f5049032b6d49faf0fd637140" title="Predefine to have something else occur when Outcome rethrows an exception_ptr from the monad...">BOOST_OUTCOME_RETHROW_EXCEPTION(e)</a></code> is executed where <code>e</code> is the <code>std::exception_ptr</code> contained by the monad.</li>
+</ul>
+<p>What happens if you try retrieving an error from a monad not containing an error?</p>
+<ul>
+<li>If it is empty, same as for the retrieving a value from not a valued monad.</li>
+<li>If it is valued, returns a default constructed error code.</li>
+<li>If it is excepted, returns an error code of <code><a class="el" href="group__monad.html#ga13e71a6619b46ebe84986aecb270ffa2" title="Returns a reference to a monad error category. Note the address of one of these may not be constant t...">monad_category()</a></code> with code <code>monad_errc::exception_present</code>.</li>
+</ul>
+<p>What happens if you try retrieving an exception from a monad not containing an exception?</p>
+<ul>
+<li>If it is empty, same as for the retrieving a value from not a valued monad.</li>
+<li>If it is valued, returns a default constructed exception ptr.</li>
+<li>If it is errored, returns an exception ptr to a <code>std::system_error</code> instance containing the monad's error code.</li>
 </ul>
 <p>Reusing the same <code>openfile()</code> example from the earlier examples, this is it written using Outcome's <code>result&lt;T&gt;</code>:</p>
 <div class="fragment"><div class="line"><span class="keyword">using namespace </span><a class="code" href="group__config.html#gab113de43db2cd2a4cf1e33b54294944a">BOOST_OUTCOME_V1_NAMESPACE</a>;</div>
@@ -371,222 +404,11 @@ Ach my head is hurting, make this easier!</h2>
 <div class="line">  handle_ref fh = std::move(fh_.value());  <span class="comment">// extract via move the value type</span></div>
 <div class="line">  fh-&gt;read(... etc</div>
 <div class="line">}</div>
-</div><!-- fragment --><p>You might wonder why one would ever use <code>result&lt;&gt;</code> instead of <code>outcome&lt;&gt;</code> seeing as it leads to simpler, more elegant and expressive code? The reason why is that the compiler's optimiser is required to treat a potential use of <code>exception_ptr</code> as a synchronisation event because like <code>shared_ptr</code>, it is implemented using an atomically incremented and decremented reference count. By "synchronisation event" I mean that the compiler is <em>required</em> to assume memory could be modified, and therefore <em>must</em> emit assembler to check the globally visible state rather than elide it. In other words, the compiler can entirely elide and fuse long sequences of <code>result&lt;&gt;</code> to a much greater extent than it can <code>outcome&lt;&gt;</code> because the only globally visible effects of potentially creating an error code is the effect on global state of instantiating its error category. Therefore the compiler can emit exactly one call of the error category function, and thereafter assume subsequent calls to it will not affect globally visible state.</p>
+</div><!-- fragment --><p>This is a really elegant expression of error handling in C++: catastrophic errors are returned as exception ptrs, non serious errors are returned as error codes. All public APIs are <code>noexcept</code> and therefore calling them never causes an unexpected inversion of control flow. If this aesthetic appeals to you, then you need to be using Outcome in your code!</p>
+<p>You might wonder why one would ever use <code>result&lt;&gt;</code> instead of <code>outcome&lt;&gt;</code> seeing as it leads to simpler, more elegant and expressive code? The reason why is that the compiler's optimiser is required to treat a potential use of <code>exception_ptr</code> as a synchronisation event because like <code>shared_ptr</code>, it is implemented using an atomically incremented and decremented reference count. By "synchronisation event" I mean that the compiler is <em>required</em> to assume memory could be modified, and therefore <em>must</em> emit assembler to check the globally visible state rather than elide it. In other words, the compiler can entirely elide and fuse long sequences of <code>result&lt;&gt;</code> to a much greater extent than it can <code>outcome&lt;&gt;</code> because the only globally visible effects of potentially creating an error code is the effect on global state of instantiating its error category. Therefore the compiler can emit exactly one call of the error category function, and thereafter assume subsequent calls to it will not affect globally visible state.</p>
 <dl class="section note"><dt>Note</dt><dd>The Dinkumware STL supplied with Visual Studio makes any fetch of an error category an operation with globally visible consequences. Compilers using this STL therefore must emit a lot more assembler than with other STL implementations. This is part of the reason why MSVC generates code bloat unlike GCC or clang.</dd></dl>
 <p>So, to sum up, try to use <code>option&lt;T&gt;</code> where that's appropriate. <code>option&lt;T&gt;</code> is constexpr available and very often vanishes entirely from the assembler generated. Try to use <code>result&lt;T&gt;</code> where you don't need a full <code>outcome&lt;T&gt;</code> where that's appropriate. And remember a less expressive form always implicitly converts into a more expressive form, so you can always feed options into results or outcomes, or results into outcomes.</p>
-<h2><a class="anchor" id="try"></a>
-The BOOST_OUTCOME_TRY() macro</h2>
-<p>todo</p>
-<h2><a class="anchor" id="sea-of-noexcept"></a>
-The "Islands of exception throw in a sea of noexcept" design pattern</h2>
-<p>This design pattern was intended by the committee in C++ 11 to be the method by which that large minority of C++ users who disable RTTI and exceptions entirely could be brought back into ISO standard C++. The pattern is easy:</p>
-<ol type="1">
-<li>Every <code>extern</code> API in your translation unit is marked <code>noexcept</code> and uses a non-throwing mechanism such as <code>std::error_code</code> or <code>std::expected&lt;T, E&gt;</code> or Outcomes or even a C-style integer to return errors.</li>
-<li>Code within a translation unit is generally not marked <code>noexcept</code>, or indeed may throw and catch exceptions before returning out of an extern <code>noexcept</code> API.</li>
-<li>Because all <code>extern</code> function calls are <code>noexcept</code> throughout the entire codebase, from any given translation unit it is never the case that implementation code will ever call a potentially throwing function (C APIs are assumed to never throw on most C++ compilers). Because no calls to unknown code will ever throw, the compiler's optimiser <em>ought</em> to elide emission of stack unwind code and all other exception throw handling overhead in any sequence of code inside the translation unit <em>as if</em> exceptions had been globally disabled at the command line.</li>
-<li>Where code inside a translation unit does call something which could throw e.g. much of the STL, exception handling overhead <em>ought</em> to be confined to the containing <code>try</code> ... <code>catch</code> <b>island</b> at best, at worst to that given translation unit.</li>
-<li>Consumers of your <code>extern</code> API need not care how that API is internally implemented as they shall never see an exception thrown out of that API, and the compiler will optimise your code which uses that <code>extern</code> API in its <b>sea</b> of <code>noexcept</code> accordingly.</li>
-</ol>
-<h2><a class="anchor" id="exceptions-are-exceptional"></a>
-The "Exceptions are exceptional, errors are not failure" design pattern</h2>
-<p>In addition to the pure "sea of noexcept" for low latency users, there is one other new error handling design pattern to mention made possible by <code>expected&lt;T, E&gt;</code> or especially Outcomes which combines "sea of noexcept" with exception throws. The idea is that ordinarily speaking code never throws an exception, and returns all failures anticipated by the programmer through <code>expected&lt;T, E&gt;</code> as an <code>E</code>. If however something very unexpected occurs, an <em>exceptional</em> event, we exclusively use exception throws to abort the current operation entirely. For anyone familiar with Rust, this is <b>exactly</b> the Rust error handling model: <code>Result&lt;T&gt;</code> and <code>Option&lt;T&gt;</code> return errors expected by the programmer whereas a stack unwinding panic of the current thread is how exceptional, programmer unanticipated events are handled.</p>
-<h2><a class="anchor" id="cpp17-stl"></a>
-Standardised optional&lt;T&gt; and expected&lt;T, E&gt;</h2>
-<p>There are useful improvements coming in C++ 17/20 with which one can implement some new error handling design patterns in addition to those already covered above: </p>
-<dl>
-<dt><a href="http://en.cppreference.com/w/cpp/utility/optional"><code>std::optional&lt;T&gt;</code></a> </dt>
-<dd>Utility class managing an optional contained value i.e. a value which may or may not be present. </dd>
-<dt><a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0323r1.pdf"><code>std::experimental::expected&lt;T, E&gt;</code> (P0323R1)</a> </dt>
-<dd>Utility class managing one of three variant states, an expected <code>T</code> or an unexpected <code>E</code> or no value (with the no value semantics matching <a href="http://en.cppreference.com/w/cpp/utility/variant">std::variant&lt;...&gt;</a>). </dd>
-</dl>
-<p>Outcome provides convenience typedefs which map <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html">basic_monad&lt;&gt;</a> as close as is feasible onto the standard utility classes:</p>
-<ul>
-<li><code>BOOST_OUTCOME_V1_NAMESPACE::option&lt;T&gt;</code> =&gt; <code>std::optional&lt;T&gt;</code></li>
-<li><code>BOOST_OUTCOME_V1_NAMESPACE::result&lt;T&gt;</code> =&gt; <code>std::experimental::expected&lt;T, E = std::error_code&gt;</code></li>
-<li><code>BOOST_OUTCOME_V1_NAMESPACE::outcome&lt;T&gt;</code> =&gt; no longer any equivalent in the STL<ul>
-<li>but in an earlier proposal for Expected it would have been <code>std::experimental::expected&lt;T, E = std::experimental::expected&lt;T = std::error_code, E = std::exception_ptr&gt;&gt;</code> i.e. either an expected <code>T</code> or an unexpected <code>std::error_code</code> or a really unexpected <code>std::exception_ptr</code>.</li>
-</ul>
-</li>
-</ul>
-<p>In 95% of use cases, Outcome's convenience typedefs should be typedef-swappable for <code>optional&lt;T&gt;</code> and <code>expected&lt;T, E&gt;</code>, and Outcome has been carefully designed to maximise this. There are some important semantic differences though, for those interested please see <a class="el" href="md_doc_md_06-std_expected.html#std-expected">std-expected</a> for lots of detail. In summary, Outcome is intended as an <em>ultra lightweight universal error handling framework</em> which lets you the programmer seamlessly transport error states around without adding any extra overhead nor losing any information, folding everything into C-style returns of some <code>basic_monad&lt;&gt;</code> implementation. It therefore has a different intent and purpose than Expected which is more of a general purpose building block primitive intended for much more general (i.e. unknown) use cases than Outcome.</p>
-<p>Outcome takes absolute minimum runtime overhead unusually seriously, and generates exceptionally tight code with recent versions of GCC and clang which a design making more use of potential exception throws currently can not achieve with current compiler optimiser technology. To achieve its ultra lightweightness, Outcome is written to enable as much as possible current compiler optimisers to deduce when to elide the underlying variant storage used by <code>basic_monad&lt;&gt;</code> such that if you do <code>return outcome&lt;int&gt;(5);</code> then the compiler generates code exactly as if you wrote <code>return 5;</code> i.e. Outcome disappears entirely from the assembler generated. And this is not some vague aspiration: Outcome's unit test suite actually tests that outcomes vanish from runtime overhead per commit. To achieve this with current optimiser technologies, it needs to be implemented less branchy and with a formal constexpr empty state to avoid the potential <code>valueless_by_exception</code> state that <code>expected&lt;T, E&gt;</code> requires. Another big goal for Outcome is that it works perfectly with C++ exceptions and RTTI disabled so it is useful for high performance/gaming/finance applications such as those studied by ISO WG21 SG14. In fact, it is intended to submit Outcome to SG14 for standardisation as the low latency/high performance friendly close alternative to <code>expected&lt;T, E&gt;</code>.</p>
-<p>Whether you choose in your own code to use Outcome or the C++ 17/21 STL is up to you, and there are pro and cons to choosing either. The rest of this tutorial will focus on Outcome of course, but please do bear in mind that any of the design patterns mentioned during the remainder of this tutorial can be implemented almost as easily using <code>expected&lt;T, E&gt;</code> and <code>variant&lt;...&gt;</code> as using Outcomes. I think you'll find Outcomes are more convenient to use for error handling, but it wouldn't require you writing much additional macro and type boilerplate to use Expected and Variant just as easily as your base transports.</p>
-<h2><a class="anchor" id="outcome_example"></a>
-Example function using Outcome's result&lt;T&gt;</h2>
-<h2><a class="anchor" id="examples"></a>
-Examples of usage</h2>
-<p>The above synopsis of Outcome looks lengthy and complex, but almost all of it is convenience overloads of one form or other. In usage Outcome is generally "stupid easy" to program with, especially if you're already used to <code>std::optional</code>. Here is a real world use case distilled from AFIO v2's source code:</p>
-<div class="fragment"><div class="line">  <span class="keyword">using namespace </span>minimal_afio;</div>
-<div class="line">  <span class="keyword">using</span> boost_lite::ringbuffer_log::last190;</div>
-<div class="line">  <span class="keyword">extern</span> BOOST_SYMBOL_EXPORT result&lt;file_handle&gt; file_create(              <span class="comment">//</span></div>
-<div class="line">  file_handle::path_type _path,                                            <span class="comment">//</span></div>
-<div class="line">  file_handle::mode _mode = file_handle::mode::read,                       <span class="comment">//</span></div>
-<div class="line">  file_handle::creation _creation = file_handle::creation::open_existing,  <span class="comment">//</span></div>
-<div class="line">  file_handle::caching _caching = file_handle::caching::all,               <span class="comment">//</span></div>
-<div class="line">  file_handle::flag flags = file_handle::flag::none) noexcept              <span class="comment">//</span></div>
-<div class="line">  {</div>
-<div class="line"><span class="preprocessor">#ifdef __cpp_exceptions</span></div>
-<div class="line"><span class="preprocessor"></span>    <span class="comment">// If exceptions are turned on (the above is the C++ 17 feature detection</span></div>
-<div class="line">    <span class="comment">// macro, Boost-lite provides a consistent set of these on all platforms)</span></div>
-<div class="line">    <span class="comment">// noexcept functions should always wrap their innards in a try...catch,</span></div>
-<div class="line">    <span class="comment">// if you don&#39;t ever call a potentially throwing piece of code the compiler</span></div>
-<div class="line">    <span class="comment">// will completely elide the runtime try...catch overhead.</span></div>
-<div class="line">    <span class="keywordflow">try</span></div>
-<div class="line"><span class="preprocessor">#endif</span></div>
-<div class="line"><span class="preprocessor"></span>    {</div>
-<div class="line">      result&lt;file_handle&gt; ret(file_handle(std::move(_path), _caching, flags));</div>
-<div class="line">      native_handle_type &amp;nativeh = ret.value()._v;</div>
-<div class="line"></div>
-<div class="line">      <span class="comment">// access_mask_from_handle_mode() returns a result&lt;ACCESS_MASK&gt;,</span></div>
-<div class="line">      <span class="comment">// if it is signalled then propagate it immediately by returning it,</span></div>
-<div class="line">      <span class="comment">// else unwrap the return value into the variable access</span></div>
-<div class="line">      <a class="code" href="monad_8hpp.html#aa977bf0b7aded30c781c35f956edc1d7">BOOST_OUTCOME_TRY</a>(access, access_mask_from_handle_mode(_mode));</div>
-<div class="line">      DWORD creation = OPEN_EXISTING;</div>
-<div class="line">      <span class="keywordflow">switch</span>(_creation)</div>
-<div class="line">      {</div>
-<div class="line">      <span class="keywordflow">case</span> file_handle::creation::open_existing:</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line">      <span class="keywordflow">case</span> file_handle::creation::only_if_not_exist:</div>
-<div class="line">        creation = CREATE_NEW;</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line">      <span class="keywordflow">case</span> file_handle::creation::if_needed:</div>
-<div class="line">        creation = OPEN_ALWAYS;</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line">      <span class="keywordflow">case</span> file_handle::creation::truncate:</div>
-<div class="line">        creation = TRUNCATE_EXISTING;</div>
-<div class="line">        <span class="keywordflow">break</span>;</div>
-<div class="line">      }</div>
-<div class="line"></div>
-<div class="line">      <span class="comment">// attributes_from_handle_caching_and_flags() returns a result&lt;DWORD&gt;,</span></div>
-<div class="line">      <span class="comment">// so if it errors the propagate immediately, else unpack DWORD into</span></div>
-<div class="line">      <span class="comment">// the variable attribs</span></div>
-<div class="line">      <a class="code" href="monad_8hpp.html#aa977bf0b7aded30c781c35f956edc1d7">BOOST_OUTCOME_TRY</a>(attribs, attributes_from_handle_caching_and_flags(_caching, flags));</div>
-<div class="line">      <span class="keywordflow">if</span>(INVALID_HANDLE_VALUE == (nativeh.h = CreateFile(ret.value()._path.c_str(), access, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, NULL, creation, attribs, NULL)))</div>
-<div class="line">      {</div>
-<div class="line">        DWORD errcode = GetLastError();</div>
-<div class="line"></div>
-<div class="line">        <span class="comment">// make_errored_result() understands DWORDs on Windows. It also understands</span></div>
-<div class="line">        <span class="comment">// int for automatic errno conversion.</span></div>
-<div class="line">        <span class="keywordflow">return</span> make_errored_result&lt;file_handle&gt;(errcode, last190(ret.value()._path.u8string()));</div>
-<div class="line">      }</div>
-<div class="line">      <span class="keywordflow">if</span>(flags &amp; file_handle::flag::unlink_on_close)</div>
-<div class="line">      {</div>
-<div class="line">        <span class="comment">// Hide this item</span></div>
-<div class="line">        SetFileAttributes(ret.value()._path.c_str(), FILE_ATTRIBUTE_HIDDEN);</div>
-<div class="line">      }</div>
-<div class="line">      <span class="keywordflow">return</span> ret;</div>
-<div class="line">    }</div>
-<div class="line"><span class="preprocessor">#ifdef __cpp_exceptions</span></div>
-<div class="line"><span class="preprocessor"></span>    <span class="comment">// Catch all the STL exceptions, converting them to an equivalent result&lt;&gt;</span></div>
-<div class="line">    <span class="comment">// containing a system_error with the appropriate error_code.</span></div>
-<div class="line">    <a class="code" href="group__macro__helpers.html#gaacf14d3429ad0bc72a6ba40e7f283b43">BOOST_OUTCOME_CATCH_EXCEPTION_TO_RESULT</a></div>
-<div class="line"><span class="preprocessor">#endif</span></div>
-<div class="line"><span class="preprocessor"></span>  }</div>
-</div><!-- fragment --> <dl class="todo"><dt><b><a class="el" href="todo.html#_todo000004">Todo:</a></b></dt><dd>Add link to whole source code in an online compiler explorer so end users can play with the use case</dd></dl>
-<p>Unlike the earlier example functions opening a file, the above is not a toy use case and it covers almost all of the permutations of creating or opening a file which are common to POSIX and Windows. We make use of the fact that <code>basic_monad&lt;&gt;</code><code>::</code><code><a class="el" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316" title="Variable of type value_t. ">value()</a></code> returns a non-const lvalue ref when the monad instance is a non-const stack allocated instance, binding it to the convenience lvalue ref <code>nativeh</code> which points at a union containing the <code>HANDLE</code> later filled with the opened handle.</p>
-<p>We make use of <code><a class="el" href="monad_8hpp.html#aa977bf0b7aded30c781c35f956edc1d7" title="If the monad returned by expression m is empty, erroneous or excepted, propagate that by immediately ...">BOOST_OUTCOME_TRY(var, expr)</a></code> which is a macro expanding to:</p>
-<div class="fragment"><div class="line"><span class="keyword">auto</span> &amp;&amp;unique = (expr);                                  <span class="comment">// &quot;unique&quot; is a preprocessor generated unique temporary identifier</span></div>
-<div class="line"><span class="keywordflow">if</span>(!unique.has_value())</div>
-<div class="line">  <span class="keywordflow">return</span> <a class="code" href="group__monad.html#ga31623e855d816d8be8b796107e29d4f7">BOOST_OUTCOME_V1_NAMESPACE::as_void</a>(unique);</div>
-<div class="line"><span class="keyword">auto</span> var(std::move(std::move(unique).<a class="code" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">value</a>()))</div>
-</div><!-- fragment --><p>This gets as close as is possible in C++ to the <code>try!</code> facility in Rust or Swift without using exception throws, and you'll find yourself using it a very great deal when writing code using Outcome. Like <code>try!</code>, the monad returning expression is executed and its returned monad checked to see if it has a value. If it does, the value is extracted out of the monad and placed in the variable you asked for. If it did not contain a value, the emptiness/errored/exceptioned state is converted into a void form monad and returned immediately from the calling function, thus propagating the empty/errored/exceptioned state up the stack. You'll note we cast the stack allocated monad instance into a rvalue ref before asking for its value, this returns a rvalue ref to the value. We then pass that rvalue ref through to the variable instance constructor so the value is moved and not copied when possible. I have disassembled this sequence on the main compilers and found that where the compiler knows for a fact that a value is being returned, all runtime overhead over a straight return of a value is usually eliminated.</p>
-<p>We also make use of a convenience overload of the <code>make_errored_XXX()</code> functions where a single <code>int</code> is assumed to be a POSIX code in the <code>errno</code> domain and a single <code>DWORD</code> is assumed to be a Win32 code in the <code>GetLastError()</code> domain. This allows very easy conversion of system error codes into the appropriate <code>std::error_code</code> thusly returned wrapped in a monad.</p>
-<p>Finally we also make use of the <code>BOOST_OUTCOME_CATCH_EXCEPTION_TO_RESULT</code> macro which is a long sequence of STL exception type catch clauses converting STL exception types into their equivalent error codes:</p>
-<div class="fragment"><div class="line"><span class="keywordflow">catch</span>(<span class="keyword">const</span> std::invalid_argument &amp;e)</div>
-<div class="line">{</div>
-<div class="line">  <span class="keywordflow">return</span> BOOST_OUTCOME_V1_NAMESPACE::make_errored_result&lt;void&gt;(EINVAL, e.what());</div>
-<div class="line">}</div>
-<div class="line"><span class="keywordflow">catch</span>(<span class="keyword">const</span> std::domain_error &amp;e)</div>
-<div class="line">{</div>
-<div class="line">  <span class="keywordflow">return</span> BOOST_OUTCOME_V1_NAMESPACE::make_errored_result&lt;void&gt;(EDOM, e.what());</div>
-<div class="line">}</div>
-<div class="line"><span class="keywordflow">catch</span>(<span class="keyword">const</span> std::length_error &amp;e)</div>
-<div class="line">{</div>
-<div class="line">  <span class="keywordflow">return</span> BOOST_OUTCOME_V1_NAMESPACE::make_errored_result&lt;void&gt;(E2BIG, e.what());</div>
-<div class="line">}</div>
-<div class="line"><span class="keywordflow">catch</span>(<span class="keyword">const</span> std::out_of_range &amp;e)</div>
-<div class="line">{</div>
-<div class="line">  <span class="keywordflow">return</span> BOOST_OUTCOME_V1_NAMESPACE::make_errored_result&lt;void&gt;(ERANGE, e.what());</div>
-<div class="line">}</div>
-<div class="line"><span class="keywordflow">catch</span>(<span class="keyword">const</span> std::logic_error &amp;e) <span class="comment">/* base class for this group */</span></div>
-<div class="line">{</div>
-<div class="line">  <span class="keywordflow">return</span> BOOST_OUTCOME_V1_NAMESPACE::make_errored_result&lt;void&gt;(EINVAL, e.what());</div>
-<div class="line">}</div>
-<div class="line"><span class="keywordflow">catch</span>(<span class="keyword">const</span> std::system_error &amp;e) <span class="comment">/* also catches ios::failure */</span></div>
-<div class="line">{</div>
-<div class="line">  <span class="keywordflow">return</span> BOOST_OUTCOME_V1_NAMESPACE::make_errored_result&lt;void&gt;(BOOST_OUTCOME_V1_NAMESPACE::error_code_extended(e.code(), e.what()));</div>
-<div class="line">}</div>
-<div class="line"><span class="keywordflow">catch</span>(<span class="keyword">const</span> std::overflow_error &amp;e)</div>
-<div class="line">{</div>
-<div class="line">  <span class="keywordflow">return</span> BOOST_OUTCOME_V1_NAMESPACE::make_errored_result&lt;void&gt;(EOVERFLOW, e.what());</div>
-<div class="line">}</div>
-<div class="line"><span class="keywordflow">catch</span>(<span class="keyword">const</span> std::range_error &amp;e)</div>
-<div class="line">{</div>
-<div class="line">  <span class="keywordflow">return</span> BOOST_OUTCOME_V1_NAMESPACE::make_errored_result&lt;void&gt;(ERANGE, e.what());</div>
-<div class="line">}</div>
-<div class="line"><span class="keywordflow">catch</span>(<span class="keyword">const</span> std::runtime_error &amp;e) <span class="comment">/* base class for this group */</span></div>
-<div class="line">{</div>
-<div class="line">  <span class="keywordflow">return</span> BOOST_OUTCOME_V1_NAMESPACE::make_errored_result&lt;void&gt;(EAGAIN, e.what());</div>
-<div class="line">}</div>
-<div class="line"><span class="keywordflow">catch</span>(<span class="keyword">const</span> std::bad_alloc &amp;e)</div>
-<div class="line">{</div>
-<div class="line">  <span class="keywordflow">return</span> BOOST_OUTCOME_V1_NAMESPACE::make_errored_result&lt;void&gt;(ENOMEM, e.what());</div>
-<div class="line">}</div>
-<div class="line"><span class="keywordflow">catch</span>(<span class="keyword">const</span> std::exception &amp;e)</div>
-<div class="line">{</div>
-<div class="line">  <span class="keywordflow">return</span> BOOST_OUTCOME_V1_NAMESPACE::make_errored_result&lt;void&gt;(EINVAL, e.what());</div>
-<div class="line">}</div>
-<div class="line"><span class="keywordflow">catch</span>(...)</div>
-<div class="line">{</div>
-<div class="line">  <span class="keywordflow">return</span> BOOST_OUTCOME_V1_NAMESPACE::make_errored_result&lt;void&gt;(EAGAIN, <span class="stringliteral">&quot;unknown exception&quot;</span>);</div>
-<div class="line">}</div>
-</div><!-- fragment --><p>You will surely note that the <code>make_errored_XXX()</code> functions actually take an <code>int</code> and an optional <code>const char *</code>. This is the purpose of <code>error_code_extended</code> which extends <code>std::error_code</code> with the following synposis:</p>
-<div class="fragment"><div class="line"><span class="keyword">class </span>error_code_extended : <span class="keyword">public</span> std::error_code</div>
-<div class="line">{</div>
-<div class="line"><span class="keyword">public</span>:</div>
-<div class="line">  error_code_extended();</div>
-<div class="line">  error_code_extended(<span class="keywordtype">int</span> ec, <span class="keyword">const</span> std::error_category &amp;cat, <span class="keyword">const</span> <span class="keywordtype">char</span> *msg = <span class="keyword">nullptr</span>, <span class="keywordtype">unsigned</span> code1 = 0, <span class="keywordtype">unsigned</span> code2 = 0, <span class="keywordtype">bool</span> backtrace = <span class="keyword">false</span>);</div>
-<div class="line">  <a class="code" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">template &lt;class ErrorCodeEnum, typename = typename std::enable_if&lt;std::is_error_code_enum&lt;ErrorCodeEnum&gt;::value</a>&gt;::type&gt;</div>
-<div class="line">    error_code_extended(ErrorCodeEnum e);</div>
-<div class="line">  <span class="keyword">explicit</span> error_code_extended(<span class="keyword">const</span> std::error_code &amp;e, <span class="keyword">const</span> <span class="keywordtype">char</span> *msg = <span class="keyword">nullptr</span>, <span class="keywordtype">unsigned</span> code1 = 0, <span class="keywordtype">unsigned</span> code2 = 0, <span class="keywordtype">bool</span> backtrace = <span class="keyword">false</span>);</div>
-<div class="line">  <span class="keyword">explicit</span> error_code_extended(std::error_code &amp;&amp;e, <span class="keyword">const</span> <span class="keywordtype">char</span> *msg = <span class="keyword">nullptr</span>, <span class="keywordtype">unsigned</span> code1 = 0, <span class="keywordtype">unsigned</span> code2 = 0, <span class="keywordtype">bool</span> backtrace = <span class="keyword">false</span>);</div>
-<div class="line">  <span class="keywordtype">void</span> assign(<span class="keywordtype">int</span> ec, <span class="keyword">const</span> std::error_category &amp;cat, <span class="keyword">const</span> <span class="keywordtype">char</span> *msg = <span class="keyword">nullptr</span>, <span class="keywordtype">unsigned</span> code1 = 0, <span class="keywordtype">unsigned</span> code2 = 0, <span class="keywordtype">bool</span> backtrace = <span class="keyword">false</span>);</div>
-<div class="line">  <span class="keywordtype">void</span> clear();</div>
-<div class="line">  </div>
-<div class="line">  <span class="comment">// New member functions</span></div>
-<div class="line">  <span class="comment">// Fill a char buffer with the extended message, retrieving the two extended unsigned integer codes</span></div>
-<div class="line">  <span class="keywordtype">size_t</span> extended_message(<span class="keywordtype">char</span> *buffer, <span class="keywordtype">size_t</span> len, <span class="keywordtype">unsigned</span> &amp;code1, <span class="keywordtype">unsigned</span> &amp;code2) <span class="keyword">const</span> noexcept;</div>
-<div class="line">  <span class="comment">// Return an array of strings describing the stack at the time of construction. MUST call free() on this returned pointer.</span></div>
-<div class="line">  <span class="keywordtype">char</span> **backtrace() const noexcept;</div>
-<div class="line">};</div>
-<div class="line"><span class="comment">// Prints the extended error code, including any extended information if available</span></div>
-<div class="line">inline std::ostream &amp;operator&lt;&lt;(std::ostream &amp;s, const error_code_extended &amp;ec);</div>
-</div><!-- fragment --><p><code>error_code_extended</code> is completely API compatible with <code>std::error_code</code> and all its member functions can be used the same way. You can supply a <code>std::error_code</code> to an extended error code, or else construct an extended error code the same way you would a STL error code. You should note that it is <b>always safe</b> to slice <code>error_code_extended</code> into an <code>std::error_code</code>, so you can safely feed <code>error_code_extended</code> to anything consuming a <code>std::error_code</code>.</p>
-<p>The main big additions are obviously the ability to add a custom string message to an extended error code, this allows the preservation of the original <code>what()</code> message when converting a thrown exception into an extended error code. You can also add two arbitrary unsigned integer codes and most interestingly, a backtrace of the stack at the point of construction. The extended message and backtrace can be later fetched using the new member functions, though note that the storage for these is kept in a statically allocated threadsafe ring buffer and so may vanish at some arbitrary later point when the storage gets recycled. If this happens, <code>extended_message()</code> will return zero characters written and <code>backtrace()</code> will return a null pointer.</p>
-<p>If you are throwing your own custom types with custom information, you should note that you can create your own custom extended error code type using the same reusable microsecond fast threadsafe logging framework that Outcome uses. This won't be documented here as that framework (<code>ringbuffer_log</code>) lives in Boost-lite, but it's fairly easy to study Outcome's and Boost-lite's source code all of which is on github.</p>
-<p><br/>
-</p>
-<hr/>
-<p><br/>
-</p>
-<h1><a class="anchor" id="when_use"></a>
-When am I supposed to use what when?</h1>
-<p>The total available permutations may seem overwhelming at this point, because as with any fundamental primitive the possibilities are endless. However, here are some quick notes to help you decide what design pattern to use for your particular code base:</p>
-<h2><a class="anchor" id="outcome_vs_result"></a>
-When should I use a result&lt;T&gt; instead of an outcome&lt;T&gt;?</h2>
-<p><code>outcome&lt;T&gt;</code> has the potential to carry a <code>std::exception_ptr</code> which is implemented by any STL I can think of as something very similar to a <code>std::shared_ptr</code> i.e. it uses atomics to manage the reference count. Atomics are unavoidably a <em>compiler fence</em> i.e. the compiler <b>must</b> emit code at the point of the fence. Outcome has been very carefully written to let the compiler's optimiser <em>not</em> emit code thus leading to its stellar low runtime overhead. Whilst recent versions of GCC and clang seem reasonably good at eliding compiler fences caused by use of atomics in <code>std::exception_ptr</code> when the compiler is absolutely sure that no <code>std::exception_ptr</code> can be transported, where there is doubt the compiler has no choice but to generate a lot more assembler to cover all the possible outcomes. <code>result&lt;T&gt;</code> cannot transport a <code>std::exception_ptr</code> and therefore doesn't force the compiler to generate output (except unfortunately on the Dinkumware STL where fetching a STL error category e.g. <code>std::generic_category()</code> uses atomics).</p>
-<p>So in short, always use <code>result&lt;T&gt;</code> instead of <code>outcome&lt;T&gt;</code> where doing so does not impact negatively on your codebase, and remember one bit of your code can use <code>result&lt;T&gt;</code> and another <code>outcome&lt;T&gt;</code> just fine.</p>
-<h2><a class="anchor" id="result_vs_outcome"></a>
-When should I use an outcome&lt;T&gt; instead of a result&lt;T&gt;?</h2>
-<p>The main reason to use an <code>outcome&lt;T&gt;</code> is in the "sea of noexcept" design pattern where implementations may throw exceptions internally, but all public extern APIs are always noexcept. <code>outcome&lt;T&gt;</code> provides a lossless method of exporting the thrown exception but without loading the programmer with dealing with unexpected control flow reversal, thus helping the programmer write correct exception safe code faster.</p>
-<p>One can implement the "exceptions are exceptional" design pattern easily with Expected: expected errors are returned via <code>expected&lt;T, E&gt; = E</code> and aborting errors are returned via an exception throw. However the role where using <code>outcome&lt;T&gt;</code> really shines is in the "exceptions
-are exceptional" combined with "sea of noexcept" design pattern where the errored state means an expected error which was handled inline, but the exceptioned state means an operation was aborted, yet the programmer still can easily write exception safe forward-only-execution code not having to worry about unexpected control flow inversion. This is where using Outcome adds significant value over using Expected.</p>
-<p>Finally, there is a third big reason to use Outcome. The main reason I designed and wrote Outcome was to implement a universal error handling framework which could express <em>in the minimum possible overhead</em>, and without losing information, the many C++ error handling design patterns possible, and even more importantly that individual libraries could use the design pattern which best suited them whilst seamlessly interoperating with other libraries using different error handling designs. To go into a bit more detail:</p>
-<ul>
-<li>Proposed <a href="https://ned14.github.io/boost.afio/">Boost.AFIO v2</a> is a very low level very thin file i/o and filesystem library which sits just above the raw kernel syscalls. Throwing exceptions in such a library is overkill, so AFIO v2 uses the "sea of noexcept" design pattern both in its public API and in its internal implementation (i.e. it doesn't use C++ exceptions at all).</li>
-<li>Proposed <a href="https://github.com/ned14/boost.kerneltest">Boost.KernelTest</a> is a kernel based testing infrastructure which uses Outcomes as the storage for each kernel permutation run in its permutation tables of preconditions, postconditions, parameters and outcomes. KernelTest itself is written using the "exceptions are exceptional" design pattern where expected errors are returned via outcomes but unexpected errors which abort the test use thrown exceptions which are collected into <code>outcome&lt;T&gt;</code>'s. AFIO v2's test suite is written using KernelTest.</li>
-<li>Planned Boost.BLOBStore will be a versioned, ACID transactional key to BLOB store written using AFIO v2 which will use both the "sea of noexcept" and the "exceptions are exceptional" design patterns together. This allows user supplied callbacks to throw exceptions which aborts the current transaction and for those exceptions to be propagated, if desired, out of BLOBStore whilst the internal implementation of BLOBStore and indeed its public API is all noexcept and never throws exceptions (writing correct filesystem code is hard enough without dealing with unexpected control flow reversal). BLOBStore will also use KernelTest for its test suite. </li>
-</ul>
+<p>Let's summarise all this into another new error handling design pattern:</p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
