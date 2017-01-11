@@ -253,19 +253,19 @@ Synopsis</h1>
 <div class="line">  <span class="keywordtype">void</span> <a class="code" href="group__monad.html#ga2ffab91838224f042fe7ed1b108e5ad7">swap</a>(basic_monad&amp;) noexcept([1]);                                       <span class="comment">// also in expected&lt;&gt;</span></div>
 <div class="line">  <span class="keywordtype">void</span> clear() noexcept([1]);</div>
 <div class="line"></div>
-<div class="line"><span class="preprocessor">#ifdef BOOST_OUTCOME_ENABLE_OPERATORS                                          // defaults to disabled (documented in Advanced Usage)</span></div>
-<div class="line"><span class="preprocessor"></span>  basic_monad&lt;...&gt; unwrap() const &amp;;</div>
+<div class="line"><span class="preprocessor">#ifdef BOOST_OUTCOME_ENABLE_ADVANCED                                           // defaults to disabled (documented in Advanced Usage)</span></div>
+<div class="line"><span class="preprocessor"></span>  basic_monad&lt;...&gt; unwrap() const &amp;;                                           <span class="comment">// return innermost monad</span></div>
 <div class="line">  basic_monad&lt;...&gt; unwrap() &amp;&amp;;</div>
-<div class="line">  template&lt;class F&gt; basic_monad&lt;...&gt; bind(F &amp;&amp;f);</div>
-<div class="line">  template&lt;class F&gt; basic_monad&lt;...&gt; operator&gt;&gt;(F &amp;&amp;f);</div>
-<div class="line">  template&lt;class F&gt; basic_monad&lt;...&gt; map(F &amp;&amp;f);</div>
-<div class="line">  template&lt;class F&gt; basic_monad(F(contents)).unwrap() match(F &amp;&amp;f);</div>
-<div class="line">  template&lt;class... Args&gt; decltype(value_type(Args...)) operator()(Args &amp;&amp;...);</div>
+<div class="line">  template&lt;class F&gt; basic_monad&lt;...&gt; bind(F &amp;&amp;f);                              <span class="comment">// traditional monad bind operation</span></div>
+<div class="line">  template&lt;class F&gt; basic_monad&lt;...&gt; operator&gt;&gt;(F &amp;&amp;f);                        <span class="comment">// alias for bind() to keep Haskell folk happy</span></div>
+<div class="line">  template&lt;class F&gt; basic_monad&lt;...&gt; map(F &amp;&amp;f);                               <span class="comment">// traditional monad map operation</span></div>
+<div class="line">  template&lt;class F&gt; basic_monad(F(contents)).unwrap() match(F &amp;&amp;f);            <span class="comment">// call callable with contents of monad</span></div>
+<div class="line">  template&lt;class... Args&gt; decltype(value_type(Args...)) operator()(Args &amp;&amp;...);<span class="comment">// as if value()(Args...)</span></div>
 <div class="line"></div>
-<div class="line">  template&lt;class U&gt; constexpr basic_monad operator|(U &amp;&amp;) &amp;;</div>
+<div class="line">  template&lt;class U&gt; constexpr basic_monad operator|(U &amp;&amp;) &amp;;                   <span class="comment">// if the monad is not valued, return monad with U</span></div>
 <div class="line">  template&lt;class U&gt; constexpr basic_monad operator|(U &amp;&amp;) const&amp;;</div>
 <div class="line">  template&lt;class U&gt; constexpr basic_monad operator|(U &amp;&amp;) &amp;&amp;;</div>
-<div class="line">  template&lt;class U&gt; constexpr basic_monad operator&amp;(U &amp;&amp;) &amp;;</div>
+<div class="line">  template&lt;class U&gt; constexpr basic_monad operator&amp;(U &amp;&amp;) &amp;;                   <span class="comment">// if the monad is valued, return monad with U</span></div>
 <div class="line">  template&lt;class U&gt; constexpr basic_monad operator&amp;(U &amp;&amp;) const&amp;;</div>
 <div class="line">  template&lt;class U&gt; constexpr basic_monad operator&amp;(U &amp;&amp;) &amp;&amp;;</div>
 <div class="line"><span class="preprocessor">#endif</span></div>
