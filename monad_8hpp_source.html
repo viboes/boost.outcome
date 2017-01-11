@@ -739,94 +739,94 @@ $(document).ready(function(){initNavTree('monad_8hpp_source.html','');});
 <div class="line"><a name="l00816"></a><span class="lineno">  816</span>&#160;  {</div>
 <div class="line"><a name="l00817"></a><span class="lineno">  817</span>&#160;  };</div>
 <div class="line"><a name="l00818"></a><span class="lineno">  818</span>&#160;</div>
-<div class="line"><a name="l00819"></a><span class="lineno">  819</span>&#160;  <span class="comment">// Does the monad contain a monad?</span></div>
-<div class="line"><a name="l00820"></a><span class="lineno">  820</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span>&gt; <span class="keyword">struct </span>is_monad_monad;</div>
-<div class="line"><a name="l00821"></a><span class="lineno">  821</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> Policy&gt; <span class="keyword">struct </span>is_monad_monad&lt;basic_monad&lt;Policy&gt;&gt;</div>
-<div class="line"><a name="l00822"></a><span class="lineno">  822</span>&#160;  {</div>
-<div class="line"><a name="l00823"></a><span class="lineno">  823</span>&#160;    <span class="keyword">static</span> constexpr <span class="keywordtype">bool</span> <a class="code" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">value</a> = is_monad&lt;typename basic_monad&lt;Policy&gt;::value_type&gt;<a class="code" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">::value</a>;</div>
-<div class="line"><a name="l00824"></a><span class="lineno">  824</span>&#160;  };</div>
-<div class="line"><a name="l00825"></a><span class="lineno">  825</span>&#160;</div>
-<div class="line"><a name="l00826"></a><span class="lineno">  826</span>&#160;  <span class="comment">// Convert any input type into a lvalue ref</span></div>
-<div class="line"><a name="l00827"></a><span class="lineno">  827</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; <span class="keyword">struct </span>to_lvalue_ref : <span class="keyword">public</span> std::add_lvalue_reference&lt;typename std::decay&lt;T&gt;::type&gt;</div>
-<div class="line"><a name="l00828"></a><span class="lineno">  828</span>&#160;  {</div>
-<div class="line"><a name="l00829"></a><span class="lineno">  829</span>&#160;  };</div>
-<div class="line"><a name="l00830"></a><span class="lineno">  830</span>&#160;  <span class="comment">// Call C with A either by rvalue or lvalue ref</span></div>
-<div class="line"><a name="l00831"></a><span class="lineno">  831</span>&#160;  <span class="keyword">template</span> &lt;<span class="keywordtype">bool</span> with_rvalue&gt; <span class="keyword">struct </span>do_invoke</div>
-<div class="line"><a name="l00832"></a><span class="lineno">  832</span>&#160;  {</div>
-<div class="line"><a name="l00833"></a><span class="lineno">  833</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">class</span> C, <span class="keyword">class</span> A&gt; BOOST_OUTCOME_CONSTEXPR <span class="keyword">auto</span> operator()(C &amp;&amp;c, A &amp;&amp;a) -&gt; decltype(c(<span class="keyword">static_cast&lt;</span>typename to_lvalue_ref&lt;A&gt;::type<span class="keyword">&gt;</span>(a))) { <span class="keywordflow">return</span> c(<span class="keyword">static_cast&lt;</span>typename to_lvalue_ref&lt;A&gt;::type<span class="keyword">&gt;</span>(a)); }</div>
-<div class="line"><a name="l00834"></a><span class="lineno">  834</span>&#160;  };</div>
-<div class="line"><a name="l00835"></a><span class="lineno">  835</span>&#160;  <span class="keyword">template</span> &lt;&gt; <span class="keyword">struct </span>do_invoke&lt;true&gt;</div>
-<div class="line"><a name="l00836"></a><span class="lineno">  836</span>&#160;  {</div>
-<div class="line"><a name="l00837"></a><span class="lineno">  837</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">class</span> C, <span class="keyword">class</span> A&gt; BOOST_OUTCOME_CONSTEXPR <span class="keyword">auto</span> operator()(C &amp;&amp;c, A &amp;&amp;a) -&gt; decltype(c(std::move(a))) { <span class="keywordflow">return</span> c(std::move(a)); }</div>
-<div class="line"><a name="l00838"></a><span class="lineno">  838</span>&#160;  };</div>
-<div class="line"><a name="l00839"></a><span class="lineno">  839</span>&#160;  <span class="comment">/* Invokes the callable passed to next() folding any monad return type</span></div>
-<div class="line"><a name="l00840"></a><span class="lineno">  840</span>&#160;<span class="comment">  R is the type returned by the callable</span></div>
-<div class="line"><a name="l00841"></a><span class="lineno">  841</span>&#160;<span class="comment">  C is the callable</span></div>
-<div class="line"><a name="l00842"></a><span class="lineno">  842</span>&#160;<span class="comment">  Monad is the monad</span></div>
-<div class="line"><a name="l00843"></a><span class="lineno">  843</span>&#160;<span class="comment">  Policy is the implementation policy</span></div>
-<div class="line"><a name="l00844"></a><span class="lineno">  844</span>&#160;<span class="comment"></span></div>
-<div class="line"><a name="l00845"></a><span class="lineno">  845</span>&#160;<span class="comment">  Call operator is always invoked with basic_monad.</span></div>
-<div class="line"><a name="l00846"></a><span class="lineno">  846</span>&#160;<span class="comment">  */</span></div>
-<div class="line"><a name="l00847"></a><span class="lineno">  847</span>&#160;  <span class="comment">// For when R is not a monad and not void</span></div>
-<div class="line"><a name="l00848"></a><span class="lineno">  848</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> R, <span class="keyword">class</span> C, <span class="keyword">template</span> &lt;<span class="keyword">class</span>&gt; <span class="keyword">class </span>Monad, <span class="keyword">class </span>Policy&gt; <span class="keyword">struct </span>do_simple_continuation</div>
-<div class="line"><a name="l00849"></a><span class="lineno">  849</span>&#160;  {</div>
-<div class="line"><a name="l00850"></a><span class="lineno">  850</span>&#160;    <span class="keyword">typedef</span> <span class="keyword">typename</span> std::decay&lt;C&gt;::type callable_type;</div>
-<div class="line"><a name="l00851"></a><span class="lineno">  851</span>&#160;    <span class="comment">// If the return type is an error_type or exception_type or void, reuse monad else rebind monad to R</span></div>
-<div class="line"><a name="l00852"></a><span class="lineno">  852</span>&#160;    <span class="keyword">typedef</span> <span class="keyword">typename</span> std::conditional&lt;std::is_same&lt;R, typename Monad&lt;Policy&gt;::error_type&gt;<a class="code" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">::value</a> || std::is_same&lt;R, typename Monad&lt;Policy&gt;::exception_type&gt;<a class="code" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">::value</a> || <a class="code" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">std::is_void&lt;R&gt;::value</a>, Monad&lt;Policy&gt;, <span class="keyword">typename</span> Monad&lt;Policy&gt;::template rebind&lt;R&gt;&gt;::type output_type;</div>
-<div class="line"><a name="l00853"></a><span class="lineno">  853</span>&#160;    <span class="keyword">typedef</span> Monad&lt;Policy&gt; input_type;</div>
-<div class="line"><a name="l00854"></a><span class="lineno">  854</span>&#160;    callable_type _c;</div>
-<div class="line"><a name="l00855"></a><span class="lineno">  855</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">class</span> U&gt;</div>
-<div class="line"><a name="l00856"></a><span class="lineno">  856</span>&#160;    constexpr do_simple_continuation(U &amp;&amp;c)</div>
-<div class="line"><a name="l00857"></a><span class="lineno">  857</span>&#160;        : _c(std::forward&lt;U&gt;(c))</div>
-<div class="line"><a name="l00858"></a><span class="lineno">  858</span>&#160;    {</div>
-<div class="line"><a name="l00859"></a><span class="lineno">  859</span>&#160;    }</div>
-<div class="line"><a name="l00860"></a><span class="lineno">  860</span>&#160;    BOOST_OUTCOME_CONSTEXPR output_type operator()(input_type &amp;&amp;v)</div>
-<div class="line"><a name="l00861"></a><span class="lineno">  861</span>&#160;    {</div>
-<div class="line"><a name="l00862"></a><span class="lineno">  862</span>&#160;      <span class="keyword">using</span> c_traits = traits::callable_argument_traits&lt;callable_type, input_type&gt;;</div>
-<div class="line"><a name="l00863"></a><span class="lineno">  863</span>&#160;      <span class="keywordflow">return</span> output_type(do_invoke&lt;c_traits::is_rvalue&gt;()(_c, std::move(v)));</div>
-<div class="line"><a name="l00864"></a><span class="lineno">  864</span>&#160;    }</div>
-<div class="line"><a name="l00865"></a><span class="lineno">  865</span>&#160;  };</div>
-<div class="line"><a name="l00866"></a><span class="lineno">  866</span>&#160;  <span class="comment">// For when R is void</span></div>
-<div class="line"><a name="l00867"></a><span class="lineno">  867</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> C, <span class="keyword">template</span> &lt;<span class="keyword">class</span>&gt; <span class="keyword">class </span>Monad, <span class="keyword">class </span>Policy&gt; <span class="keyword">struct </span>do_simple_continuation&lt;void, C, Monad, Policy&gt;</div>
-<div class="line"><a name="l00868"></a><span class="lineno">  868</span>&#160;  {</div>
-<div class="line"><a name="l00869"></a><span class="lineno">  869</span>&#160;    <span class="keyword">typedef</span> <span class="keyword">typename</span> std::decay&lt;C&gt;::type callable_type;</div>
-<div class="line"><a name="l00870"></a><span class="lineno">  870</span>&#160;    <span class="comment">// If the return type is an error_type or exception_type or void, reuse monad else rebind monad to R</span></div>
-<div class="line"><a name="l00871"></a><span class="lineno">  871</span>&#160;    <span class="keyword">typedef</span> <span class="keyword">typename</span> Monad&lt;Policy&gt;::template rebind&lt;void&gt; output_type;</div>
-<div class="line"><a name="l00872"></a><span class="lineno">  872</span>&#160;    <span class="keyword">typedef</span> Monad&lt;Policy&gt; input_type;</div>
-<div class="line"><a name="l00873"></a><span class="lineno">  873</span>&#160;    callable_type _c;</div>
-<div class="line"><a name="l00874"></a><span class="lineno">  874</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">class</span> U&gt;</div>
-<div class="line"><a name="l00875"></a><span class="lineno">  875</span>&#160;    constexpr do_simple_continuation(U &amp;&amp;c)</div>
-<div class="line"><a name="l00876"></a><span class="lineno">  876</span>&#160;        : _c(std::forward&lt;U&gt;(c))</div>
-<div class="line"><a name="l00877"></a><span class="lineno">  877</span>&#160;    {</div>
-<div class="line"><a name="l00878"></a><span class="lineno">  878</span>&#160;    }</div>
-<div class="line"><a name="l00879"></a><span class="lineno">  879</span>&#160;    BOOST_OUTCOME_CONSTEXPR output_type operator()(input_type &amp;&amp;v)</div>
-<div class="line"><a name="l00880"></a><span class="lineno">  880</span>&#160;    {</div>
-<div class="line"><a name="l00881"></a><span class="lineno">  881</span>&#160;      <span class="keyword">using</span> c_traits = traits::callable_argument_traits&lt;callable_type, input_type&gt;;</div>
-<div class="line"><a name="l00882"></a><span class="lineno">  882</span>&#160;      <span class="keywordflow">return</span> do_invoke&lt;c_traits::is_rvalue&gt;()(_c, std::move(v)), output_type();</div>
-<div class="line"><a name="l00883"></a><span class="lineno">  883</span>&#160;    }</div>
-<div class="line"><a name="l00884"></a><span class="lineno">  884</span>&#160;  };</div>
-<div class="line"><a name="l00885"></a><span class="lineno">  885</span>&#160;  <span class="comment">// For when R is a monad</span></div>
-<div class="line"><a name="l00886"></a><span class="lineno">  886</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> Policy1, <span class="keyword">class</span> C, <span class="keyword">template</span> &lt;<span class="keyword">class</span>&gt; <span class="keyword">class </span>Monad, <span class="keyword">class </span>Policy2&gt; <span class="keyword">struct </span>do_simple_continuation&lt;Monad&lt;Policy1&gt;, C, Monad, Policy2&gt;</div>
-<div class="line"><a name="l00887"></a><span class="lineno">  887</span>&#160;  {</div>
-<div class="line"><a name="l00888"></a><span class="lineno">  888</span>&#160;    <span class="keyword">typedef</span> <span class="keyword">typename</span> std::decay&lt;C&gt;::type callable_type;</div>
-<div class="line"><a name="l00889"></a><span class="lineno">  889</span>&#160;    <span class="keyword">typedef</span> Monad&lt;Policy1&gt; output_type;</div>
-<div class="line"><a name="l00890"></a><span class="lineno">  890</span>&#160;    <span class="keyword">typedef</span> Monad&lt;Policy2&gt; input_type;</div>
-<div class="line"><a name="l00891"></a><span class="lineno">  891</span>&#160;    callable_type _c;</div>
-<div class="line"><a name="l00892"></a><span class="lineno">  892</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">class</span> U&gt;</div>
-<div class="line"><a name="l00893"></a><span class="lineno">  893</span>&#160;    constexpr do_simple_continuation(U &amp;&amp;c)</div>
-<div class="line"><a name="l00894"></a><span class="lineno">  894</span>&#160;        : _c(std::forward&lt;U&gt;(c))</div>
-<div class="line"><a name="l00895"></a><span class="lineno">  895</span>&#160;    {</div>
-<div class="line"><a name="l00896"></a><span class="lineno">  896</span>&#160;    }</div>
-<div class="line"><a name="l00897"></a><span class="lineno">  897</span>&#160;    BOOST_OUTCOME_CONSTEXPR output_type operator()(input_type &amp;&amp;v)</div>
-<div class="line"><a name="l00898"></a><span class="lineno">  898</span>&#160;    {</div>
-<div class="line"><a name="l00899"></a><span class="lineno">  899</span>&#160;      <span class="keyword">using</span> c_traits = traits::callable_argument_traits&lt;callable_type, input_type&gt;;</div>
-<div class="line"><a name="l00900"></a><span class="lineno">  900</span>&#160;      <span class="keywordflow">return</span> output_type(do_invoke&lt;c_traits::is_rvalue&gt;()(_c, std::move(v)));</div>
-<div class="line"><a name="l00901"></a><span class="lineno">  901</span>&#160;    }</div>
-<div class="line"><a name="l00902"></a><span class="lineno">  902</span>&#160;  };</div>
-<div class="line"><a name="l00903"></a><span class="lineno">  903</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> R, <span class="keyword">class</span> C, <span class="keyword">class</span> Policy&gt; <span class="keyword">using</span> do_next = do_simple_continuation&lt;R, C, basic_monad, Policy&gt;;</div>
-<div class="line"><a name="l00904"></a><span class="lineno">  904</span>&#160;</div>
-<div class="line"><a name="l00905"></a><span class="lineno">  905</span>&#160;<span class="preprocessor">#ifdef BOOST_OUTCOME_ENABLE_OPERATORS</span></div>
-<div class="line"><a name="l00906"></a><span class="lineno">  906</span>&#160;<span class="preprocessor"></span>  <span class="keyword">template</span> &lt;<span class="keywordtype">bool</span> is_monad_monad, <span class="keyword">class</span> M&gt; <span class="keyword">struct </span>do_unwrap2;</div>
+<div class="line"><a name="l00819"></a><span class="lineno">  819</span>&#160;<span class="preprocessor">#ifdef BOOST_OUTCOME_ENABLE_ADVANCED</span></div>
+<div class="line"><a name="l00820"></a><span class="lineno">  820</span>&#160;<span class="preprocessor"></span>  <span class="comment">// Does the monad contain a monad?</span></div>
+<div class="line"><a name="l00821"></a><span class="lineno">  821</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span>&gt; <span class="keyword">struct </span>is_monad_monad;</div>
+<div class="line"><a name="l00822"></a><span class="lineno">  822</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> Policy&gt; <span class="keyword">struct </span>is_monad_monad&lt;basic_monad&lt;Policy&gt;&gt;</div>
+<div class="line"><a name="l00823"></a><span class="lineno">  823</span>&#160;  {</div>
+<div class="line"><a name="l00824"></a><span class="lineno">  824</span>&#160;    <span class="keyword">static</span> constexpr <span class="keywordtype">bool</span> <a class="code" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">value</a> = is_monad&lt;typename basic_monad&lt;Policy&gt;::value_type&gt;<a class="code" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">::value</a>;</div>
+<div class="line"><a name="l00825"></a><span class="lineno">  825</span>&#160;  };</div>
+<div class="line"><a name="l00826"></a><span class="lineno">  826</span>&#160;</div>
+<div class="line"><a name="l00827"></a><span class="lineno">  827</span>&#160;  <span class="comment">// Convert any input type into a lvalue ref</span></div>
+<div class="line"><a name="l00828"></a><span class="lineno">  828</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt; <span class="keyword">struct </span>to_lvalue_ref : <span class="keyword">public</span> std::add_lvalue_reference&lt;typename std::decay&lt;T&gt;::type&gt;</div>
+<div class="line"><a name="l00829"></a><span class="lineno">  829</span>&#160;  {</div>
+<div class="line"><a name="l00830"></a><span class="lineno">  830</span>&#160;  };</div>
+<div class="line"><a name="l00831"></a><span class="lineno">  831</span>&#160;  <span class="comment">// Call C with A either by rvalue or lvalue ref</span></div>
+<div class="line"><a name="l00832"></a><span class="lineno">  832</span>&#160;  <span class="keyword">template</span> &lt;<span class="keywordtype">bool</span> with_rvalue&gt; <span class="keyword">struct </span>do_invoke</div>
+<div class="line"><a name="l00833"></a><span class="lineno">  833</span>&#160;  {</div>
+<div class="line"><a name="l00834"></a><span class="lineno">  834</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">class</span> C, <span class="keyword">class</span> A&gt; BOOST_OUTCOME_CONSTEXPR <span class="keyword">auto</span> operator()(C &amp;&amp;c, A &amp;&amp;a) -&gt; decltype(c(<span class="keyword">static_cast&lt;</span>typename to_lvalue_ref&lt;A&gt;::type<span class="keyword">&gt;</span>(a))) { <span class="keywordflow">return</span> c(<span class="keyword">static_cast&lt;</span>typename to_lvalue_ref&lt;A&gt;::type<span class="keyword">&gt;</span>(a)); }</div>
+<div class="line"><a name="l00835"></a><span class="lineno">  835</span>&#160;  };</div>
+<div class="line"><a name="l00836"></a><span class="lineno">  836</span>&#160;  <span class="keyword">template</span> &lt;&gt; <span class="keyword">struct </span>do_invoke&lt;true&gt;</div>
+<div class="line"><a name="l00837"></a><span class="lineno">  837</span>&#160;  {</div>
+<div class="line"><a name="l00838"></a><span class="lineno">  838</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">class</span> C, <span class="keyword">class</span> A&gt; BOOST_OUTCOME_CONSTEXPR <span class="keyword">auto</span> operator()(C &amp;&amp;c, A &amp;&amp;a) -&gt; decltype(c(std::move(a))) { <span class="keywordflow">return</span> c(std::move(a)); }</div>
+<div class="line"><a name="l00839"></a><span class="lineno">  839</span>&#160;  };</div>
+<div class="line"><a name="l00840"></a><span class="lineno">  840</span>&#160;  <span class="comment">/* Invokes the callable passed to next() folding any monad return type</span></div>
+<div class="line"><a name="l00841"></a><span class="lineno">  841</span>&#160;<span class="comment">  R is the type returned by the callable</span></div>
+<div class="line"><a name="l00842"></a><span class="lineno">  842</span>&#160;<span class="comment">  C is the callable</span></div>
+<div class="line"><a name="l00843"></a><span class="lineno">  843</span>&#160;<span class="comment">  Monad is the monad</span></div>
+<div class="line"><a name="l00844"></a><span class="lineno">  844</span>&#160;<span class="comment">  Policy is the implementation policy</span></div>
+<div class="line"><a name="l00845"></a><span class="lineno">  845</span>&#160;<span class="comment"></span></div>
+<div class="line"><a name="l00846"></a><span class="lineno">  846</span>&#160;<span class="comment">  Call operator is always invoked with basic_monad.</span></div>
+<div class="line"><a name="l00847"></a><span class="lineno">  847</span>&#160;<span class="comment">  */</span></div>
+<div class="line"><a name="l00848"></a><span class="lineno">  848</span>&#160;  <span class="comment">// For when R is not a monad and not void</span></div>
+<div class="line"><a name="l00849"></a><span class="lineno">  849</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> R, <span class="keyword">class</span> C, <span class="keyword">template</span> &lt;<span class="keyword">class</span>&gt; <span class="keyword">class </span>Monad, <span class="keyword">class </span>Policy&gt; <span class="keyword">struct </span>do_simple_continuation</div>
+<div class="line"><a name="l00850"></a><span class="lineno">  850</span>&#160;  {</div>
+<div class="line"><a name="l00851"></a><span class="lineno">  851</span>&#160;    <span class="keyword">typedef</span> <span class="keyword">typename</span> std::decay&lt;C&gt;::type callable_type;</div>
+<div class="line"><a name="l00852"></a><span class="lineno">  852</span>&#160;    <span class="comment">// If the return type is an error_type or exception_type or void, reuse monad else rebind monad to R</span></div>
+<div class="line"><a name="l00853"></a><span class="lineno">  853</span>&#160;    <span class="keyword">typedef</span> <span class="keyword">typename</span> std::conditional&lt;std::is_same&lt;R, typename Monad&lt;Policy&gt;::error_type&gt;<a class="code" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">::value</a> || std::is_same&lt;R, typename Monad&lt;Policy&gt;::exception_type&gt;<a class="code" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">::value</a> || <a class="code" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">std::is_void&lt;R&gt;::value</a>, Monad&lt;Policy&gt;, <span class="keyword">typename</span> Monad&lt;Policy&gt;::template rebind&lt;R&gt;&gt;::type output_type;</div>
+<div class="line"><a name="l00854"></a><span class="lineno">  854</span>&#160;    <span class="keyword">typedef</span> Monad&lt;Policy&gt; input_type;</div>
+<div class="line"><a name="l00855"></a><span class="lineno">  855</span>&#160;    callable_type _c;</div>
+<div class="line"><a name="l00856"></a><span class="lineno">  856</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">class</span> U&gt;</div>
+<div class="line"><a name="l00857"></a><span class="lineno">  857</span>&#160;    constexpr do_simple_continuation(U &amp;&amp;c)</div>
+<div class="line"><a name="l00858"></a><span class="lineno">  858</span>&#160;        : _c(std::forward&lt;U&gt;(c))</div>
+<div class="line"><a name="l00859"></a><span class="lineno">  859</span>&#160;    {</div>
+<div class="line"><a name="l00860"></a><span class="lineno">  860</span>&#160;    }</div>
+<div class="line"><a name="l00861"></a><span class="lineno">  861</span>&#160;    BOOST_OUTCOME_CONSTEXPR output_type operator()(input_type &amp;&amp;v)</div>
+<div class="line"><a name="l00862"></a><span class="lineno">  862</span>&#160;    {</div>
+<div class="line"><a name="l00863"></a><span class="lineno">  863</span>&#160;      <span class="keyword">using</span> c_traits = traits::callable_argument_traits&lt;callable_type, input_type&gt;;</div>
+<div class="line"><a name="l00864"></a><span class="lineno">  864</span>&#160;      <span class="keywordflow">return</span> output_type(do_invoke&lt;c_traits::is_rvalue&gt;()(_c, std::move(v)));</div>
+<div class="line"><a name="l00865"></a><span class="lineno">  865</span>&#160;    }</div>
+<div class="line"><a name="l00866"></a><span class="lineno">  866</span>&#160;  };</div>
+<div class="line"><a name="l00867"></a><span class="lineno">  867</span>&#160;  <span class="comment">// For when R is void</span></div>
+<div class="line"><a name="l00868"></a><span class="lineno">  868</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> C, <span class="keyword">template</span> &lt;<span class="keyword">class</span>&gt; <span class="keyword">class </span>Monad, <span class="keyword">class </span>Policy&gt; <span class="keyword">struct </span>do_simple_continuation&lt;void, C, Monad, Policy&gt;</div>
+<div class="line"><a name="l00869"></a><span class="lineno">  869</span>&#160;  {</div>
+<div class="line"><a name="l00870"></a><span class="lineno">  870</span>&#160;    <span class="keyword">typedef</span> <span class="keyword">typename</span> std::decay&lt;C&gt;::type callable_type;</div>
+<div class="line"><a name="l00871"></a><span class="lineno">  871</span>&#160;    <span class="comment">// If the return type is an error_type or exception_type or void, reuse monad else rebind monad to R</span></div>
+<div class="line"><a name="l00872"></a><span class="lineno">  872</span>&#160;    <span class="keyword">typedef</span> <span class="keyword">typename</span> Monad&lt;Policy&gt;::template rebind&lt;void&gt; output_type;</div>
+<div class="line"><a name="l00873"></a><span class="lineno">  873</span>&#160;    <span class="keyword">typedef</span> Monad&lt;Policy&gt; input_type;</div>
+<div class="line"><a name="l00874"></a><span class="lineno">  874</span>&#160;    callable_type _c;</div>
+<div class="line"><a name="l00875"></a><span class="lineno">  875</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">class</span> U&gt;</div>
+<div class="line"><a name="l00876"></a><span class="lineno">  876</span>&#160;    constexpr do_simple_continuation(U &amp;&amp;c)</div>
+<div class="line"><a name="l00877"></a><span class="lineno">  877</span>&#160;        : _c(std::forward&lt;U&gt;(c))</div>
+<div class="line"><a name="l00878"></a><span class="lineno">  878</span>&#160;    {</div>
+<div class="line"><a name="l00879"></a><span class="lineno">  879</span>&#160;    }</div>
+<div class="line"><a name="l00880"></a><span class="lineno">  880</span>&#160;    BOOST_OUTCOME_CONSTEXPR output_type operator()(input_type &amp;&amp;v)</div>
+<div class="line"><a name="l00881"></a><span class="lineno">  881</span>&#160;    {</div>
+<div class="line"><a name="l00882"></a><span class="lineno">  882</span>&#160;      <span class="keyword">using</span> c_traits = traits::callable_argument_traits&lt;callable_type, input_type&gt;;</div>
+<div class="line"><a name="l00883"></a><span class="lineno">  883</span>&#160;      <span class="keywordflow">return</span> do_invoke&lt;c_traits::is_rvalue&gt;()(_c, std::move(v)), output_type();</div>
+<div class="line"><a name="l00884"></a><span class="lineno">  884</span>&#160;    }</div>
+<div class="line"><a name="l00885"></a><span class="lineno">  885</span>&#160;  };</div>
+<div class="line"><a name="l00886"></a><span class="lineno">  886</span>&#160;  <span class="comment">// For when R is a monad</span></div>
+<div class="line"><a name="l00887"></a><span class="lineno">  887</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> Policy1, <span class="keyword">class</span> C, <span class="keyword">template</span> &lt;<span class="keyword">class</span>&gt; <span class="keyword">class </span>Monad, <span class="keyword">class </span>Policy2&gt; <span class="keyword">struct </span>do_simple_continuation&lt;Monad&lt;Policy1&gt;, C, Monad, Policy2&gt;</div>
+<div class="line"><a name="l00888"></a><span class="lineno">  888</span>&#160;  {</div>
+<div class="line"><a name="l00889"></a><span class="lineno">  889</span>&#160;    <span class="keyword">typedef</span> <span class="keyword">typename</span> std::decay&lt;C&gt;::type callable_type;</div>
+<div class="line"><a name="l00890"></a><span class="lineno">  890</span>&#160;    <span class="keyword">typedef</span> Monad&lt;Policy1&gt; output_type;</div>
+<div class="line"><a name="l00891"></a><span class="lineno">  891</span>&#160;    <span class="keyword">typedef</span> Monad&lt;Policy2&gt; input_type;</div>
+<div class="line"><a name="l00892"></a><span class="lineno">  892</span>&#160;    callable_type _c;</div>
+<div class="line"><a name="l00893"></a><span class="lineno">  893</span>&#160;    <span class="keyword">template</span> &lt;<span class="keyword">class</span> U&gt;</div>
+<div class="line"><a name="l00894"></a><span class="lineno">  894</span>&#160;    constexpr do_simple_continuation(U &amp;&amp;c)</div>
+<div class="line"><a name="l00895"></a><span class="lineno">  895</span>&#160;        : _c(std::forward&lt;U&gt;(c))</div>
+<div class="line"><a name="l00896"></a><span class="lineno">  896</span>&#160;    {</div>
+<div class="line"><a name="l00897"></a><span class="lineno">  897</span>&#160;    }</div>
+<div class="line"><a name="l00898"></a><span class="lineno">  898</span>&#160;    BOOST_OUTCOME_CONSTEXPR output_type operator()(input_type &amp;&amp;v)</div>
+<div class="line"><a name="l00899"></a><span class="lineno">  899</span>&#160;    {</div>
+<div class="line"><a name="l00900"></a><span class="lineno">  900</span>&#160;      <span class="keyword">using</span> c_traits = traits::callable_argument_traits&lt;callable_type, input_type&gt;;</div>
+<div class="line"><a name="l00901"></a><span class="lineno">  901</span>&#160;      <span class="keywordflow">return</span> output_type(do_invoke&lt;c_traits::is_rvalue&gt;()(_c, std::move(v)));</div>
+<div class="line"><a name="l00902"></a><span class="lineno">  902</span>&#160;    }</div>
+<div class="line"><a name="l00903"></a><span class="lineno">  903</span>&#160;  };</div>
+<div class="line"><a name="l00904"></a><span class="lineno">  904</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> R, <span class="keyword">class</span> C, <span class="keyword">class</span> Policy&gt; <span class="keyword">using</span> do_next = do_simple_continuation&lt;R, C, basic_monad, Policy&gt;;</div>
+<div class="line"><a name="l00905"></a><span class="lineno">  905</span>&#160;</div>
+<div class="line"><a name="l00906"></a><span class="lineno">  906</span>&#160;  <span class="keyword">template</span> &lt;<span class="keywordtype">bool</span> is_monad_monad, <span class="keyword">class</span> M&gt; <span class="keyword">struct </span>do_unwrap2;</div>
 <div class="line"><a name="l00907"></a><span class="lineno">  907</span>&#160;  <span class="keyword">template</span> &lt;<span class="keyword">class</span> M&gt; <span class="keyword">using</span> do_unwrap = <a class="code" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">do_unwrap2&lt;is_monad_monad&lt;M&gt;::value</a>, M&gt;;</div>
 <div class="line"><a name="l00908"></a><span class="lineno">  908</span>&#160;  <span class="keyword">template</span> &lt;<span class="keywordtype">bool</span> is_monad_monad, <span class="keyword">class</span> M&gt; <span class="keyword">struct </span>do_unwrap2</div>
 <div class="line"><a name="l00909"></a><span class="lineno">  909</span>&#160;  {</div>
@@ -1243,21 +1243,22 @@ $(document).ready(function(){initNavTree('monad_8hpp_source.html','');});
 <div class="line"><a name="l01412"></a><span class="lineno"> 1412</span>&#160;<span class="preprocessor">#ifdef DOXYGEN_IS_IN_THE_HOUSE</span></div>
 <div class="line"><a name="l01413"></a><span class="lineno"> 1413</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l01419"></a><span class="lineno"> 1419</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l01502"></a><span class="lineno"> 1502</span>&#160;</div>
-<div class="line"><a name="l01514"></a><span class="lineno"> 1514</span>&#160;<span class="preprocessor">#ifdef DOXYGEN_IS_IN_THE_HOUSE</span></div>
-<div class="line"><a name="l01515"></a><span class="lineno"> 1515</span>&#160;<span class="preprocessor"></span>  <span class="keyword">template</span> &lt;<span class="keyword">class</span> F&gt; basic_monad&lt;...&gt; next(F &amp;&amp;f);</div>
-<div class="line"><a name="l01516"></a><span class="lineno"> 1516</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l01517"></a><span class="lineno"> 1517</span>&#160;<span class="preprocessor"></span>  <span class="keyword">template</span> &lt;<span class="keyword">class</span> _F&gt; BOOST_OUTCOME_CONSTEXPR <span class="keyword">typename</span> detail::do_next&lt;typename traits::is_callable_is_well_formed&lt;typename std::decay&lt;_F&gt;::type, basic_monad&gt;::type, <span class="keyword">typename</span> std::decay&lt;_F&gt;::type, implementation_policy&gt;::output_type next(_F &amp;&amp;f)</div>
-<div class="line"><a name="l01518"></a><span class="lineno"> 1518</span>&#160;  {</div>
-<div class="line"><a name="l01519"></a><span class="lineno"> 1519</span>&#160;    <span class="keyword">typedef</span> <span class="keyword">typename</span> std::decay&lt;_F&gt;::type F;</div>
-<div class="line"><a name="l01520"></a><span class="lineno"> 1520</span>&#160;    <span class="keyword">typedef</span> traits::callable_argument_traits&lt;F, basic_monad&gt; f_traits;</div>
-<div class="line"><a name="l01521"></a><span class="lineno"> 1521</span>&#160;    static_assert(f_traits::valid, <span class="stringliteral">&quot;The callable passed to next() must take this monad type or a reference to it.&quot;</span>);</div>
-<div class="line"><a name="l01522"></a><span class="lineno"> 1522</span>&#160;    <span class="keywordflow">return</span> detail::do_next&lt;typename f_traits::return_type, F, implementation_policy&gt;(std::forward&lt;F&gt;(f))(std::move(*<span class="keyword">this</span>));</div>
-<div class="line"><a name="l01523"></a><span class="lineno"> 1523</span>&#160;  }</div>
-<div class="line"><a name="l01524"></a><span class="lineno"> 1524</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l01525"></a><span class="lineno"> 1525</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l01526"></a><span class="lineno"> 1526</span>&#160;<span class="preprocessor">#ifdef BOOST_OUTCOME_ENABLE_OPERATORS</span></div>
-<div class="line"><a name="l01527"></a><span class="lineno"> 1527</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#ifdef DOXYGEN_IS_IN_THE_HOUSE</span></div>
+<div class="line"><a name="l01420"></a><span class="lineno"> 1420</span>&#160;<span class="preprocessor">#ifdef BOOST_OUTCOME_ENABLE_ADVANCED</span></div>
+<div class="line"><a name="l01421"></a><span class="lineno"> 1421</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l01503"></a><span class="lineno"> 1503</span>&#160;</div>
+<div class="line"><a name="l01515"></a><span class="lineno"> 1515</span>&#160;<span class="preprocessor">#ifdef DOXYGEN_IS_IN_THE_HOUSE</span></div>
+<div class="line"><a name="l01516"></a><span class="lineno"> 1516</span>&#160;<span class="preprocessor"></span>  <span class="keyword">template</span> &lt;<span class="keyword">class</span> F&gt; basic_monad&lt;...&gt; next(F &amp;&amp;f);</div>
+<div class="line"><a name="l01517"></a><span class="lineno"> 1517</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l01518"></a><span class="lineno"> 1518</span>&#160;<span class="preprocessor"></span>  <span class="keyword">template</span> &lt;<span class="keyword">class</span> _F&gt; BOOST_OUTCOME_CONSTEXPR <span class="keyword">typename</span> detail::do_next&lt;typename traits::is_callable_is_well_formed&lt;typename std::decay&lt;_F&gt;::type, basic_monad&gt;::type, <span class="keyword">typename</span> std::decay&lt;_F&gt;::type, implementation_policy&gt;::output_type next(_F &amp;&amp;f)</div>
+<div class="line"><a name="l01519"></a><span class="lineno"> 1519</span>&#160;  {</div>
+<div class="line"><a name="l01520"></a><span class="lineno"> 1520</span>&#160;    <span class="keyword">typedef</span> <span class="keyword">typename</span> std::decay&lt;_F&gt;::type F;</div>
+<div class="line"><a name="l01521"></a><span class="lineno"> 1521</span>&#160;    <span class="keyword">typedef</span> traits::callable_argument_traits&lt;F, basic_monad&gt; f_traits;</div>
+<div class="line"><a name="l01522"></a><span class="lineno"> 1522</span>&#160;    static_assert(f_traits::valid, <span class="stringliteral">&quot;The callable passed to next() must take this monad type or a reference to it.&quot;</span>);</div>
+<div class="line"><a name="l01523"></a><span class="lineno"> 1523</span>&#160;    <span class="keywordflow">return</span> detail::do_next&lt;typename f_traits::return_type, F, implementation_policy&gt;(std::forward&lt;F&gt;(f))(std::move(*<span class="keyword">this</span>));</div>
+<div class="line"><a name="l01524"></a><span class="lineno"> 1524</span>&#160;  }</div>
+<div class="line"><a name="l01525"></a><span class="lineno"> 1525</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l01526"></a><span class="lineno"> 1526</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l01528"></a><span class="lineno"> 1528</span>&#160;<span class="preprocessor">#ifdef DOXYGEN_IS_IN_THE_HOUSE</span></div>
 <div class="line"><a name="l01529"></a><span class="lineno"> 1529</span>&#160;<span class="preprocessor"></span>  basic_monad&lt;...&gt; unwrap() const &amp;;</div>
 <div class="line"><a name="l01530"></a><span class="lineno"> 1530</span>&#160;<span class="preprocessor">#else</span></div>
 <div class="line"><a name="l01531"></a><span class="lineno"> 1531</span>&#160;<span class="preprocessor"></span>  BOOST_OUTCOME_CONSTEXPR <span class="keyword">typename</span> detail::do_unwrap&lt;basic_monad&gt;::output_type unwrap() const &amp; { <span class="keywordflow">return</span> detail::do_unwrap&lt;basic_monad&gt;()(*<span class="keyword">this</span>); }</div>
