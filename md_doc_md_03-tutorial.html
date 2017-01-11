@@ -261,11 +261,11 @@ of noexcept"</em> which will be described later.</p>
 <li>You only pay for what you use, so if you call the non-throwing overload you are guaranteed by the <code>noexcept</code> that execution flow will not unexpectedly invert. This makes writing correct exception safe code much easier, plus unpredictable execution times due to exception throws cannot occur. The compiler can also reduce executable bloat by not generating stack unwind tables around that call which is useful for some C++ users.</li>
 <li>Simple usage of the API will default to the throwing (i.e. abort this operation) overload which is probably what most users <em>think</em> they want. This does have the advantage that the error won't be lost, however in practice aborting partially completed operations can lose other people's data just as easily as ignoring errors and proceeding regardless.</li>
 </ol>
-<p>It does however have some disadvantages (which upcoming C++ 17/20 library additions will address):</p>
+<p>Once you've been programming using the non-throwing API form for a while, some disadvantages begin to become obvious (which upcoming C++ 17/20 library additions will address):</p>
 <ol type="1">
-<li>Once you've been programming using the non-throwing API form for a while, you begin to realise how clunky it is for callers of your function to have to create a <code>std::error_code</code> on the stack before calling the function passing in a lvalue ref, then manually check the error code to see if it has been set on return. This is mainly an aesthetic concern in terms of being annoying having to type more stuff and remembering to check return codes just like in C, but unless the compiler inlines the called function then there is an optimisation penalty as with all functions which have parameters which can affect the caller's stack. Functions which solely return change rather than changing the caller via their parameters will tend to optimise better.</li>
-<li>It might not seem a big thing unless you see it in a large program, but having throwing and non-throwing variants of every API means doubling your API count. That means more maintenance, more testing, more documentation, more clutter.</li>
-<li>Probably the most serious practical concern with this design pattern is that there is no way to get the compiler to remind you to check error codes because this design pattern defeats static analysis. This design pattern therefore suffers from the same problem as C style error codes, errors "get lost" or ignored inadvertently.</li>
+<li>It is clunky for callers of your function to have to create a <code>std::error_code</code> on the stack before calling the function passing in a lvalue ref. There is a temptation for programmers to reuse the <code>error_code &amp;ec</code> instance passed to their function, and this can become a source of unintended lost errors because errors already written there get overwritten or reset during error handling.</li>
+<li>It is annoying having to type more boilerplate and remembering to check return codes just like in C. The compiler should be telling me when I forget to check an error, but the C++ 17 nodiscard attribute can't work with the lvalue ref passing pattern. This design pattern therefore suffers from the same problem as C style error codes, errors "get lost" or ignored inadvertently.</li>
+<li>It might not seem a big thing until you see it in a large program, but having throwing and non-throwing variants of every API means doubling your API count. That means more maintenance, more testing, more documentation, more clutter.</li>
 </ol>
 <p>Summarising this section into a design pattern:</p>
 <h2><a class="anchor" id="sea-of-noexcept"></a>
@@ -296,11 +296,11 @@ C++ 17 style error handling: outcome&lt;T&gt;, result&lt;T&gt; and option&lt;T&g
 <p>Each of <code>option&lt;T&gt;</code>, <code>result&lt;T&gt;</code> and <code>outcome&lt;T&gt;</code> being actually a <code>basic_monad&lt;&gt;</code> instance have a very straightforward API, and less expressive monads implicitly convert into more expressive forms on demand. We will call the type <code>T</code> the value type, the error type will be any <code>std::error_code</code>-ish present and the exception type will be any <code>std::exception_ptr</code>-ish present.</p>
 <ul>
 <li>You retrieve a value type using the <code><a class="el" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316" title="Variable of type value_t. ">value()</a></code> or <code>get()</code> member functions. These come with const lvalue ref, lvalue ref and rvalue ref overloads, so you can directly modify or move from a contained value.<ul>
-<li>Note that <code>void</code> is an entirely legal value type, and is considered always less expressive than any other value type i.e. an <code>outcome&lt;void&gt;</code> will implicitly convert into an <code>outcome&lt;int&gt;</code> preserving any empty, errored or excepted state. A valued state converts into default initialisation.</li>
+<li>Note that <code>void</code> is an entirely legal value type, and is considered always less expressive than any other value type i.e. an <code>outcome&lt;void&gt;</code> will implicitly convert into an <code>outcome&lt;int&gt;</code> preserving any empty, errored or excepted state. A valued state converts into default initialisation. Void monads are used very extensively internally to convert between different value typed monads.</li>
 </ul>
 </li>
 <li>You retrieve an error type using the <code><a class="el" href="group__monad.html#ga1a1a8470c4efc3a52412f3ecc79a0060" title="Variable of type error_t. ">error()</a></code> or <code>get_error()</code> member functions.</li>
-<li>You retrieve an exception type use the <code>exception()</code> or <code>get_exception()</code> member functions.</li>
+<li>You retrieve an exception type using the <code>exception()</code> or <code>get_exception()</code> member functions.</li>
 <li>There are also state inspection member functions which have the entirely unsurprising STL nomenclature <code><a class="el" href="group__monad.html#ga68770961e182715930ad64ca244b645e" title="Variable of type empty_t. ">empty()</a></code>, <code>has_value()</code>, <code>has_error()</code> and <code>has_exception()</code>.</li>
 <li>Semantics of things like <code>emplace()</code>, <code>operator*()</code> and <code>operator-&gt;()</code> all behave exactly the same as <code>std::optional&lt;T&gt;</code> and <code>std::experimental::expected&lt;T, E&gt;</code>, and indeed exactly as you would intutively guess as they behave the same as anywhere in the STL.</li>
 <li><code>if(monad)</code> is true if and only if the monad contains an instance of <code>T</code>, again exactly the same as anywhere else in the STL.</li>
@@ -323,7 +323,7 @@ C++ 17 style error handling: outcome&lt;T&gt;, result&lt;T&gt; and option&lt;T&g
 <li>If it is valued, returns a default constructed (i.e. null) exception ptr.</li>
 <li>If it is errored, returns an exception ptr to a <code>std::system_error</code> instance containing the monad's error code.</li>
 </ul>
-<p>And finally, if your compiler is in C++ 17 mode or later, monads are marked with the <a href="http://en.cppreference.com/w/cpp/language/attributes"><code>[[nodiscard]]</code></a> attribute. This means the compiler ought to warn if you forget to examine monads returned by functions. If you really mean to throw away a returned monad, make sure you cast it to void to tell the compiler you specifically intend to throw it away.</p>
+<p>And finally, if your compiler is in C++ 17 mode or later, monads are marked with the <a href="http://en.cppreference.com/w/cpp/language/attributes"><code>[[nodiscard]]</code></a> attribute. This means the compiler ought to warn if you forget to examine monads returned by functions. If you really mean to throw away a returned monad, make sure you cast it to <code>void</code> to tell the compiler you specifically intend to throw it away.</p>
 <p>Reusing the same <code>openfile()</code> example from the earlier examples, this is it written using Outcome's <code>result&lt;T&gt;</code>:</p>
 <div class="fragment"><div class="line"><span class="keyword">using namespace </span><a class="code" href="group__config.html#gab113de43db2cd2a4cf1e33b54294944a">BOOST_OUTCOME_V1_NAMESPACE</a>;</div>
 <div class="line"></div>
@@ -433,22 +433,19 @@ Propagating errors up the call stack: The BOOST_OUTCOME_TRY(var, expression) mac
 <div class="line">  ...</div>
 <div class="line">  <span class="comment">// This is the &quot;try&quot; operation common in Rust or Swift</span></div>
 <div class="line">  <span class="comment">// It takes the form try! var = openfile(...);</span></div>
-<div class="line">  handle_ref var;</div>
+<div class="line">  outcome&lt;handle_ref&gt; unique_temporary = openfile(...);</div>
+<div class="line">  <span class="keywordflow">if</span>(unique_temporary.has_error())</div>
 <div class="line">  {</div>
-<div class="line">    outcome&lt;handle_ref&gt; unique_temporary = openfile(...);</div>
-<div class="line">    <span class="keywordflow">if</span>(unique_temporary.has_error())</div>
-<div class="line">    {</div>
-<div class="line">      <span class="keywordflow">return</span> make_errored_outcome&lt;sometype&gt;(std::move(unique_temporary.error());</div>
-<div class="line">    }</div>
-<div class="line">    <span class="keywordflow">if</span>(unique_temporary.has_exception())</div>
-<div class="line">    {</div>
-<div class="line">      <span class="keywordflow">return</span> make_exceptional_outcome&lt;sometype&gt;(std::move(unique_temporary.exception());</div>
-<div class="line">    }</div>
-<div class="line">    var = std::move(unique_temporary.value());</div>
+<div class="line">    <span class="keywordflow">return</span> make_errored_outcome&lt;void&gt;(std::move(unique_temporary.error());</div>
 <div class="line">  }</div>
+<div class="line">  <span class="keywordflow">if</span>(unique_temporary.has_exception())</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordflow">return</span> make_exceptional_outcome&lt;void&gt;(std::move(unique_temporary.exception());</div>
+<div class="line">  }</div>
+<div class="line">  handle_ref var(std::move(unique_temporary.value()));</div>
 <div class="line">}</div>
 </div><!-- fragment --><p>In other words, the <code>try var = openfile(...)</code> operation examines the monad returned from calling <code>openfile(...)</code> to see if it is errored in some way. If it is, it extracts the error value, constructs a monad of the return type of the calling function and sets it to be errored to the same error value, returning immediately. If it is not errored, it extracts/unwraps the contained value in the monad into the <code>var</code> variable which is of the contained value type.</p>
-<p>Because of the limitations of C++, Outcome cannot provide a nice syntax like <code>try var = openfile(...)</code>. The best it can do is <code>BOOST_OUTCOME_TRY(var, openfile(...))</code> which will declare <code>var</code> using <code>auto</code> onto the stack initialised to the contents of any valued monad returned by the expression, else it will convert the returned monad to its <code>&lt;void&gt;</code> form and return that immediately which ought to implicitly convert to whatever the return monad type of the enclosing function is.</p>
+<p>Because of the limitations of C++, Outcome cannot provide a nice syntax like <code>try var = openfile(...)</code>. The best it can do is <code>BOOST_OUTCOME_TRY(var, openfile(...))</code> which will declare <code>var</code> using <code>auto</code> onto the stack initialised to the moved contents of any valued monad returned by the expression, else it will convert the returned monad to its <code>&lt;void&gt;</code> form and return that immediately which ought to implicitly convert to whatever the return monad type of the enclosing function is.</p>
 <hr/>
 <p><br/>
 </p>
