@@ -18,11 +18,6 @@ var hierarchy =
       [ "boost::outcome::v1_xxx::error_code_extended", "classboost_1_1outcome_1_1v1__xxx_1_1error__code__extended.html", null ]
     ] ],
     [ "boost::outcome::v1_xxx::error_t", "structboost_1_1outcome_1_1v1__xxx_1_1error__t.html", null ],
-    [ "std::exception", null, [
-      [ "std::logic_error", null, [
-        [ "boost::outcome::v1_xxx::monad_error", "classboost_1_1outcome_1_1v1__xxx_1_1monad__error.html", null ]
-      ] ]
-    ] ],
     [ "boost::outcome::v1_xxx::exception_t", "structboost_1_1outcome_1_1v1__xxx_1_1exception__t.html", null ],
     [ "false_type", null, [
       [ "boost::outcome::v1_xxx::enable_single_byte_value_storage< _value_type >", "structboost_1_1outcome_1_1v1__xxx_1_1enable__single__byte__value__storage.html", null ],
@@ -35,6 +30,9 @@ var hierarchy =
     ] ],
     [ "boost::outcome::v1_xxx::inplace_t", "structboost_1_1outcome_1_1v1__xxx_1_1inplace__t.html", null ],
     [ "boost::outcome::v1_xxx::traits::is_callable_is_well_formed< F, A >", "structboost_1_1outcome_1_1v1__xxx_1_1traits_1_1is__callable__is__well__formed.html", null ],
+    [ "system_error", null, [
+      [ "boost::outcome::v1_xxx::monad_error", "classboost_1_1outcome_1_1v1__xxx_1_1monad__error.html", null ]
+    ] ],
     [ "true_type", null, [
       [ "boost::outcome::v1_xxx::enable_single_byte_value_storage< bool >", "structboost_1_1outcome_1_1v1__xxx_1_1enable__single__byte__value__storage_3_01bool_01_4.html", null ],
       [ "boost::outcome::v1_xxx::enable_single_byte_value_storage< void >", "structboost_1_1outcome_1_1v1__xxx_1_1enable__single__byte__value__storage_3_01void_01_4.html", null ],

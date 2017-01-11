@@ -92,7 +92,6 @@ var NAVTREEINDEX0 =
 "classboost_1_1outcome_1_1v1__xxx_1_1lightweight__futures_1_1basic__promise.html":[12,0,0,0,0,0,0],
 "classboost_1_1outcome_1_1v1__xxx_1_1monad__error.html":[10,1,1],
 "classboost_1_1outcome_1_1v1__xxx_1_1monad__error.html#aaf88e119a5094a77cd4b0d64e7ecfea8":[10,1,1,0],
-"classboost_1_1outcome_1_1v1__xxx_1_1monad__error.html#ac8bddb69477d4fa126d0f095546f5978":[10,1,1,1],
 "classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html":[10,1,9],
 "classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html#a047803cb301153d67855e31d2dbaa885":[10,1,9,12],
 "classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html#a09e824dae2903d70ba832b9b7a26e48f":[10,1,9,24],
@@ -249,5 +248,6 @@ var NAVTREEINDEX0 =
 "md_doc_md_03-tutorial.html#cpp98-style":[5,1],
 "md_doc_md_03-tutorial.html#error_codes":[5,4,1],
 "md_doc_md_03-tutorial.html#exceptions-are-exceptional":[5,3,0],
-"md_doc_md_03-tutorial.html#optimal":[5,4,2]
+"md_doc_md_03-tutorial.html#optimal":[5,4,2],
+"md_doc_md_03-tutorial.html#sea-of-noexcept":[5,2,0]
 };

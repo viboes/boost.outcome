@@ -2,8 +2,7 @@ var group__monad =
 [
     [ "Useful preprocessor macros which expand into commonly written boilerplate", "group__macro__helpers.html", "group__macro__helpers" ],
     [ "monad_error", "classboost_1_1outcome_1_1v1__xxx_1_1monad__error.html", [
-      [ "monad_error", "classboost_1_1outcome_1_1v1__xxx_1_1monad__error.html#aaf88e119a5094a77cd4b0d64e7ecfea8", null ],
-      [ "code", "classboost_1_1outcome_1_1v1__xxx_1_1monad__error.html#ac8bddb69477d4fa126d0f095546f5978", null ]
+      [ "monad_error", "classboost_1_1outcome_1_1v1__xxx_1_1monad__error.html#aaf88e119a5094a77cd4b0d64e7ecfea8", null ]
     ] ],
     [ "is_error_code_enum< boost::outcome::v1_xxx::monad_errc >", "structstd_1_1is__error__code__enum_3_01boost_1_1outcome_1_1v1__xxx_1_1monad__errc_01_4.html", null ],
     [ "is_error_condition_enum< boost::outcome::v1_xxx::monad_errc >", "structstd_1_1is__error__condition__enum_3_01boost_1_1outcome_1_1v1__xxx_1_1monad__errc_01_4.html", null ],

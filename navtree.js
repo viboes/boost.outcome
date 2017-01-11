@@ -23,7 +23,7 @@ var NAVTREE =
       ] ],
       [ "C++ 17 style error handling: outcome<T>, result<T> and option<T>", "md_doc_md_03-tutorial.html#cpp17-style", [
         [ "The \"Exceptions are exceptional, errors are not failure\" design pattern", "md_doc_md_03-tutorial.html#exceptions-are-exceptional", null ],
-        [ "The BOOST_OUTCOME_TRY(var, expression) macro", "md_doc_md_03-tutorial.html#try", null ]
+        [ "Propagating errors up the call stack: The BOOST_OUTCOME_TRY(var, expression) macro", "md_doc_md_03-tutorial.html#try", null ]
       ] ],
       [ "Conclusion", "md_doc_md_03-tutorial.html#conclusion", [
         [ "What you need to know about basic_monad", "md_doc_md_03-tutorial.html#basic_monad", null ],
@@ -85,7 +85,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 ".html",
-"md_doc_md_03-tutorial.html#sea-of-noexcept"
+"md_doc_md_03-tutorial.html#try"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
