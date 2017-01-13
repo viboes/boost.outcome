@@ -42,13 +42,8 @@ var NAVTREE =
     [ "Advanced usage: Outcome as a Monad", "md_doc_md_05-advanced.html", [
       [ "Functional programming extensions (optional)", "md_doc_md_05-advanced.html#functional", null ]
     ] ],
-    [ "Outcome and the upcoming std::expected<T, E>", "md_doc_md_06-std_expected.html", [
-      [ "Returning optional<T>", "md_doc_md_06-std_expected.html#optional", [
-        [ "Returning expected<T, E>", "md_doc_md_06-std_expected.html#expected", null ]
-      ] ],
-      [ "Introducing Outcome", "md_doc_md_06-std_expected.html#introduction2", [
-        [ "Design differences between Expected and Outcomes", "md_doc_md_06-std_expected.html#design_differences", null ]
-      ] ]
+    [ "Outcome and the upcoming C++ 20 std::expected<T, E>", "md_doc_md_06-std_expected.html", [
+      [ "Design differences between Expected and Outcome", "md_doc_md_06-std_expected.html#design_differences", null ]
     ] ],
     [ "Todo List", "todo.html", null ],
     [ "Modules", "modules.html", "modules" ],

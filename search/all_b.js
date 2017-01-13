@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['outcome_20and_20the_20upcoming_20std_3a_3aexpected_3ct_2c_20e_3e',['Outcome and the upcoming std::expected&lt;T, E&gt;',['../md_doc_md_06-std_expected.html',1,'']]],
+  ['outcome_20and_20the_20upcoming_20c_2b_2b_2020_20std_3a_3aexpected_3ct_2c_20e_3e',['Outcome and the upcoming C++ 20 std::expected&lt;T, E&gt;',['../md_doc_md_06-std_expected.html',1,'']]],
   ['operator_20bool',['operator bool',['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#ab939ededf3097a4e8ef5159639643c05',1,'boost::outcome::v1_xxx::basic_monad']]],
   ['operator_21_3d',['operator!=',['../namespaceboost_1_1outcome_1_1v1__xxx.html#a45313fa17aa4be05a21363191dacab93',1,'boost::outcome::v1_xxx::operator!=(const basic_monad&lt; Policy1 &gt; &amp;a, const basic_monad&lt; Policy2 &gt; &amp;b)'],['../namespaceboost_1_1outcome_1_1v1__xxx.html#a3dfd218a8d296c6876ee093f7236eb8f',1,'boost::outcome::v1_xxx::operator!=(const basic_monad&lt; Policy1 &gt; &amp;a, const basic_monad&lt; Policy2 &gt; &amp;b)']]],
   ['operator_3c_3c',['operator&lt;&lt;',['../group__monad.html#gab6f91d60f7f8d66cc60aec27fd61166a',1,'std']]],

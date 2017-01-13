@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>boost.outcome: Outcome and the upcoming std::expected&lt;T, E&gt;</title>
+<title>boost.outcome: Outcome and the upcoming C++ 20 std::expected&lt;T, E&gt;</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,36 +99,16 @@ $(document).ready(function(){initNavTree('md_doc_md_06-std_expected.html','');})
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Outcome and the upcoming std::expected&lt;T, E&gt; </div>  </div>
+<div class="title">Outcome and the upcoming C++ 20 std::expected&lt;T, E&gt; </div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="std-expected"></a> </p>
 <dl class="section warning"><dt>Warning</dt><dd>This section is still a work in progress and may be out of date, incorrect or make no sense!</dd></dl>
 <p>C++ 17 isn't finished at the time of writing, but we are very sure that at least <a href="http://en.cppreference.com/w/cpp/utility/optional"><code>std::optional&lt;T&gt;</code></a> will be in it. It remains to be seen if LEWG's <code>expected&lt;T, E&gt;</code> will make it, if not then most STL implementations will probably ship an implementation as an experimental and if your STL does not, there is always the reference implementation at <a href="https://github.com/viboes/std-make">https://github.com/viboes/std-make</a> which ought to work on any C++ 14 compiler.</p>
-<dl class="section note"><dt>Note</dt><dd>LEWG is the C++ standard committee's Library Evolution Working Group. They work on improving the C++ standard runtime library which will gain <code>std::optional&lt;T&gt;</code> and <code>std::variant&lt;...&gt;</code> in C++ 17 and probably <code>std::expected&lt;T, E&gt;</code> in C++ 17 or C++ 20.</dd></dl>
-<p>The following discussion is based on <code>expected&lt;T, E&gt;</code> as detailed by <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0323r1.pdf">P0323R1</a> which is the latest LEWG proposal paper at the time of writing (Nov 2016) and indeed one where <code>expected&lt;T, E&gt;</code> was pared down significantly from its original proposal. It should be noted that C++ may yet end up adopting something quite different, though given how long <code>expected&lt;T, E&gt;</code> has been around by now, and how well it fits nicely between <code>optional&lt;T&gt;</code> and <code>variant&lt;T, E&gt;</code>, it would seem unlikely. <code>expected&lt;T, E&gt;</code> is intended as a strict superset of <code>optional&lt;T&gt;</code> with aspects of <a href="http://en.cppreference.com/w/cpp/utility/variant"><code>std::variant&lt;T, E&gt;</code></a>, indeed much of LEWG's remaining work on the proposal is on reconciling the small remaining semantic differences between <code>expected&lt;T, nullopt_t&gt;</code> and <code>optional&lt;T&gt;</code>.</p>
+<dl class="section note"><dt>Note</dt><dd>LEWG is the C++ standard committee's Library Evolution Working Group. They work on improving the C++ standard runtime library which will gain <code>std::optional&lt;T&gt;</code> and <code>std::variant&lt;...&gt;</code> in C++ 17 and probably <code>std::expected&lt;T, E&gt;</code> in C++ 20. The following discussion is based on <code>expected&lt;T, E&gt;</code> as detailed by <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0323r1.pdf">P0323R1</a> which is the latest LEWG proposal paper at the time of writing (Nov 2016) and indeed one where <code>expected&lt;T, E&gt;</code> was pared down significantly from its original proposal. It should be noted that C++ may yet end up adopting something quite different, though given how long <code>expected&lt;T, E&gt;</code> has been around by now, and how well it fits nicely between <code>optional&lt;T&gt;</code> and <code>variant&lt;T, E&gt;</code>, it would seem unlikely. <code>expected&lt;T, E&gt;</code> is intended as a strict superset of <code>optional&lt;T&gt;</code> with aspects of <a href="http://en.cppreference.com/w/cpp/utility/variant"><code>std::variant&lt;T, E&gt;</code></a>, indeed much of LEWG's remaining work on the proposal is on reconciling the small remaining semantic differences between <code>expected&lt;T, nullopt_t&gt;</code> and <code>optional&lt;T&gt;</code>.</dd></dl>
 <p>The original prototype Boost.Expected library was a large and very complex beastie - I was fortunate to be employed on a contract in 2015 where I saw it deployed at scale into a large C++ codebase. Indeed, much of what I witnessed there had a big impact in how Outcome ended up being designed. P0323R1 proposes an enormously simplified implementation which ought to fix all of the showstopper problems with the original that I am aware of, and P0323R1's reduced <code>expected&lt;T, E&gt;</code> has ended up having a huge resemblance to Outcome in every day usage. It is heartening that the committee have made most of the changes I also made in Outcome, as that suggests I am on the right track. Outcome's slightly different design still contributes a lot of value for the specific use of error handling in my opinion, as we shall hopefully see next.</p>
-<h1><a class="anchor" id="optional"></a>
-Returning optional&lt;T&gt;</h1>
-<p>In some programming contexts we don't need to know why an operation failed, only that it did. Throwing an exception after failing to find a file is a good example of the kind of failure which is very common and where throwing an exception to handle that event is excessive and inappropriate. One might therefore design a routine expected to frequently fail in C++ as:</p>
-<div class="fragment"><div class="line"><span class="comment">// Returns true for success and fills \em out with the opened file, else false</span></div>
-<div class="line"><span class="keywordtype">bool</span> openfile(handle_ref &amp;out, <span class="keyword">const</span> <span class="keywordtype">char</span> *path) noexcept;</div>
-</div><!-- fragment --><p>Wouldn't it be much nicer though if you didn't force the caller to have to instantiate a copy of <code>handle_ref</code> before each call, not least because such a requirement messes badly with using <code>openfile()</code> in generic template code and moreover it could be the case that constructing a <code>handle_ref</code> is an atomic operation, and is thus wasted work if the failure to open is very common? This is where <code>optional&lt;T&gt;</code> comes in:</p>
-<div class="fragment"><div class="line"><span class="comment">// Returns the opened handle on success, else an empty optional</span></div>
-<div class="line">std::optional&lt;handle_ref&gt; openfile(<span class="keyword">const</span> <span class="keywordtype">char</span> *path) noexcept;</div>
-<div class="line">...</div>
-<div class="line">auto fh_ = openfile(<span class="stringliteral">&quot;foo&quot;</span>);</div>
-<div class="line"><span class="keywordflow">if</span>(fh_)</div>
-<div class="line">{</div>
-<div class="line">  handle_ref fh = std::move(fh_.value());</div>
-<div class="line">  fh-&gt;read(... etc</div>
-<div class="line">}</div>
-</div><!-- fragment --><p><code>optional&lt;T&gt;</code> is pretty boring and unsurprising like any good primitive. It's also fairly intuitive, almost any C++ programmer will immediately understand what the code above does from inspection.</p>
-<h2><a class="anchor" id="expected"></a>
-Returning expected&lt;T, E&gt;</h2>
-<p>Many familiar with the filesystem will find the above use case of <code>optional&lt;T&gt;</code> unsettling because there are many reasons why one couldn't open a file rather than merely it was not found. Imagine, for example, that a program is attempting to open a few thousand files on a networked drive which has broken its connection - in this case every single failure will take considerable time to return and there is zero chance <em>any</em> file open will ever succeed, so what the user sees is an apparently hanged program. Far better would be if the <code>openfile()</code> function could return the cause of its failure, and we could then treat all errors which are different to file-not-found as reason to <b>abort</b>.</p>
-<p>Enter LEWG's proposed <code>expected&lt;T, E&gt;</code> which can hold either an expected value of type <code>T</code> or an unexpected value of type <code>E</code>. Like <code>variant&lt;T, E&gt;</code>, <code>expected&lt;T, E&gt;</code> is a discriminated union storing either <code>T</code> or <code>E</code> in the same storage space, but unlike the variant, expected treats the <code>T</code> as a positive thing (fetchable via a <code>.<a class="el" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316" title="Variable of type value_t. ">value()</a></code>) and <code>E</code> as a negative thing (fetchable via an <code>.<a class="el" href="group__monad.html#ga1a1a8470c4efc3a52412f3ecc79a0060" title="Variable of type error_t. ">error()</a></code>). Because <code>expected&lt;T, E&gt;</code> provides a "almost never empty" guarantee similar to variant, it currently requires type <code>E</code> to be nothrow copy and move constructible and assignable. Expected is a bit less intuitive to use than optional, but its rules are straightforward: <code>expected&lt;T, E&gt;</code> will greedily and implicitly construct from any type from which a <code>T</code> can be constructed, after which it will hold an instance of <code>T</code>. If you wish to construct an <code>expected&lt;T, E&gt;</code> holding an instance of unexpected <code>E</code>, you need to feed it an <code>unexpected&lt;E&gt;</code> which is type sugar to indicate you want an instance of <code>E</code> implicitly converted into an <code>expected&lt;T, E&gt;</code>. As with everything else in C++ 11 onwards, there is a <code>make_expected(T)</code> and a <code>make_unexpected(E)</code> which do any type deduction and conversion for you into the right contents of <code>expected&lt;T, E&gt;</code>.</p>
-<p>All this sounds a bit complex, but really it's much easier to use. Here is a non-throwing implementation based on <code>expected&lt;T, E&gt;</code></p>
+<p>LEWG's proposed <code>expected&lt;T, E&gt;</code> as per P0323R1 can hold either an expected value of type <code>T</code> or an unexpected value of type <code>E</code>. Like <code>variant&lt;T, E&gt;</code>, <code>expected&lt;T, E&gt;</code> is a discriminated union storing either <code>T</code> or <code>E</code> in the same storage space, but unlike the variant, expected treats the <code>T</code> as a positive thing (fetchable via a <code>.<a class="el" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316" title="Variable of type value_t. ">value()</a></code>) and <code>E</code> as a negative thing (fetchable via an <code>.<a class="el" href="group__monad.html#ga1a1a8470c4efc3a52412f3ecc79a0060" title="Variable of type error_t. ">error()</a></code>). Because <code>expected&lt;T, E&gt;</code> provides an "almost never empty" guarantee similar to variant, it currently requires type <code>E</code> to be nothrow copy and move constructible and assignable. Expected is a bit less intuitive to use than optional, but its rules are straightforward: <code>expected&lt;T, E&gt;</code> will greedily and implicitly construct from any type from which a <code>T</code> can be constructed, after which it will hold an instance of <code>T</code>. If you wish to construct an <code>expected&lt;T, E&gt;</code> holding an instance of unexpected <code>E</code>, you need to feed it an <code>unexpected&lt;E&gt;</code> which is type sugar to indicate you want an instance of <code>E</code> implicitly converted into an <code>expected&lt;T, E&gt;</code>. As with everything else in C++ 11 onwards, there is a <code>make_expected(T)</code> and a <code>make_unexpected(E)</code> which do any type deduction and conversion for you into the right contents of <code>expected&lt;T, E&gt;</code>.</p>
+<p>All this sounds a bit complex, but really it's much easier to use. Here is a non-throwing implementation of the tutorial's <code>openfile()</code> based on <code>expected&lt;T, E&gt;</code></p>
 <div class="fragment"><div class="line"><span class="comment">// Returns the expected opened handle on success, or an unexpected cause of failure</span></div>
 <div class="line">std::expected&lt;handle_ref, std::error_code&gt; openfile(<span class="keyword">const</span> <span class="keywordtype">char</span> *path) noexcept</div>
 <div class="line">{</div>
@@ -158,98 +138,20 @@ Returning expected&lt;T, E&gt;</h2>
 <div class="line">  <span class="comment">// This is serious, abort</span></div>
 <div class="line">  <span class="keywordflow">throw</span> std::system_error(std::move(fh_.error()));</div>
 <div class="line">}</div>
-<div class="line"><span class="keywordflow">else</span> <span class="keywordflow">if</span>(fh_)</div>
-<div class="line">{</div>
-<div class="line">  handle_ref fh = std::move(fh_.value());</div>
-<div class="line">  fh-&gt;read(... etc</div>
-<div class="line">}</div>
-</div><!-- fragment --><p>The prototype Boost.Expected library and the P0323R1 reference library actually declares <code>expected&lt;T, E = std::exception_ptr&gt;</code> as the default despite that P0323R1 specifies <code>expected&lt;T, E = std::error_condition&gt;</code> as the default (note: I have no idea why LEWG would use error condition as a default, such a default would lose information for users so I have assumed they'll change it to error code soon), so for completeness let's rewrite the above to match an <code>E = std::exception_ptr</code> design instead:</p>
-<div class="fragment"><div class="line"><span class="comment">// Returns the expected opened handle on success, or an unexpected cause of failure</span></div>
-<div class="line">std::expected&lt;handle_ref, std::exception_ptr&gt; openfile(<span class="keyword">const</span> <span class="keywordtype">char</span> *path) noexcept</div>
-<div class="line">{</div>
-<div class="line">  <span class="keywordtype">int</span> fd = -1;</div>
-<div class="line">  <span class="keywordflow">try</span></div>
-<div class="line">  {</div>
-<div class="line">    fd = open(path, O_RDONLY);</div>
-<div class="line">    <span class="keywordflow">if</span>(fd == -1)</div>
-<div class="line">    {</div>
-<div class="line">      <span class="keywordflow">throw</span> std::system_error(std::error_code(errno, std::system_category()));</div>
-<div class="line">    }</div>
-<div class="line">    <span class="keywordflow">return</span> make_handle_ref&lt;some_derived_handle_implementation&gt;(fd);</div>
-<div class="line">  }</div>
-<div class="line">  <span class="keywordflow">catch</span>(...)</div>
-<div class="line">  {</div>
-<div class="line">    <span class="keywordflow">if</span>(fd != -1)</div>
-<div class="line">      close(fd);</div>
-<div class="line">    <span class="keywordflow">return</span> std::make_unexpected(std::current_exception());</div>
-<div class="line">  }</div>
-<div class="line">}</div>
-<div class="line">...</div>
-<div class="line">auto fh_ = openfile(<span class="stringliteral">&quot;foo&quot;</span>);</div>
-<div class="line"><span class="keywordflow">if</span>(!fh_)</div>
-<div class="line">{</div>
-<div class="line">  <span class="keywordflow">try</span></div>
-<div class="line">  {</div>
-<div class="line">    std::rethrow_exception(fh_.error());</div>
-<div class="line">  }</div>
-<div class="line">  <span class="keywordflow">catch</span>(<span class="keyword">const</span> std::system_error &amp;e)</div>
-<div class="line">  {</div>
-<div class="line">    <span class="keywordflow">if</span>(e.code() != std::errc::no_such_file_or_directory)</div>
-<div class="line">      <span class="keywordflow">throw</span>;</div>
-<div class="line">  }</div>
-<div class="line">  <span class="comment">// All other exception types were rethrown</span></div>
-<div class="line">}</div>
-<div class="line"><span class="keywordflow">else</span></div>
-<div class="line">{</div>
-<div class="line">  handle_ref fh = std::move(fh_.value());</div>
-<div class="line">  fh-&gt;read(... etc</div>
-<div class="line">}</div>
-</div><!-- fragment --><p>This is the very first time in this tutorial that we have seen the design pattern around which Outcome was specifically designed to make easy: <em>islands of exception throw in a sea of noexcept</em>.</p>
-<p>As you will see later, Outcome makes implementing this error handling design pattern easier than in Expected, but let's merge our two code examples using Expected above into one treating expected failures are unexceptional and exceptional failures as thrown exceptions:</p>
-<div class="fragment"><div class="line"><span class="comment">// Returns the expected opened handle on success, an error code if an anticipated error,</span></div>
-<div class="line"><span class="comment">// throws a system error if an unanticipated exceptional failure</span></div>
-<div class="line">std::expected&lt;handle_ref, std::error_code&gt; openfile(<span class="keyword">const</span> <span class="keywordtype">char</span> *path)</div>
-<div class="line">{</div>
-<div class="line">  <span class="keywordtype">int</span> fd = open(path, O_RDONLY);</div>
-<div class="line">  <span class="keywordflow">if</span>(fd == -1)</div>
-<div class="line">  {</div>
-<div class="line">    <span class="keywordtype">int</span> code = errno;</div>
-<div class="line">    <span class="comment">// If a temporary failure, this is an expected unexpected outcome</span></div>
-<div class="line">    <span class="keywordflow">if</span>(EINTR==code || EBUSY==code || EISDIR==code || ELOOP==code || ENOENT==code || ENOTDIR==code || EPERM==code || EACCES==code)</div>
-<div class="line">      <span class="keywordflow">return</span> std::make_unexpected(std::error_code(code, std::system_category());</div>
-<div class="line">    <span class="comment">// If anything else, it&#39;s serious and we should abort</span></div>
-<div class="line">    <span class="keywordflow">throw</span> std::system_error(std::error_code(code, std::system_category()));</div>
-<div class="line">  }</div>
-<div class="line">  <span class="keywordflow">try</span></div>
-<div class="line">  {</div>
-<div class="line">    <span class="keywordflow">return</span> make_handle_ref&lt;some_derived_handle_implementation&gt;(fd);</div>
-<div class="line">  }</div>
-<div class="line">  <span class="keywordflow">catch</span>(...)</div>
-<div class="line">  {</div>
-<div class="line">    close(fd);</div>
-<div class="line">    <span class="keywordflow">throw</span>;</div>
-<div class="line">  }</div>
-<div class="line">}</div>
-<div class="line">...</div>
-<div class="line">auto fh_ = openfile(<span class="stringliteral">&quot;foo&quot;</span>);</div>
-<div class="line"><span class="comment">// If !fh_, it&#39;s an expected failure we ignored</span></div>
 <div class="line"><span class="keywordflow">if</span>(fh_)</div>
 <div class="line">{</div>
 <div class="line">  handle_ref fh = std::move(fh_.value());</div>
 <div class="line">  fh-&gt;read(... etc</div>
 <div class="line">}</div>
-</div><!-- fragment --><p>This "separation of concerns" pattern has a great aesthetic appeal to most, including myself. This is likely why Rust adopted it.</p>
-<p>However I must admit that after more than a year of using Outcome I haven't found myself using this design a great deal. It fits well for some codebases, but very much a minority. The problem in my opinion is that the cost of writing and maintaining correct and fully tested code which can invert control flow at any moment is high and typically very much underestimated. Therefore, it is only in some code bases that it is worth placing that high burden on the code, and in most code bases it is not. Hence in most code bases I write forwards only execution code where there is no possible way of inverting control flow at all i.e. no exceptions can be thrown, despite that exceptions are available.</p>
+</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>The prototype Boost.Expected library and the P0323R1 reference library actually declares <code>expected&lt;T, E = std::exception_ptr&gt;</code> as the default despite that P0323R1 specifies <code>expected&lt;T, E = std::error_condition&gt;</code> as the default. I have no idea why LEWG would use error condition as a default, such a default would lose information for users so I have assumed they'll change it to error code soon.</dd></dl>
 <p><br/>
 </p>
 <hr/>
 <p><br/>
 </p>
-<h1><a class="anchor" id="introduction2"></a>
-Introducing Outcome</h1>
-<p>After that literature review of how C++ has implemented error handling and how code might implement error handling from C++ 17/20 onwards, one might think that Outcome and Expected are interchangeable. They do cover substantially similar ground and in the semantic sense they are the same thing, however where Expected is intended as a generic fundamental type useful for many things, Outcome is specifically intended as a universal error handling framework capable of lossless propagation of all possible kinds of C++ error with the least possible runtime and compile time overhead. It could be considered as a "fixed feature" Expected specialised for the use case of handling errors only.</p>
-<h2><a class="anchor" id="design_differences"></a>
-Design differences between Expected and Outcomes</h2>
+<h1><a class="anchor" id="design_differences"></a>
+Design differences between Expected and Outcome</h1>
+<p>After all the documentation to date, one might think that Outcome and Expected are interchangeable. They do cover substantially similar ground and in the semantic sense they are the same thing, however where Expected is intended as a generic fundamental type useful for many things, Outcome is specifically intended as a universal error handling framework capable of lossless propagation of all possible kinds of C++ error with the least possible runtime and compile time overhead. It could be considered as a "fixed feature" Expected specialised for the use case of handling errors only. Here are the exact differences:</p>
 <ol type="1">
 <li>Outcome is designed specifically for returning output from function calls in low latency/very high performance C++ of the kind <a href="https://groups.google.com/a/isocpp.org/forum/#!forum/sg14">WG21 SG14</a> is working upon. It therefore works perfectly with exceptions and RTTI disabled and its CI compiles per commit typical use cases of Outcomes and counts the assembler operations emitted by GCC, clang and MSVC to ensure code bloat is kept optimally minimal. On all recent GCCs and clangs, if the compiler's optimiser can infer the state of an outcome, <b>all runtime overhead due to the outcome ought to be completely eliminated</b> (sans optimiser bugs which appear from time to time). This means for inlined code if you return a <code>result&lt;T&gt;(T(...))</code>, the compiler will generate identical code as if you had returned a <code>T(...)</code> directly.</li>
 <li>Outcome's actual core implementation is <code>boost::outcome::basic_monad&lt;Policy&lt;T, EC, E&gt;&gt;</code> with these convenience typedefs: <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; <span class="keyword">using</span> <a class="code" href="group__monad.html#gaab2ff6220205017226794529c863b336">outcome</a> = basic_monad&lt; monad_policy&lt;T, std::error_code, std::exception_ptr&gt;&gt;;</div>
