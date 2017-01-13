@@ -143,7 +143,6 @@ apt-get install libboost-outcome-dev</pre><p>Once installed it is available for 
 </p>
 <h1><a class="anchor" id="osx"></a>
 Installing on OS X</h1>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Todo:</a></b></dt><dd>This is yet to be implemented</dd></dl>
 <p>Assuming you have <a href="http://brew.sh/">homebrew</a> installed, then:</p>
 <pre>brew tap ned14/tap
 brew install <a class="el" href="namespaceboost_1_1outcome.html" title="The Outcome namespace. ">boost.outcome</a></pre><p>Once installed it is available for usage in any C++ 14 project using:</p>
@@ -184,14 +183,14 @@ mkdir build
 cd build
 cmake ..
 cmake --build .
-</pre><p>On POSIX now do: </p>
+ctest
+</pre><p>On some cmake generators (Visual Studio, Xcode) you may need to tell cmake build a configuration like Release or Debug. Similarly, ctest needs to be told the same e.g.</p>
 <pre>
-bin/outcome_hl--unittests
-bin/outcome_hl--unittests_noexcept
-</pre><p>On Windows now do: </p>
-<pre>
-bin/Debug/outcome_hl--unittests
-bin/Debug/outcome_hl--unittests_noexcept
+mkdir build
+cd build
+cmake ..
+cmake --build . --config Release
+ctest -C Release
 </pre><p>In case you are curious why there is a "noexcept" edition of the unit tests, this is the unit test suite compiled with C++ exceptions and RTTI disabled and apart from not including the C++ exception specific tests, is otherwise identical. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
