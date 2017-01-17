@@ -14,6 +14,8 @@ var namespaceboost_1_1outcome_1_1v1__xxx =
     [ "basic_monad", "classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html", "classboost_1_1outcome_1_1v1__xxx_1_1basic__monad" ],
     [ "inplace_t", "structboost_1_1outcome_1_1v1__xxx_1_1inplace__t.html", "structboost_1_1outcome_1_1v1__xxx_1_1inplace__t" ],
     [ "is_monad", "structboost_1_1outcome_1_1v1__xxx_1_1is__monad.html", null ],
+    [ "bad_expected_access", "classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access.html", "classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access" ],
+    [ "bad_expected_access< void >", "classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access_3_01void_01_4.html", "classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access_3_01void_01_4" ],
     [ "empty_t", "structboost_1_1outcome_1_1v1__xxx_1_1empty__t.html", "structboost_1_1outcome_1_1v1__xxx_1_1empty__t" ],
     [ "value_t", "structboost_1_1outcome_1_1v1__xxx_1_1value__t.html", "structboost_1_1outcome_1_1v1__xxx_1_1value__t" ],
     [ "error_t", "structboost_1_1outcome_1_1v1__xxx_1_1error__t.html", "structboost_1_1outcome_1_1v1__xxx_1_1error__t" ],

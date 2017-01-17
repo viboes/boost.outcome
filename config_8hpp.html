@@ -192,6 +192,7 @@ Macros</h2></td></tr>
 <tr class="memdesc:a39e44c8ec617c859417ddf8960eca4de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Predefine to have something else occur when Outcome throws an exception due to a deserialisation failure. <br/></td></tr>
 <tr class="separator:a39e44c8ec617c859417ddf8960eca4de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a10f1ea9f0f1205c24e106fb77cee19c3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a10f1ea9f0f1205c24e106fb77cee19c3">BOOST_OUTCOME_THROW_MONAD_ERROR</a>(ec, expr)&#160;&#160;&#160;<a class="el" href="config_8hpp.html#a8fefe8516997eb0f7c649834d298044a">BOOST_OUTCOME_THROW</a>(expr), false</td></tr>
+<tr class="memdesc:a10f1ea9f0f1205c24e106fb77cee19c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Predefine to have something else occur when Outcome throws a monad_error due to being asked to do something not possible.  <a href="#a10f1ea9f0f1205c24e106fb77cee19c3">More...</a><br/></td></tr>
 <tr class="separator:a10f1ea9f0f1205c24e106fb77cee19c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af1d540bfb21e8b45eaeb3ec60686e91f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af1d540bfb21e8b45eaeb3ec60686e91f"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#af1d540bfb21e8b45eaeb3ec60686e91f">BOOST_OUTCOME_THROW_SYSTEM_ERROR</a>(ec, expr)&#160;&#160;&#160;<a class="el" href="config_8hpp.html#a8fefe8516997eb0f7c649834d298044a">BOOST_OUTCOME_THROW</a>(expr)</td></tr>
@@ -201,6 +202,10 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a9f8f080f5049032b6d49faf0fd637140">BOOST_OUTCOME_RETHROW_EXCEPTION</a>(ex)&#160;&#160;&#160;<a class="el" href="config_8hpp.html#a8fefe8516997eb0f7c649834d298044a">BOOST_OUTCOME_THROW</a>(std::rethrow_exception(ex))</td></tr>
 <tr class="memdesc:a9f8f080f5049032b6d49faf0fd637140"><td class="mdescLeft">&#160;</td><td class="mdescRight">Predefine to have something else occur when Outcome rethrows an exception_ptr from the monad. <br/></td></tr>
 <tr class="separator:a9f8f080f5049032b6d49faf0fd637140"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0fa9abc7e240b4323721e13b433953db"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0fa9abc7e240b4323721e13b433953db"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a0fa9abc7e240b4323721e13b433953db">BOOST_OUTCOME_THROW_BAD_EXPECTED_ACCESS</a>(...)&#160;&#160;&#160;<a class="el" href="config_8hpp.html#a8fefe8516997eb0f7c649834d298044a">BOOST_OUTCOME_THROW</a>(make_bad_expected_access(__VA_ARGS__))</td></tr>
+<tr class="memdesc:a0fa9abc7e240b4323721e13b433953db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Predefine to what you want the Expected implementation to when throwing a bad_expected_access. <br/></td></tr>
+<tr class="separator:a0fa9abc7e240b4323721e13b433953db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -234,7 +239,8 @@ BOOSTLITE_NORETURN void&#160;</td><td class="memItemRight" valign="bottom"><b>bo
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Predefine to have something else occur when Outcome throws a monad_error due to being asked to do something not possible </p>
+
+<p>Predefine to have something else occur when Outcome throws a monad_error due to being asked to do something not possible. </p>
 <dl class="section return"><dt>Returns</dt><dd>Can return false to cancel the calling operation (see <code>_throw_error()</code> in monad_policy.ipp). </dd></dl>
 
 </div>

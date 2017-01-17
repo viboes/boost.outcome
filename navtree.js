@@ -82,7 +82,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 ".html",
-"md_doc_md_03-tutorial.html#try"
+"group__monad.html#ggaf5abc43f8d09588556c4c65b53485c0dac537dcef56fd6ff75592c0220fd3dae1"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -511,31 +511,27 @@ constexpr error_t&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 <h2>Supplying your own implementations of <code>basic_monad&lt;T, EC, E&gt;</code></h2>
 <p>To do this, simply supply a policy type of the following form: </p>
 <div class="fragment"><div class="line">  <span class="comment">// An implementation policy for basic_monad</span></div>
-<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> R&gt; <span class="keyword">struct </span>BOOST_OUTCOME_MONAD_POLICY_NAME</div>
+<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> R, <span class="keyword">typename</span> EC&gt; <span class="keyword">struct </span>expected_policy</div>
 <div class="line">  {</div>
 <div class="line">    <span class="comment">// The final resulting implementation type</span></div>
-<div class="line">    <span class="keyword">typedef</span> basic_monad&lt;BOOST_OUTCOME_MONAD_POLICY_NAME&gt; implementation_type;</div>
+<div class="line">    <span class="keyword">typedef</span> basic_monad&lt;expected_policy&gt; implementation_type;</div>
 <div class="line">    <span class="comment">// The value type to use. Can be void to disable.</span></div>
 <div class="line">    <span class="keyword">typedef</span> R value_type;</div>
 <div class="line"><span class="comment">// The error code type to use. Can be void to disable.</span></div>
-<div class="line"><span class="preprocessor">#ifdef BOOST_OUTCOME_MONAD_POLICY_ERROR_TYPE</span></div>
-<div class="line"><span class="preprocessor"></span>    <span class="keyword">typedef</span> BOOST_OUTCOME_MONAD_POLICY_ERROR_TYPE error_type;</div>
-<div class="line"><span class="preprocessor">#else</span></div>
-<div class="line"><span class="preprocessor"></span>    <span class="keyword">typedef</span> <span class="keywordtype">void</span> error_type;</div>
-<div class="line"><span class="preprocessor">#endif</span></div>
-<div class="line"><span class="preprocessor"></span><span class="comment">// The exception pointer type to use. Can be void to disable.</span></div>
-<div class="line"><span class="preprocessor">#ifdef BOOST_OUTCOME_MONAD_POLICY_EXCEPTION_TYPE</span></div>
-<div class="line"><span class="preprocessor"></span>    <span class="keyword">typedef</span> BOOST_OUTCOME_MONAD_POLICY_EXCEPTION_TYPE exception_type;</div>
+<div class="line">    <span class="keyword">typedef</span> EC error_type;</div>
+<div class="line"><span class="comment">// The exception pointer type to use. Can be void to disable.</span></div>
+<div class="line"><span class="preprocessor">#ifdef BOOST_OUTCOME_EXPECTED_POLICY_EXCEPTION_TYPE</span></div>
+<div class="line"><span class="preprocessor"></span>    <span class="keyword">typedef</span> BOOST_OUTCOME_EXPECTED_POLICY_EXCEPTION_TYPE exception_type;</div>
 <div class="line"><span class="preprocessor">#else</span></div>
 <div class="line"><span class="preprocessor"></span>    <span class="keyword">typedef</span> <span class="keywordtype">void</span> exception_type;</div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"><span class="preprocessor"></span>    <span class="comment">// The base class to use to store state</span></div>
-<div class="line">    <span class="keyword">typedef</span> BOOST_OUTCOME_MONAD_POLICY_BASE_NAME&lt;basic_monad_storage&lt;BOOST_OUTCOME_MONAD_POLICY_NAME&gt;, value_type, error_type, exception_type&gt; base;</div>
+<div class="line">    <span class="keyword">typedef</span> expected_policy_base&lt;basic_monad_storage&lt;expected_policy&gt;, value_type, error_type, exception_type&gt; base;</div>
 <div class="line"></div>
 <div class="line">    <span class="comment">// The type which basic_monad::rebind&lt;U&gt; should return</span></div>
-<div class="line">    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> U&gt; <span class="keyword">using</span> rebind = basic_monad&lt;BOOST_OUTCOME_MONAD_POLICY_NAME&lt;U&gt;&gt;;</div>
+<div class="line">    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> U&gt; <span class="keyword">using</span> rebind = basic_monad&lt;expected_policy&lt;U, EC&gt;&gt;;</div>
 <div class="line">    <span class="comment">// The type which rebinding myself produces</span></div>
-<div class="line">    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> U&gt; <span class="keyword">using</span> rebind_policy = BOOST_OUTCOME_MONAD_POLICY_NAME&lt;U&gt;;</div>
+<div class="line">    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> U&gt; <span class="keyword">using</span> rebind_policy = expected_policy&lt;U, EC&gt;;</div>
 <div class="line">  };</div>
 </div><!-- fragment --><h2 class="groupheader">Enumeration Type Documentation</h2>
 <a class="anchor" id="gaf5abc43f8d09588556c4c65b53485c0d"></a>

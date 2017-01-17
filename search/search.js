@@ -12,12 +12,12 @@ var indexSectionsWithContent =
   2: "b",
   3: "cmov",
   4: "abceghimnosuv",
-  5: "ehiv",
-  6: "eiortv",
+  5: "ehiuv",
+  6: "eiortuv",
   7: "m",
   8: "aen",
   9: "b",
-  10: "cu",
+  10: "ciu",
   11: "afiopqst"
 };
 

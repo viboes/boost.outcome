@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['value_5ftype',['value_type',['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a75005d345be5708ccfa2fcca44deb778',1,'boost::outcome::v1_xxx::basic_monad']]]
+  ['unexpect_5ft',['unexpect_t',['../group__expected.html#ga43a5a0da82bcdf70d885e62ca9d5528a',1,'boost::outcome::v1_xxx']]],
+  ['unexpected_5ftype',['unexpected_type',['../group__expected.html#ga1a389d89eeffe909fe9e97905325f69d',1,'boost::outcome::v1_xxx']]]
 ];

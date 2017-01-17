@@ -430,14 +430,14 @@ const <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1value__storage.htm
 <div class="line">}</div>
 </div><!-- fragment --><div class="fragment"><div class="line">  <span class="keyword">struct </span>o_type</div>
 <div class="line">  {</div>
-<div class="line">    <span class="keywordtype">int</span> expected;</div>
+<div class="line">    <span class="keywordtype">int</span> <a class="code" href="group__expected.html#ga7440167038cbd110405573cf2bd873ad">expected</a>;</div>
 <div class="line">    <span class="comment">// monad.match() will call an overload for each possible content it might have</span></div>
-<div class="line">    <span class="keywordtype">void</span> operator()(<span class="keywordtype">int</span> <span class="comment">/*unused*/</span>)<span class="keyword"> const </span>{ BOOST_CHECK(expected == 1); }</div>
-<div class="line">    <span class="keywordtype">void</span> operator()(error_code_extended <span class="comment">/*unused*/</span>)<span class="keyword"> const </span>{ BOOST_CHECK(expected == 2); }</div>
-<div class="line">    <span class="keywordtype">void</span> operator()(std::exception_ptr <span class="comment">/*unused*/</span>)<span class="keyword"> const </span>{ BOOST_CHECK(expected == 3); }  <span class="comment">// NOLINT</span></div>
-<div class="line">    <span class="keywordtype">void</span> operator()(outcome&lt;int&gt;::empty_type <span class="comment">/*unused*/</span>)<span class="keyword"> const </span>{ BOOST_CHECK(expected == 4); }</div>
+<div class="line">    <span class="keywordtype">void</span> operator()(<span class="keywordtype">int</span> <span class="comment">/*unused*/</span>)<span class="keyword"> const </span>{ BOOST_CHECK(<a class="code" href="group__expected.html#ga7440167038cbd110405573cf2bd873ad">expected</a> == 1); }</div>
+<div class="line">    <span class="keywordtype">void</span> operator()(error_code_extended <span class="comment">/*unused*/</span>)<span class="keyword"> const </span>{ BOOST_CHECK(<a class="code" href="group__expected.html#ga7440167038cbd110405573cf2bd873ad">expected</a> == 2); }</div>
+<div class="line">    <span class="keywordtype">void</span> operator()(std::exception_ptr <span class="comment">/*unused*/</span>)<span class="keyword"> const </span>{ BOOST_CHECK(<a class="code" href="group__expected.html#ga7440167038cbd110405573cf2bd873ad">expected</a> == 3); }  <span class="comment">// NOLINT</span></div>
+<div class="line">    <span class="keywordtype">void</span> operator()(outcome&lt;int&gt;::empty_type <span class="comment">/*unused*/</span>)<span class="keyword"> const </span>{ BOOST_CHECK(<a class="code" href="group__expected.html#ga7440167038cbd110405573cf2bd873ad">expected</a> == 4); }</div>
 <div class="line">    o_type()</div>
-<div class="line">        : expected(0)</div>
+<div class="line">        : <a class="code" href="group__expected.html#ga7440167038cbd110405573cf2bd873ad">expected</a>(0)</div>
 <div class="line">    {</div>
 <div class="line">    }</div>
 <div class="line">  } o;</div>

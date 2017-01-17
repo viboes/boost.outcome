@@ -135,6 +135,12 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1is__monad.html">is_monad</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">True if the type passed is a monad or a reference to a monad.  <a href="structboost_1_1outcome_1_1v1__xxx_1_1is__monad.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access.html">bad_expected_access</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The exception type thrown when you try to access an errored expected.  <a href="classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access_3_01void_01_4.html">bad_expected_access&lt; void &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type thrown due to valueless by exception state.  <a href="classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access_3_01void_01_4.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1empty__t.html">empty_t</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type tag for an empty monad.  <a href="structboost_1_1outcome_1_1v1__xxx_1_1empty__t.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -175,6 +181,20 @@ template&lt;typename R &gt; </td></tr>
 <tr class="memitem:ga0d0fd5ca15cb339df9aa8e829a8ea5e0"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga0d0fd5ca15cb339df9aa8e829a8ea5e0">option</a> = <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html">basic_monad</a>&lt; detail::option_policy&lt; R &gt;&gt;</td></tr>
 <tr class="memdesc:ga0d0fd5ca15cb339df9aa8e829a8ea5e0"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>option&lt;R&gt;</code> can hold a fixed variant list of empty or a type <code>R</code> at a space cost of <code>sizeof(<a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html" title="A fixed lightweight variant store for monad.This fixed variant list of empty, a type value_type...">value_storage</a>&lt;R&gt;)</code> which is usually <code>sizeof(R)+8</code>, but may be smaller if <code><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html" title="A fixed lightweight variant store for monad.This fixed variant list of empty, a type value_type...">value_storage</a>&lt;R&gt;</code> is specialised. This corresponds to <code>tribool::unknown</code> and <code>tribool::true_</code> respectively. This specialisation looks deliberately like Rust's <code>Option&lt;T&gt;</code>. <br/></td></tr>
 <tr class="separator:ga0d0fd5ca15cb339df9aa8e829a8ea5e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7440167038cbd110405573cf2bd873ad"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga7440167038cbd110405573cf2bd873ad"></a>
+template&lt;typename R , typename E  = BOOST_OUTCOME_EXPECTED_DEFAULT_ERROR_TYPE&gt; </td></tr>
+<tr class="memitem:ga7440167038cbd110405573cf2bd873ad"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__expected.html#ga7440167038cbd110405573cf2bd873ad">expected</a> = <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html">basic_monad</a>&lt; detail::expected_policy&lt; R, E &gt;&gt;</td></tr>
+<tr class="memdesc:ga7440167038cbd110405573cf2bd873ad"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>expected&lt;R&gt;</code> can hold a fixed variant list of empty, a type <code>R</code> or a lightweight <code>std::error_code</code> at a space cost of <code>max(24, sizeof(R)+8)</code>. This corresponds to <code>tribool::unknown</code>, <code>tribool::true_</code> and <code>tribool::false_</code> respectively. This specialisation matches the proposed Expected implementation before standards. <br/></td></tr>
+<tr class="separator:ga7440167038cbd110405573cf2bd873ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1a389d89eeffe909fe9e97905325f69d"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga1a389d89eeffe909fe9e97905325f69d"></a>
+template&lt;typename E &gt; </td></tr>
+<tr class="memitem:ga1a389d89eeffe909fe9e97905325f69d"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__expected.html#ga1a389d89eeffe909fe9e97905325f69d">unexpected_type</a> = <a class="el" href="group__monad.html#ga0d0fd5ca15cb339df9aa8e829a8ea5e0">option</a>&lt; E &gt;</td></tr>
+<tr class="memdesc:ga1a389d89eeffe909fe9e97905325f69d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type sugar to indicate type E is an unexpected value. <br/></td></tr>
+<tr class="separator:ga1a389d89eeffe909fe9e97905325f69d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga43a5a0da82bcdf70d885e62ca9d5528a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga43a5a0da82bcdf70d885e62ca9d5528a"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__expected.html#ga43a5a0da82bcdf70d885e62ca9d5528a">unexpect_t</a> = <a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1error__t.html">error_t</a></td></tr>
+<tr class="memdesc:ga43a5a0da82bcdf70d885e62ca9d5528a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tag type for unexpected. <br/></td></tr>
+<tr class="separator:ga43a5a0da82bcdf70d885e62ca9d5528a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -449,6 +469,52 @@ template&lt;class T &gt; </td></tr>
 <tr class="memitem:ga31623e855d816d8be8b796107e29d4f7"><td class="memTemplItemLeft" align="right" valign="top">BOOSTLITE_CONSTEXPR <a class="el" href="group__monad.html#ga0d0fd5ca15cb339df9aa8e829a8ea5e0">option</a>&lt; void &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ga31623e855d816d8be8b796107e29d4f7">as_void</a> (const <a class="el" href="group__monad.html#ga0d0fd5ca15cb339df9aa8e829a8ea5e0">option</a>&lt; T &gt; &amp;v)</td></tr>
 <tr class="memdesc:ga31623e855d816d8be8b796107e29d4f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a void option from an input option, forwarding any emptiness. <br/></td></tr>
 <tr class="separator:ga31623e855d816d8be8b796107e29d4f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a559c1275e64eaf353414d5b061ae6723"><td class="memTemplParams" colspan="2"><a class="anchor" id="a559c1275e64eaf353414d5b061ae6723"></a>
+template&lt;class E &gt; </td></tr>
+<tr class="memitem:a559c1275e64eaf353414d5b061ae6723"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access.html">bad_expected_access</a>&lt; E &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>make_bad_expected_access</b> (const E &amp;v)</td></tr>
+<tr class="separator:a559c1275e64eaf353414d5b061ae6723"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5280a337aaec9ee5601d5b1d4bbb4e46"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5280a337aaec9ee5601d5b1d4bbb4e46"></a>
+<a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access.html">bad_expected_access</a>&lt; void &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>make_bad_expected_access</b> ()</td></tr>
+<tr class="separator:a5280a337aaec9ee5601d5b1d4bbb4e46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga276cc35056dccfdbe461c11d8eeb3d93"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga276cc35056dccfdbe461c11d8eeb3d93"></a>
+<a class="el" href="group__expected.html#ga7440167038cbd110405573cf2bd873ad">expected</a>&lt; void &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__expected.html#ga276cc35056dccfdbe461c11d8eeb3d93">make_expected</a> ()</td></tr>
+<tr class="memdesc:ga276cc35056dccfdbe461c11d8eeb3d93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an expected&lt;void&gt; <br/></td></tr>
+<tr class="separator:ga276cc35056dccfdbe461c11d8eeb3d93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4c1e14f8fbcc88fcba33db0e20a81b68"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga4c1e14f8fbcc88fcba33db0e20a81b68"></a>
+template&lt;class T &gt; </td></tr>
+<tr class="memitem:ga4c1e14f8fbcc88fcba33db0e20a81b68"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="group__expected.html#ga7440167038cbd110405573cf2bd873ad">expected</a>&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__expected.html#ga4c1e14f8fbcc88fcba33db0e20a81b68">make_expected</a> (T &amp;&amp;v)</td></tr>
+<tr class="memdesc:ga4c1e14f8fbcc88fcba33db0e20a81b68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an expected from the type passed. <br/></td></tr>
+<tr class="separator:ga4c1e14f8fbcc88fcba33db0e20a81b68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga15006fc8c6098c482cc05f8f5e0f37fb"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga15006fc8c6098c482cc05f8f5e0f37fb"></a>
+template&lt;class T &gt; </td></tr>
+<tr class="memitem:ga15006fc8c6098c482cc05f8f5e0f37fb"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="group__expected.html#ga7440167038cbd110405573cf2bd873ad">expected</a>&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__expected.html#ga15006fc8c6098c482cc05f8f5e0f37fb">make_expected</a> (const T &amp;v)</td></tr>
+<tr class="memdesc:ga15006fc8c6098c482cc05f8f5e0f37fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an expected from the type passed. <br/></td></tr>
+<tr class="separator:ga15006fc8c6098c482cc05f8f5e0f37fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga03e1e619a559e7f336621b1092e28527"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga03e1e619a559e7f336621b1092e28527"></a>
+template&lt;class E &gt; </td></tr>
+<tr class="memitem:ga03e1e619a559e7f336621b1092e28527"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="group__expected.html#ga1a389d89eeffe909fe9e97905325f69d">unexpected_type</a>&lt; E &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__expected.html#ga03e1e619a559e7f336621b1092e28527">make_unexpected</a> (E &amp;&amp;v)</td></tr>
+<tr class="memdesc:ga03e1e619a559e7f336621b1092e28527"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an unexpected from the type passed. <br/></td></tr>
+<tr class="separator:ga03e1e619a559e7f336621b1092e28527"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabd55e36a8c81909ef08420b0f59c2d7c"><td class="memTemplParams" colspan="2"><a class="anchor" id="gabd55e36a8c81909ef08420b0f59c2d7c"></a>
+template&lt;class E &gt; </td></tr>
+<tr class="memitem:gabd55e36a8c81909ef08420b0f59c2d7c"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="group__expected.html#ga1a389d89eeffe909fe9e97905325f69d">unexpected_type</a>&lt; E &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__expected.html#gabd55e36a8c81909ef08420b0f59c2d7c">make_unexpected</a> (const E &amp;v)</td></tr>
+<tr class="memdesc:gabd55e36a8c81909ef08420b0f59c2d7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an unexpected from the type passed. <br/></td></tr>
+<tr class="separator:gabd55e36a8c81909ef08420b0f59c2d7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga726f6c276fd09c5036f20811239b0c8e"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga726f6c276fd09c5036f20811239b0c8e"></a>
+template&lt;class T , class E &gt; </td></tr>
+<tr class="memitem:ga726f6c276fd09c5036f20811239b0c8e"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="group__expected.html#ga7440167038cbd110405573cf2bd873ad">expected</a>&lt; T, E &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__expected.html#ga726f6c276fd09c5036f20811239b0c8e">make_expected_from_error</a> (E &amp;&amp;v)</td></tr>
+<tr class="memdesc:ga726f6c276fd09c5036f20811239b0c8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make an errored expected from the type passed. <br/></td></tr>
+<tr class="separator:ga726f6c276fd09c5036f20811239b0c8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafb8fef1c192879efd3d8baa9e1d5fb29"><td class="memTemplParams" colspan="2"><a class="anchor" id="gafb8fef1c192879efd3d8baa9e1d5fb29"></a>
+template&lt;class T , class E &gt; </td></tr>
+<tr class="memitem:gafb8fef1c192879efd3d8baa9e1d5fb29"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="group__expected.html#ga7440167038cbd110405573cf2bd873ad">expected</a>&lt; T, E &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__expected.html#gafb8fef1c192879efd3d8baa9e1d5fb29">make_expected_from_error</a> (const E &amp;v)</td></tr>
+<tr class="memdesc:gafb8fef1c192879efd3d8baa9e1d5fb29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make an errored expected from the type passed. <br/></td></tr>
+<tr class="separator:gafb8fef1c192879efd3d8baa9e1d5fb29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2b20ead4762b8cc52a81dbcde62e4b4f"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga2b20ead4762b8cc52a81dbcde62e4b4f"></a>
+template&lt;class T , class E , class U &gt; </td></tr>
+<tr class="memitem:ga2b20ead4762b8cc52a81dbcde62e4b4f"><td class="memTemplItemLeft" align="right" valign="top">constexpr <a class="el" href="group__expected.html#ga7440167038cbd110405573cf2bd873ad">expected</a>&lt; T, E &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__expected.html#ga2b20ead4762b8cc52a81dbcde62e4b4f">make_expected_from_error</a> (U &amp;&amp;v)</td></tr>
+<tr class="memdesc:ga2b20ead4762b8cc52a81dbcde62e4b4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make an errored expected from the type passed. <br/></td></tr>
+<tr class="separator:ga2b20ead4762b8cc52a81dbcde62e4b4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga93fd76af06145e1e6544d9c27bd080d0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga93fd76af06145e1e6544d9c27bd080d0"></a>
 constexpr <a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1exception__t.html">exception_t</a> exception&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__monad.html#ga93fd76af06145e1e6544d9c27bd080d0">exception_t</a> ()</td></tr>
 <tr class="memdesc:ga93fd76af06145e1e6544d9c27bd080d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable of type <a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1exception__t.html" title="Type tag for an excepted monad. ">exception_t</a>. <br/></td></tr>
@@ -456,6 +522,10 @@ constexpr <a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1exception__t.
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
+<tr class="memitem:ga71d06dbe1034b67b00f3f69839c548ae"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga71d06dbe1034b67b00f3f69839c548ae"></a>
+constexpr <a class="el" href="group__expected.html#ga43a5a0da82bcdf70d885e62ca9d5528a">unexpect_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__expected.html#ga71d06dbe1034b67b00f3f69839c548ae">unexpect</a> = <a class="el" href="group__expected.html#ga43a5a0da82bcdf70d885e62ca9d5528a">unexpect_t</a>()</td></tr>
+<tr class="memdesc:ga71d06dbe1034b67b00f3f69839c548ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tag value for unexpected. <br/></td></tr>
+<tr class="separator:ga71d06dbe1034b67b00f3f69839c548ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga68770961e182715930ad64ca244b645e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga68770961e182715930ad64ca244b645e"></a>
 constexpr <a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1empty__t.html">empty_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__monad.html#ga68770961e182715930ad64ca244b645e">empty</a> = <a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1empty__t.html">empty_t</a>()</td></tr>
 <tr class="memdesc:ga68770961e182715930ad64ca244b645e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable of type <a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1empty__t.html" title="Type tag for an empty monad. ">empty_t</a>. <br/></td></tr>

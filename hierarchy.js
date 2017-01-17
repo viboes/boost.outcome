@@ -18,6 +18,12 @@ var hierarchy =
       [ "boost::outcome::v1_xxx::error_code_extended", "classboost_1_1outcome_1_1v1__xxx_1_1error__code__extended.html", null ]
     ] ],
     [ "boost::outcome::v1_xxx::error_t", "structboost_1_1outcome_1_1v1__xxx_1_1error__t.html", null ],
+    [ "std::exception", null, [
+      [ "std::logic_error", null, [
+        [ "boost::outcome::v1_xxx::bad_expected_access< E >", "classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access.html", null ],
+        [ "boost::outcome::v1_xxx::bad_expected_access< void >", "classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access_3_01void_01_4.html", null ]
+      ] ]
+    ] ],
     [ "boost::outcome::v1_xxx::exception_t", "structboost_1_1outcome_1_1v1__xxx_1_1exception__t.html", null ],
     [ "false_type", null, [
       [ "boost::outcome::v1_xxx::enable_single_byte_value_storage< _value_type >", "structboost_1_1outcome_1_1v1__xxx_1_1enable__single__byte__value__storage.html", null ],

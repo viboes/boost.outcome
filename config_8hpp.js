@@ -7,6 +7,7 @@ var config_8hpp =
     [ "BOOST_OUTCOME_NEED_DEFINE_DESCRIPTION", "config_8hpp.html#a7a5af0b99b2d7b61b148ae30e90d7465", null ],
     [ "BOOST_OUTCOME_RETHROW_EXCEPTION", "config_8hpp.html#a9f8f080f5049032b6d49faf0fd637140", null ],
     [ "BOOST_OUTCOME_THROW", "config_8hpp.html#a8fefe8516997eb0f7c649834d298044a", null ],
+    [ "BOOST_OUTCOME_THROW_BAD_EXPECTED_ACCESS", "config_8hpp.html#a0fa9abc7e240b4323721e13b433953db", null ],
     [ "BOOST_OUTCOME_THROW_DESERIALISATION_FAILURE", "config_8hpp.html#a39e44c8ec617c859417ddf8960eca4de", null ],
     [ "BOOST_OUTCOME_THROW_MONAD_ERROR", "config_8hpp.html#a10f1ea9f0f1205c24e106fb77cee19c3", null ],
     [ "BOOST_OUTCOME_THROW_SYSTEM_ERROR", "config_8hpp.html#af1d540bfb21e8b45eaeb3ec60686e91f", null ],
