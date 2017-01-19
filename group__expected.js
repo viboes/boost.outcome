@@ -10,7 +10,7 @@ var group__expected =
     ] ],
     [ "expected", "group__expected.html#ga7440167038cbd110405573cf2bd873ad", null ],
     [ "unexpect_t", "group__expected.html#ga43a5a0da82bcdf70d885e62ca9d5528a", null ],
-    [ "unexpected_type", "group__expected.html#ga1a389d89eeffe909fe9e97905325f69d", null ],
+    [ "unexpected_type", "group__expected.html#gaf61cb3012566f621329133c01f17c647", null ],
     [ "make_expected", "group__expected.html#ga276cc35056dccfdbe461c11d8eeb3d93", null ],
     [ "make_expected", "group__expected.html#ga4c1e14f8fbcc88fcba33db0e20a81b68", null ],
     [ "make_expected", "group__expected.html#ga15006fc8c6098c482cc05f8f5e0f37fb", null ],

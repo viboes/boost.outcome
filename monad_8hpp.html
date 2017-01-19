@@ -158,8 +158,8 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1lightweight__futures_1_1basic__future.html">boost::outcome::v1_xxx::lightweight_futures::basic_future&lt; R &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1inplace__t.html">boost::outcome::v1_xxx::inplace_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tag type for inplace construction.  <a href="structboost_1_1outcome_1_1v1__xxx_1_1inplace__t.html#details">More...</a><br/></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1in__place__t.html">boost::outcome::v1_xxx::in_place_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tag type for in_place construction.  <a href="structboost_1_1outcome_1_1v1__xxx_1_1in__place__t.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1is__monad.html">boost::outcome::v1_xxx::is_monad&lt; M &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">True if the type passed is a monad or a reference to a monad.  <a href="structboost_1_1outcome_1_1v1__xxx_1_1is__monad.html#details">More...</a><br/></td></tr>
@@ -322,11 +322,11 @@ template&lt;typename R , typename E  = BOOST_OUTCOME_EXPECTED_DEFAULT_ERROR_TYPE
 <tr class="memitem:ga7440167038cbd110405573cf2bd873ad"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__expected.html#ga7440167038cbd110405573cf2bd873ad">boost::outcome::v1_xxx::expected</a> = basic_monad&lt; detail::expected_policy&lt; R, E &gt;&gt;</td></tr>
 <tr class="memdesc:ga7440167038cbd110405573cf2bd873ad"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>expected&lt;R&gt;</code> can hold a fixed variant list of empty, a type <code>R</code> or a lightweight <code>std::error_code</code> at a space cost of <code>max(24, sizeof(R)+8)</code>. This corresponds to <code>tribool::unknown</code>, <code>tribool::true_</code> and <code>tribool::false_</code> respectively. This specialisation matches the proposed Expected implementation before standards. <br/></td></tr>
 <tr class="separator:ga7440167038cbd110405573cf2bd873ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1a389d89eeffe909fe9e97905325f69d"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga1a389d89eeffe909fe9e97905325f69d"></a>
+<tr class="memitem:gaf61cb3012566f621329133c01f17c647"><td class="memTemplParams" colspan="2"><a class="anchor" id="gaf61cb3012566f621329133c01f17c647"></a>
 template&lt;typename E &gt; </td></tr>
-<tr class="memitem:ga1a389d89eeffe909fe9e97905325f69d"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__expected.html#ga1a389d89eeffe909fe9e97905325f69d">boost::outcome::v1_xxx::unexpected_type</a> = option&lt; E &gt;</td></tr>
-<tr class="memdesc:ga1a389d89eeffe909fe9e97905325f69d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type sugar to indicate type E is an unexpected value. <br/></td></tr>
-<tr class="separator:ga1a389d89eeffe909fe9e97905325f69d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf61cb3012566f621329133c01f17c647"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__expected.html#gaf61cb3012566f621329133c01f17c647">boost::outcome::v1_xxx::unexpected_type</a> = basic_monad&lt; detail::expected_policy&lt; void, E &gt;&gt;</td></tr>
+<tr class="memdesc:gaf61cb3012566f621329133c01f17c647"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type sugar to indicate type E is an unexpected value. <br/></td></tr>
+<tr class="separator:gaf61cb3012566f621329133c01f17c647"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga43a5a0da82bcdf70d885e62ca9d5528a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga43a5a0da82bcdf70d885e62ca9d5528a"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__expected.html#ga43a5a0da82bcdf70d885e62ca9d5528a">boost::outcome::v1_xxx::unexpect_t</a> = error_t</td></tr>
 <tr class="memdesc:ga43a5a0da82bcdf70d885e62ca9d5528a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tag type for unexpected. <br/></td></tr>

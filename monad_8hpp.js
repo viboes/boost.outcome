@@ -6,7 +6,7 @@ var monad_8hpp =
     [ "callable_argument_traits", "structboost_1_1outcome_1_1v1__xxx_1_1traits_1_1callable__argument__traits.html", "structboost_1_1outcome_1_1v1__xxx_1_1traits_1_1callable__argument__traits" ],
     [ "basic_promise", "classboost_1_1outcome_1_1v1__xxx_1_1lightweight__futures_1_1basic__promise.html", null ],
     [ "basic_future", "classboost_1_1outcome_1_1v1__xxx_1_1lightweight__futures_1_1basic__future.html", null ],
-    [ "inplace_t", "structboost_1_1outcome_1_1v1__xxx_1_1inplace__t.html", "structboost_1_1outcome_1_1v1__xxx_1_1inplace__t" ],
+    [ "in_place_t", "structboost_1_1outcome_1_1v1__xxx_1_1in__place__t.html", "structboost_1_1outcome_1_1v1__xxx_1_1in__place__t" ],
     [ "is_monad", "structboost_1_1outcome_1_1v1__xxx_1_1is__monad.html", null ],
     [ "empty_type", "structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1empty__type.html", "structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1empty__type" ],
     [ "_is_constructible", "structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1__is__constructible.html", null ],
@@ -48,7 +48,7 @@ var monad_8hpp =
     [ "outcome", "monad_8hpp.html#gaab2ff6220205017226794529c863b336", null ],
     [ "result", "monad_8hpp.html#ga91e1fe11dbebea15458d882d078d6eb5", null ],
     [ "unexpect_t", "monad_8hpp.html#ga43a5a0da82bcdf70d885e62ca9d5528a", null ],
-    [ "unexpected_type", "monad_8hpp.html#ga1a389d89eeffe909fe9e97905325f69d", null ],
+    [ "unexpected_type", "monad_8hpp.html#gaf61cb3012566f621329133c01f17c647", null ],
     [ "monad_errc", "monad_8hpp.html#gaf5abc43f8d09588556c4c65b53485c0d", [
       [ "already_set", "monad_8hpp.html#ggaf5abc43f8d09588556c4c65b53485c0da25621f93230ec01ef6ead2516f3613ce", null ],
       [ "no_state", "monad_8hpp.html#ggaf5abc43f8d09588556c4c65b53485c0dac537dcef56fd6ff75592c0220fd3dae1", null ],

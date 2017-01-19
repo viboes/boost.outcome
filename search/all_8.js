@@ -2,7 +2,7 @@ var searchData=
 [
   ['implementation_20of_20lewg_20proposed_20expected_3ct_2c_20e_3e',['Implementation of LEWG proposed expected&lt;T, E&gt;',['../group__expected.html',1,'']]],
   ['implementation_5ftype',['implementation_type',['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a6b79ee41109578f0eb5b64d395b1e393',1,'boost::outcome::v1_xxx::basic_monad']]],
-  ['inplace_5ft',['inplace_t',['../structboost_1_1outcome_1_1v1__xxx_1_1inplace__t.html',1,'boost::outcome::v1_xxx']]],
+  ['in_5fplace_5ft',['in_place_t',['../structboost_1_1outcome_1_1v1__xxx_1_1in__place__t.html',1,'boost::outcome::v1_xxx']]],
   ['is_5fcallable_5fis_5fwell_5fformed',['is_callable_is_well_formed',['../structboost_1_1outcome_1_1v1__xxx_1_1traits_1_1is__callable__is__well__formed.html',1,'boost::outcome::v1_xxx::traits']]],
   ['is_5fcomparable',['is_comparable',['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a04f398a7339c61677d344e34814665be',1,'boost::outcome::v1_xxx::basic_monad']]],
   ['is_5fconstructible',['is_constructible',['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#ac3749e9bdb9cfdb615d5c147513a586c',1,'boost::outcome::v1_xxx::basic_monad']]],
