@@ -135,12 +135,10 @@ Inheritance diagram for boost::outcome::v1_xxx::basic_monad&lt; Impl &gt;:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1__is__comparable.html">_is_comparable</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1__is__constructible.html">_is_constructible</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1empty__type.html">empty_type</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tag type for an empty monad.  <a href="structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1empty__type.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1from__value__storage__type__t.html">from_value_storage_type_t</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
@@ -185,13 +183,22 @@ template&lt;typename U &gt; </td></tr>
 <tr class="memitem:ababd25c7268208ac884ea4d28aa66afa"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#ababd25c7268208ac884ea4d28aa66afa">rebind</a> = typename implementation_policy::template <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#ababd25c7268208ac884ea4d28aa66afa">rebind</a>&lt; U &gt;</td></tr>
 <tr class="memdesc:ababd25c7268208ac884ea4d28aa66afa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rebind this monad type into a different value_type. <br/></td></tr>
 <tr class="separator:ababd25c7268208ac884ea4d28aa66afa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7fe99e4a212c2987ddd6a285a427bfbb"><td class="memTemplParams" colspan="2"><a class="anchor" id="a7fe99e4a212c2987ddd6a285a427bfbb"></a>
+template&lt;class OtherMonad &gt; </td></tr>
+<tr class="memitem:a7fe99e4a212c2987ddd6a285a427bfbb"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>_is_constructible</b> = typename value_storage_type::template _is_constructible_from&lt; typename OtherMonad::raw_value_type, typename OtherMonad::raw_error_type, typename OtherMonad::raw_exception_type &gt;</td></tr>
+<tr class="separator:a7fe99e4a212c2987ddd6a285a427bfbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c66181e77f426d9c0db2c564bd90ec5"><td class="memTemplParams" colspan="2"><a class="anchor" id="a9c66181e77f426d9c0db2c564bd90ec5"></a>
+template&lt;class OtherMonad &gt; </td></tr>
+<tr class="memitem:a9c66181e77f426d9c0db2c564bd90ec5"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>_is_comparable</b> = typename value_storage_type::template _is_comparable_to&lt; typename OtherMonad::raw_value_type, typename OtherMonad::raw_error_type, typename OtherMonad::raw_exception_type &gt;</td></tr>
+<tr class="separator:a9c66181e77f426d9c0db2c564bd90ec5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a83e27a5b2a20f8f1468956511da40b45"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a83e27a5b2a20f8f1468956511da40b45"></a>
-constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a83e27a5b2a20f8f1468956511da40b45">basic_monad</a> ()</td></tr>
-<tr class="memdesc:a83e27a5b2a20f8f1468956511da40b45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor, initialises to empty. <br/></td></tr>
-<tr class="separator:a83e27a5b2a20f8f1468956511da40b45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaeab88cb6158c192643e279c1d96aaa3"><td class="memTemplParams" colspan="2"><a class="anchor" id="aaeab88cb6158c192643e279c1d96aaa3"></a>
+template&lt;bool enabled = is_default_constructible, typename  = typename std::enable_if&lt;enabled&gt;::type&gt; </td></tr>
+<tr class="memitem:aaeab88cb6158c192643e279c1d96aaa3"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#aaeab88cb6158c192643e279c1d96aaa3">basic_monad</a> () noexcept(<a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#ac56686719ab58f8ea42f952985318a2c">is_nothrow_default_constructible</a>)</td></tr>
+<tr class="memdesc:aaeab88cb6158c192643e279c1d96aaa3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor, disabled if policy does not allow default construction. <br/></td></tr>
+<tr class="separator:aaeab88cb6158c192643e279c1d96aaa3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a027dc0fbfa71446741bb5877660d1786"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a027dc0fbfa71446741bb5877660d1786"></a>
 constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a027dc0fbfa71446741bb5877660d1786">basic_monad</a> (<a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1empty__type.html">empty_type</a>) noexcept</td></tr>
 <tr class="memdesc:a027dc0fbfa71446741bb5877660d1786"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implicit constructor of an empty monad. <br/></td></tr>
@@ -204,14 +211,16 @@ constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href=
 constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a8224a5062b6877bc9e04b4edf81aab63">basic_monad</a> (<a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1value__t.html">value_t</a> _) noexcept(std::is_nothrow_default_constructible&lt; <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a75005d345be5708ccfa2fcca44deb778">value_type</a> &gt;::<a class="el" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">value</a>)</td></tr>
 <tr class="memdesc:a8224a5062b6877bc9e04b4edf81aab63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implicit constructor of a valued monad (default constructed) <br/></td></tr>
 <tr class="separator:a8224a5062b6877bc9e04b4edf81aab63"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8beca7aae37e644ef456680cdebc9702"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8beca7aae37e644ef456680cdebc9702"></a>
-constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a8beca7aae37e644ef456680cdebc9702">basic_monad</a> (const <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a75005d345be5708ccfa2fcca44deb778">value_type</a> &amp;v) noexcept(std::is_nothrow_copy_constructible&lt; <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a75005d345be5708ccfa2fcca44deb778">value_type</a> &gt;::<a class="el" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">value</a>)</td></tr>
-<tr class="memdesc:a8beca7aae37e644ef456680cdebc9702"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implicit constructor from a value_type by copy. <br/></td></tr>
-<tr class="separator:a8beca7aae37e644ef456680cdebc9702"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae14ddadea98509be3c35021b4a8fc198"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae14ddadea98509be3c35021b4a8fc198"></a>
-constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#ae14ddadea98509be3c35021b4a8fc198">basic_monad</a> (<a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a75005d345be5708ccfa2fcca44deb778">value_type</a> &amp;&amp;v) noexcept(std::is_nothrow_move_constructible&lt; <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a75005d345be5708ccfa2fcca44deb778">value_type</a> &gt;::<a class="el" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">value</a>)</td></tr>
-<tr class="memdesc:ae14ddadea98509be3c35021b4a8fc198"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implicit constructor from a value_type by move. <br/></td></tr>
-<tr class="separator:ae14ddadea98509be3c35021b4a8fc198"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac145aae9020e16a7bafbe97ce7e10f80"><td class="memTemplParams" colspan="2"><a class="anchor" id="ac145aae9020e16a7bafbe97ce7e10f80"></a>
+template&lt;bool enabled = std::is_copy_constructible&lt;value_type&gt;::value, typename  = typename std::enable_if&lt;enabled&gt;::type&gt; </td></tr>
+<tr class="memitem:ac145aae9020e16a7bafbe97ce7e10f80"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#ac145aae9020e16a7bafbe97ce7e10f80">basic_monad</a> (const <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a75005d345be5708ccfa2fcca44deb778">value_type</a> &amp;v) noexcept(std::is_nothrow_copy_constructible&lt; <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a75005d345be5708ccfa2fcca44deb778">value_type</a> &gt;::<a class="el" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">value</a>)</td></tr>
+<tr class="memdesc:ac145aae9020e16a7bafbe97ce7e10f80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implicit constructor from a value_type by copy, disabled if value_type does not allow copy construction. <br/></td></tr>
+<tr class="separator:ac145aae9020e16a7bafbe97ce7e10f80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2ff9dddfb43896469370e07c9e87c44"><td class="memTemplParams" colspan="2"><a class="anchor" id="ae2ff9dddfb43896469370e07c9e87c44"></a>
+template&lt;bool enabled = std::is_move_constructible&lt;value_type&gt;::value, typename  = typename std::enable_if&lt;enabled&gt;::type&gt; </td></tr>
+<tr class="memitem:ae2ff9dddfb43896469370e07c9e87c44"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#ae2ff9dddfb43896469370e07c9e87c44">basic_monad</a> (<a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a75005d345be5708ccfa2fcca44deb778">value_type</a> &amp;&amp;v) noexcept(std::is_nothrow_move_constructible&lt; <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a75005d345be5708ccfa2fcca44deb778">value_type</a> &gt;::<a class="el" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">value</a>)</td></tr>
+<tr class="memdesc:ae2ff9dddfb43896469370e07c9e87c44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implicit constructor from a value_type by move, disable if value_type does not allow move constructions. <br/></td></tr>
+<tr class="separator:ae2ff9dddfb43896469370e07c9e87c44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a357200f361c86a0862a3ed30dbe47597"><td class="memTemplParams" colspan="2"><a class="anchor" id="a357200f361c86a0862a3ed30dbe47597"></a>
 template&lt;class... Args&gt; </td></tr>
 <tr class="memitem:a357200f361c86a0862a3ed30dbe47597"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a357200f361c86a0862a3ed30dbe47597">basic_monad</a> (<a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1in__place__t.html">in_place_t</a>, Args &amp;&amp;...args) noexcept(std::is_nothrow_constructible&lt; <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a75005d345be5708ccfa2fcca44deb778">value_type</a>, Arg, Args...&gt;::<a class="el" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">value</a>)</td></tr>
@@ -258,20 +267,18 @@ template&lt;class Policy , typename  = typename std::enable_if&lt;_is_constructi
 <tr class="separator:ad69563e843aa40ec74676796f1f74aba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a11a400d3eaf0073c3ddb98d177b4d6bf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a11a400d3eaf0073c3ddb98d177b4d6bf"></a>
 constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a11a400d3eaf0073c3ddb98d177b4d6bf">basic_monad</a> (<a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html">basic_monad</a> &amp;&amp;o) noexcept(<a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a5608fbff1931cc7b50025bbf27b1ae1e">is_nothrow_move_constructible</a>)</td></tr>
-<tr class="memdesc:a11a400d3eaf0073c3ddb98d177b4d6bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move constructor. <br/></td></tr>
+<tr class="memdesc:a11a400d3eaf0073c3ddb98d177b4d6bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move constructor, disabled if monad cannot be move constructed. <br/></td></tr>
 <tr class="separator:a11a400d3eaf0073c3ddb98d177b4d6bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0fd3a2bd7f1cd49fdb866aa284f12f28"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0fd3a2bd7f1cd49fdb866aa284f12f28"></a>
-<a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html">basic_monad</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a0fd3a2bd7f1cd49fdb866aa284f12f28">operator=</a> (<a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html">basic_monad</a> &amp;&amp;)=default</td></tr>
-<tr class="memdesc:a0fd3a2bd7f1cd49fdb866aa284f12f28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move assignment. Firstly clears any existing state, so exception throws during move will leave the monad empty. <br/></td></tr>
-<tr class="separator:a0fd3a2bd7f1cd49fdb866aa284f12f28"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abab1c980a71371d1d4b3d102c12abcb4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abab1c980a71371d1d4b3d102c12abcb4"></a>
-constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#abab1c980a71371d1d4b3d102c12abcb4">basic_monad</a> (const <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html">basic_monad</a> &amp;v)=default</td></tr>
-<tr class="memdesc:abab1c980a71371d1d4b3d102c12abcb4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy constructor. <br/></td></tr>
-<tr class="separator:abab1c980a71371d1d4b3d102c12abcb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af46578a707b318114e945dc76cd2c3a5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af46578a707b318114e945dc76cd2c3a5"></a>
-<a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html">basic_monad</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#af46578a707b318114e945dc76cd2c3a5">operator=</a> (const <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html">basic_monad</a> &amp;)=default</td></tr>
-<tr class="memdesc:af46578a707b318114e945dc76cd2c3a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy assignment. Firstly clears any existing state, so exception throws during copy will leave the monad empty. <br/></td></tr>
-<tr class="separator:af46578a707b318114e945dc76cd2c3a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3fc2978785af0d8e12c35228615ae3a1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3fc2978785af0d8e12c35228615ae3a1"></a>
+constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a3fc2978785af0d8e12c35228615ae3a1">basic_monad</a> (const <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html">basic_monad</a> &amp;o) noexcept(<a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a519548d0d281188cb34060ad8e85e679">is_nothrow_copy_constructible</a>)</td></tr>
+<tr class="memdesc:a3fc2978785af0d8e12c35228615ae3a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy constructor, disabled if monad cannot be copy constructed. <br/></td></tr>
+<tr class="separator:a3fc2978785af0d8e12c35228615ae3a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b25f6e1a2ae426f21624f04e221c929"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5b25f6e1a2ae426f21624f04e221c929"></a>
+constexpr <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html">basic_monad</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (<a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html">basic_monad</a> &amp;&amp;)=default</td></tr>
+<tr class="separator:a5b25f6e1a2ae426f21624f04e221c929"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3fe3ef594de9025333855f92402cbdc4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3fe3ef594de9025333855f92402cbdc4"></a>
+constexpr <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html">basic_monad</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html">basic_monad</a> &amp;)=default</td></tr>
+<tr class="separator:a3fe3ef594de9025333855f92402cbdc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab939ededf3097a4e8ef5159639643c05"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab939ededf3097a4e8ef5159639643c05"></a>
 constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#ab939ededf3097a4e8ef5159639643c05">operator bool</a> () const noexcept</td></tr>
 <tr class="memdesc:ab939ededf3097a4e8ef5159639643c05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Same as <code>true_(tribool(*this))</code> <br/></td></tr>
@@ -557,20 +564,36 @@ static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a clas
 static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#ade136945a18da70b159f6c40b496e325">has_exception_type</a> = value_storage_type::has_exception_type</td></tr>
 <tr class="memdesc:ade136945a18da70b159f6c40b496e325"><td class="mdescLeft">&#160;</td><td class="mdescRight">This monad has an exception_type. <br/></td></tr>
 <tr class="separator:ade136945a18da70b159f6c40b496e325"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af73b37dd2d7ff23bc618b715827a75d1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af73b37dd2d7ff23bc618b715827a75d1"></a>
+static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#af73b37dd2d7ff23bc618b715827a75d1">is_default_constructible</a> = implementation_policy::is_default_constructible</td></tr>
+<tr class="memdesc:af73b37dd2d7ff23bc618b715827a75d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">This monad can be default constructed. <br/></td></tr>
+<tr class="separator:af73b37dd2d7ff23bc618b715827a75d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac56686719ab58f8ea42f952985318a2c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac56686719ab58f8ea42f952985318a2c"></a>
+static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#ac56686719ab58f8ea42f952985318a2c">is_nothrow_default_constructible</a> = implementation_policy::is_nothrow_default_constructible</td></tr>
+<tr class="memdesc:ac56686719ab58f8ea42f952985318a2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">This monad will never throw exceptions during default construction. <br/></td></tr>
+<tr class="separator:ac56686719ab58f8ea42f952985318a2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab46dc2252724ba5fb82e46f2f561fccb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab46dc2252724ba5fb82e46f2f561fccb"></a>
+static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#ab46dc2252724ba5fb82e46f2f561fccb">is_copy_constructible</a> = value_storage_type::is_copy_constructible</td></tr>
+<tr class="memdesc:ab46dc2252724ba5fb82e46f2f561fccb"><td class="mdescLeft">&#160;</td><td class="mdescRight">This monad can be copy constructed. <br/></td></tr>
+<tr class="separator:ab46dc2252724ba5fb82e46f2f561fccb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a519548d0d281188cb34060ad8e85e679"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a519548d0d281188cb34060ad8e85e679"></a>
 static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a519548d0d281188cb34060ad8e85e679">is_nothrow_copy_constructible</a> = value_storage_type::is_nothrow_copy_constructible</td></tr>
 <tr class="memdesc:a519548d0d281188cb34060ad8e85e679"><td class="mdescLeft">&#160;</td><td class="mdescRight">This monad will never throw exceptions during copy construction. <br/></td></tr>
 <tr class="separator:a519548d0d281188cb34060ad8e85e679"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2af62db6504441bd54ea00da5dada063"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2af62db6504441bd54ea00da5dada063"></a>
+static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a2af62db6504441bd54ea00da5dada063">is_move_constructible</a> = value_storage_type::is_move_constructible</td></tr>
+<tr class="memdesc:a2af62db6504441bd54ea00da5dada063"><td class="mdescLeft">&#160;</td><td class="mdescRight">This monad can be move constructed. <br/></td></tr>
+<tr class="separator:a2af62db6504441bd54ea00da5dada063"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5608fbff1931cc7b50025bbf27b1ae1e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5608fbff1931cc7b50025bbf27b1ae1e"></a>
 static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a5608fbff1931cc7b50025bbf27b1ae1e">is_nothrow_move_constructible</a> = value_storage_type::is_nothrow_move_constructible</td></tr>
 <tr class="memdesc:a5608fbff1931cc7b50025bbf27b1ae1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">This monad will never throw exceptions during move construction. <br/></td></tr>
 <tr class="separator:a5608fbff1931cc7b50025bbf27b1ae1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a054bd89ff8210d8d34e88b0b36c3675f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a054bd89ff8210d8d34e88b0b36c3675f"></a>
-static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a054bd89ff8210d8d34e88b0b36c3675f">is_nothrow_copy_assignable</a> = value_storage_type::is_nothrow_destructible &amp;&amp; value_storage_type::is_nothrow_copy_constructible</td></tr>
+static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a054bd89ff8210d8d34e88b0b36c3675f">is_nothrow_copy_assignable</a> = value_storage_type::is_nothrow_copy_assignable</td></tr>
 <tr class="memdesc:a054bd89ff8210d8d34e88b0b36c3675f"><td class="mdescLeft">&#160;</td><td class="mdescRight">This monad will never throw exceptions during copy assignment. <br/></td></tr>
 <tr class="separator:a054bd89ff8210d8d34e88b0b36c3675f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a49a3433703cc8effdb690e5f48620112"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a49a3433703cc8effdb690e5f48620112"></a>
-static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a49a3433703cc8effdb690e5f48620112">is_nothrow_move_assignable</a> = value_storage_type::is_nothrow_destructible &amp;&amp; value_storage_type::is_nothrow_move_constructible</td></tr>
+static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a49a3433703cc8effdb690e5f48620112">is_nothrow_move_assignable</a> = value_storage_type::is_nothrow_move_assignable</td></tr>
 <tr class="memdesc:a49a3433703cc8effdb690e5f48620112"><td class="mdescLeft">&#160;</td><td class="mdescRight">This monad will never throw exceptions during move assignment. <br/></td></tr>
 <tr class="separator:a49a3433703cc8effdb690e5f48620112"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a27aaf33871e3270bfdb5b35b9fa623b1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a27aaf33871e3270bfdb5b35b9fa623b1"></a>
@@ -606,9 +629,9 @@ implementation_policy::exception_type &gt;&#160;</td><td class="memItemRight" va
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:ad0b579a10a33f9686eaa15ac3bbc1f06"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad0b579a10a33f9686eaa15ac3bbc1f06"></a>
-constexpr&#160;</td><td class="memItemRight" valign="bottom"><b>basic_monad</b> (<a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html">value_storage_type</a> &amp;&amp;s)</td></tr>
-<tr class="separator:ad0b579a10a33f9686eaa15ac3bbc1f06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9cf7d3ea2d4a454117744cfed854dc8a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9cf7d3ea2d4a454117744cfed854dc8a"></a>
+constexpr&#160;</td><td class="memItemRight" valign="bottom"><b>basic_monad</b> (<a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1from__value__storage__type__t.html">from_value_storage_type_t</a>, <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html">value_storage_type</a> &amp;&amp;s)</td></tr>
+<tr class="separator:a9cf7d3ea2d4a454117744cfed854dc8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>

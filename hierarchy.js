@@ -1,9 +1,5 @@
 var hierarchy =
 [
-    [ "Base", null, [
-      [ "boost::outcome::v1_xxx::basic_monad< Impl >::_is_comparable< OtherMonad, Base >", "structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1__is__comparable.html", null ],
-      [ "boost::outcome::v1_xxx::basic_monad< Impl >::_is_constructible< OtherMonad, Base >", "structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1__is__constructible.html", null ]
-    ] ],
     [ "base", null, [
       [ "boost::outcome::v1_xxx::basic_monad< Impl >", "classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html", null ]
     ] ],
@@ -34,6 +30,7 @@ var hierarchy =
         [ "boost::outcome::v1_xxx::is_monad< M >", "structboost_1_1outcome_1_1v1__xxx_1_1is__monad.html", null ]
       ] ]
     ] ],
+    [ "boost::outcome::v1_xxx::basic_monad< Impl >::from_value_storage_type_t", "structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1from__value__storage__type__t.html", null ],
     [ "boost::outcome::v1_xxx::in_place_t", "structboost_1_1outcome_1_1v1__xxx_1_1in__place__t.html", null ],
     [ "boost::outcome::v1_xxx::traits::is_callable_is_well_formed< F, A >", "structboost_1_1outcome_1_1v1__xxx_1_1traits_1_1is__callable__is__well__formed.html", null ],
     [ "system_error", null, [

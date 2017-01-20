@@ -143,12 +143,32 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>exception_type</b> =
 <tr class="memitem:a8dd6e9c4d319935c30efe33be003ac14"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8dd6e9c4d319935c30efe33be003ac14"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>storage_type</b> = typename base::storage_type</td></tr>
 <tr class="separator:a8dd6e9c4d319935c30efe33be003ac14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a316a784321a5d2a47df563f5ad9e5af2"><td class="memTemplParams" colspan="2"><a class="anchor" id="a316a784321a5d2a47df563f5ad9e5af2"></a>
+template&lt;class _value_type2 , class _error_type2 , class _exception_type2 &gt; </td></tr>
+<tr class="memitem:a316a784321a5d2a47df563f5ad9e5af2"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>_is_constructible_from</b> = typename std::conditional&lt; is_constructible_from&lt; _value_type2, _error_type2, _exception_type2 &gt;, std::true_type, std::false_type &gt;::type</td></tr>
+<tr class="separator:a316a784321a5d2a47df563f5ad9e5af2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a874f57e7d282b139eda208447bd939ca"><td class="memTemplParams" colspan="2"><a class="anchor" id="a874f57e7d282b139eda208447bd939ca"></a>
+template&lt;class _value_type2 , class _error_type2 , class _exception_type2 &gt; </td></tr>
+<tr class="memitem:a874f57e7d282b139eda208447bd939ca"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>_is_comparable_to</b> = typename std::conditional&lt; is_comparable_to&lt; _value_type2, _error_type2, _exception_type2 &gt;, std::true_type, std::false_type &gt;::type</td></tr>
+<tr class="separator:a874f57e7d282b139eda208447bd939ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac1b6d14e2762977a9df945de26b08e67"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac1b6d14e2762977a9df945de26b08e67"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>emplace_t</b> = typename base::emplace_t</td></tr>
 <tr class="separator:ac1b6d14e2762977a9df945de26b08e67"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:ada2a014e2da2f8b2b67d5da932aaa76c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ada2a014e2da2f8b2b67d5da932aaa76c"></a>
+constexpr&#160;</td><td class="memItemRight" valign="bottom"><b>value_storage</b> (const <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html">value_storage</a> &amp;)=default</td></tr>
+<tr class="separator:ada2a014e2da2f8b2b67d5da932aaa76c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade50762b9e45e1d60d43c63ef5a61770"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ade50762b9e45e1d60d43c63ef5a61770"></a>
+constexpr&#160;</td><td class="memItemRight" valign="bottom"><b>value_storage</b> (<a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html">value_storage</a> &amp;&amp;)=default</td></tr>
+<tr class="separator:ade50762b9e45e1d60d43c63ef5a61770"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3b590d509220fc52d81e97e98baa72d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab3b590d509220fc52d81e97e98baa72d"></a>
+constexpr <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html">value_storage</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html">value_storage</a> &amp;)=default</td></tr>
+<tr class="separator:ab3b590d509220fc52d81e97e98baa72d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad844537f0cf4b14b1978348b186507e5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad844537f0cf4b14b1978348b186507e5"></a>
+constexpr <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html">value_storage</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (<a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html">value_storage</a> &amp;&amp;)=default</td></tr>
+<tr class="separator:ad844537f0cf4b14b1978348b186507e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae032f095d8bd35ab9dde0919263884ca"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae032f095d8bd35ab9dde0919263884ca"></a>
 constexpr&#160;</td><td class="memItemRight" valign="bottom"><b>value_storage</b> (<a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1empty__t.html">empty_t</a> _) noexcept</td></tr>
 <tr class="separator:ae032f095d8bd35ab9dde0919263884ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -184,51 +204,37 @@ template&lt;class... Args&gt; </td></tr>
 <tr class="memitem:aa9e57145b9f1731261e4312ee47f0401"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><b>value_storage</b> (emplace_t _, Args &amp;&amp;...args) noexcept(std::is_nothrow_constructible&lt; value_type, Args...&gt;::<a class="el" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">value</a>)</td></tr>
 <tr class="separator:aa9e57145b9f1731261e4312ee47f0401"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5fefcd7988e61cc68e3805b743db6452"><td class="memTemplParams" colspan="2"><a class="anchor" id="a5fefcd7988e61cc68e3805b743db6452"></a>
-template&lt;class _value_type2 , class _error_type2 , class _exception_type2 , typename  = typename std::enable_if&lt;is_constructible_from&lt;_value_type2, _error_type2, _exception_type2&gt;&gt;::type&gt; </td></tr>
+template&lt;class _value_type2 , class _error_type2 , class _exception_type2 , typename  = typename std::enable_if&lt;_is_constructible_from&lt;_value_type2, _error_type2, _exception_type2&gt;::value&gt;::type&gt; </td></tr>
 <tr class="memitem:a5fefcd7988e61cc68e3805b743db6452"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><b>value_storage</b> (const <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html">value_storage</a>&lt; _value_type2, _error_type2, _exception_type2 &gt; &amp;o)</td></tr>
 <tr class="separator:a5fefcd7988e61cc68e3805b743db6452"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab52067b553a888342f493078f9ad0281"><td class="memTemplParams" colspan="2"><a class="anchor" id="ab52067b553a888342f493078f9ad0281"></a>
-template&lt;class _value_type2 , class _error_type2 , class _exception_type2 , typename  = typename std::enable_if&lt;is_constructible_from&lt;_value_type2, _error_type2, _exception_type2&gt;&gt;::type&gt; </td></tr>
+template&lt;class _value_type2 , class _error_type2 , class _exception_type2 , typename  = typename std::enable_if&lt;_is_constructible_from&lt;_value_type2, _error_type2, _exception_type2&gt;::value&gt;::type&gt; </td></tr>
 <tr class="memitem:ab52067b553a888342f493078f9ad0281"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><b>value_storage</b> (<a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html">value_storage</a>&lt; _value_type2, _error_type2, _exception_type2 &gt; &amp;&amp;o)</td></tr>
 <tr class="separator:ab52067b553a888342f493078f9ad0281"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2fc724a415772a4cb05db8d4f61adcb2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2fc724a415772a4cb05db8d4f61adcb2"></a>
-constexpr&#160;</td><td class="memItemRight" valign="bottom"><b>value_storage</b> (const <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html">value_storage</a> &amp;o) noexcept(is_nothrow_copy_constructible)</td></tr>
-<tr class="separator:a2fc724a415772a4cb05db8d4f61adcb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a67dcf80d4bcd7c85d4b4a85fdeb382ea"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a67dcf80d4bcd7c85d4b4a85fdeb382ea"></a>
-constexpr&#160;</td><td class="memItemRight" valign="bottom"><b>value_storage</b> (<a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html">value_storage</a> &amp;&amp;o) noexcept(is_nothrow_move_constructible)</td></tr>
-<tr class="separator:a67dcf80d4bcd7c85d4b4a85fdeb382ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abe35d2010c2fab5940a89630e1d13dba"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abe35d2010c2fab5940a89630e1d13dba"></a>
-constexpr <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html">value_storage</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html">value_storage</a> &amp;o) noexcept(is_nothrow_destructible &amp;&amp;is_nothrow_copy_constructible)</td></tr>
-<tr class="separator:abe35d2010c2fab5940a89630e1d13dba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a09e824dae2903d70ba832b9b7a26e48f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a09e824dae2903d70ba832b9b7a26e48f"></a>
-constexpr <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html">value_storage</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (<a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html">value_storage</a> &amp;&amp;o) noexcept(is_nothrow_destructible &amp;&amp;is_nothrow_move_constructible)</td></tr>
-<tr class="separator:a09e824dae2903d70ba832b9b7a26e48f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a856ac99ea8551226e7b7d9b18c363e09"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a856ac99ea8551226e7b7d9b18c363e09"></a>
 constexpr void&#160;</td><td class="memItemRight" valign="bottom"><b>set_state</b> (<a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html">value_storage</a> &amp;&amp;o) noexcept(is_nothrow_destructible &amp;&amp;is_nothrow_move_constructible)</td></tr>
 <tr class="separator:a856ac99ea8551226e7b7d9b18c363e09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3941653675b812113a25be6d483b69f0"><td class="memTemplParams" colspan="2"><a class="anchor" id="a3941653675b812113a25be6d483b69f0"></a>
+template&lt;class... Args&gt; </td></tr>
+<tr class="memitem:a3941653675b812113a25be6d483b69f0"><td class="memTemplItemLeft" align="right" valign="top">constexpr void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>emplace_value</b> (Args &amp;&amp;...args)</td></tr>
+<tr class="separator:a3941653675b812113a25be6d483b69f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7345bf6b908f41aac0643d5fe23301e5"><td class="memTemplParams" colspan="2"><a class="anchor" id="a7345bf6b908f41aac0643d5fe23301e5"></a>
+template&lt;class... Args&gt; </td></tr>
+<tr class="memitem:a7345bf6b908f41aac0643d5fe23301e5"><td class="memTemplItemLeft" align="right" valign="top">constexpr void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>emplace_error</b> (Args &amp;&amp;...args)</td></tr>
+<tr class="separator:a7345bf6b908f41aac0643d5fe23301e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a602e401c4ac2ca5f9c966f4d8c552abe"><td class="memTemplParams" colspan="2"><a class="anchor" id="a602e401c4ac2ca5f9c966f4d8c552abe"></a>
+template&lt;class... Args&gt; </td></tr>
+<tr class="memitem:a602e401c4ac2ca5f9c966f4d8c552abe"><td class="memTemplItemLeft" align="right" valign="top">constexpr void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>emplace_exception</b> (Args &amp;&amp;...args)</td></tr>
+<tr class="separator:a602e401c4ac2ca5f9c966f4d8c552abe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaacb032afb8d9ef17b75d0c1306c0f79"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaacb032afb8d9ef17b75d0c1306c0f79"></a>
 constexpr void&#160;</td><td class="memItemRight" valign="bottom"><b>swap</b> (<a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html">value_storage</a> &amp;o) noexcept(is_nothrow_move_constructible)</td></tr>
 <tr class="separator:aaacb032afb8d9ef17b75d0c1306c0f79"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0e6a35d823896a8d1b70ad7111c8cc4f"><td class="memTemplParams" colspan="2"><a class="anchor" id="a0e6a35d823896a8d1b70ad7111c8cc4f"></a>
-template&lt;class U &gt; </td></tr>
-<tr class="memitem:a0e6a35d823896a8d1b70ad7111c8cc4f"><td class="memTemplItemLeft" align="right" valign="top">constexpr void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>set_value</b> (U &amp;&amp;v)</td></tr>
-<tr class="separator:a0e6a35d823896a8d1b70ad7111c8cc4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5a984ec2402c7424a3f0b3c294d3c9d4"><td class="memTemplParams" colspan="2"><a class="anchor" id="a5a984ec2402c7424a3f0b3c294d3c9d4"></a>
-template&lt;class... Args&gt; </td></tr>
-<tr class="memitem:a5a984ec2402c7424a3f0b3c294d3c9d4"><td class="memTemplItemLeft" align="right" valign="top">constexpr void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>emplace_value</b> (Args &amp;&amp;...v)</td></tr>
-<tr class="separator:a5a984ec2402c7424a3f0b3c294d3c9d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1d5259399b44f942756d2a91adc3ac71"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1d5259399b44f942756d2a91adc3ac71"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set_exception</b> (exception_type e)</td></tr>
-<tr class="separator:a1d5259399b44f942756d2a91adc3ac71"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aec4cd536b446f53152f1b1cf9296d20c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aec4cd536b446f53152f1b1cf9296d20c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set_error</b> (error_type e)</td></tr>
-<tr class="separator:aec4cd536b446f53152f1b1cf9296d20c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af87f911f493e3d0adb64e0caa31c1f81"><td class="memTemplParams" colspan="2"><a class="anchor" id="af87f911f493e3d0adb64e0caa31c1f81"></a>
-template&lt;class _value_type2 , class _error_type2 , class _exception_type2 , typename  = typename std::enable_if&lt;is_comparable_to&lt;_value_type2, _error_type2, _exception_type2&gt;&gt;::type&gt; </td></tr>
+template&lt;class _value_type2 , class _error_type2 , class _exception_type2 , typename  = typename std::enable_if&lt;_is_comparable_to&lt;_value_type2, _error_type2, _exception_type2&gt;::value&gt;::type&gt; </td></tr>
 <tr class="memitem:af87f911f493e3d0adb64e0caa31c1f81"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator==</b> (const <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html">value_storage</a>&lt; _value_type2, _error_type2, _exception_type2 &gt; &amp;o) const </td></tr>
 <tr class="separator:af87f911f493e3d0adb64e0caa31c1f81"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ade7fb44076f7e217deaeb41817115f05"><td class="memTemplParams" colspan="2"><a class="anchor" id="ade7fb44076f7e217deaeb41817115f05"></a>
-template&lt;class _value_type2 , class _error_type2 , class _exception_type2 , typename  = typename std::enable_if&lt;is_comparable_to&lt;_value_type2, _error_type2, _exception_type2&gt;&gt;::type&gt; </td></tr>
+template&lt;class _value_type2 , class _error_type2 , class _exception_type2 , typename  = typename std::enable_if&lt;_is_comparable_to&lt;_value_type2, _error_type2, _exception_type2&gt;::value&gt;::type&gt; </td></tr>
 <tr class="memitem:ade7fb44076f7e217deaeb41817115f05"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator!=</b> (const <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html">value_storage</a>&lt; _value_type2, _error_type2, _exception_type2 &gt; &amp;o) const </td></tr>
 <tr class="separator:ade7fb44076f7e217deaeb41817115f05"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -243,24 +249,18 @@ static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><b>has_
 <tr class="memitem:a7fae137f0996877304719e903fd6d46b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7fae137f0996877304719e903fd6d46b"></a>
 static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><b>has_exception_type</b> = base::has_exception_type</td></tr>
 <tr class="separator:a7fae137f0996877304719e903fd6d46b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86f1db50188b9e29c3964e7c0c9512d1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a86f1db50188b9e29c3964e7c0c9512d1"></a>
-static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_copy_constructible</b> = (!has_value_type || std::is_copy_constructible&lt;value_type&gt;::<a class="el" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">value</a>) &amp;&amp; (!has_error_type || std::is_copy_constructible&lt;exception_type&gt;::<a class="el" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">value</a>) &amp;&amp; (!has_exception_type || std::is_copy_constructible&lt;error_type&gt;::<a class="el" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">value</a>)</td></tr>
-<tr class="separator:a86f1db50188b9e29c3964e7c0c9512d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a886a9e2aa1c74fd2488940831bf65b81"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a886a9e2aa1c74fd2488940831bf65b81"></a>
-static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_move_constructible</b> = (!has_value_type || std::is_move_constructible&lt;value_type&gt;::<a class="el" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">value</a>) &amp;&amp; (!has_error_type || std::is_move_constructible&lt;exception_type&gt;::<a class="el" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">value</a>) &amp;&amp; (!has_exception_type || std::is_move_constructible&lt;error_type&gt;::<a class="el" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">value</a>)</td></tr>
-<tr class="separator:a886a9e2aa1c74fd2488940831bf65b81"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9fdb49fc82b96b7d1df5ecd105c11b0b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9fdb49fc82b96b7d1df5ecd105c11b0b"></a>
-static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_nothrow_copy_constructible</b> = (!has_value_type || std::is_nothrow_copy_constructible&lt;value_type&gt;::<a class="el" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">value</a>) &amp;&amp; (!has_error_type || std::is_nothrow_copy_constructible&lt;exception_type&gt;::<a class="el" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">value</a>) &amp;&amp; (!has_exception_type || std::is_nothrow_copy_constructible&lt;error_type&gt;::<a class="el" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">value</a>)</td></tr>
-<tr class="separator:a9fdb49fc82b96b7d1df5ecd105c11b0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a34a4c7ec127631285abc3734457b98f8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a34a4c7ec127631285abc3734457b98f8"></a>
-static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_nothrow_move_constructible</b> = (!has_value_type || std::is_nothrow_move_constructible&lt;value_type&gt;::<a class="el" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">value</a>) &amp;&amp; (!has_error_type || std::is_nothrow_move_constructible&lt;exception_type&gt;::<a class="el" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">value</a>) &amp;&amp; (!has_exception_type || std::is_nothrow_move_constructible&lt;error_type&gt;::<a class="el" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">value</a>)</td></tr>
+static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_nothrow_move_constructible</b> = base::is_nothrow_move_constructible</td></tr>
 <tr class="separator:a34a4c7ec127631285abc3734457b98f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a551b6c657da06b5e9b4d026c03232a37"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a551b6c657da06b5e9b4d026c03232a37"></a>
-static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_nothrow_copy_assignable</b> = (!has_value_type || std::is_nothrow_copy_assignable&lt;value_type&gt;::<a class="el" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">value</a>) &amp;&amp; (!has_error_type || std::is_nothrow_copy_assignable&lt;exception_type&gt;::<a class="el" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">value</a>) &amp;&amp; (!has_exception_type || std::is_nothrow_copy_assignable&lt;error_type&gt;::<a class="el" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">value</a>)</td></tr>
-<tr class="separator:a551b6c657da06b5e9b4d026c03232a37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9fdb49fc82b96b7d1df5ecd105c11b0b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9fdb49fc82b96b7d1df5ecd105c11b0b"></a>
+static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_nothrow_copy_constructible</b> = base::is_nothrow_copy_constructible</td></tr>
+<tr class="separator:a9fdb49fc82b96b7d1df5ecd105c11b0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2e9a13b942a144e50dbcd17f1a863ae1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2e9a13b942a144e50dbcd17f1a863ae1"></a>
-static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_nothrow_move_assignable</b> = (!has_value_type || std::is_nothrow_move_assignable&lt;value_type&gt;::<a class="el" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">value</a>) &amp;&amp; (!has_error_type || std::is_nothrow_move_assignable&lt;exception_type&gt;::<a class="el" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">value</a>) &amp;&amp; (!has_exception_type || std::is_nothrow_move_assignable&lt;error_type&gt;::<a class="el" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">value</a>)</td></tr>
+static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_nothrow_move_assignable</b> = base::is_nothrow_move_assignable</td></tr>
 <tr class="separator:a2e9a13b942a144e50dbcd17f1a863ae1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a551b6c657da06b5e9b4d026c03232a37"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a551b6c657da06b5e9b4d026c03232a37"></a>
+static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_nothrow_copy_assignable</b> = base::is_nothrow_copy_assignable</td></tr>
+<tr class="separator:a551b6c657da06b5e9b4d026c03232a37"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adc5b7d1ee23d2a731214d63290a0b195"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adc5b7d1ee23d2a731214d63290a0b195"></a>
 static constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><b>is_nothrow_destructible</b> = base::is_nothrow_destructible</td></tr>
 <tr class="separator:adc5b7d1ee23d2a731214d63290a0b195"><td class="memSeparator" colspan="2">&#160;</td></tr>

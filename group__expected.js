@@ -3,10 +3,10 @@ var group__expected =
     [ "bad_expected_access", "classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access.html", [
       [ "error_type", "classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access.html#adf40d997faa1e516d254ad0307c7de0f", null ],
       [ "bad_expected_access", "classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access.html#a22d7b1f244cf66c63d98e3282c4f9c50", null ],
-      [ "error", "classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access.html#a7ca4fc1aa010952eaddfec058236c000", null ],
-      [ "error", "classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access.html#a9d13cd31fb10ccc98a4129d88ee5a144", null ],
-      [ "error", "classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access.html#a7424e8858d578f7c6d47896cf1b581ba", null ],
-      [ "error", "classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access.html#aaec26eab230e1a47bc34feaea87a894c", null ]
+      [ "error", "classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access.html#a7bf24559c1627e5bb090cf6229c08d00", null ],
+      [ "error", "classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access.html#af8fdf7b54a3b83f7e76c50e12a0e08b2", null ],
+      [ "error", "classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access.html#ad93081d459c9c4869b0775712dc6bf2f", null ],
+      [ "error", "classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access.html#a255e838632bc84dc92c67c327ed86db7", null ]
     ] ],
     [ "expected", "group__expected.html#ga7440167038cbd110405573cf2bd873ad", null ],
     [ "unexpect_t", "group__expected.html#ga43a5a0da82bcdf70d885e62ca9d5528a", null ],

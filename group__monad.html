@@ -517,15 +517,21 @@ constexpr error_t&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 <div class="line">    <span class="keyword">typedef</span> basic_monad&lt;expected_policy&gt; implementation_type;</div>
 <div class="line">    <span class="comment">// The value type to use. Can be void to disable.</span></div>
 <div class="line">    <span class="keyword">typedef</span> R value_type;</div>
-<div class="line"><span class="comment">// The error code type to use. Can be void to disable.</span></div>
+<div class="line">    <span class="comment">// The error code type to use. Can be void to disable.</span></div>
 <div class="line">    <span class="keyword">typedef</span> EC error_type;</div>
-<div class="line"><span class="comment">// The exception pointer type to use. Can be void to disable.</span></div>
+<div class="line">    <span class="comment">// The exception pointer type to use. Can be void to disable.</span></div>
 <div class="line"><span class="preprocessor">#ifdef BOOST_OUTCOME_EXPECTED_POLICY_EXCEPTION_TYPE</span></div>
 <div class="line"><span class="preprocessor"></span>    <span class="keyword">typedef</span> BOOST_OUTCOME_EXPECTED_POLICY_EXCEPTION_TYPE exception_type;</div>
 <div class="line"><span class="preprocessor">#else</span></div>
 <div class="line"><span class="preprocessor"></span>    <span class="keyword">typedef</span> <span class="keywordtype">void</span> exception_type;</div>
 <div class="line"><span class="preprocessor">#endif</span></div>
-<div class="line"><span class="preprocessor"></span>    <span class="comment">// The base class to use to store state</span></div>
+<div class="line"><span class="preprocessor"></span></div>
+<div class="line">    <span class="comment">// Ought the monad be default constructible?</span></div>
+<div class="line">    <span class="keyword">static</span> constexpr <span class="keywordtype">bool</span> is_default_constructible = <a class="code" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">std::is_default_constructible&lt;value_type&gt;::value</a>;</div>
+<div class="line">    <span class="comment">// Is default construction non-throwing?</span></div>
+<div class="line">    <span class="keyword">static</span> constexpr <span class="keywordtype">bool</span> is_nothrow_default_constructible = <a class="code" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">std::is_nothrow_default_constructible&lt;value_type&gt;::value</a>;</div>
+<div class="line"></div>
+<div class="line">    <span class="comment">// The base class to use to store state</span></div>
 <div class="line">    <span class="keyword">typedef</span> expected_policy_base&lt;basic_monad_storage&lt;expected_policy&gt;, value_type, error_type, exception_type&gt; base;</div>
 <div class="line"></div>
 <div class="line">    <span class="comment">// The type which basic_monad::rebind&lt;U&gt; should return</span></div>
@@ -602,9 +608,9 @@ template&lt;class T &gt; </div>
 
 <p>Makes an outcome from a result. </p>
 <p>Makes an outcome from an option. </p>
-<div class="fragment"><div class="line"><a name="l02168"></a><span class="lineno"> 2168</span>&#160;{</div>
-<div class="line"><a name="l02169"></a><span class="lineno"> 2169</span>&#160;  <span class="keywordflow">return</span> outcome&lt;T&gt;(std::move(v));</div>
-<div class="line"><a name="l02170"></a><span class="lineno"> 2170</span>&#160;}</div>
+<div class="fragment"><div class="line"><a name="l02157"></a><span class="lineno"> 2157</span>&#160;{</div>
+<div class="line"><a name="l02158"></a><span class="lineno"> 2158</span>&#160;  <span class="keywordflow">return</span> outcome&lt;T&gt;(std::move(v));</div>
+<div class="line"><a name="l02159"></a><span class="lineno"> 2159</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -634,9 +640,9 @@ template&lt;class T &gt; </div>
 
 <p>Makes an outcome from a result. </p>
 <p>Makes an outcome from an option. </p>
-<div class="fragment"><div class="line"><a name="l02173"></a><span class="lineno"> 2173</span>&#160;{</div>
-<div class="line"><a name="l02174"></a><span class="lineno"> 2174</span>&#160;  <span class="keywordflow">return</span> outcome&lt;T&gt;(v);</div>
-<div class="line"><a name="l02175"></a><span class="lineno"> 2175</span>&#160;}</div>
+<div class="fragment"><div class="line"><a name="l02162"></a><span class="lineno"> 2162</span>&#160;{</div>
+<div class="line"><a name="l02163"></a><span class="lineno"> 2163</span>&#160;  <span class="keywordflow">return</span> outcome&lt;T&gt;(v);</div>
+<div class="line"><a name="l02164"></a><span class="lineno"> 2164</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>

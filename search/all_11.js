@@ -1,8 +1,10 @@
 var searchData=
 [
-  ['useful_20preprocessor_20macros_20which_20expand_20into_20commonly_20written_20boilerplate',['Useful preprocessor macros which expand into commonly written boilerplate',['../group__macro__helpers.html',1,'']]],
-  ['unexpect',['unexpect',['../group__expected.html#ga71d06dbe1034b67b00f3f69839c548ae',1,'boost::outcome::v1_xxx']]],
-  ['unexpect_5ft',['unexpect_t',['../group__expected.html#ga43a5a0da82bcdf70d885e62ca9d5528a',1,'boost::outcome::v1_xxx']]],
-  ['unexpected_5ftype',['unexpected_type',['../group__expected.html#gaf61cb3012566f621329133c01f17c647',1,'boost::outcome::v1_xxx']]],
-  ['unwrap',['unwrap',['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#ab17f034dda4ecdfdfd5916200888b1cd',1,'boost::outcome::v1_xxx::basic_monad::unwrap() const &amp;'],['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a4006306c352d047defc3f049ef9ce73c',1,'boost::outcome::v1_xxx::basic_monad::unwrap()&amp;&amp;']]]
+  ['value',['value',['../structboost_1_1outcome_1_1v1__xxx_1_1traits_1_1is__callable__is__well__formed.html#a3b78b885219c9c81d9ee193e3b5f5bf1',1,'boost::outcome::v1_xxx::traits::is_callable_is_well_formed::value()'],['../group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316',1,'boost::outcome::v1_xxx::value()']]],
+  ['value_5for',['value_or',['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a161ef82aa76b13b1fc60d47a4b5bc24d',1,'boost::outcome::v1_xxx::basic_monad::value_or(value_type &amp;v)&amp;noexcept'],['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#aae84a42f61397960cb6c24c2c322e659',1,'boost::outcome::v1_xxx::basic_monad::value_or(const value_type &amp;v) const &amp;noexcept'],['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#ae9d261d6f99e36854e19df03fd7fb2a4',1,'boost::outcome::v1_xxx::basic_monad::value_or(value_type &amp;&amp;v)&amp;&amp;noexcept'],['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a327a8a47796b8745bb9c86d6f194ab1f',1,'boost::outcome::v1_xxx::basic_monad::value_or(const value_type &amp;&amp;v) const &amp;&amp;noexcept']]],
+  ['value_5fstorage',['value_storage',['../classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html',1,'boost::outcome::v1_xxx']]],
+  ['value_5fstorage_2ehpp',['value_storage.hpp',['../value__storage_8hpp.html',1,'']]],
+  ['value_5ft',['value_t',['../structboost_1_1outcome_1_1v1__xxx_1_1value__t.html',1,'boost::outcome::v1_xxx']]],
+  ['value_5ftype',['value_type',['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a75005d345be5708ccfa2fcca44deb778',1,'boost::outcome::v1_xxx::basic_monad']]],
+  ['version_2ehpp',['version.hpp',['../version_8hpp.html',1,'']]]
 ];
