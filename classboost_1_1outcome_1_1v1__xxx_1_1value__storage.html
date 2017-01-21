@@ -208,24 +208,12 @@ template&lt;class _value_type2 , class _error_type2 , class _exception_type2 , t
 <tr class="memitem:a5fefcd7988e61cc68e3805b743db6452"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><b>value_storage</b> (const <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html">value_storage</a>&lt; _value_type2, _error_type2, _exception_type2 &gt; &amp;o)</td></tr>
 <tr class="separator:a5fefcd7988e61cc68e3805b743db6452"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab52067b553a888342f493078f9ad0281"><td class="memTemplParams" colspan="2"><a class="anchor" id="ab52067b553a888342f493078f9ad0281"></a>
-template&lt;class _value_type2 , class _error_type2 , class _exception_type2 , typename  = typename std::enable_if&lt;_is_constructible_from&lt;_value_type2, _error_type2, _exception_type2&gt;::value&gt;::type&gt; </td></tr>
+template&lt;class _value_type2 , class _error_type2 , class _exception_type2 , typename  = typename std::enable_if&lt;base::is_referenceable &amp;&amp; _is_constructible_from&lt;_value_type2, _error_type2, _exception_type2&gt;::value&gt;::type&gt; </td></tr>
 <tr class="memitem:ab52067b553a888342f493078f9ad0281"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><b>value_storage</b> (<a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html">value_storage</a>&lt; _value_type2, _error_type2, _exception_type2 &gt; &amp;&amp;o)</td></tr>
 <tr class="separator:ab52067b553a888342f493078f9ad0281"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a856ac99ea8551226e7b7d9b18c363e09"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a856ac99ea8551226e7b7d9b18c363e09"></a>
 constexpr void&#160;</td><td class="memItemRight" valign="bottom"><b>set_state</b> (<a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html">value_storage</a> &amp;&amp;o) noexcept(is_nothrow_destructible &amp;&amp;is_nothrow_move_constructible)</td></tr>
 <tr class="separator:a856ac99ea8551226e7b7d9b18c363e09"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3941653675b812113a25be6d483b69f0"><td class="memTemplParams" colspan="2"><a class="anchor" id="a3941653675b812113a25be6d483b69f0"></a>
-template&lt;class... Args&gt; </td></tr>
-<tr class="memitem:a3941653675b812113a25be6d483b69f0"><td class="memTemplItemLeft" align="right" valign="top">constexpr void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>emplace_value</b> (Args &amp;&amp;...args)</td></tr>
-<tr class="separator:a3941653675b812113a25be6d483b69f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7345bf6b908f41aac0643d5fe23301e5"><td class="memTemplParams" colspan="2"><a class="anchor" id="a7345bf6b908f41aac0643d5fe23301e5"></a>
-template&lt;class... Args&gt; </td></tr>
-<tr class="memitem:a7345bf6b908f41aac0643d5fe23301e5"><td class="memTemplItemLeft" align="right" valign="top">constexpr void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>emplace_error</b> (Args &amp;&amp;...args)</td></tr>
-<tr class="separator:a7345bf6b908f41aac0643d5fe23301e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a602e401c4ac2ca5f9c966f4d8c552abe"><td class="memTemplParams" colspan="2"><a class="anchor" id="a602e401c4ac2ca5f9c966f4d8c552abe"></a>
-template&lt;class... Args&gt; </td></tr>
-<tr class="memitem:a602e401c4ac2ca5f9c966f4d8c552abe"><td class="memTemplItemLeft" align="right" valign="top">constexpr void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>emplace_exception</b> (Args &amp;&amp;...args)</td></tr>
-<tr class="separator:a602e401c4ac2ca5f9c966f4d8c552abe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaacb032afb8d9ef17b75d0c1306c0f79"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaacb032afb8d9ef17b75d0c1306c0f79"></a>
 constexpr void&#160;</td><td class="memItemRight" valign="bottom"><b>swap</b> (<a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html">value_storage</a> &amp;o) noexcept(is_nothrow_move_constructible)</td></tr>
 <tr class="separator:aaacb032afb8d9ef17b75d0c1306c0f79"><td class="memSeparator" colspan="2">&#160;</td></tr>
