@@ -127,7 +127,7 @@ var group__monad =
       [ "operator=", "classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html#ad844537f0cf4b14b1978348b186507e5", null ],
       [ "operator==", "classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html#af87f911f493e3d0adb64e0caa31c1f81", null ],
       [ "set_state", "classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html#a856ac99ea8551226e7b7d9b18c363e09", null ],
-      [ "swap", "classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html#aaacb032afb8d9ef17b75d0c1306c0f79", null ]
+      [ "swap", "classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html#ae51dc6eaca65c73e12ed8eb2bb2038a2", null ]
     ] ],
     [ "option", "group__monad.html#ga0d0fd5ca15cb339df9aa8e829a8ea5e0", null ],
     [ "outcome", "group__monad.html#gaab2ff6220205017226794529c863b336", null ],
