@@ -1,7 +1,7 @@
 var classboost_1_1outcome_1_1v1__xxx_1_1value__storage =
 [
-    [ "_is_comparable_to", "classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html#a874f57e7d282b139eda208447bd939ca", null ],
-    [ "_is_constructible_from", "classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html#a316a784321a5d2a47df563f5ad9e5af2", null ],
+    [ "_is_comparable_to", "classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html#a88bdd773ee2bbcc05e727f789fd157dd", null ],
+    [ "_is_constructible_from", "classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html#a0f84ff4016efe39d977884b791443360", null ],
     [ "emplace_t", "classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html#ac1b6d14e2762977a9df945de26b08e67", null ],
     [ "error_type", "classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html#affa252951fe1d676059c12fb03d9b7bc", null ],
     [ "exception_type", "classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html#a179b9ffebd7d6ed7e71bec26211cad3d", null ],
