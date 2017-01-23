@@ -142,7 +142,7 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements a configurable lightweight simple monadic value transport with the same semantics and API as a future.  <a href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html">boost::outcome::v1_xxx::value_storage&lt; _value_type, _error_type, _exception_type &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A fixed lightweight variant store for monad.This fixed variant list of empty, a type <code>value_type</code>, a lightweight <code>error_type</code> or a heavier <code>exception_type</code> typically has a space cost of <code>max(24, sizeof(R)+8)</code>. If however you specialise <code><a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1enable__single__byte__value__storage.html" title="Specialise to indicate that this type should use the single byte storage layout. You get six bits of ...">enable_single_byte_value_storage</a>&lt;T&gt;</code> with <code>true_type</code>, and both <code>error_type</code> and <code>exception_type</code> are disabled (void), a special single byte storage implementation is enabled. Both <code>bool</code> and <code>void</code> are already specialised.  <a href="classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html#details">More...</a><br/></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A fixed lightweight variant store for monad.This fixed variant list of empty, a type <code>value_type</code>, a lightweight <code>error_type</code> or a heavier <code>exception_type</code> typically has a space cost of <code>max(24, sizeof(R)+8)</code>. If however you specialise <code>enable_single_byte_value_storage&lt;T&gt;</code> with <code>true_type</code>, and both <code>error_type</code> and <code>exception_type</code> are disabled (void), a special single byte storage implementation is enabled. Both <code>bool</code> and <code>void</code> are already specialised.  <a href="classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
@@ -160,7 +160,7 @@ template&lt;typename R &gt; </td></tr>
 <tr class="memitem:ga0d0fd5ca15cb339df9aa8e829a8ea5e0"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga0d0fd5ca15cb339df9aa8e829a8ea5e0"></a>
 template&lt;typename R &gt; </td></tr>
 <tr class="memitem:ga0d0fd5ca15cb339df9aa8e829a8ea5e0"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga0d0fd5ca15cb339df9aa8e829a8ea5e0">boost::outcome::v1_xxx::option</a> = basic_monad&lt; detail::option_policy&lt; R &gt;&gt;</td></tr>
-<tr class="memdesc:ga0d0fd5ca15cb339df9aa8e829a8ea5e0"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>option&lt;R&gt;</code> can hold a fixed variant list of empty or a type <code>R</code> at a space cost of <code>sizeof(<a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html" title="A fixed lightweight variant store for monad.This fixed variant list of empty, a type value_type...">value_storage</a>&lt;R&gt;)</code> which is usually <code>sizeof(R)+8</code>, but may be smaller if <code><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html" title="A fixed lightweight variant store for monad.This fixed variant list of empty, a type value_type...">value_storage</a>&lt;R&gt;</code> is specialised. This corresponds to <code>tribool::unknown</code> and <code>tribool::true_</code> respectively. This specialisation looks deliberately like Rust's <code>Option&lt;T&gt;</code>. <br/></td></tr>
+<tr class="memdesc:ga0d0fd5ca15cb339df9aa8e829a8ea5e0"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>option&lt;R&gt;</code> can hold a fixed variant list of empty or a type <code>R</code> at a space cost of <code>sizeof(value_storage&lt;R&gt;)</code> which is usually <code>sizeof(R)+8</code>, but may be smaller if <code>value_storage&lt;R&gt;</code> is specialised. This corresponds to <code>tribool::unknown</code> and <code>tribool::true_</code> respectively. This specialisation looks deliberately like Rust's <code>Option&lt;T&gt;</code>. <br/></td></tr>
 <tr class="separator:ga0d0fd5ca15cb339df9aa8e829a8ea5e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
@@ -371,7 +371,7 @@ template&lt;class Impl &gt; </td></tr>
 <tr class="separator:ga2ffab91838224f042fe7ed1b108e5ad7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga93fd76af06145e1e6544d9c27bd080d0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga93fd76af06145e1e6544d9c27bd080d0"></a>
 constexpr exception_t exception&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__monad.html#ga93fd76af06145e1e6544d9c27bd080d0">boost::outcome::v1_xxx::exception_t</a> ()</td></tr>
-<tr class="memdesc:ga93fd76af06145e1e6544d9c27bd080d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable of type <a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1exception__t.html" title="Type tag for an excepted monad. ">exception_t</a>. <br/></td></tr>
+<tr class="memdesc:ga93fd76af06145e1e6544d9c27bd080d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable of type exception_t. <br/></td></tr>
 <tr class="separator:ga93fd76af06145e1e6544d9c27bd080d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga70474a7831a5c7c7f045043ba554ff5a"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga70474a7831a5c7c7f045043ba554ff5a"></a>
 template&lt;class _value_type , class _error_type , class _exception_type &gt; </td></tr>
@@ -388,15 +388,15 @@ template&lt;class _value_type &gt; </td></tr>
 Variables</h2></td></tr>
 <tr class="memitem:ga68770961e182715930ad64ca244b645e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga68770961e182715930ad64ca244b645e"></a>
 constexpr empty_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__monad.html#ga68770961e182715930ad64ca244b645e">boost::outcome::v1_xxx::empty</a> = empty_t()</td></tr>
-<tr class="memdesc:ga68770961e182715930ad64ca244b645e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable of type <a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1empty__t.html" title="Type tag for an empty monad. ">empty_t</a>. <br/></td></tr>
+<tr class="memdesc:ga68770961e182715930ad64ca244b645e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable of type empty_t. <br/></td></tr>
 <tr class="separator:ga68770961e182715930ad64ca244b645e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab1740f6220ea9c91b5fd5a9263c6b316"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab1740f6220ea9c91b5fd5a9263c6b316"></a>
 constexpr value_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">boost::outcome::v1_xxx::value</a> = value_t()</td></tr>
-<tr class="memdesc:gab1740f6220ea9c91b5fd5a9263c6b316"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable of type <a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1value__t.html" title="Type tag for a valued monad. ">value_t</a>. <br/></td></tr>
+<tr class="memdesc:gab1740f6220ea9c91b5fd5a9263c6b316"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable of type value_t. <br/></td></tr>
 <tr class="separator:gab1740f6220ea9c91b5fd5a9263c6b316"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1a1a8470c4efc3a52412f3ecc79a0060"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga1a1a8470c4efc3a52412f3ecc79a0060"></a>
 constexpr error_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__monad.html#ga1a1a8470c4efc3a52412f3ecc79a0060">boost::outcome::v1_xxx::error</a> = error_t()</td></tr>
-<tr class="memdesc:ga1a1a8470c4efc3a52412f3ecc79a0060"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable of type <a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1error__t.html" title="Type tag for an errored monad. ">error_t</a>. <br/></td></tr>
+<tr class="memdesc:ga1a1a8470c4efc3a52412f3ecc79a0060"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable of type error_t. <br/></td></tr>
 <tr class="separator:ga1a1a8470c4efc3a52412f3ecc79a0060"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -423,7 +423,7 @@ constexpr error_t&#160;</td><td class="memItemRight" valign="bottom"><a class="e
 <li>Very lightweight on build times and run times up to the point of zero execution cost and a one to eight byte space overhead. See below for benchmarks. Requires min clang 3.7, GCC 5.0 or VS2015 Update 2.</li>
 <li>Just enough monad, nothing more, nothing fancy. Replicates the <code>future&lt;T&gt;</code>, <code>optional&lt;T&gt;</code> and <code>expected&lt;T, E&gt;</code> API, so if you know how to use one of those you already know how to use this.</li>
 <li>Enables convenient and easy all-<code>noexcept</code> coding and design, giving you powerful error handling facilities with automatic exception safety.</li>
-<li>Works just fine with exceptions and RTTI disabled. You may wish to replace the <code><a class="el" href="config_8hpp.html#a8fefe8516997eb0f7c649834d298044a" title="Redefine to have something else occur when Outcome throws an exception. ">BOOST_OUTCOME_THROW()</a></code> macro with what to do when an exception would have been thrown e.g. trying to get a value from an errored or excepted monad.</li>
+<li>Works just fine with exceptions and RTTI disabled. You may wish to replace the <code>BOOST_OUTCOME_THROW()</code> macro with what to do when an exception would have been thrown e.g. trying to get a value from an errored or excepted monad.</li>
 <li>Can replace most uses of <code>optional&lt;T&gt;</code> with seamless interop with more expressive forms e.g. <code>outcome&lt;int&gt; != option&lt;int&gt;</code>.</li>
 <li>Comprehensive unit testing and validation suite.</li>
 <li>Mirrors <code>noexcept</code> and trivial destructiveness of type R.</li>

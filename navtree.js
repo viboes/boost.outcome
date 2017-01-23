@@ -12,38 +12,31 @@ var NAVTREE =
       [ "Installing via git subrepository into your project's git repository", "md_doc_md_01-installation.html#gitsubrepo", null ],
       [ "Running the unit test suite", "md_doc_md_01-installation.html#unittests", null ]
     ] ],
-    [ "Quick start for the expert", "md_doc_md_02-quickstart.html", [
-      [ "Synopsis", "md_doc_md_02-quickstart.html#synopsis", null ]
-    ] ],
-    [ "Tutorial", "md_doc_md_03-tutorial.html", [
-      [ "C style error handling: integer returns", "md_doc_md_03-tutorial.html#c-style", null ],
-      [ "C++ 98 style error handling: throwing exceptions", "md_doc_md_03-tutorial.html#cpp98-style", null ],
-      [ "C++ 11 style error handling: error_code and noexcept", "md_doc_md_03-tutorial.html#cpp11-style", [
-        [ "The \"Islands of exception throw in a sea of noexcept\" design pattern", "md_doc_md_03-tutorial.html#sea-of-noexcept", null ]
-      ] ],
-      [ "C++ 17 style error handling: outcome<T>, result<T> and option<T>", "md_doc_md_03-tutorial.html#cpp17-style", [
-        [ "The \"Exceptions are exceptional, errors are not failure\" design pattern", "md_doc_md_03-tutorial.html#exceptions-are-exceptional", null ],
-        [ "Propagating errors up the call stack: The BOOST_OUTCOME_TRY(var, expression) macro", "md_doc_md_03-tutorial.html#try", null ]
-      ] ],
-      [ "Conclusion", "md_doc_md_03-tutorial.html#conclusion", [
-        [ "What you need to know about basic_monad", "md_doc_md_03-tutorial.html#basic_monad", null ],
-        [ "What you need to know about error_code_extended", "md_doc_md_03-tutorial.html#error_codes", null ],
-        [ "A demonstration of how optimally tuned code using Outcome becomes", "md_doc_md_03-tutorial.html#optimal", null ]
+    [ "Tutorial part A: Outcome's expected<T, E>", "md_doc_md_02-tutorial_a.html", [
+      [ "C style error handling: integer returns", "md_doc_md_02-tutorial_a.html#c-style", null ],
+      [ "C++ 98 style error handling: throwing exceptions", "md_doc_md_02-tutorial_a.html#cpp98-style", null ],
+      [ "C++ 11 style error handling: error_code and noexcept", "md_doc_md_02-tutorial_a.html#cpp11-style", null ],
+      [ "C++ 17 style error handling: optional<T> and expected<T, E>", "md_doc_md_02-tutorial_a.html#cpp17-style", [
+        [ "std::optional<T> (C++ 17)", "md_doc_md_02-tutorial_a.html#optional", null ],
+        [ "std::experimental::expected<T, E> (on standards track)", "md_doc_md_02-tutorial_a.html#expected", [
+          [ "Expected's bad_expected_access<E>", "md_doc_md_02-tutorial_a.html#bad_expected_access", null ],
+          [ "Expected's observers", "md_doc_md_02-tutorial_a.html#expected_observers", null ]
+        ] ]
       ] ]
     ] ],
-    [ "Frequently Asked Questions", "md_doc_md_04-faq.html", [
-      [ "Hard coding error_code and exception_ptr is incredibly restrictive and ruins Outcome for me. Can you not do that please (i.e. make it more like expected<T, E> with its arbitrary type E)?", "md_doc_md_04-faq.html#dontlike", null ],
-      [ "I want to use a custom enum as the error type, not an error_code!", "md_doc_md_04-faq.html#custom_enum", null ],
-      [ "How do I implement chains of errors to transport errors happening whilst handling another error?", "md_doc_md_04-faq.html#error_chains", null ],
-      [ "When should I use a result<T> instead of an outcome<T>?", "md_doc_md_04-faq.html#outcome_vs_result", null ],
-      [ "When should I use Outcome instead of expected<T, E>?", "md_doc_md_04-faq.html#result_vs_outcome", null ],
-      [ "Are there some real world code bases using Outcome I can study?", "md_doc_md_04-faq.html#examples_of_use", null ]
+    [ "Detail: Outcome's implementation of Expected", "md_doc_md_04-expectedsynopsis.html", [
+      [ "unexpected_type<E>", "md_doc_md_04-expectedsynopsis.html#synopsis_unexpected_type", null ],
+      [ "expected<T, E>", "md_doc_md_04-expectedsynopsis.html#synopsis_expected", null ],
+      [ "bad_expected_access<E>", "md_doc_md_04-expectedsynopsis.html#synopsis_bad_expected_access", null ]
     ] ],
-    [ "Advanced usage: Outcome as a Monad", "md_doc_md_05-advanced.html", [
-      [ "Functional programming extensions (optional)", "md_doc_md_05-advanced.html#functional", null ]
-    ] ],
-    [ "Outcome and the upcoming C++ 20 std::expected<T, E>", "md_doc_md_06-std_expected.html", [
-      [ "Design differences between Expected and Outcome", "md_doc_md_06-std_expected.html#design_differences", null ]
+    [ "Frequently Asked Questions", "md_doc_md_05-faq.html", [
+      [ "How close to the proposed C++ 20 standard expected<T, E> is Outcome's", "md_doc_md_05-faq.html#expected_qoi", null ],
+      [ "Hard coding error_code and exception_ptr is incredibly restrictive and ruins Outcome for me. Can you not do that please (i.e. make it more like expected<T, E> with its arbitrary type E)?", "md_doc_md_05-faq.html#dontlike", null ],
+      [ "I want to use a custom enum as the error type, not an error_code!", "md_doc_md_05-faq.html#custom_enum", null ],
+      [ "How do I implement chains of errors to transport errors happening whilst handling another error?", "md_doc_md_05-faq.html#error_chains", null ],
+      [ "When should I use a result<T> instead of an outcome<T>?", "md_doc_md_05-faq.html#outcome_vs_result", null ],
+      [ "When should I use Outcome instead of expected<T, E>?", "md_doc_md_05-faq.html#result_vs_outcome", null ],
+      [ "Are there some real world code bases using Outcome I can study?", "md_doc_md_05-faq.html#examples_of_use", null ]
     ] ],
     [ "Todo List", "todo.html", null ],
     [ "Modules", "modules.html", "modules" ],

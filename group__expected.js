@@ -2,11 +2,11 @@ var group__expected =
 [
     [ "bad_expected_access", "classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access.html", [
       [ "error_type", "classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access.html#adf40d997faa1e516d254ad0307c7de0f", null ],
-      [ "bad_expected_access", "classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access.html#a22d7b1f244cf66c63d98e3282c4f9c50", null ],
-      [ "error", "classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access.html#a7bf24559c1627e5bb090cf6229c08d00", null ],
-      [ "error", "classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access.html#af8fdf7b54a3b83f7e76c50e12a0e08b2", null ],
-      [ "error", "classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access.html#ad93081d459c9c4869b0775712dc6bf2f", null ],
-      [ "error", "classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access.html#a255e838632bc84dc92c67c327ed86db7", null ]
+      [ "bad_expected_access", "classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access.html#a2228b3915bfb049777864f86de770939", null ],
+      [ "error", "classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access.html#a9b9baa1cef84a3f3ae3ebd5f8944b565", null ],
+      [ "error", "classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access.html#af8526483f7737c975330d018286f69fe", null ],
+      [ "error", "classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access.html#a2a3021013c0f10ed693de0a6d46f20e8", null ],
+      [ "error", "classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access.html#aca3a40ae5f1a02b47267c6f23697d88d", null ]
     ] ],
     [ "expected", "group__expected.html#ga7440167038cbd110405573cf2bd873ad", null ],
     [ "unexpect_t", "group__expected.html#ga43a5a0da82bcdf70d885e62ca9d5528a", null ],

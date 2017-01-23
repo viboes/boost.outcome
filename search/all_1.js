@@ -2,7 +2,7 @@ var searchData=
 [
   ['backtrace',['backtrace',['../classboost_1_1outcome_1_1v1__xxx_1_1error__code__extended.html#a97dbed92d0783dabb5bcb02e8918638a',1,'boost::outcome::v1_xxx::error_code_extended']]],
   ['bad_5fexpected_5faccess',['bad_expected_access',['../classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access.html',1,'boost::outcome::v1_xxx']]],
-  ['bad_5fexpected_5faccess',['bad_expected_access',['../classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access.html#a22d7b1f244cf66c63d98e3282c4f9c50',1,'boost::outcome::v1_xxx::bad_expected_access::bad_expected_access()'],['../classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access_3_01void_01_4.html#ac5f254a8a028e9152639fba4863e439c',1,'boost::outcome::v1_xxx::bad_expected_access&lt; void &gt;::bad_expected_access()']]],
+  ['bad_5fexpected_5faccess',['bad_expected_access',['../classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access.html#a2228b3915bfb049777864f86de770939',1,'boost::outcome::v1_xxx::bad_expected_access::bad_expected_access()'],['../classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access_3_01void_01_4.html#a9c6a3d5626b51afd45fb2a14292ceef5',1,'boost::outcome::v1_xxx::bad_expected_access&lt; void &gt;::bad_expected_access()']]],
   ['bad_5fexpected_5faccess_3c_20void_20_3e',['bad_expected_access&lt; void &gt;',['../classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access_3_01void_01_4.html',1,'boost::outcome::v1_xxx']]],
   ['basic_5ffuture',['basic_future',['../classboost_1_1outcome_1_1v1__xxx_1_1lightweight__futures_1_1basic__future.html',1,'boost::outcome::v1_xxx::lightweight_futures']]],
   ['basic_5fmonad',['basic_monad',['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html',1,'boost::outcome::v1_xxx']]],

@@ -80,7 +80,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('md_doc_md_04-faq.html','');});
+$(document).ready(function(){initNavTree('md_doc_md_05-faq.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -103,6 +103,26 @@ $(document).ready(function(){initNavTree('md_doc_md_04-faq.html','');});
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="faq"></a> </p>
+<h1><a class="anchor" id="expected_qoi"></a>
+How close to the proposed C++ 20 standard expected&lt;T, E&gt; is Outcome's</h1>
+<p>expected&lt;T, E&gt; implementation?</p>
+<p>Outcome's <code>expected&lt;T, E&gt;</code> implementation is highly conforming to the current proposal text, indeed more so than the current LEWG reference implementation at <a href="https://github.com/viboes/std-make">https://github.com/viboes/std-make</a>. Outcome uses the <b>exact same</b> unit test suite as the LEWG Expected reference implementation, and passes it handily. As the LEWG reference implementation updates its unit test suite, we shall keep pace.</p>
+<p>These are the known deviations from the WG21 LEWG Expected proposal as per <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0323r1.pdf:">http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0323r1.pdf:</a></p>
+<ul>
+<li>P0323R1 doesn't yet specify what will be done if you try accessing an expected which is valueless due to exception. We throw a <code>bad_expected_access&lt;void&gt;</code> in this situation as that seemed logical. If the LEWG proposal decides on something different, this implementation will change to track the LEWG proposal.</li>
+<li>Types <code>T</code> and <code>E</code> cannot be constructible into one another. This is a fundamental design choice in basic_monad to significantly reduce compile times so it won't be fixed.</li>
+<li><code>unexpected_type&lt;E&gt;</code> is implemented as an <code>expected&lt;void, E&gt;</code> and it lets the basic_monad machinery do the implicit conversion to some <code>expected&lt;T, E&gt;</code> through the less representative to more representative conversion rules.</li>
+<li>Our <code>expected&lt;T, E&gt;</code> defaults E to <code>error_code_extended</code> rather than <code>std::error_condition</code> (the LEWG proposal is almost certainly wrong on this, it should be <code>std::error_code</code>). If you don't like this, predefine the <code>BOOST_OUTCOME_EXPECTED_DEFAULT_ERROR_TYPE</code> macro.</li>
+<li>We don't implement the ordering and hashing operator overloads due to <a href="https://akrzemi1.wordpress.com/2014/12/02/a-gotcha-with-optional/">https://akrzemi1.wordpress.com/2014/12/02/a-gotcha-with-optional/</a>. The fact the LEWG proposal does as currently proposed is a defect.</li>
+<li>We don't implement <code>make_expected_from_call()</code> as we think it highly likely to be removed from the next version of the proposal due to it conferring little value.</li>
+<li>Our Expected always defines the default, copy and move constructors even if the the type configured is not capable of it. That means <code>std::is_copy_constructible</code> etc returns true when they should return false. The reason why is again to significantly improve compile times by hugely reducing the number of templates which need to be instantiated during routine basic_monad usage, and again this won't be fixed. Instead use the static constexpr bools at:<ul>
+<li><code>expected&lt;T, E&gt;is_default_constructible</code></li>
+<li><code>expected&lt;T, E&gt;is_copy_constructible</code></li>
+<li><code>expected&lt;T, E&gt;is_move_constructible</code> <dl class="section note"><dt>Note</dt><dd>Depending on what any Boost peer review thinks, we may inject correct answers for the type traits for basic_monad into namespace std.</dd></dl>
+</li>
+</ul>
+</li>
+</ul>
 <h1><a class="anchor" id="dontlike"></a>
 Hard coding error_code and exception_ptr is incredibly restrictive and ruins Outcome for me. Can you not do that please (i.e. make it more like expected&lt;T, E&gt; with its arbitrary type E)?</h1>
 <p>Outcome isn't a direct substitute for Expected per se. It can substitute for Expected's default configuration of E = std::error_code and because it's less configurable and less flexible than Expected, we can achieve much tighter assembler output by the compiler. It's a tradeoff - Outcome imposes more restrictions but gives you faster, tighter, more predictable code. Expected is the STL primitive useful for a wide variety of tasks, not just error handling.</p>
@@ -113,7 +133,7 @@ Hard coding error_code and exception_ptr is incredibly restrictive and ruins Out
 <li>Two arbitrary unsigned integers. These could be fused into a <code>void *</code>, up to you.</li>
 <li>You can ask for a stack backtrace to be taken, thus allowing identification of what code sequence resulted in the error. This also does not allocate memory and costs a maximum of about 35 microseconds on a fast Intel CPU if your stack down to seven levels deep is in warm cache.</li>
 </ul>
-<p>To make using this extended functionality even easier, in the <a class="el" href="md_doc_md_02-quickstart.html#quickstart">Quick start</a> synopsis you may have noticed that the <code>make_errored_*()</code> functions accept an optional <code>const char *</code> string. This is simply fed to <code>error_code_extended</code>'s constructor. If Outcome ever converts a C++ exception into an error code for you e.g. through you using <code>BOOST_OUTCOME_CATCH_EXCEPTION_TO_RESULT</code>, the conversion always feeds the exception's <code>what()</code> as the extended string description so no information is lost.</p>
+<p>To make using this extended functionality even easier, in the Quick start synopsis you may have noticed that the <code>make_errored_*()</code> functions accept an optional <code>const char *</code> string. This is simply fed to <code>error_code_extended</code>'s constructor. If Outcome ever converts a C++ exception into an error code for you e.g. through you using <code>BOOST_OUTCOME_CATCH_EXCEPTION_TO_RESULT</code>, the conversion always feeds the exception's <code>what()</code> as the extended string description so no information is lost.</p>
 <dl class="section warning"><dt>Warning</dt><dd>The extended information is stored in a preallocated global threadsafe ringbuffer. It will get garbage collected at some point when the ring buffer wraps. The garbage collection is not synchronised with use of that data, so there is small chance that the extended data will get overwritten in mid use if you leave it too long between the error code being created and making use of its extended data. You should therefore endeavour to transfer the extended error code information into allocated memory as soon as you practically can (or increase the size of the ring buffer, this is very easy, examine the source code).</dd></dl>
 <hr/>
 <p><br/>
