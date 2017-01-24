@@ -19,10 +19,12 @@ var NAVTREE =
       [ "C++ 17 style error handling: optional<T> and expected<T, E>", "md_doc_md_02-tutorial_a.html#cpp17-style", [
         [ "std::optional<T> (C++ 17)", "md_doc_md_02-tutorial_a.html#optional", null ],
         [ "std::experimental::expected<T, E> (on standards track)", "md_doc_md_02-tutorial_a.html#expected", [
+          [ "Sea of noexcept, islands of exception throw", "md_doc_md_02-tutorial_a.html#sea_of_noexcept", null ],
           [ "Expected's bad_expected_access<E>", "md_doc_md_02-tutorial_a.html#bad_expected_access", null ],
           [ "Expected's observers", "md_doc_md_02-tutorial_a.html#expected_observers", null ]
         ] ]
-      ] ]
+      ] ],
+      [ "Short example program using expected<T, E>", "md_doc_md_02-tutorial_a.html#expected_example", null ]
     ] ],
     [ "Detail: Outcome's implementation of Expected", "md_doc_md_04-expectedsynopsis.html", [
       [ "unexpected_type<E>", "md_doc_md_04-expectedsynopsis.html#synopsis_unexpected_type", null ],

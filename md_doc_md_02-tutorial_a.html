@@ -107,12 +107,14 @@ $(document).ready(function(){initNavTree('md_doc_md_02-tutorial_a.html','');});
 <li class="level1"><a href="#cpp98-style">C++ 98 style error handling: throwing exceptions</a></li>
 <li class="level1"><a href="#cpp11-style">C++ 11 style error handling: error_code and noexcept</a></li>
 <li class="level1"><a href="#cpp17-style">C++ 17 style error handling: optional<T> and expected<T, E></a><ul><li class="level2"><a href="#optional">std::optional<T> (C++ 17)</a></li>
-<li class="level2"><a href="#expected">std::experimental::expected<T, E> (on standards track)</a><ul><li class="level3"><a href="#bad_expected_access">Expected's bad_expected_access<E></a></li>
+<li class="level2"><a href="#expected">std::experimental::expected<T, E> (on standards track)</a><ul><li class="level3"><a href="#sea_of_noexcept">Sea of noexcept, islands of exception throw</a></li>
+<li class="level3"><a href="#bad_expected_access">Expected's bad_expected_access<E></a></li>
 <li class="level3"><a href="#expected_observers">Expected's observers</a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li class="level1"><a href="#expected_example">Short example program using expected<T, E></a></li>
 </ul>
 </div>
 <div class="textblock"><p><a class="anchor" id="tutorial_expected"></a></p>
@@ -384,11 +386,14 @@ islands of exception throw" design pattern which is much more natural:</p>
 <div class="line">  fh-&gt;read(... etc</div>
 <div class="line">}</div>
 </div><!-- fragment --><p>You'll note we've changed the error type from a <code>std::error_code</code> to a <code>std::exception_ptr</code> in order to transport, without losing information, all possible C++ exception throws.</p>
+<h3><a class="anchor" id="sea_of_noexcept"></a>
+Sea of noexcept, islands of exception throw</h3>
 <p>The "sea of noexcept, islands of exception throw" design pattern is characterised by all <code>extern</code> function APIs i.e. all functions callable by code outside the current translation unit being marked <code>noexcept</code>. Because code outside the current translation unit will only see a header declaration of the form:</p>
 <div class="fragment"><div class="line"><span class="keyword">extern</span> std::experimental::expected&lt;handle_ref, std::exception_ptr&gt; openfile(<span class="keyword">const</span> <span class="keywordtype">char</span> *path) noexcept;</div>
 </div><!-- fragment --><p>... it is guaranteed by the C++ standard that calling that function will not throw an exception, and therefore invert the flow of execution. That makes writing exception safe code considerably easier in a lot of cases, which means lower maintenance and considerably fewer implicit potential execution paths to test for correctness.</p>
-<p>Meanwhile internal to the implementation of <code>openfile()</code>, we do throw exceptions, but there is <b>always</b> a master <code>try...catch(...)</code> catchall clause at the base of the function. This is because if you have anything else, the compiler is required by the C++ standard to insert a call to <code>std::terminate()</code> if any exception throw reaches a noexcept function boundary. Assuming that you really don't want that to happen, we therefore always catch all exceptions and convert them into a <code>std::exception_ptr</code> which we return out of the function via the normal value return mechanism as an unexpected Expected instance.</p>
+<p>Meanwhile internal to the implementation of <code>openfile()</code>, we do throw exceptions, but there is <b>always</b> a master <code>try...catch(...)</code> catchall clause at the base of the function. This is because if you have anything but a catchall try-catch, the compiler is required by the C++ standard to insert a call to <code>std::terminate()</code> if any exception throw reaches a noexcept function boundary. Assuming that you really don't want that to happen, we therefore always catch all exceptions and convert them into a <code>std::exception_ptr</code> which we return out of the function via the normal value return mechanism as an unexpected Expected instance.</p>
 <dl class="section note"><dt>Note</dt><dd>Old hands would consider any use of <code>exception_ptr</code> to be similarly heavyweight to any use of <code>std::shared_ptr</code> as they need to be implemented the same way (i.e. with malloc and atomics) according to the C++ standard. For most code this is an acceptable overhead, if that is not the case in your code then Tutorial part B is for you.</dd></dl>
+<p>Finally, within any translation unit you do NOT mark non-extern functions with <code>noexcept</code> unless the function cannot fail. Because the compiler can see an entire translation unit as a single whole, it will deduce which non-extern functions can throw and which can not (any calls by you into other translation units will use extern functions marked <code>noexcept</code>, hence the only exception throws which the compiler needs to consider will be thrown from within the current translation unit only). The compiler ought to then optimise the current translation unit down to an <b>optimal</b> edition maximising the regions of code known by the compiler to be incapable of throwing exceptions, thus eliminating any EH tables etc for that code. Indeed, if the master catchall try-catch at the base of an extern function is deduced by the compiler to not be needed, all recent compilers will eliminate that from the runtime code generated too, effectively making it as if you compiled the translation unit with C++ exceptions globally disabled.</p>
 <h3><a class="anchor" id="bad_expected_access"></a>
 Expected's bad_expected_access&lt;E&gt;</h3>
 <p>The proposed Expected implementation defines this exception type to represent when you try to use an <code>expected&lt;T, E&gt;</code> in a way not compatible with its current state:</p>
@@ -477,8 +482,104 @@ Expected's observers</h3>
 <div class="line">    T value_or(U&amp;&amp;) &amp;&amp;;</div>
 <div class="line"></div>
 <div class="line">};</div>
-</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>You should be aware that Outcome's Expected implementation varies from the above in a few very minor ways. See <a class="el" href="md_doc_md_04-expectedsynopsis.html#outcome_expected_reference">Outcome's implementation of Expected</a> for an exact detail. </dd></dl>
-</div></div><!-- contents -->
+</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>You should be aware that Outcome's Expected implementation varies from the above in a few very minor ways. It also provides a considerable number of extensions. See <a class="el" href="md_doc_md_04-expectedsynopsis.html#outcome_expected_reference">Outcome's implementation of Expected</a> for an exact detail.</dd></dl>
+<p>As inferred in the example code cases earlier, you can check if an <code>expected&lt;T, E&gt;</code> has an expected value via a simple test for boolean true or more explicitly via <code>.has_value()</code> before retrieving the value using <code>.value()</code>. A useful shortcut can be <code>.value_or()</code> where you would otherwise write a ternary operation selecting on the Expected having an expected value.</p>
+<p>Finally, the current proposal before WG21 has not yet added a mechanism for testing if the Expected is valueless or not, so you currently have no way of testing for that except by catching the exception thrown. It <em>may</em> mirror <code>std::variant&lt;...&gt;</code>'s <code>valueless_by_exception()</code> observer function, or it may choose something else. Outcome's implementation of Expected implements a '.empty()' extension, this seemed to fit the rest of STL the best.</p>
+<h1><a class="anchor" id="expected_example"></a>
+Short example program using expected&lt;T, E&gt;</h1>
+<p>Up until now we have been referring to Expected via the namespace <code>std::experimental</code>. Outcome obviously does not provide Expected in that namespace, instead it uses the outcome namespace which you can find via either of these forms:</p>
+<div class="fragment"><div class="line"><span class="comment">// Traditional: use SOME version Boost.Outcome visible to the compiler/linker</span></div>
+<div class="line"><span class="keyword">namespace </span><a class="code" href="group__monad.html#gaab2ff6220205017226794529c863b336">outcome</a> = <a class="code" href="group__monad.html#gaab2ff6220205017226794529c863b336">boost::outcome</a>;</div>
+<div class="line"></div>
+<div class="line"><span class="comment">// Better: use EXACTLY the Boost.Outcome visible in the current translation unit</span></div>
+<div class="line"><span class="keyword">namespace </span><a class="code" href="group__monad.html#gaab2ff6220205017226794529c863b336">outcome</a> = <a class="code" href="group__config.html#gab113de43db2cd2a4cf1e33b54294944a">BOOST_OUTCOME_V1_NAMESPACE</a>;</div>
+</div><!-- fragment --><p>The <code>BOOST_OUTCOME_V1_NAMESPACE</code> macro encodes a unique hexadecimal value per release. This guarantees that the linker will not substitute a different version of Outcome than the Outcome you compiled against. It is therefore recommended that you use the <code>BOOST_OUTCOME_V1_NAMESPACE</code> macro.</p>
+<p>This example program using <code>expected&lt;T, E&gt;</code> replicates <a href="http://rustbyexample.com/std/result.html">the use example in the documentation for Rust's <code>Result&lt;T, E&gt;</code></a>. As you'll see in Tutorial part B, you would be unwise to use <code>expected&lt;T, E&gt;</code> like this in large C++ programs.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;../include/boost/outcome.hpp&quot;</span></div>
+<div class="line"></div>
+<div class="line"><span class="preprocessor">#include &lt;cfloat&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;cmath&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"></div>
+<div class="line"><span class="keyword">namespace </span><a class="code" href="group__monad.html#gaab2ff6220205017226794529c863b336">outcome</a> = <a class="code" href="group__config.html#gab113de43db2cd2a4cf1e33b54294944a">BOOST_OUTCOME_V1_NAMESPACE</a>;</div>
+<div class="line"></div>
+<div class="line"><span class="comment">// Replicates example usage of Result&lt;T, E&gt; from http://rustbyexample.com/std/result.html</span></div>
+<div class="line"><span class="keyword">namespace </span>checked</div>
+<div class="line">{</div>
+<div class="line">  <span class="comment">// Mathematical &quot;errors&quot; we want to catch</span></div>
+<div class="line">  <span class="keyword">enum class</span> MathError {</div>
+<div class="line">    DivisionByZero,</div>
+<div class="line">    NegativeLogarithm,</div>
+<div class="line">    NegativeSquareRoot</div>
+<div class="line">  };</div>
+<div class="line">  </div>
+<div class="line">  <span class="keyword">using</span> MathResult = outcome::expected&lt;double, MathError&gt;;</div>
+<div class="line">  <span class="keyword">static</span> <span class="keyword">inline</span> MathResult MathResultOk(<span class="keywordtype">double</span> x) { <span class="keywordflow">return</span> outcome::make_expected&lt;double, MathError&gt;(x); }</div>
+<div class="line">  <span class="keyword">static</span> <span class="keyword">inline</span> MathResult MathResultErr(MathError e) { <span class="keywordflow">return</span> outcome::make_expected_from_error&lt;double, MathError&gt;(e); }</div>
+<div class="line">  </div>
+<div class="line">  MathResult div(<span class="keywordtype">double</span> x, <span class="keywordtype">double</span> y) noexcept</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordflow">if</span>(::fabs(y) &lt; FLT_EPSILON)</div>
+<div class="line">    {</div>
+<div class="line">      <span class="comment">// This operation would fail, instead let&#39;s return the reason of</span></div>
+<div class="line">      <span class="comment">// the failure wrapped in E</span></div>
+<div class="line">      <span class="keywordflow">return</span> MathResultErr(MathError::DivisionByZero);</div>
+<div class="line">    }</div>
+<div class="line">    <span class="keywordflow">else</span></div>
+<div class="line">    {</div>
+<div class="line">      <span class="comment">// This operation is valid, return the result wrapped in T</span></div>
+<div class="line">      <span class="keywordflow">return</span> MathResultOk(x / y);</div>
+<div class="line">    }</div>
+<div class="line">  }</div>
+<div class="line"></div>
+<div class="line">  MathResult sqrt(<span class="keywordtype">double</span> x) noexcept</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordflow">if</span>(x &lt; 0.0)</div>
+<div class="line">      <span class="keywordflow">return</span> MathResultErr(MathError::NegativeSquareRoot);</div>
+<div class="line">    <span class="keywordflow">return</span> MathResultOk(::sqrt(x));</div>
+<div class="line">  }</div>
+<div class="line"></div>
+<div class="line">  MathResult ln(<span class="keywordtype">double</span> x) noexcept</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordflow">if</span>(x &lt; 0.0)</div>
+<div class="line">      <span class="keywordflow">return</span> MathResultErr(MathError::NegativeLogarithm);</div>
+<div class="line">    <span class="keywordflow">return</span> MathResultOk(::log(x));</div>
+<div class="line">  }</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">double</span> op(<span class="keywordtype">double</span> x, <span class="keywordtype">double</span> y)</div>
+<div class="line">{</div>
+<div class="line">  <span class="comment">// Outcome provides a .match() extension, but this is 100% standard Expected</span></div>
+<div class="line">  <span class="comment">// Also using outcome::result&lt;T&gt; instead of expected&lt;T, E&gt; would enable</span></div>
+<div class="line">  <span class="comment">// intelligent printing of the error code to std::cerr</span></div>
+<div class="line">  checked::MathResult ratio = checked::div(x, y);</div>
+<div class="line">  <span class="keywordflow">if</span>(!ratio)</div>
+<div class="line">  {</div>
+<div class="line">    std::cerr &lt;&lt; <span class="stringliteral">&quot;PANIC: MatchResult::DivisionByZero&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">    std::terminate();</div>
+<div class="line">  }</div>
+<div class="line">  checked::MathResult ln = checked::ln(*ratio);</div>
+<div class="line">  <span class="keywordflow">if</span>(!ln)</div>
+<div class="line">  {</div>
+<div class="line">    std::cerr &lt;&lt; <span class="stringliteral">&quot;PANIC: MatchResult::NegativeLogarithm&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">    std::terminate();</div>
+<div class="line">  }</div>
+<div class="line">  checked::MathResult sqrt = checked::sqrt(*ln);</div>
+<div class="line">  <span class="keywordflow">if</span>(!sqrt)</div>
+<div class="line">  {</div>
+<div class="line">    std::cerr &lt;&lt; <span class="stringliteral">&quot;PANIC: MatchResult::NegativeSquareRoot&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">    std::terminate();</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keywordflow">return</span> sqrt.value();</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">void</span>)</div>
+<div class="line">{</div>
+<div class="line">  <span class="comment">// Will this fail?</span></div>
+<div class="line">  std::cout &lt;&lt; op(1.0, 10.0) &lt;&lt; std::endl;</div>
+<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+</div><!-- fragment --></div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

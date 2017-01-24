@@ -109,7 +109,11 @@ $(document).ready(function(){initNavTree('md_doc_md_04-expectedsynopsis.html',''
 </p>
 <h1><a class="anchor" id="synopsis_unexpected_type"></a>
 unexpected_type&lt;E&gt;</h1>
-<div class="fragment"><div class="line"><span class="keyword">namespace </span>std {</div>
+<table class="doxtable">
+<tr>
+<th>LEWG's Expected implementation</th><th>Outcome's Expected implementation </th></tr>
+<tr>
+<td><div class="fragment"><div class="line"><span class="keyword">namespace </span>std {</div>
 <div class="line"><span class="keyword">namespace </span>experimental {</div>
 <div class="line"><span class="keyword">inline</span> <span class="keyword">namespace </span>fundamentals_v3 {</div>
 <div class="line">  <span class="comment">// X.Y.3, Unexpected object type</span></div>
@@ -119,6 +123,8 @@ unexpected_type&lt;E&gt;</h1>
 <div class="line">  <span class="comment">// X.Y.4, Unexpected factories</span></div>
 <div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> E&gt;</div>
 <div class="line">    constexpr unexpected_type&lt;decay_t&lt;E&gt;&gt; <a class="code" href="group__expected.html#ga03e1e619a559e7f336621b1092e28527">make_unexpected</a>(E&amp;&amp; v);</div>
+<div class="line"></div>
+<div class="line"></div>
 <div class="line"></div>
 <div class="line">  <span class="comment">// X.Y.5, unexpected_type relational operators</span></div>
 <div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> E&gt;</div>
@@ -152,12 +158,60 @@ unexpected_type&lt;E&gt;</h1>
 <div class="line"><span class="keyword">private</span>:</div>
 <div class="line">  E val; <span class="comment">// exposition only</span></div>
 <div class="line">};</div>
-</div><!-- fragment --><hr/>
-<p><br/>
-</p>
+</div><!-- fragment --> </td><td><div class="fragment"><div class="line"><span class="keyword">namespace </span>boost {</div>
+<div class="line"><span class="keyword">namespace </span><a class="code" href="group__monad.html#gaab2ff6220205017226794529c863b336">outcome</a> {</div>
+<div class="line"><span class="keyword">inline</span> <span class="keyword">namespace </span>v1_xxx {</div>
+<div class="line">  <span class="comment">// X.Y.3, Unexpected object type</span></div>
+<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> E&gt;</div>
+<div class="line">    <span class="keyword">using</span> <a class="code" href="group__expected.html#gaf61cb3012566f621329133c01f17c647">unexpected_type</a> = expected&lt;void, E&gt;;</div>
+<div class="line"></div>
+<div class="line">  <span class="comment">// X.Y.4, Unexpected factories</span></div>
+<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> E&gt;</div>
+<div class="line">    constexpr unexpected_type&lt;E&gt; <a class="code" href="group__expected.html#ga03e1e619a559e7f336621b1092e28527">make_unexpected</a>(<span class="keyword">const</span> E&amp; v);</div>
+<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> E&gt;</div>
+<div class="line">    constexpr unexpected_type&lt;E&gt; <a class="code" href="group__expected.html#ga03e1e619a559e7f336621b1092e28527">make_unexpected</a>(E&amp;&amp; v);</div>
+<div class="line"></div>
+<div class="line">  <span class="comment">// X.Y.5, unexpected_type relational operators</span></div>
+<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> E&gt;</div>
+<div class="line">    constexpr <span class="keywordtype">bool</span></div>
+<div class="line">    <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a63db4c206ada0cb03a5a1fbe0d626ba7">operator==</a>(<span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;, <span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;);</div>
+<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> E&gt;</div>
+<div class="line">    constexpr <span class="keywordtype">bool</span></div>
+<div class="line">    <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a45313fa17aa4be05a21363191dacab93">operator!=</a>(<span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;, <span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;);</div>
+<div class="line"></div>
+<div class="line"></div>
+<div class="line"></div>
+<div class="line"></div>
+<div class="line"></div>
+<div class="line"></div>
+<div class="line"></div>
+<div class="line"></div>
+<div class="line"></div>
+<div class="line"></div>
+<div class="line"></div>
+<div class="line"></div>
+<div class="line"></div>
+<div class="line">}}}</div>
+</div><!-- fragment --><div class="fragment"><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> E&gt;</div>
+<div class="line"><span class="keyword">class </span><a class="code" href="group__expected.html#gaf61cb3012566f621329133c01f17c647">unexpected_type</a> {                           <span class="comment">// Actually expected&lt;void, E&gt;</span></div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">  <a class="code" href="group__expected.html#gaf61cb3012566f621329133c01f17c647">unexpected_type</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line">  constexpr <span class="keyword">explicit</span> <a class="code" href="group__expected.html#gaf61cb3012566f621329133c01f17c647">unexpected_type</a>(<span class="keyword">const</span> E&amp;);</div>
+<div class="line">  constexpr <span class="keyword">explicit</span> <a class="code" href="group__expected.html#gaf61cb3012566f621329133c01f17c647">unexpected_type</a>(E&amp;&amp;);</div>
+<div class="line">  constexpr <span class="keyword">const</span> E&amp; <a class="code" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">value</a>() <span class="keyword">const</span>;</div>
+<div class="line">  constexpr E &amp; <a class="code" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">value</a>();</div>
+<div class="line"><span class="keyword">private</span>:</div>
+<div class="line">  E val; <span class="comment">// exposition only</span></div>
+<div class="line">};</div>
+</div><!-- fragment -->  </td></tr>
+</table>
 <h1><a class="anchor" id="synopsis_expected"></a>
 expected&lt;T, E&gt;</h1>
-<div class="fragment"><div class="line"><span class="keyword">namespace </span>std {</div>
+<table class="doxtable">
+<tr>
+<th>LEWG's Expected implementation</th><th>Outcome's Expected implementation </th></tr>
+<tr>
+<td><div class="fragment"><div class="line"><span class="keyword">namespace </span>std {</div>
 <div class="line"><span class="keyword">namespace </span>experimental {</div>
 <div class="line"><span class="keyword">inline</span> <span class="keyword">namespace </span>fundamentals_v3 {</div>
 <div class="line">  <span class="comment">// X.Z.4, expected for object types</span></div>
@@ -262,7 +316,114 @@ expected&lt;T, E&gt;</h1>
 <div class="line">  template &lt;class T, class E&gt; struct hash&lt;<a class="code" href="group__expected.html#ga7440167038cbd110405573cf2bd873ad">expected</a>&lt;T,E&gt;&gt;;</div>
 <div class="line">  template &lt;class E&gt; struct hash&lt;<a class="code" href="group__expected.html#ga7440167038cbd110405573cf2bd873ad">expected</a>&lt;<span class="keywordtype">void</span>,E&gt;&gt;;</div>
 <div class="line">}}}</div>
-</div><!-- fragment --><div class="fragment"><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
+</div><!-- fragment --> </td><td><div class="fragment"><div class="line"><span class="keyword">namespace </span>std {</div>
+<div class="line"><span class="keyword">namespace </span>experimental {</div>
+<div class="line"><span class="keyword">inline</span> <span class="keyword">namespace </span>fundamentals_v3 {</div>
+<div class="line">  <span class="comment">// X.Z.4, expected for object types</span></div>
+<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E= error_condition&gt;</div>
+<div class="line">    <span class="keyword">class </span><a class="code" href="group__expected.html#ga7440167038cbd110405573cf2bd873ad">expected</a>;</div>
+<div class="line"></div>
+<div class="line">  <span class="comment">// X.Z.5, Specialization for void.</span></div>
+<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> E&gt;</div>
+<div class="line">    <span class="keyword">class </span><a class="code" href="group__expected.html#ga7440167038cbd110405573cf2bd873ad">expected</a>&lt;void, E&gt;;</div>
+<div class="line"></div>
+<div class="line">  <span class="comment">// X.Z.6, unexpect tag</span></div>
+<div class="line">  <span class="keyword">struct </span><a class="code" href="group__expected.html#ga43a5a0da82bcdf70d885e62ca9d5528a">unexpect_t</a>{</div>
+<div class="line">    <a class="code" href="group__expected.html#ga43a5a0da82bcdf70d885e62ca9d5528a">unexpect_t</a>() = <span class="keyword">delete</span>;</div>
+<div class="line">  };</div>
+<div class="line">  constexpr <a class="code" href="group__expected.html#ga43a5a0da82bcdf70d885e62ca9d5528a">unexpect_t</a> <a class="code" href="group__expected.html#ga71d06dbe1034b67b00f3f69839c548ae">unexpect</a>{<span class="stringliteral">&#39;implementation defined&#39;</span>};</div>
+<div class="line"></div>
+<div class="line">  <span class="comment">// X.Z.7, class bad_expected_access</span></div>
+<div class="line">  <span class="keyword">class </span>bad_expected_access;</div>
+<div class="line"></div>
+<div class="line">  <span class="comment">// X.Z.8, Expected relational operators</span></div>
+<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
+<div class="line">    constexpr <span class="keywordtype">bool</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a63db4c206ada0cb03a5a1fbe0d626ba7">operator==</a>(<span class="keyword">const</span> expected&lt;T,E&gt;&amp;, <span class="keyword">const</span> expected&lt;T,E&gt;&amp;);</div>
+<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
+<div class="line">    constexpr <span class="keywordtype">bool</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a45313fa17aa4be05a21363191dacab93">operator!=</a>(<span class="keyword">const</span> expected&lt;T,E&gt;&amp;, <span class="keyword">const</span> expected&lt;T,E&gt;&amp;);</div>
+<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
+<div class="line">    constexpr <span class="keywordtype">bool</span> operator&lt;(const expected&lt;T,E&gt;&amp;, <span class="keyword">const</span> expected&lt;T,E&gt;&amp;);</div>
+<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
+<div class="line">    constexpr <span class="keywordtype">bool</span> operator&gt;(<span class="keyword">const</span> expected&lt;T,E&gt;&amp;, <span class="keyword">const</span> expected&lt;T,E&gt;&amp;);</div>
+<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
+<div class="line">    constexpr <span class="keywordtype">bool</span> operator&lt;=(const expected&lt;T,E&gt;&amp;, <span class="keyword">const</span> expected&lt;T,E&gt;&amp;);</div>
+<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
+<div class="line">    constexpr <span class="keywordtype">bool</span> operator&gt;=(<span class="keyword">const</span> expected&lt;T,E&gt;&amp;, <span class="keyword">const</span> expected&lt;T,E&gt;&amp;);</div>
+<div class="line"></div>
+<div class="line">  <span class="comment">// X.Z.9, Comparison with T</span></div>
+<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
+<div class="line">    constexpr <span class="keywordtype">bool</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a63db4c206ada0cb03a5a1fbe0d626ba7">operator==</a>(<span class="keyword">const</span> expected&lt;T,E&gt;&amp;, <span class="keyword">const</span> T&amp;);</div>
+<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
+<div class="line">    constexpr <span class="keywordtype">bool</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a63db4c206ada0cb03a5a1fbe0d626ba7">operator==</a>(<span class="keyword">const</span> T&amp;, <span class="keyword">const</span> expected&lt;T,E&gt;&amp;);</div>
+<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
+<div class="line">    constexpr <span class="keywordtype">bool</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a45313fa17aa4be05a21363191dacab93">operator!=</a>(<span class="keyword">const</span> expected&lt;T,E&gt;&amp;, <span class="keyword">const</span> T&amp;);</div>
+<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
+<div class="line">    constexpr <span class="keywordtype">bool</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a45313fa17aa4be05a21363191dacab93">operator!=</a>(<span class="keyword">const</span> T&amp;, <span class="keyword">const</span> expected&lt;T,E&gt;&amp;);</div>
+<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
+<div class="line">    constexpr <span class="keywordtype">bool</span> operator&lt;(const expected&lt;T,E&gt;&amp;, <span class="keyword">const</span> T&amp;);</div>
+<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
+<div class="line">    constexpr <span class="keywordtype">bool</span> operator&lt;(const T&amp;, const expected&lt;T,E&gt;&amp;);</div>
+<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
+<div class="line">    constexpr <span class="keywordtype">bool</span> operator&lt;=(const expected&lt;T,E&gt;&amp;, <span class="keyword">const</span> T&amp;);</div>
+<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
+<div class="line">    constexpr <span class="keywordtype">bool</span> operator&lt;=(const T&amp;, const expected&lt;T,E&gt;&amp;);</div>
+<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
+<div class="line">    constexpr <span class="keywordtype">bool</span> operator&gt;(<span class="keyword">const</span> expected&lt;T,E&gt;&amp;, <span class="keyword">const</span> T&amp;);</div>
+<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
+<div class="line">    constexpr <span class="keywordtype">bool</span> operator&gt;(<span class="keyword">const</span> T&amp;, <span class="keyword">const</span> expected&lt;T,E&gt;&amp;);</div>
+<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
+<div class="line">    constexpr <span class="keywordtype">bool</span> operator&gt;=(<span class="keyword">const</span> expected&lt;T,E&gt;&amp;, <span class="keyword">const</span> T&amp;);</div>
+<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
+<div class="line">    constexpr <span class="keywordtype">bool</span> operator&gt;=(<span class="keyword">const</span> T&amp;, <span class="keyword">const</span> expected&lt;T,E&gt;&amp;);</div>
+<div class="line"></div>
+<div class="line">  <span class="comment">// X.Z.10, Comparison with unexpected_type&lt;E&gt;</span></div>
+<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
+<div class="line">    constexpr <span class="keywordtype">bool</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a63db4c206ada0cb03a5a1fbe0d626ba7">operator==</a>(<span class="keyword">const</span> expected&lt;T,E&gt;&amp;, <span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;);</div>
+<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
+<div class="line">    constexpr <span class="keywordtype">bool</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a63db4c206ada0cb03a5a1fbe0d626ba7">operator==</a>(<span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;, <span class="keyword">const</span> expected&lt;T,E&gt;&amp;);</div>
+<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
+<div class="line">    constexpr <span class="keywordtype">bool</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a45313fa17aa4be05a21363191dacab93">operator!=</a>(<span class="keyword">const</span> expected&lt;T,E&gt;&amp;, <span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;);</div>
+<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
+<div class="line">    constexpr <span class="keywordtype">bool</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a45313fa17aa4be05a21363191dacab93">operator!=</a>(<span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;, <span class="keyword">const</span> expected&lt;T,E&gt;&amp;);</div>
+<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
+<div class="line">    constexpr <span class="keywordtype">bool</span> operator&lt;(const expected&lt;T,E&gt;&amp;, <span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;);</div>
+<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
+<div class="line">    constexpr <span class="keywordtype">bool</span> operator&lt;(const unexpected_type&lt;E&gt;&amp;, <span class="keyword">const</span> expected&lt;T,E&gt;&amp;);</div>
+<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
+<div class="line">    constexpr <span class="keywordtype">bool</span> operator&lt;=(const expected&lt;T,E&gt;&amp;, <span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;);</div>
+<div class="line"></div>
+<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
+<div class="line">    constexpr <span class="keywordtype">bool</span> operator&lt;=(const unexpected_type&lt;E&gt;&amp;, <span class="keyword">const</span> expected&lt;T,E&gt;&amp;);</div>
+<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
+<div class="line">    constexpr <span class="keywordtype">bool</span> operator&gt;(<span class="keyword">const</span> expected&lt;T,E&gt;&amp;, <span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;);</div>
+<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
+<div class="line">    constexpr <span class="keywordtype">bool</span> operator&gt;(<span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;, <span class="keyword">const</span> expected&lt;T,E&gt;&amp;);</div>
+<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
+<div class="line">    constexpr <span class="keywordtype">bool</span> operator&gt;=(<span class="keyword">const</span> expected&lt;T,E&gt;&amp;, <span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;);</div>
+<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
+<div class="line">    constexpr <span class="keywordtype">bool</span> operator&gt;=(<span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;, <span class="keyword">const</span> expected&lt;T,E&gt;&amp;);</div>
+<div class="line"></div>
+<div class="line">  <span class="comment">// X.Z.11, Specialized algorithms</span></div>
+<div class="line">  <span class="keywordtype">void</span> <a class="code" href="group__monad.html#ga2ffab91838224f042fe7ed1b108e5ad7">swap</a>(expected&lt;T,E&gt;&amp;, expected&lt;T,E&gt;&amp;) noexcept(see below);</div>
+<div class="line"></div>
+<div class="line">  <span class="comment">// X.Z.12, Factories</span></div>
+<div class="line">  template &lt;class T&gt; constexpr <a class="code" href="group__expected.html#ga7440167038cbd110405573cf2bd873ad">expected</a>&lt;decay_t&lt;T&gt;&gt; make_expected(T&amp;&amp; v);</div>
+<div class="line">  <a class="code" href="group__expected.html#ga7440167038cbd110405573cf2bd873ad">expected</a>&lt;<span class="keywordtype">void</span>&gt; make_expected();</div>
+<div class="line">  template &lt;class T, class E&gt;</div>
+<div class="line">    constexpr <a class="code" href="group__expected.html#ga7440167038cbd110405573cf2bd873ad">expected</a>&lt;T, decay_t&lt;E&gt;&gt; <a class="code" href="group__expected.html#ga726f6c276fd09c5036f20811239b0c8e">make_expected_from_error</a>(E&amp;&amp; e);</div>
+<div class="line">  template &lt;class T, class E, class U&gt;</div>
+<div class="line">    constexpr <a class="code" href="group__expected.html#ga7440167038cbd110405573cf2bd873ad">expected</a>&lt;T, E&gt; <a class="code" href="group__expected.html#ga726f6c276fd09c5036f20811239b0c8e">make_expected_from_error</a>(U&amp;&amp; u);</div>
+<div class="line">  template &lt;class F&gt;</div>
+<div class="line">    constexpr <a class="code" href="group__expected.html#ga7440167038cbd110405573cf2bd873ad">expected</a>&lt;typename result_type&lt;F&gt;::type&gt;</div>
+<div class="line">  make_expected_from_call(F f);</div>
+<div class="line"></div>
+<div class="line">  <span class="comment">// X.Z.13, hash support</span></div>
+<div class="line">  template &lt;class T, class E&gt; struct hash&lt;<a class="code" href="group__expected.html#ga7440167038cbd110405573cf2bd873ad">expected</a>&lt;T,E&gt;&gt;;</div>
+<div class="line">  template &lt;class E&gt; struct hash&lt;<a class="code" href="group__expected.html#ga7440167038cbd110405573cf2bd873ad">expected</a>&lt;<span class="keywordtype">void</span>,E&gt;&gt;;</div>
+<div class="line">}}}</div>
+</div><!-- fragment -->  </td></tr>
+<tr>
+<td><div class="fragment"><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
 <div class="line"><span class="keyword">class </span><a class="code" href="group__expected.html#ga7440167038cbd110405573cf2bd873ad">expected</a></div>
 <div class="line">{</div>
 <div class="line"><span class="keyword">public</span>:</div>
@@ -339,19 +500,112 @@ expected&lt;T, E&gt;</h1>
 <div class="line">    error_type err; <span class="comment">// exposition only</span></div>
 <div class="line">  };</div>
 <div class="line">};</div>
-</div><!-- fragment --><hr/>
-<p><br/>
-</p>
+</div><!-- fragment --> </td><td><div class="fragment"><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
+<div class="line"><span class="keyword">class </span><a class="code" href="group__expected.html#ga7440167038cbd110405573cf2bd873ad">expected</a></div>
+<div class="line">{</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">  <span class="keyword">typedef</span> T value_type;</div>
+<div class="line">  <span class="keyword">typedef</span> E error_type;</div>
+<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> U&gt;</div>
+<div class="line">    <span class="keyword">struct </span>rebind {</div>
+<div class="line">      <span class="keyword">using</span> type = expected&lt;U, error_type&gt;;</div>
+<div class="line">    };</div>
+<div class="line"></div>
+<div class="line">  <span class="comment">// X.Z.4.1, constructors</span></div>
+<div class="line">  constexpr <a class="code" href="group__expected.html#ga7440167038cbd110405573cf2bd873ad">expected</a>() noexcept(see below);</div>
+<div class="line">  <a class="code" href="group__expected.html#ga7440167038cbd110405573cf2bd873ad">expected</a>(const <a class="code" href="group__expected.html#ga7440167038cbd110405573cf2bd873ad">expected</a>&amp;);</div>
+<div class="line">  expected(expected&amp;&amp;) noexcept(see below);</div>
+<div class="line">  constexpr expected(const T&amp;);</div>
+<div class="line">  constexpr expected(T&amp;&amp;);</div>
+<div class="line">  template &lt;class... Args&gt;</div>
+<div class="line">    constexpr explicit expected(in_place_t, Args&amp;&amp;...);</div>
+<div class="line">  template &lt;class U, class... Args&gt;</div>
+<div class="line">    constexpr explicit expected(in_place_t, initializer_list&lt;U&gt;, Args&amp;&amp;...);</div>
+<div class="line">  constexpr expected(<a class="code" href="group__expected.html#gaf61cb3012566f621329133c01f17c647">unexpected_type</a>&lt;E&gt; const&amp;);</div>
+<div class="line">  template &lt;class Err&gt;</div>
+<div class="line">    constexpr expected(<a class="code" href="group__expected.html#gaf61cb3012566f621329133c01f17c647">unexpected_type</a>&lt;Err&gt; const&amp;);</div>
+<div class="line">  template &lt;class... Args&gt;</div>
+<div class="line">    constexpr explicit expected(<a class="code" href="group__expected.html#ga43a5a0da82bcdf70d885e62ca9d5528a">unexpect_t</a>, Args&amp;&amp;...);</div>
+<div class="line">  template &lt;class U, class... Args&gt;</div>
+<div class="line">    constexpr explicit expected(unexpect_t, initializer_list&lt;U&gt;, Args&amp;&amp;...);</div>
+<div class="line"></div>
+<div class="line">  <span class="comment">// X.Z.4.2, destructor</span></div>
+<div class="line">  ~expected();</div>
+<div class="line"></div>
+<div class="line">  <span class="comment">// X.Z.4.3, assignment</span></div>
+<div class="line">  expected&amp; operator=(const expected&amp;);</div>
+<div class="line">  expected&amp; operator=(expected&amp;&amp;) noexcept(see below);</div>
+<div class="line">  template &lt;class U&gt; expected&amp; operator=(U&amp;&amp;);</div>
+<div class="line">    expected&amp; operator=(const <a class="code" href="group__expected.html#gaf61cb3012566f621329133c01f17c647">unexpected_type</a>&lt;E&gt;&amp;);</div>
+<div class="line">  expected&amp; operator=(<a class="code" href="group__expected.html#gaf61cb3012566f621329133c01f17c647">unexpected_type</a>&lt;E&gt;&amp;&amp;) noexcept(see below);</div>
+<div class="line">  template &lt;class... Args&gt;</div>
+<div class="line">    <span class="keywordtype">void</span> emplace(Args&amp;&amp;...);</div>
+<div class="line">  template &lt;class U, class... Args&gt;</div>
+<div class="line">    <span class="keywordtype">void</span> emplace(initializer_list&lt;U&gt;, Args&amp;&amp;...);</div>
+<div class="line"></div>
+<div class="line">  <span class="comment">// X.Z.4.4, swap</span></div>
+<div class="line">  <span class="keywordtype">void</span> <a class="code" href="group__monad.html#ga2ffab91838224f042fe7ed1b108e5ad7">swap</a>(expected&amp;) noexcept(see below);</div>
+<div class="line"></div>
+<div class="line">  <span class="comment">// X.Z.4.5, observers</span></div>
+<div class="line">  constexpr const T* operator -&gt;() const;</div>
+<div class="line">  T* operator -&gt;();</div>
+<div class="line">  constexpr const T&amp; operator *() const&amp;;</div>
+<div class="line">  T&amp; operator *() &amp;;</div>
+<div class="line">  constexpr const T&amp;&amp; operator *() const &amp;&amp;;</div>
+<div class="line">  constexpr T&amp;&amp; operator *() &amp;&amp;;</div>
+<div class="line">  constexpr explicit operator <span class="keywordtype">bool</span>() const noexcept;</div>
+<div class="line">  constexpr <span class="keywordtype">bool</span> has_value() const noexcept;</div>
+<div class="line">  constexpr const T&amp; value() const&amp;;</div>
+<div class="line">  constexpr T&amp; value() &amp;;</div>
+<div class="line">  constexpr const T&amp;&amp; value() const &amp;&amp;;</div>
+<div class="line">  constexpr T&amp;&amp; value() &amp;&amp;;</div>
+<div class="line">  constexpr const E&amp; error() const&amp;;</div>
+<div class="line">  E&amp; error() &amp;;</div>
+<div class="line">  constexpr E&amp;&amp; error() &amp;&amp;;</div>
+<div class="line">  constexpr const E&amp;&amp; error() const &amp;&amp;;</div>
+<div class="line">  constexpr <a class="code" href="group__expected.html#gaf61cb3012566f621329133c01f17c647">unexpected_type</a>&lt;E&gt; get_unexpected() const;</div>
+<div class="line">  template &lt;class U&gt;</div>
+<div class="line">    constexpr T value_or(U&amp;&amp;) const&amp;;</div>
+<div class="line">  template &lt;class U&gt;</div>
+<div class="line">    T value_or(U&amp;&amp;) &amp;&amp;;</div>
+<div class="line"></div>
+<div class="line">private:</div>
+<div class="line">  <span class="keywordtype">bool</span> has_value; <span class="comment">// exposition only</span></div>
+<div class="line">  union</div>
+<div class="line">  {</div>
+<div class="line">    value_type val; <span class="comment">// exposition only</span></div>
+<div class="line">    error_type err; <span class="comment">// exposition only</span></div>
+<div class="line">  };</div>
+<div class="line">};</div>
+</div><!-- fragment -->  </td></tr>
+</table>
 <h1><a class="anchor" id="synopsis_bad_expected_access"></a>
 bad_expected_access&lt;E&gt;</h1>
-<div class="fragment"><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> E&gt;</div>
+<table class="doxtable">
+<tr>
+<th>LEWG's Expected implementation</th><th>Outcome's Expected implementation </th></tr>
+<tr>
+<td><div class="fragment"><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> E&gt;</div>
 <div class="line"><span class="keyword">class </span>bad_expected_access : <span class="keyword">public</span> logic_error {</div>
 <div class="line"><span class="keyword">public</span>:</div>
 <div class="line">  <span class="keyword">explicit</span> bad_expected_access(E);</div>
+<div class="line"></div>
 <div class="line">  constexpr error_type <span class="keyword">const</span>&amp; <a class="code" href="group__monad.html#ga1a1a8470c4efc3a52412f3ecc79a0060">error</a>() <span class="keyword">const</span>;</div>
 <div class="line">  error_type&amp; <a class="code" href="group__monad.html#ga1a1a8470c4efc3a52412f3ecc79a0060">error</a>();</div>
 <div class="line">};</div>
-</div><!-- fragment --> </div></div><!-- contents -->
+</div><!-- fragment --> </td><td><div class="fragment"><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> E&gt;</div>
+<div class="line"><span class="keyword">class </span>bad_expected_access : <span class="keyword">public</span> logic_error {</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">  <span class="keyword">explicit</span> bad_expected_access(E) noexcept;       <span class="comment">// noexcept as this type is thrown as a C++ exception</span></div>
+<div class="line"></div>
+<div class="line">  const error_type &amp;error() const &amp; noexcept;     <span class="comment">// No point in these being constexpr due to inheriting logic_error</span></div>
+<div class="line">  error_type &amp;error() &amp; noexcept;</div>
+<div class="line">  const error_type &amp;&amp;error() const &amp;&amp; noexcept;</div>
+<div class="line">  error_type &amp;&amp;error() &amp;&amp; noexcept;</div>
+<div class="line">};</div>
+</div><!-- fragment -->  </td></tr>
+</table>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
