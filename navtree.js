@@ -26,6 +26,11 @@ var NAVTREE =
       ] ],
       [ "Short example program using expected<T, E>", "md_doc_md_02-tutorial_a.html#expected_example", null ]
     ] ],
+    [ "Tutorial part B: Outcome's outcome<T>, result<T> and option<T>", "md_doc_md_03-tutorial_b.html", [
+      [ "Unrestricted use of expected<T, E> is bad practice", "md_doc_md_03-tutorial_b.html#expected_is_bad", null ],
+      [ "Using expected<T, E> means typing more boilerplate", "md_doc_md_03-tutorial_b.html#expected_boilerplate", null ],
+      [ "Where Outcome's outcome<T>, result<T> and option<T> come from", "md_doc_md_03-tutorial_b.html#outcome_rationale", null ]
+    ] ],
     [ "Detail: Outcome's implementation of Expected", "md_doc_md_04-expectedsynopsis.html", [
       [ "unexpected_type<E>", "md_doc_md_04-expectedsynopsis.html#synopsis_unexpected_type", null ],
       [ "expected<T, E>", "md_doc_md_04-expectedsynopsis.html#synopsis_expected", null ],
