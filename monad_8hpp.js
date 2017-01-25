@@ -60,6 +60,7 @@ var monad_8hpp =
     [ "as_void", "monad_8hpp.html#ga31623e855d816d8be8b796107e29d4f7", null ],
     [ "as_void", "monad_8hpp.html#ga31623e855d816d8be8b796107e29d4f7", null ],
     [ "as_void", "monad_8hpp.html#ga31623e855d816d8be8b796107e29d4f7", null ],
+    [ "as_void", "monad_8hpp.html#ga61c46f3be4c8e19586871d20f37b5f10", null ],
     [ "emplace_function_ptr", "monad_8hpp.html#a89ddbe5df34aa20e4b2d363a4d9440b5", null ],
     [ "extended_error_code_log", "monad_8hpp.html#aa3997a8b00f62af89d4c240b469a9cbd", null ],
     [ "make_bad_expected_access", "monad_8hpp.html#a3f2827754aa774f72b31a16abc7f543b", null ],

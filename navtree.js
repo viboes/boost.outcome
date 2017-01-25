@@ -28,7 +28,8 @@ var NAVTREE =
     ] ],
     [ "Tutorial part B: Outcome's outcome<T>, result<T> and option<T>", "md_doc_md_03-tutorial_b.html", [
       [ "Unrestricted use of expected<T, E> is bad practice", "md_doc_md_03-tutorial_b.html#expected_is_bad", null ],
-      [ "Using expected<T, E> means typing more boilerplate", "md_doc_md_03-tutorial_b.html#expected_boilerplate", null ],
+      [ "Unrestricted use of expected<T, E> means typing more boilerplate", "md_doc_md_03-tutorial_b.html#expected_boilerplate", null ],
+      [ "Outcome's extended std::error_code", "md_doc_md_03-tutorial_b.html#error_code_extended", null ],
       [ "Where Outcome's outcome<T>, result<T> and option<T> come from", "md_doc_md_03-tutorial_b.html#outcome_rationale", null ]
     ] ],
     [ "Detail: Outcome's implementation of Expected", "md_doc_md_04-expectedsynopsis.html", [
@@ -82,7 +83,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 ".html",
-"group__monad.html#ggaf5abc43f8d09588556c4c65b53485c0dac537dcef56fd6ff75592c0220fd3dae1"
+"group__monad.html#ggaf5abc43f8d09588556c4c65b53485c0da621bbc00c646a321b70c18a067da2eb2"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

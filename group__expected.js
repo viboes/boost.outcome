@@ -11,6 +11,7 @@ var group__expected =
     [ "expected", "group__expected.html#ga7440167038cbd110405573cf2bd873ad", null ],
     [ "unexpect_t", "group__expected.html#ga43a5a0da82bcdf70d885e62ca9d5528a", null ],
     [ "unexpected_type", "group__expected.html#gaf61cb3012566f621329133c01f17c647", null ],
+    [ "as_void", "group__expected.html#ga61c46f3be4c8e19586871d20f37b5f10", null ],
     [ "make_expected", "group__expected.html#ga276cc35056dccfdbe461c11d8eeb3d93", null ],
     [ "make_expected", "group__expected.html#gafb7486a3c995e0d931f9528b07955cd6", null ],
     [ "make_expected", "group__expected.html#ga29da713c36094f47421c40844fbc577e", null ],

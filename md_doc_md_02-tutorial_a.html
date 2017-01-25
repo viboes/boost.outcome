@@ -494,7 +494,7 @@ Short example program using expected&lt;T, E&gt;</h1>
 <div class="line"><span class="comment">// Better: use EXACTLY the Boost.Outcome visible in the current translation unit</span></div>
 <div class="line"><span class="keyword">namespace </span><a class="code" href="group__monad.html#gaab2ff6220205017226794529c863b336">outcome</a> = <a class="code" href="group__config.html#gab113de43db2cd2a4cf1e33b54294944a">BOOST_OUTCOME_V1_NAMESPACE</a>;</div>
 </div><!-- fragment --><p>The <code>BOOST_OUTCOME_V1_NAMESPACE</code> macro encodes a unique hexadecimal value per release. This guarantees that the linker will not substitute a different version of Outcome than the Outcome you compiled against. It is therefore recommended that you use the <code>BOOST_OUTCOME_V1_NAMESPACE</code> macro.</p>
-<p>This example program using <code>expected&lt;T, E&gt;</code> replicates <a href="http://rustbyexample.com/std/result.html">the use example in the documentation for Rust's <code>Result&lt;T, E&gt;</code></a>. As you'll see in Tutorial part B, you would be unwise to use <code>expected&lt;T, E&gt;</code> like this in large C++ programs.</p>
+<p>This example program using <code>expected&lt;T, E&gt;</code> replicates <a href="http://rustbyexample.com/std/result.html">the use example in the documentation for Rust's <code>Result&lt;T, E&gt;</code></a>. As you will see in Tutorial part B, you would be unwise to use <code>expected&lt;T, E&gt;</code> like this in large C++ programs.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;../include/boost/outcome.hpp&quot;</span></div>
 <div class="line"></div>
 <div class="line"><span class="preprocessor">#include &lt;cfloat&gt;</span></div>
@@ -514,8 +514,6 @@ Short example program using expected&lt;T, E&gt;</h1>
 <div class="line">  };</div>
 <div class="line">  </div>
 <div class="line">  <span class="keyword">using</span> MathResult = outcome::expected&lt;double, MathError&gt;;</div>
-<div class="line">  <span class="keyword">static</span> <span class="keyword">inline</span> MathResult MathResultOk(<span class="keywordtype">double</span> x) { <span class="keywordflow">return</span> outcome::make_expected&lt;double, MathError&gt;(x); }</div>
-<div class="line">  <span class="keyword">static</span> <span class="keyword">inline</span> MathResult MathResultErr(MathError e) { <span class="keywordflow">return</span> outcome::make_expected_from_error&lt;double, MathError&gt;(e); }</div>
 <div class="line">  </div>
 <div class="line">  MathResult div(<span class="keywordtype">double</span> x, <span class="keywordtype">double</span> y) noexcept</div>
 <div class="line">  {</div>
@@ -523,27 +521,27 @@ Short example program using expected&lt;T, E&gt;</h1>
 <div class="line">    {</div>
 <div class="line">      <span class="comment">// This operation would fail, instead let&#39;s return the reason of</span></div>
 <div class="line">      <span class="comment">// the failure wrapped in E</span></div>
-<div class="line">      <span class="keywordflow">return</span> MathResultErr(MathError::DivisionByZero);</div>
+<div class="line">      <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga03e1e619a559e7f336621b1092e28527">outcome::make_unexpected</a>(MathError::DivisionByZero);</div>
 <div class="line">    }</div>
 <div class="line">    <span class="keywordflow">else</span></div>
 <div class="line">    {</div>
 <div class="line">      <span class="comment">// This operation is valid, return the result wrapped in T</span></div>
-<div class="line">      <span class="keywordflow">return</span> MathResultOk(x / y);</div>
+<div class="line">      <span class="keywordflow">return</span> x / y;</div>
 <div class="line">    }</div>
 <div class="line">  }</div>
 <div class="line"></div>
 <div class="line">  MathResult sqrt(<span class="keywordtype">double</span> x) noexcept</div>
 <div class="line">  {</div>
 <div class="line">    <span class="keywordflow">if</span>(x &lt; 0.0)</div>
-<div class="line">      <span class="keywordflow">return</span> MathResultErr(MathError::NegativeSquareRoot);</div>
-<div class="line">    <span class="keywordflow">return</span> MathResultOk(::sqrt(x));</div>
+<div class="line">      <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga03e1e619a559e7f336621b1092e28527">outcome::make_unexpected</a>(MathError::NegativeSquareRoot);</div>
+<div class="line">    return ::sqrt(x);</div>
 <div class="line">  }</div>
 <div class="line"></div>
 <div class="line">  MathResult ln(<span class="keywordtype">double</span> x) noexcept</div>
 <div class="line">  {</div>
 <div class="line">    <span class="keywordflow">if</span>(x &lt; 0.0)</div>
-<div class="line">      <span class="keywordflow">return</span> MathResultErr(MathError::NegativeLogarithm);</div>
-<div class="line">    <span class="keywordflow">return</span> MathResultOk(::log(x));</div>
+<div class="line">      <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga03e1e619a559e7f336621b1092e28527">outcome::make_unexpected</a>(MathError::NegativeLogarithm);</div>
+<div class="line">    return ::log(x);</div>
 <div class="line">  }</div>
 <div class="line">}</div>
 <div class="line"></div>
