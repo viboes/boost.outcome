@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['support',['Support',['../support.html',1,'']]]
+  ['prerequisites',['Prerequisites',['../prerequisites.html',1,'']]]
 ];

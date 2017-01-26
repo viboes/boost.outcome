@@ -46,6 +46,7 @@ var NAVTREE =
       [ "When should I use Outcome instead of expected<T, E>?", "md_doc_md_05-faq.html#result_vs_outcome", null ],
       [ "Are there some real world code bases using Outcome I can study?", "md_doc_md_05-faq.html#examples_of_use", null ]
     ] ],
+    [ "History and Acknowledgements", "md_doc_md_09-acknowledgements.html", null ],
     [ "Todo List", "todo.html", null ],
     [ "Modules", "modules.html", "modules" ],
     [ "Namespaces", null, [

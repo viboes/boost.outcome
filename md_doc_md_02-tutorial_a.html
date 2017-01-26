@@ -118,8 +118,13 @@ $(document).ready(function(){initNavTree('md_doc_md_02-tutorial_a.html','');});
 </ul>
 </div>
 <div class="textblock"><p><a class="anchor" id="tutorial_expected"></a></p>
-<p>Outcome provides a number of utility classes useful for ultra lightweight and constant time error handling in C++ 14 and later. One of these is <a class="el" href="md_doc_md_05-faq.html#expected_qoi">a highly conforming expected&lt;T, E&gt; implementation</a> which is currently before the ISO C++ standards Library Evolution Working Group for standardisation. <code>expected&lt;T, E&gt;</code> is a very flexible and generic utility class allowing perhaps too much unwise customisation in the hands of its users, so Outcome also provides a family of more hard coded and deliberately less flexible refinements to <code>expected&lt;T, E&gt;</code> called <code>outcome&lt;T&gt;</code> and <code>result&lt;T&gt;</code> the use of which ought to generate lower overhead. These less flexible refinements are likely much better suited to large code bases, encourage users to not unintentionally write bad practice code and come with the big advantage of requiring you to type less boilerplate during use.</p>
-<p>This tutorial is therefore split into two parts. The first part (part A) provides a broad overview of error handling in C++ in general and how <code>expected&lt;T, E&gt;</code> will contribute to that big menu of error handling design patterns available to the C++ programmer. The second part (<a class="el" href="md_doc_md_03-tutorial_b.html#tutorial_outcome">part B</a>) describes why you probably ought to not use unrestricted <code>expected&lt;T, E&gt;</code> in any real world code base and why you ought to use the refinements of <code>outcome&lt;T&gt;</code> or <code>result&lt;T&gt;</code> instead.</p>
+<p>Outcome provides a number of utility classes useful for ultra lightweight and constant time error handling in C++ 14 and later. One of these is <a class="el" href="md_doc_md_05-faq.html#expected_qoi">a highly conforming expected&lt;T, E&gt; implementation</a> which is currently before the ISO C++ standards Library Evolution Working Group for standardisation. <code>expected&lt;T, E&gt;</code> is a very flexible and generic utility class allowing perhaps too much unwise customisation in the hands of its users, so Outcome also provides a family of more hard coded and deliberately less flexible refinements to <code>expected&lt;T, E&gt;</code> called <code>outcome&lt;T&gt;</code> and <code>result&lt;T&gt;</code> the use of which ought to generate more maintainable code bases and require less typing of boilerplate by the programmer.</p>
+<p>This tutorial is therefore split into three parts:</p>
+<ol type="1">
+<li>The first part (part A, this part) provides a broad overview of error handling in C++ in general and how the <code>expected&lt;T, E&gt;</code> proposed for standardisation will contribute to that big menu of error handling design patterns available to the C++ programmer. This part isn't relevant to Outcome the library, but places it in context.</li>
+<li>The second part (<a class="el" href="md_doc_md_03-tutorial_b.html#tutorial_outcome">part B</a>) describes why you probably ought to not use unrestricted <code>expected&lt;T, E&gt;</code> in any real world code base and why you ought to use the refinements of <code>outcome&lt;T&gt;</code> or <code>result&lt;T&gt;</code> instead.</li>
+<li>The third part (part C) walks you through using Outcome's refinements <code>outcome&lt;T&gt;</code> and <code>result&lt;T&gt;</code>. Usage is very similar to Expected, but with less typing and more convenient extensions.</li>
+</ol>
 <h1><a class="anchor" id="c-style"></a>
 C style error handling: integer returns</h1>
 <p>Historically C++ 98 code has taken one of two design patterns when returning errors from functions. This pattern is taken from C, and indeed is pure C:</p>
@@ -577,7 +582,8 @@ Short example program using expected&lt;T, E&gt;</h1>
 <div class="line">  std::cout &lt;&lt; op(1.0, 10.0) &lt;&lt; std::endl;</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-</div><!-- fragment --></div></div><!-- contents -->
+</div><!-- fragment --> <dl class="section warning"><dt>Warning</dt><dd><b>BE WARNED</b> that Outcome's Expected implementation WILL track the LEWG Expected proposal. No API backwards compatibility will be maintained, so if proposed LEWG Expected breaks your code, so be it. If you would like to use a stable API, Outcome's refinements of <code>outcome&lt;T&gt;</code> and <code>result&lt;T&gt;</code> are expected to be API stable, or else pin yourself to an older git SHA revision of the Outcome library. </dd></dl>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
