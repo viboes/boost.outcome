@@ -153,10 +153,13 @@ Outcome's extended std::error_code</h1>
 <div class="line"></div>
 <div class="line">  <span class="comment">// New member functions follow</span></div>
 <div class="line"></div>
+<div class="line">  <span class="comment">// Fill a buffer with any extended error message and codes, returning bytes of buffer filled (zero if no extended message).</span></div>
 <div class="line">  <span class="keywordtype">size_t</span> extended_message(<span class="keywordtype">char</span> *buffer, <span class="keywordtype">size_t</span> len, <span class="keywordtype">unsigned</span> &amp;code1, <span class="keywordtype">unsigned</span> &amp;code2) <span class="keyword">const</span> noexcept;</div>
 <div class="line"></div>
+<div class="line">  <span class="comment">// Fill a buffer with any backtrace available, returning items filled if any.</span></div>
 <div class="line">  <span class="keywordtype">size_t</span> raw_backtrace(<span class="keywordtype">void</span> **buffer, <span class="keywordtype">size_t</span> len) <span class="keyword">const</span> noexcept</div>
 <div class="line"></div>
+<div class="line">  <span class="comment">// Returns an array of strings describing the backtrace. You must free() this after use.</span></div>
 <div class="line">  <span class="keywordtype">char</span> **backtrace() const noexcept;</div>
 <div class="line">};</div>
 <div class="line"></div>
