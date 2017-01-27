@@ -247,8 +247,8 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>BOOST_OUTCOME_MONAD_NAME</b>&#160;&#160;&#160;option</td></tr>
 <tr class="separator:a78c2bf36a933759c6cd003ab28f4caf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9e7dcdfa1e8a28b6d89ef81248fdba90"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9e7dcdfa1e8a28b6d89ef81248fdba90"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="monad_8hpp.html#a9e7dcdfa1e8a28b6d89ef81248fdba90">BOOST_OUTCOME_EXPECTED_DEFAULT_ERROR_TYPE</a>&#160;&#160;&#160;error_code_extended</td></tr>
-<tr class="memdesc:a9e7dcdfa1e8a28b6d89ef81248fdba90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Predefine to change the default error type for expected to something else. Defaults to <code>error_code_extended</code>. <br/></td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="monad_8hpp.html#a9e7dcdfa1e8a28b6d89ef81248fdba90">BOOST_OUTCOME_EXPECTED_DEFAULT_ERROR_TYPE</a>&#160;&#160;&#160;std::error_code</td></tr>
+<tr class="memdesc:a9e7dcdfa1e8a28b6d89ef81248fdba90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Predefine to change the default error type for expected to something else. Defaults to <code>std::error_code</code>. <br/></td></tr>
 <tr class="separator:a9e7dcdfa1e8a28b6d89ef81248fdba90"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa1529abb5f924d8c459e295759628593"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa1529abb5f924d8c459e295759628593"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>BOOST_OUTCOME__GLUE2</b>(x, y)&#160;&#160;&#160;x##y</td></tr>
@@ -711,7 +711,7 @@ constexpr unexpect_t&#160;</td><td class="memItemRight" valign="bottom"><a class
 <div class="line">  if(!unique.has_value())                                                                                                                                                                                                                                                                                                      \</div>
 <div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga61c46f3be4c8e19586871d20f37b5f10">BOOST_OUTCOME_V1_NAMESPACE::as_void</a>(unique);                                                                                                                                                                                                                                                                        \</div>
 <div class="line">  auto v(std::move(std::move(unique).<span class="keyword">get</span>()))</div>
-<div class="ttc" id="group__expected_html_ga61c46f3be4c8e19586871d20f37b5f10"><div class="ttname"><a href="group__expected.html#ga61c46f3be4c8e19586871d20f37b5f10">boost::outcome::v1_xxx::as_void</a></div><div class="ttdeci">expected&lt; void, E &gt; as_void(const expected&lt; T, E &gt; &amp;v)</div><div class="ttdoc">Makes a void expected from an input expected, forwarding any emptiness or error. </div><div class="ttdef"><b>Definition:</b> monad.hpp:2352</div></div>
+<div class="ttc" id="group__expected_html_ga61c46f3be4c8e19586871d20f37b5f10"><div class="ttname"><a href="group__expected.html#ga61c46f3be4c8e19586871d20f37b5f10">boost::outcome::v1_xxx::as_void</a></div><div class="ttdeci">expected&lt; void, E &gt; as_void(const expected&lt; T, E &gt; &amp;v)</div><div class="ttdoc">Makes a void expected from an input expected, forwarding any emptiness or error. </div><div class="ttdef"><b>Definition:</b> monad.hpp:2368</div></div>
 </div><!-- fragment -->
 </div>
 </div>

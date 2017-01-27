@@ -80,7 +80,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('md_doc_md_04-expectedsynopsis.html','');});
+$(document).ready(function(){initNavTree('md_doc_md_08-expectedsynopsis.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -102,12 +102,27 @@ $(document).ready(function(){initNavTree('md_doc_md_04-expectedsynopsis.html',''
 <div class="title">Detail: Outcome's implementation of Expected </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="outcome_expected_reference"></a> You should read <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0323r1.pdf">P0323R1</a> if you want a C++ standards level of detail regarding exactly what each member function's preconditions, effects and postconditions are. Unless otherwise indicated, Outcome's Expected behaves exactly the same.</p>
+<div class="textblock"><p><a class="anchor" id="outcome_expected_reference"></a> You should read <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0323r1.pdf">P0323R1</a> if you want a C++ standards level of detail regarding exactly what each member function's preconditions, effects and postconditions are. Unless otherwise indicated, Outcome's Expected behaves exactly the same. Outcome uses the <b>exact same</b> unit test suite as the LEWG Expected reference implementation, and passes it handily. As the LEWG reference implementation updates its unit test suite, we shall keep pace.</p>
 <p>For your convenience we copy and paste P0323R1's Expected synopsis here in the left hand column. In the right hand column we show Outcome's Expected implementation with the lines matched to the left perfectly (you may need to make your web browser page wider) so you can quickly compare the LEWG Expected to the Outcome Expected.</p>
 <p>As you will note, there are technically speaking quite a lot of deviations. Most are insignificant and will present no effect in code using Expected. Occasionally a function is missing or implemented significantly differently. If it has a significantly different signature, it is usually because we feel the LEWG Expected is defective in that area (e.g. the use of <code>decay&lt;&gt;</code> for the factory functions precludes manufacturing <code>expected&lt;const T&gt;</code> which we have found to be in practice very useful). If it is missing, it is either because we feel its presence is a defect in the LEWG Expected or we think it not worth implementing.</p>
+<p>A summary of the main differences:</p>
+<ul>
+<li>P0323R1 doesn't yet specify what will be done if you try accessing an expected which is valueless due to exception. We throw a <code>bad_expected_access&lt;void&gt;</code> in this situation as that seemed logical. If the LEWG proposal decides on something different, this implementation will change to track the LEWG proposal.</li>
+<li>Types <code>T</code> and <code>E</code> cannot be constructible into one another. This is a fundamental design choice in basic_monad to significantly reduce compile times so it won't be fixed.</li>
+<li><code>unexpected_type&lt;E&gt;</code> is implemented as an <code>expected&lt;void, E&gt;</code> and it lets the basic_monad machinery do the implicit conversion to some <code>expected&lt;T, E&gt;</code> through the less representative to more representative conversion rules.</li>
+<li>Our <code>expected&lt;T, E&gt;</code> defaults E to <code>std::error_code</code> rather than <code>std::error_condition</code> (the LEWG proposal is almost certainly wrong on this, it should be <code>std::error_code</code>). If you don't like this, predefine the <code>BOOST_OUTCOME_EXPECTED_DEFAULT_ERROR_TYPE</code> macro.</li>
+<li>We don't implement the ordering and hashing operator overloads due to <a href="https://akrzemi1.wordpress.com/2014/12/02/a-gotcha-with-optional/">https://akrzemi1.wordpress.com/2014/12/02/a-gotcha-with-optional/</a>. The fact the LEWG proposal does as currently proposed is a defect.</li>
+<li>We don't implement <code>make_expected_from_call()</code> as we think it highly likely to be removed from the next version of the proposal due to it conferring little value.</li>
+<li>Our Expected always defines the default, copy and move constructors even if the the type configured is not capable of it. That means <code>std::is_copy_constructible</code> etc returns true when they should return false. The reason why is again to significantly improve compile times by hugely reducing the number of templates which need to be instantiated during routine basic_monad usage, and again this won't be fixed. Instead use the static constexpr bools at:<ul>
+<li><code>expected&lt;T, E&gt;is_default_constructible</code></li>
+<li><code>expected&lt;T, E&gt;is_copy_constructible</code></li>
+<li><code>expected&lt;T, E&gt;is_move_constructible</code> <dl class="section note"><dt>Note</dt><dd>Depending on what any Boost peer review thinks, we may inject correct answers for the type traits for basic_monad into namespace std.</dd></dl>
 <hr/>
-<p><br/>
-</p>
+<br/>
+</li>
+</ul>
+</li>
+</ul>
 <h1><a class="anchor" id="synopsis_unexpected_type"></a>
 unexpected_type&lt;E&gt;</h1>
 <table  width="100%">
@@ -328,7 +343,7 @@ expected&lt;T, E&gt;</h1>
 <div class="line"><span class="keyword">namespace </span><a class="code" href="group__monad.html#gaab2ff6220205017226794529c863b336">outcome</a> {</div>
 <div class="line"><span class="keyword">inline</span> <span class="keyword">namespace </span>v1_xxx {</div>
 <div class="line">  <span class="comment">// X.Z.4, expected for object types</span></div>
-<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E = error_code_extended&gt;</div>
+<div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E = std::error_code&gt;</div>
 <div class="line">    <span class="keyword">using</span> <a class="code" href="group__expected.html#ga7440167038cbd110405573cf2bd873ad">expected</a> = basic_monad&lt;detail::expected_policy&lt;T, E&gt;&gt;;</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">// X.Z.5, Specialization for void.</span></div>
@@ -415,9 +430,9 @@ expected&lt;T, E&gt;</h1>
 <div class="line">  <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="group__monad.html#ga2ffab91838224f042fe7ed1b108e5ad7">swap</a>(expected&lt;T,E&gt;&amp;, expected&lt;T,E&gt;&amp;) noexcept(see below);</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">// X.Z.12, Factories</span></div>
-<div class="line">  template &lt;class T, class E = error_code_extended&gt;</div>
+<div class="line">  template &lt;class T, class E = std::error_code&gt;</div>
 <div class="line">    constexpr inline <a class="code" href="group__expected.html#ga7440167038cbd110405573cf2bd873ad">expected</a>&lt;T, E&gt; make_expected(const T&amp; v);</div>
-<div class="line">  template &lt;class T, class E = error_code_extended&gt;</div>
+<div class="line">  template &lt;class T, class E = std::error_code&gt;</div>
 <div class="line">    constexpr inline <a class="code" href="group__expected.html#ga7440167038cbd110405573cf2bd873ad">expected</a>&lt;T, E&gt; make_expected(T&amp;&amp; v);</div>
 <div class="line">  inline <a class="code" href="group__expected.html#ga7440167038cbd110405573cf2bd873ad">expected</a>&lt;<span class="keywordtype">void</span>&gt; make_expected();</div>
 <div class="line">  template &lt;class T, class E&gt;</div>

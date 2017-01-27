@@ -26,25 +26,28 @@ var NAVTREE =
       ] ],
       [ "Short example program using expected<T, E>", "md_doc_md_02-tutorial_a.html#expected_example", null ]
     ] ],
-    [ "Tutorial part B: Outcome's outcome<T>, result<T> and option<T>", "md_doc_md_03-tutorial_b.html", [
+    [ "Tutorial part B: Don't use expected<T, E>!", "md_doc_md_03-tutorial_b.html", [
+      [ "Expected is unstable", "md_doc_md_03-tutorial_b.html#expected_is_unstable", null ],
       [ "Unrestricted use of expected<T, E> is bad practice", "md_doc_md_03-tutorial_b.html#expected_is_bad", null ],
       [ "Unrestricted use of expected<T, E> means typing more boilerplate", "md_doc_md_03-tutorial_b.html#expected_boilerplate", null ],
-      [ "Outcome's extended std::error_code", "md_doc_md_03-tutorial_b.html#error_code_extended", null ],
-      [ "Where Outcome's outcome<T>, result<T> and option<T> come from", "md_doc_md_03-tutorial_b.html#outcome_rationale", null ]
+      [ "std::error_code CAN replace your custom error types", "md_doc_md_03-tutorial_b.html#error_codes_insufficient", null ]
     ] ],
-    [ "Detail: Outcome's implementation of Expected", "md_doc_md_04-expectedsynopsis.html", [
-      [ "unexpected_type<E>", "md_doc_md_04-expectedsynopsis.html#synopsis_unexpected_type", null ],
-      [ "expected<T, E>", "md_doc_md_04-expectedsynopsis.html#synopsis_expected", null ],
-      [ "bad_expected_access<E>", "md_doc_md_04-expectedsynopsis.html#synopsis_bad_expected_access", null ]
+    [ "Tutorial part C: Outcome's outcome<T>, result<T> and option<T>", "md_doc_md_04-tutorial_c.html", [
+      [ "Outcome's extended std::error_code", "md_doc_md_04-tutorial_c.html#error_code_extended", null ],
+      [ "Where Outcome's outcome<T>, result<T> and option<T> come from", "md_doc_md_04-tutorial_c.html#outcome_rationale", null ]
     ] ],
-    [ "Frequently Asked Questions", "md_doc_md_05-faq.html", [
-      [ "How close to the proposed C++ 20 standard expected<T, E> is Outcome's", "md_doc_md_05-faq.html#expected_qoi", null ],
-      [ "Hard coding error_code and exception_ptr is incredibly restrictive and ruins Outcome for me. Can you not do that please (i.e. make it more like expected<T, E> with its arbitrary type E)?", "md_doc_md_05-faq.html#dontlike", null ],
-      [ "I want to use a custom enum as the error type, not an error_code!", "md_doc_md_05-faq.html#custom_enum", null ],
-      [ "How do I implement chains of errors to transport errors happening whilst handling another error?", "md_doc_md_05-faq.html#error_chains", null ],
-      [ "When should I use a result<T> instead of an outcome<T>?", "md_doc_md_05-faq.html#outcome_vs_result", null ],
-      [ "When should I use Outcome instead of expected<T, E>?", "md_doc_md_05-faq.html#result_vs_outcome", null ],
-      [ "Are there some real world code bases using Outcome I can study?", "md_doc_md_05-faq.html#examples_of_use", null ]
+    [ "Frequently Asked Questions", "md_doc_md_07-faq.html", [
+      [ "Hard coding error_code and exception_ptr is incredibly restrictive and ruins Outcome for me. Can you not do that please (i.e. make it more like expected<T, E> with its arbitrary type E)?", "md_doc_md_07-faq.html#dontlike", null ],
+      [ "I want to use a custom enum as the error type, not an error_code!", "md_doc_md_07-faq.html#custom_enum", null ],
+      [ "How do I implement chains of errors to transport errors happening whilst handling another error?", "md_doc_md_07-faq.html#error_chains", null ],
+      [ "When should I use a result<T> instead of an outcome<T>?", "md_doc_md_07-faq.html#outcome_vs_result", null ],
+      [ "When should I use Outcome instead of expected<T, E>?", "md_doc_md_07-faq.html#result_vs_outcome", null ],
+      [ "Are there some real world code bases using Outcome I can study?", "md_doc_md_07-faq.html#examples_of_use", null ]
+    ] ],
+    [ "Detail: Outcome's implementation of Expected", "md_doc_md_08-expectedsynopsis.html", [
+      [ "unexpected_type<E>", "md_doc_md_08-expectedsynopsis.html#synopsis_unexpected_type", null ],
+      [ "expected<T, E>", "md_doc_md_08-expectedsynopsis.html#synopsis_expected", null ],
+      [ "bad_expected_access<E>", "md_doc_md_08-expectedsynopsis.html#synopsis_bad_expected_access", null ]
     ] ],
     [ "History and Acknowledgements", "md_doc_md_09-acknowledgements.html", null ],
     [ "Todo List", "todo.html", null ],
@@ -84,7 +87,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 ".html",
-"group__monad.html#ggaf5abc43f8d09588556c4c65b53485c0da621bbc00c646a321b70c18a067da2eb2"
+"group__monad.html#ggaf5abc43f8d09588556c4c65b53485c0da25621f93230ec01ef6ead2516f3613ce"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>boost.outcome: Tutorial part B: Outcome&#39;s outcome&lt;T&gt;, result&lt;T&gt; and option&lt;T&gt;</title>
+<title>boost.outcome: Tutorial part B: Don&#39;t use expected&lt;T, E&gt;!</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,25 +99,31 @@ $(document).ready(function(){initNavTree('md_doc_md_03-tutorial_b.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Tutorial part B: Outcome's outcome&lt;T&gt;, result&lt;T&gt; and option&lt;T&gt; </div>  </div>
+<div class="title">Tutorial part B: Don't use expected&lt;T, E&gt;! </div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#expected_is_bad">Unrestricted use of expected<T, E> is bad practice</a></li>
+<ul><li class="level1"><a href="#expected_is_unstable">Expected is unstable</a></li>
+<li class="level1"><a href="#expected_is_bad">Unrestricted use of expected<T, E> is bad practice</a></li>
 <li class="level1"><a href="#expected_boilerplate">Unrestricted use of expected<T, E> means typing more boilerplate</a></li>
-<li class="level1"><a href="#error_code_extended">Outcome's extended std::error_code</a></li>
-<li class="level1"><a href="#outcome_rationale">Where Outcome's outcome<T>, result<T> and option<T> come from</a></li>
+<li class="level1"><a href="#error_codes_insufficient">std::error_code CAN replace your custom error types</a></li>
 </ul>
 </div>
-<div class="textblock"><p><a class="anchor" id="tutorial_outcome"></a></p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Todo:</a></b></dt><dd>This section is not finished yet and may contain inaccurate or incorrect information.</dd></dl>
-<p>Outcome provides a number of utility classes useful for ultra lightweight and constant time error handling in C++ 14 and later. One of these is <a class="el" href="md_doc_md_05-faq.html#expected_qoi">a highly conforming expected&lt;T, E&gt; implementation</a> which is currently before the ISO C++ standards Library Evolution Working Group for standardisation. <code>expected&lt;T, E&gt;</code> is a very flexible and generic utility class allowing perhaps too much unwise customisation in the hands of its users, so Outcome also provides a family of more hard coded and deliberately less flexible refinements to <code>expected&lt;T, E&gt;</code> called <code>outcome&lt;T&gt;</code> and <code>result&lt;T&gt;</code> the use of which ought to generate more maintainable code bases and require less typing of boilerplate by the programmer.</p>
+<div class="textblock"><p><a class="anchor" id="tutorial_whynot"></a></p>
+<p>Outcome provides a number of utility classes useful for ultra lightweight and constant time error handling in C++ 14 and later. One of these is <a class="el" href="md_doc_md_08-expectedsynopsis.html#outcome_expected_reference">a highly conforming expected&lt;T, E&gt; implementation</a> which is currently before the ISO C++ standards Library Evolution Working Group for standardisation. <code>expected&lt;T, E&gt;</code> is a very flexible and generic utility class allowing perhaps too much unwise customisation in the hands of its users, so Outcome also provides a family of more hard coded and deliberately less flexible refinements to <code>expected&lt;T, E&gt;</code> called <code>outcome&lt;T&gt;</code> and <code>result&lt;T&gt;</code> the use of which ought to generate more maintainable code bases and require less typing of boilerplate by the programmer.</p>
 <p>This tutorial is therefore split into three parts:</p>
 <ol type="1">
 <li>The first part (<a class="el" href="md_doc_md_02-tutorial_a.html#tutorial_expected">part A</a>) provides a broad overview of error handling in C++ in general and how the <code>expected&lt;T, E&gt;</code> proposed for standardisation will contribute to that big menu of error handling design patterns available to the C++ programmer. This part isn't relevant to Outcome the library, but places it in context.</li>
 <li>The second part (part B, this part) describes why you probably ought to not use unrestricted <code>expected&lt;T, E&gt;</code> in any real world code base and why you ought to use the refinements of <code>outcome&lt;T&gt;</code> or <code>result&lt;T&gt;</code> instead.</li>
-<li>The third part (part C) walks you through using Outcome's refinements <code>outcome&lt;T&gt;</code> and <code>result&lt;T&gt;</code>. Usage is very similar to Expected, but with less typing and more convenient extensions.</li>
+<li>The third part (<a class="el" href="md_doc_md_04-tutorial_c.html#tutorial_outcome">part C</a>) walks you through using Outcome's refinements <code>outcome&lt;T&gt;</code> and <code>result&lt;T&gt;</code>, plus its <code>extended_error_code</code>. Usage is very similar to Expected, but with less typing and more convenient extensions.</li>
 </ol>
+<hr/>
+<p><br/>
+</p>
+<h1><a class="anchor" id="expected_is_unstable"></a>
+Expected is unstable</h1>
+<p>Outcome's implementation of Expected WILL track the LEWG Expected proposal. No API backwards compatibility will be maintained, so if proposed LEWG Expected breaks your code, so will Outcome's Expected.</p>
+<p>If you would like to use a stable API, Outcome's refinements of <code>outcome&lt;T&gt;</code> and <code>result&lt;T&gt;</code> are expected to be API stable, or else pin yourself to an older git SHA revision of the Outcome library.</p>
 <hr/>
 <p><br/>
 </p>
@@ -513,71 +519,199 @@ Unrestricted use of expected&lt;T, E&gt; means typing more boilerplate</h1>
 </div><!-- fragment --><hr/>
 <p><br/>
 </p>
-<h1><a class="anchor" id="error_code_extended"></a>
-Outcome's extended std::error_code</h1>
-<p>A lot of people find <code>std::error_code</code> too constraining and value their custom error types precisely because they can carry <em>payload</em> e.g. a custom string describing exactly the cause of the error, or maybe a backtrace of the exact offending call sequence leading to the error. They therefore reject the restriction to <code>std::error_code</code> as unsuitable for their use case.</p>
-<p>Outcome provides an <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1error__code__extended.html">error_code_extended</a> refinement of <code>std::error_code</code> for exactly this situation. <code>error_code_extended</code> inherits publicly from <code>std::error_code</code>, adding two new member functions: <code>extended_message()</code> and <code>backtrace()</code>. These <em>may</em> provide additional information about the error code like any <code>what()</code> message from the C++ exception the error code was constructed from (if any), or the stack backtrace of the point at which the <code>error_code_extended</code> was constructed.</p>
-<div class="fragment"><div class="line"><span class="keyword">class </span>error_code_extended : <span class="keyword">public</span> std::error_code</div>
+<h1><a class="anchor" id="error_codes_insufficient"></a>
+std::error_code CAN replace your custom error types</h1>
+<p>The final reason that people say they need to use custom error types with Expected is because they need the custom error type to carry custom <em>payload</em> such as data directly relating to the error which occurred, and because <code>std::error_code</code> can only carry a situation-unspecific integer code and category, that it is therefore unsuited for their particular use case. Let's have a look at a typical custom error type carrying payload:</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;../include/boost/outcome.hpp&quot;</span></div>
+<div class="line"></div>
+<div class="line"><span class="preprocessor">#include &lt;fcntl.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#ifdef _MSC_VER</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#include &lt;io.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#else</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#include &lt;unistd.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"></div>
+<div class="line"><span class="keyword">namespace </span><a class="code" href="group__monad.html#gaab2ff6220205017226794529c863b336">outcome</a> = <a class="code" href="group__config.html#gab113de43db2cd2a4cf1e33b54294944a">BOOST_OUTCOME_V1_NAMESPACE</a>;</div>
+<div class="line"></div>
+<div class="line"><span class="comment">// RAII for an open file handle</span></div>
+<div class="line"><span class="keyword">class </span>handle</div>
 <div class="line">{</div>
+<div class="line">  <span class="keywordtype">int</span> _fd;</div>
 <div class="line"><span class="keyword">public</span>:</div>
-<div class="line">  error_code_extended();</div>
-<div class="line">  error_code_extended(<span class="keywordtype">int</span> ec, <span class="keyword">const</span> std::error_category &amp;cat, <span class="keyword">const</span> <span class="keywordtype">char</span> *msg = <span class="keyword">nullptr</span>, <span class="keywordtype">unsigned</span> code1 = 0, <span class="keywordtype">unsigned</span> code2 = 0, <span class="keywordtype">bool</span> backtrace = <span class="keyword">false</span>);</div>
-<div class="line">  <a class="code" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">template &lt;class ErrorCodeEnum, typename = typename std::enable_if&lt;std::is_error_code_enum&lt;ErrorCodeEnum&gt;::value</a>&gt;::type&gt;</div>
-<div class="line">    error_code_extended(ErrorCodeEnum e);</div>
-<div class="line">  <span class="keyword">explicit</span> error_code_extended(<span class="keyword">const</span> std::error_code &amp;e, <span class="keyword">const</span> <span class="keywordtype">char</span> *msg = <span class="keyword">nullptr</span>, <span class="keywordtype">unsigned</span> code1 = 0, <span class="keywordtype">unsigned</span> code2 = 0, <span class="keywordtype">bool</span> backtrace = <span class="keyword">false</span>);</div>
-<div class="line">  <span class="keyword">explicit</span> error_code_extended(std::error_code &amp;&amp;e, <span class="keyword">const</span> <span class="keywordtype">char</span> *msg = <span class="keyword">nullptr</span>, <span class="keywordtype">unsigned</span> code1 = 0, <span class="keywordtype">unsigned</span> code2 = 0, <span class="keywordtype">bool</span> backtrace = <span class="keyword">false</span>);</div>
-<div class="line">  <span class="keywordtype">void</span> assign(<span class="keywordtype">int</span> ec, <span class="keyword">const</span> std::error_category &amp;cat, <span class="keyword">const</span> <span class="keywordtype">char</span> *msg = <span class="keyword">nullptr</span>, <span class="keywordtype">unsigned</span> code1 = 0, <span class="keywordtype">unsigned</span> code2 = 0, <span class="keywordtype">bool</span> backtrace = <span class="keyword">false</span>);</div>
-<div class="line">  <span class="keywordtype">void</span> clear();</div>
+<div class="line">  handle() : _fd(-1) {}</div>
+<div class="line">  handle(<span class="keywordtype">int</span> fd) : _fd(fd) {}</div>
+<div class="line">  handle(handle &amp;&amp;o) noexcept : _fd(o._fd) { o._fd = -1; }</div>
+<div class="line">  handle &amp;operator=(handle &amp;&amp;o) noexcept { this-&gt;~handle(); <span class="keyword">new</span>(<span class="keyword">this</span>) handle(std::move(o)); <span class="keywordflow">return</span> *<span class="keyword">this</span>; }</div>
+<div class="line">  <span class="keyword">virtual</span> ~handle() { <span class="keywordflow">if</span> (-1 != _fd) ::close(_fd); }</div>
+<div class="line">  ssize_t read(<span class="keywordtype">void</span> *buffer, <span class="keywordtype">size_t</span> len) { return ::read(_fd, buffer, len); }</div>
+<div class="line">};</div>
+<div class="line"><span class="keyword">using</span> handle_ref = std::shared_ptr&lt;handle&gt;;</div>
+<div class="line"><span class="keyword">inline</span> handle_ref make_handle(<span class="keywordtype">int</span> fd) { <span class="keywordflow">return</span> std::make_shared&lt;handle&gt;(fd); }</div>
 <div class="line"></div>
-<div class="line">  <span class="comment">// New member functions</span></div>
-<div class="line"></div>
-<div class="line">  <span class="comment">// Fill a char buffer with the extended message, retrieving the two extended unsigned integer codes</span></div>
-<div class="line">  <span class="keywordtype">size_t</span> extended_message(<span class="keywordtype">char</span> *buffer, <span class="keywordtype">size_t</span> len, <span class="keywordtype">unsigned</span> &amp;code1, <span class="keywordtype">unsigned</span> &amp;code2) <span class="keyword">const</span> noexcept;</div>
-<div class="line"></div>
-<div class="line">  <span class="comment">// Return an array of strings describing the stack at the time of construction. MUST call free() on this returned pointer.</span></div>
-<div class="line">  <span class="keywordtype">char</span> **backtrace() const noexcept;</div>
+<div class="line"><span class="comment">// Custom error type</span></div>
+<div class="line"><span class="keyword">struct </span>file_error</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">enum</span></div>
+<div class="line">  {</div>
+<div class="line">    no_error = 0,</div>
+<div class="line">    out_of_memory,</div>
+<div class="line">    failure_to_open,</div>
+<div class="line">    io_failure,</div>
+<div class="line">    format_corrupt</div>
+<div class="line">  } code;</div>
+<div class="line">  <span class="keyword">const</span> <span class="keywordtype">char</span> *path;</div>
 <div class="line">};</div>
 <div class="line"></div>
-<div class="line"><span class="comment">// Prints the extended error code, including any extended information if available</span></div>
-<div class="line">inline std::ostream &amp;operator&lt;&lt;(std::ostream &amp;s, const error_code_extended &amp;ec);</div>
-</div><!-- fragment --><p><code>error_code_extended</code> is completely API compatible with <code>std::error_code</code> and all its member functions can be used the same way. You can supply a <code>std::error_code</code> to an extended error code, or else construct an extended error code the same way you would a STL error code. You should note that it is <b>always safe</b> to slice <code>error_code_extended</code> into an <code>std::error_code</code>, so you can safely feed <code>error_code_extended</code> to anything consuming a <code>std::error_code</code>.</p>
-<p>The main big additions are obviously the ability to add a custom string message to an extended error code, this allows the preservation of the original <code>what()</code> message when converting a thrown exception into an extended error code. You can also add two arbitrary unsigned integer codes and most interestingly, a backtrace of the stack at the point of construction. The extended message and backtrace can be later fetched using the new member functions, though note that the storage for these is kept in a statically allocated threadsafe ring buffer and so may vanish at some arbitrary later point when the storage gets recycled. If this happens, <code>extended_message()</code> will return zero characters written and <code>backtrace()</code> will return a null pointer.</p>
-<p>Because the storage for the extended information may be recycled at any arbitrary future point, you ought to make sure that you copy the extended information as soon as possible after the <code>error_code_extended</code> is constructed. In other words, don't store <code>error_code_extended</code> as-is into say a vector, instead extract the information into a custom struct.</p>
-<dl class="section note"><dt>Note</dt><dd>Construction of an extended error code with extended message or codes takes a maximum of a microsecond on recent hardware due to an atomic pointer increment. Constructing an extended error code with backtrace takes a maximum of about 35 microseconds on a recent Ivy Bridge Intel CPU. <b>No memory allocation</b> is ever performed when constructing an extended error code, latency is always predictable.</dd></dl>
-<hr/>
-<p><br/>
-</p>
-<h1><a class="anchor" id="outcome_rationale"></a>
-Where Outcome's outcome&lt;T&gt;, result&lt;T&gt; and option&lt;T&gt; come from</h1>
-<p>Hopefully by now you are persuaded to always <em>restrict</em> your use of <code>expected&lt;T, E&gt;</code> to one of:</p>
-<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; <span class="keyword">using</span> result = outcome::expected&lt;T, std::error_code&gt;;</div>
-<div class="line"><span class="keyword">using</span> bad_result_access = outcome::bad_expected_access&lt;std::error_code&gt;;</div>
-</div><!-- fragment --><p>... or ...</p>
-<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; <span class="keyword">using</span> result = outcome::expected&lt;T, std::exception_ptr&gt;;</div>
-<div class="line"><span class="keyword">using</span> bad_result_access = outcome::bad_expected_access&lt;std::exception_ptr&gt;;</div>
-</div><!-- fragment --><p>If you've been convinced, then you'll be glad that Outcome provides additional refinements of <code>expected&lt;T, E&gt;</code> designed to make your programming life even easier again. As a rough <b>semantic</b> map onto <code>optional&lt;T&gt;</code>, <code>variant&lt;...&gt;</code> and <code>expected&lt;T, E&gt;</code>:</p>
-<pre>
-template&lt;class T&gt; using option = std::optional&lt;T&gt;;</pre><pre>template&lt;class T&gt; using result = std::optional&lt;
-  std::experimental::expected&lt;
-    T,
-    error_code_extended
-  &gt;
-&gt;;</pre><pre>template&lt;class T&gt; using outcome = std::optional&lt;
-  std::experimental::expected&lt;
-    T,
-    std::variant&lt;
-      error_code_extended,
-      std::exception_ptr
-    &gt;
-  &gt;
-&gt;;
-</pre><p>So Outcome's <code>outcome&lt;T&gt;</code>, <code>result&lt;T&gt;</code> and <code>option&lt;T&gt;</code> assume the error type is hard coded to the C++ 11 standard error transport infrastructure, and because they hard code this they can make a series of optimisations both at runtime and for you the programmer during coding which an <code>expected&lt;T, E&gt;</code> implementation can not. In Outcome's refinements, an <em>empty</em> transport is empty, a <em>valued</em> transport contains a <code>T</code>, an <em>errored</em> transport contains an <code>error_code_extended</code> and an <em>excepted</em> transport contains a <code>std::exception_ptr</code>.</p>
-<ul>
-<li><code>.value()</code> on an errored transport directly throws <code>std::system_error</code> with the error code instead of throwing a wrapper type.</li>
-<li><code>.value()</code> on an excepted transport directly rethrows the exception pointer instead of throwing a wrapper type.</li>
-<li>Implicit conversion is permitted for any less representative form into any more representative form, so <code>option&lt;T&gt;</code> auto converts to a <code>result&lt;T&gt;</code> preserving exact contents. This turns out to be very useful in large C++ codebases where the lowest layers tend to be written using <code>option&lt;T&gt;</code> and <code>result&lt;T&gt;</code>, whilst highest layers tend to be written using <code>outcome&lt;T&gt;</code> and C++ exception throws.</li>
-</ul>
-<p>todo </p>
+<div class="line"><span class="keyword">extern</span> outcome::expected&lt;handle_ref, file_error&gt; openfile(<span class="keyword">const</span> <span class="keywordtype">char</span> *path)</div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordtype">int</span> fd = open(path, O_RDONLY);</div>
+<div class="line">  <span class="keywordflow">if</span> (fd == -1)</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga03e1e619a559e7f336621b1092e28527">outcome::make_unexpected</a>(file_error{ file_error::failure_to_open, path });</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keywordflow">try</span></div>
+<div class="line">  {</div>
+<div class="line">    handle_ref h = make_handle(fd);</div>
+<div class="line">    <span class="keywordtype">char</span> temp[1025];</div>
+<div class="line">    ssize_t read = h-&gt;read(temp, 1024);</div>
+<div class="line">    <span class="keywordflow">if</span>(-1 == read)</div>
+<div class="line">      <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga03e1e619a559e7f336621b1092e28527">outcome::make_unexpected</a>(file_error{ file_error::io_failure, path });</div>
+<div class="line">    temp[read] = 0;</div>
+<div class="line">    <span class="keywordflow">if</span>(strchr(temp, 13) != <span class="keyword">nullptr</span>)</div>
+<div class="line">      <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga03e1e619a559e7f336621b1092e28527">outcome::make_unexpected</a>(file_error{ file_error::format_corrupt, path });</div>
+<div class="line">    <span class="keywordflow">return</span> h;</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::bad_alloc &amp;)</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga03e1e619a559e7f336621b1092e28527">outcome::make_unexpected</a>(file_error{ file_error::out_of_memory, <span class="keyword">nullptr</span> });</div>
+<div class="line">  }</div>
+<div class="line">  <span class="comment">// All other exceptions thrown upwards to abort</span></div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">void</span>)</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">auto</span> h = openfile(<span class="stringliteral">&quot;somefile&quot;</span>);</div>
+<div class="line">  <span class="keywordflow">if</span> (h)</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;File opened successfully&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">  <span class="keywordflow">else</span></div>
+<div class="line">    std::cerr &lt;&lt; <span class="stringliteral">&quot;Failed to open file &quot;</span> &lt;&lt; h.error().path &lt;&lt; <span class="stringliteral">&quot; due to &quot;</span> &lt;&lt; h.error().code &lt;&lt; std::endl;</div>
+<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+</div><!-- fragment --><p> So here we have a file open function which opens some path returning a reference counted handle to the open file and if that fails, it will return a custom error type with the path of the file which failed as its payload. As much as this is a simple example where the payload carried is just a pointer, you could actually transport any arbitrary data as your payload such as a stack backtrace etc.</p>
+<p>The thing is, <code>std::error_code</code> is exactly the right solution to this problem. A lot of people hung up on their custom error types aren't thinking the problem through using STL fundamentals as building blocks with which to compose better and more elegant solutions:</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;../include/boost/outcome.hpp&quot;</span></div>
+<div class="line"></div>
+<div class="line"><span class="preprocessor">#include &lt;fcntl.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#ifdef _MSC_VER</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#include &lt;io.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#else</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#include &lt;unistd.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"></div>
+<div class="line"><span class="keyword">namespace </span><a class="code" href="group__monad.html#gaab2ff6220205017226794529c863b336">outcome</a> = <a class="code" href="group__config.html#gab113de43db2cd2a4cf1e33b54294944a">BOOST_OUTCOME_V1_NAMESPACE</a>;</div>
+<div class="line"></div>
+<div class="line"><span class="comment">// RAII for an open file handle</span></div>
+<div class="line"><span class="keyword">class </span>handle</div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordtype">int</span> _fd;</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">  handle() : _fd(-1) {}</div>
+<div class="line">  handle(<span class="keywordtype">int</span> fd) : _fd(fd) {}</div>
+<div class="line">  handle(handle &amp;&amp;o) noexcept : _fd(o._fd) { o._fd = -1; }</div>
+<div class="line">  handle &amp;operator=(handle &amp;&amp;o) noexcept { this-&gt;~handle(); <span class="keyword">new</span>(<span class="keyword">this</span>) handle(std::move(o)); <span class="keywordflow">return</span> *<span class="keyword">this</span>; }</div>
+<div class="line">  <span class="keyword">virtual</span> ~handle() { <span class="keywordflow">if</span> (-1 != _fd) ::close(_fd); }</div>
+<div class="line">  ssize_t read(<span class="keywordtype">void</span> *buffer, <span class="keywordtype">size_t</span> len) { return ::read(_fd, buffer, len); }</div>
+<div class="line">};</div>
+<div class="line"><span class="keyword">using</span> handle_ref = std::shared_ptr&lt;handle&gt;;</div>
+<div class="line"><span class="keyword">inline</span> handle_ref make_handle(<span class="keywordtype">int</span> fd) { <span class="keywordflow">return</span> std::make_shared&lt;handle&gt;(fd); }</div>
+<div class="line"></div>
+<div class="line"><span class="comment">// Custom error type</span></div>
+<div class="line"><span class="keyword">enum class</span> extended_error</div>
+<div class="line">{</div>
+<div class="line">  format_corrupt</div>
+<div class="line">};</div>
+<div class="line"><span class="keyword">namespace </span>detail</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">class </span>extended_error_category : <span class="keyword">public</span> std::error_category</div>
+<div class="line">  {</div>
+<div class="line">  <span class="keyword">public</span>:</div>
+<div class="line">    <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keywordtype">char</span> *name() const noexcept override final { <span class="keywordflow">return</span> <span class="stringliteral">&quot;extended_error&quot;</span>; }</div>
+<div class="line">    <span class="keyword">virtual</span> std::string message(<span class="keywordtype">int</span> c) <span class="keyword">const</span> <span class="keyword">override</span> <span class="keyword">final</span></div>
+<div class="line">    {</div>
+<div class="line">      <span class="keywordflow">switch</span> (static_cast&lt;extended_error&gt;(c))</div>
+<div class="line">      {</div>
+<div class="line">      <span class="keywordflow">case</span> extended_error::format_corrupt:</div>
+<div class="line">        <span class="keywordflow">return</span> <span class="stringliteral">&quot;format corrupt&quot;</span>;</div>
+<div class="line">      <span class="keywordflow">default</span>:</div>
+<div class="line">        <span class="keywordflow">return</span> <span class="stringliteral">&quot;unknown&quot;</span>;</div>
+<div class="line">      }</div>
+<div class="line">    }</div>
+<div class="line">  };</div>
+<div class="line">}</div>
+<div class="line"><span class="keyword">extern</span> <span class="keyword">const</span> detail::extended_error_category &amp;extended_error_category()</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">static</span> detail::extended_error_category c;</div>
+<div class="line">  <span class="keywordflow">return</span> c;</div>
+<div class="line">}</div>
+<div class="line"><span class="keyword">struct </span>file_error</div>
+<div class="line">{</div>
+<div class="line">  std::error_code code;</div>
+<div class="line">  <span class="keyword">const</span> <span class="keywordtype">char</span> *path;</div>
+<div class="line">  file_error() : code(), path(nullptr) {}</div>
+<div class="line">  <span class="comment">// Construct from a generic problem</span></div>
+<div class="line">  file_error(std::errc problem, <span class="keyword">const</span> <span class="keywordtype">char</span> *_path) : code(std::<a class="code" href="group__monad.html#gab6204dd7620b0e495220e76988359589">make_error_code</a>(problem)), path(_path) {}</div>
+<div class="line">  <span class="comment">// Construct from an errno</span></div>
+<div class="line">  file_error(<span class="keywordtype">int</span> _errno, <span class="keyword">const</span> <span class="keywordtype">char</span> *_path) : code(_errno, std::system_category()), path(_path) {}</div>
+<div class="line">  <span class="comment">// Construct from an extended error code</span></div>
+<div class="line">  file_error(extended_error ec, <span class="keyword">const</span> <span class="keywordtype">char</span> *_path) : code(static_cast&lt;int&gt;(ec), detail::extended_error_category()), path(_path) {}</div>
+<div class="line">};</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">extern</span> outcome::expected&lt;handle_ref, file_error&gt; openfile(<span class="keyword">const</span> <span class="keywordtype">char</span> *path)</div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordtype">int</span> fd = open(path, O_RDONLY);</div>
+<div class="line">  <span class="keywordflow">if</span> (fd == -1)</div>
+<div class="line">  {</div>
+<div class="line">    <span class="comment">// NOTE that we lose no information here, whatever error the system returned is what we return</span></div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga03e1e619a559e7f336621b1092e28527">outcome::make_unexpected</a>(file_error(errno, path));</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keywordflow">try</span></div>
+<div class="line">  {</div>
+<div class="line">    handle_ref h = make_handle(fd);</div>
+<div class="line">    <span class="keywordtype">char</span> temp[1025];</div>
+<div class="line">    ssize_t read = h-&gt;read(temp, 1024);</div>
+<div class="line">    <span class="comment">// NOTE that we lose no information here, whatever error the system returned is what we return</span></div>
+<div class="line">    <span class="keywordflow">if</span>(-1 == read)</div>
+<div class="line">      <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga03e1e619a559e7f336621b1092e28527">outcome::make_unexpected</a>(file_error(errno, path));</div>
+<div class="line">    temp[read] = 0;</div>
+<div class="line">    <span class="keywordflow">if</span>(strchr(temp, 13) != <span class="keyword">nullptr</span>)</div>
+<div class="line">      <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga03e1e619a559e7f336621b1092e28527">outcome::make_unexpected</a>(file_error(extended_error::format_corrupt, path));</div>
+<div class="line">    <span class="keywordflow">return</span> h;</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::bad_alloc &amp;)</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga03e1e619a559e7f336621b1092e28527">outcome::make_unexpected</a>(file_error(std::errc::not_enough_memory, <span class="keyword">nullptr</span>));</div>
+<div class="line">  }</div>
+<div class="line">  <span class="comment">// All other exceptions thrown upwards to abort</span></div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">void</span>)</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">auto</span> h = openfile(<span class="stringliteral">&quot;somefile&quot;</span>);</div>
+<div class="line">  <span class="keywordflow">if</span> (h)</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;File opened successfully&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">  <span class="keywordflow">else</span></div>
+<div class="line">    std::cerr &lt;&lt; <span class="stringliteral">&quot;Failed to open file &quot;</span> &lt;&lt; h.error().path &lt;&lt; <span class="stringliteral">&quot; due to &quot;</span> &lt;&lt; h.error().code &lt;&lt; std::endl;</div>
+<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+</div><!-- fragment --><p> As you can now see, we still have a custom error type, but it's now a <code>std::error_code</code> combined with payload. A big improvement with this design is that the errors returned by the system calls are now preserved perfectly rather than being converted into some generic "i/o failed" error code. The failure to allocate memory is now returned using the standard error code for that event, and the only error condition which is truly bespoke <code>format_corrupt</code> gets its own error code category.</p>
+<p>As much as the second example is much better design, it still has a custom error type the use of which precludes using convenience macros like <code>BOOST_OUTCOME_TRY</code> across disjoint domains of error. If that's acceptable to you, then work away, but be aware that Outcome's refinements of <code>outcome&lt;T&gt;</code> and <code>result&lt;T&gt;</code> don't use a <code>std::error_code</code>, they instead use an <code>outcome::error_code_extended</code> which extends <code>std::error_code</code> with most of the common payloads that most people would want to transmit with their errors.</p>
+<p><code>error_code_extended</code> won't of course cover truly bespoke needs, and if you are finding your custom error type is getting richly featured enough to require <a href="http://en.cppreference.com/w/cpp/language/destructor#Trivial_destructor">a non-trivial destructor</a> then you should be aware that <code>expected&lt;T, E&gt;</code> must always use the lowest common denominator between <code>T</code> and <code>E</code>, so if your <code>E</code> has a non-trivial destructor, so will all <code>expected&lt;T, E&gt;</code>. This can mean that compilers will "blow out" code where such <code>expected&lt;T, E&gt;</code> is used i.e. generate a lot of code bloat. Again, if that's acceptable to you for your use case, then work away. But if that worries or bothers you, then you had best stick to trivial custom error types or better still, use Outcome's refinements of <code>outcome&lt;T&gt;</code> and <code>result&lt;T&gt;</code> which remove that choice entirely and give you in return a less boilerplate and more powerful programming experience. That is exactly the subject of Part C of this tutorial, next. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

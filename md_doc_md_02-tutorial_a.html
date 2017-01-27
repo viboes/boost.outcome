@@ -118,12 +118,12 @@ $(document).ready(function(){initNavTree('md_doc_md_02-tutorial_a.html','');});
 </ul>
 </div>
 <div class="textblock"><p><a class="anchor" id="tutorial_expected"></a></p>
-<p>Outcome provides a number of utility classes useful for ultra lightweight and constant time error handling in C++ 14 and later. One of these is <a class="el" href="md_doc_md_05-faq.html#expected_qoi">a highly conforming expected&lt;T, E&gt; implementation</a> which is currently before the ISO C++ standards Library Evolution Working Group for standardisation. <code>expected&lt;T, E&gt;</code> is a very flexible and generic utility class allowing perhaps too much unwise customisation in the hands of its users, so Outcome also provides a family of more hard coded and deliberately less flexible refinements to <code>expected&lt;T, E&gt;</code> called <code>outcome&lt;T&gt;</code> and <code>result&lt;T&gt;</code> the use of which ought to generate more maintainable code bases and require less typing of boilerplate by the programmer.</p>
+<p>Outcome provides a number of utility classes useful for ultra lightweight and constant time error handling in C++ 14 and later. One of these is <a class="el" href="md_doc_md_08-expectedsynopsis.html#outcome_expected_reference">a highly conforming expected&lt;T, E&gt; implementation</a> which is currently before the ISO C++ standards Library Evolution Working Group for standardisation. <code>expected&lt;T, E&gt;</code> is a very flexible and generic utility class allowing perhaps too much unwise customisation in the hands of its users, so Outcome also provides a family of more hard coded and deliberately less flexible refinements to <code>expected&lt;T, E&gt;</code> called <code>outcome&lt;T&gt;</code> and <code>result&lt;T&gt;</code> the use of which ought to generate more maintainable code bases and require less typing of boilerplate by the programmer.</p>
 <p>This tutorial is therefore split into three parts:</p>
 <ol type="1">
 <li>The first part (part A, this part) provides a broad overview of error handling in C++ in general and how the <code>expected&lt;T, E&gt;</code> proposed for standardisation will contribute to that big menu of error handling design patterns available to the C++ programmer. This part isn't relevant to Outcome the library, but places it in context.</li>
-<li>The second part (<a class="el" href="md_doc_md_03-tutorial_b.html#tutorial_outcome">part B</a>) describes why you probably ought to not use unrestricted <code>expected&lt;T, E&gt;</code> in any real world code base and why you ought to use the refinements of <code>outcome&lt;T&gt;</code> or <code>result&lt;T&gt;</code> instead.</li>
-<li>The third part (part C) walks you through using Outcome's refinements <code>outcome&lt;T&gt;</code> and <code>result&lt;T&gt;</code>. Usage is very similar to Expected, but with less typing and more convenient extensions.</li>
+<li>The second part (<a class="el" href="md_doc_md_03-tutorial_b.html#tutorial_whynot">part B</a>) describes why you probably ought to not use unrestricted <code>expected&lt;T, E&gt;</code> in any real world code base and why you ought to use the refinements of <code>outcome&lt;T&gt;</code> or <code>result&lt;T&gt;</code> instead.</li>
+<li>The third part (<a class="el" href="md_doc_md_04-tutorial_c.html#tutorial_outcome">part C</a>) walks you through using Outcome's refinements <code>outcome&lt;T&gt;</code> and <code>result&lt;T&gt;</code>, plus its <code>extended_error_code</code>. Usage is very similar to Expected, but with less typing and more convenient extensions.</li>
 </ol>
 <h1><a class="anchor" id="c-style"></a>
 C style error handling: integer returns</h1>
@@ -487,7 +487,7 @@ Expected's observers</h3>
 <div class="line">    T value_or(U&amp;&amp;) &amp;&amp;;</div>
 <div class="line"></div>
 <div class="line">};</div>
-</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>You should be aware that Outcome's Expected implementation varies from the above in a few very minor ways. It also provides a considerable number of extensions. See <a class="el" href="md_doc_md_04-expectedsynopsis.html#outcome_expected_reference">Outcome's implementation of Expected</a> for an exact detail.</dd></dl>
+</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>You should be aware that Outcome's Expected implementation varies from the above in a few very minor ways. It also provides a considerable number of extensions. See <a class="el" href="md_doc_md_08-expectedsynopsis.html#outcome_expected_reference">Outcome's implementation of Expected</a> for an exact detail.</dd></dl>
 <p>As inferred in the example code cases earlier, you can check if an <code>expected&lt;T, E&gt;</code> has an expected value via a simple test for boolean true or more explicitly via <code>.has_value()</code> before retrieving the value using <code>.value()</code>. A useful shortcut can be <code>.value_or()</code> where you would otherwise write a ternary operation selecting on the Expected having an expected value.</p>
 <p>Finally, the current proposal before WG21 has not yet added a mechanism for testing if the Expected is valueless or not, so you currently have no way of testing for that except by catching the exception thrown. It <em>may</em> mirror <code>std::variant&lt;...&gt;</code>'s <code>valueless_by_exception()</code> observer function, or it may choose something else. Outcome's implementation of Expected implements a '.empty()' extension, this seemed to fit the rest of STL the best.</p>
 <h1><a class="anchor" id="expected_example"></a>
@@ -582,8 +582,7 @@ Short example program using expected&lt;T, E&gt;</h1>
 <div class="line">  std::cout &lt;&lt; op(1.0, 10.0) &lt;&lt; std::endl;</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-</div><!-- fragment --> <dl class="section warning"><dt>Warning</dt><dd><b>BE WARNED</b> that Outcome's Expected implementation WILL track the LEWG Expected proposal. No API backwards compatibility will be maintained, so if proposed LEWG Expected breaks your code, so be it. If you would like to use a stable API, Outcome's refinements of <code>outcome&lt;T&gt;</code> and <code>result&lt;T&gt;</code> are expected to be API stable, or else pin yourself to an older git SHA revision of the Outcome library. </dd></dl>
-</div></div><!-- contents -->
+</div><!-- fragment --></div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
