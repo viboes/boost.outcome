@@ -13,6 +13,7 @@ var monad_8hpp =
     [ "bad_expected_access< void >", "classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access_3_01void_01_4.html", "classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access_3_01void_01_4" ],
     [ "BOOST_OUTCOME__GLUE", "monad_8hpp.html#aa3085c7a0cc98823d6a2f7d35db9df29", null ],
     [ "BOOST_OUTCOME__GLUE2", "monad_8hpp.html#aa1529abb5f924d8c459e295759628593", null ],
+    [ "BOOST_OUTCOME_CATCH_ALL_EXCEPTION_TO_RESULT", "monad_8hpp.html#gab76324edce7c10037344911b04100397", null ],
     [ "BOOST_OUTCOME_CATCH_EXCEPTION_TO_RESULT", "monad_8hpp.html#gaacf14d3429ad0bc72a6ba40e7f283b43", null ],
     [ "BOOST_OUTCOME_ERROR_CODE_EXTENDED_CREATION_HOOK", "monad_8hpp.html#a6eb2d78f2e3d039fefdd7bdd2c5336a1", null ],
     [ "BOOST_OUTCOME_EXPECTED_DEFAULT_ERROR_TYPE", "monad_8hpp.html#a9e7dcdfa1e8a28b6d89ef81248fdba90", null ],
@@ -49,7 +50,6 @@ var monad_8hpp =
     [ "unexpect_t", "monad_8hpp.html#ga43a5a0da82bcdf70d885e62ca9d5528a", null ],
     [ "unexpected_type", "monad_8hpp.html#gaf61cb3012566f621329133c01f17c647", null ],
     [ "monad_errc", "monad_8hpp.html#gaf5abc43f8d09588556c4c65b53485c0d", [
-      [ "already_set", "monad_8hpp.html#ggaf5abc43f8d09588556c4c65b53485c0da25621f93230ec01ef6ead2516f3613ce", null ],
       [ "no_state", "monad_8hpp.html#ggaf5abc43f8d09588556c4c65b53485c0dac537dcef56fd6ff75592c0220fd3dae1", null ],
       [ "exception_present", "monad_8hpp.html#ggaf5abc43f8d09588556c4c65b53485c0da621bbc00c646a321b70c18a067da2eb2", null ]
     ] ],

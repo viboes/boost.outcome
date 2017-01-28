@@ -27,14 +27,17 @@ var NAVTREE =
       [ "Short example program using expected<T, E>", "md_doc_md_02-tutorial_a.html#expected_example", null ]
     ] ],
     [ "Tutorial part B: Don't use expected<T, E>!", "md_doc_md_03-tutorial_b.html", [
-      [ "Expected is unstable", "md_doc_md_03-tutorial_b.html#expected_is_unstable", null ],
+      [ "Expected is unstable!!!", "md_doc_md_03-tutorial_b.html#expected_is_unstable", null ],
       [ "Unrestricted use of expected<T, E> is bad practice", "md_doc_md_03-tutorial_b.html#expected_is_bad", null ],
       [ "Unrestricted use of expected<T, E> means typing more boilerplate", "md_doc_md_03-tutorial_b.html#expected_boilerplate", null ],
       [ "std::error_code CAN replace your custom error types", "md_doc_md_03-tutorial_b.html#error_codes_insufficient", null ]
     ] ],
     [ "Tutorial part C: Outcome's outcome<T>, result<T> and option<T>", "md_doc_md_04-tutorial_c.html", [
       [ "Outcome's extended std::error_code", "md_doc_md_04-tutorial_c.html#error_code_extended", null ],
-      [ "Where Outcome's outcome<T>, result<T> and option<T> come from", "md_doc_md_04-tutorial_c.html#outcome_rationale", null ]
+      [ "Outcome's outcome<T>, result<T> and option<T> refinements", "md_doc_md_04-tutorial_c.html#outcome_overview", null ],
+      [ "Outcome's helper free functions", "md_doc_md_04-tutorial_c.html#outcome_helpers", null ],
+      [ "Outcome's helper macros", "md_doc_md_04-tutorial_c.html#outcome_macros", null ],
+      [ "Example of usage of the refinements", "md_doc_md_04-tutorial_c.html#outcome_usage", null ]
     ] ],
     [ "Frequently Asked Questions", "md_doc_md_07-faq.html", [
       [ "Hard coding error_code and exception_ptr is incredibly restrictive and ruins Outcome for me. Can you not do that please (i.e. make it more like expected<T, E> with its arbitrary type E)?", "md_doc_md_07-faq.html#dontlike", null ],
@@ -87,7 +90,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 ".html",
-"group__monad.html#ggaf5abc43f8d09588556c4c65b53485c0da25621f93230ec01ef6ead2516f3613ce"
+"group__monad.html#gaf5abc43f8d09588556c4c65b53485c0d"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

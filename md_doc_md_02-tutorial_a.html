@@ -185,16 +185,11 @@ C++ 98 style error handling: throwing exceptions</h1>
 <div class="line">  {</div>
 <div class="line">    <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;File not found&quot;</span>);</div>
 <div class="line">  }</div>
-<div class="line">  <span class="keywordflow">try</span></div>
-<div class="line">  {</div>
-<div class="line">    <span class="comment">// Could throw std::bad_alloc or any other kind of exception during construction</span></div>
-<div class="line">    <span class="keywordflow">return</span> handle_ref(<span class="keyword">new</span> some_derived_handle_implementation(fd));</div>
-<div class="line">  }</div>
-<div class="line">  <span class="keywordflow">catch</span>(...)</div>
-<div class="line">  {</div>
-<div class="line">    close(fd);</div>
-<div class="line">    <span class="keywordflow">throw</span>;</div>
-<div class="line">  }</div>
+<div class="line">  <span class="comment">// RAII close the file if exception throw</span></div>
+<div class="line">  handle temp(fd);</div>
+<div class="line"></div>
+<div class="line">  <span class="comment">// Could throw std::bad_alloc or any other kind of exception during construction</span></div>
+<div class="line">  <span class="keywordflow">return</span> handle_ref(<span class="keyword">new</span> some_derived_handle_implementation(temp));</div>
 <div class="line">}</div>
 </div><!-- fragment --><p>Old hands will quite correctly chafe at the use of <code>std::runtime_error</code> to report a file not found, but nevertheless such a design pattern is very common in the wild, especially in older C++ which went a bit mad on using exception throws for control flow.</p>
 <hr/>

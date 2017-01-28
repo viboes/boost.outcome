@@ -111,8 +111,32 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__macro__helpers.html#gaacf14d3429ad0bc72a6ba40e7f283b43">BOOST_OUTCOME_CATCH_EXCEPTION_TO_RESULT</a></td></tr>
 <tr class="memdesc:gaacf14d3429ad0bc72a6ba40e7f283b43"><td class="mdescLeft">&#160;</td><td class="mdescRight">A boilerplate sequence of <code>catch(exceptions...)</code> returning those exceptions as their equivalent <code>result&lt;void&gt;</code> <br/></td></tr>
 <tr class="separator:gaacf14d3429ad0bc72a6ba40e7f283b43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab76324edce7c10037344911b04100397"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__macro__helpers.html#gab76324edce7c10037344911b04100397">BOOST_OUTCOME_CATCH_ALL_EXCEPTION_TO_RESULT</a></td></tr>
+<tr class="memdesc:gab76324edce7c10037344911b04100397"><td class="mdescLeft">&#160;</td><td class="mdescRight">A boilerplate sequence of <code>catch(exceptions...)</code> plus a catch all returning those exceptions as their equivalent <code>result&lt;void&gt;</code>  <a href="#gab76324edce7c10037344911b04100397">More...</a><br/></td></tr>
+<tr class="separator:gab76324edce7c10037344911b04100397"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="gab76324edce7c10037344911b04100397"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BOOST_OUTCOME_CATCH_ALL_EXCEPTION_TO_RESULT</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line">BOOST_OUTCOME_CATCH_EXCEPTION_TO_RESULT                                                                                                                                                                                                                                    \</div>
+<div class="line">  \</div>
+<div class="line">catch(...)                                                                                                                                                                                                                                                                                                                     \</div>
+<div class="line">  {                                                                                                                                                                                                                                                                                                                            \</div>
+<div class="line">    return BOOST_OUTCOME_V1_NAMESPACE::make_errored_result&lt;void&gt;(EAGAIN, <span class="stringliteral">&quot;unknown exception&quot;</span>);                                                                                                                                                                                                                                 \</div>
+<div class="line">  }</div>
+</div><!-- fragment -->
+<p>A boilerplate sequence of <code>catch(exceptions...)</code> plus a catch all returning those exceptions as their equivalent <code>result&lt;void&gt;</code> </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

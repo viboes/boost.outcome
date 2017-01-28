@@ -133,7 +133,6 @@ var group__monad =
     [ "outcome", "group__monad.html#gaab2ff6220205017226794529c863b336", null ],
     [ "result", "group__monad.html#ga91e1fe11dbebea15458d882d078d6eb5", null ],
     [ "monad_errc", "group__monad.html#gaf5abc43f8d09588556c4c65b53485c0d", [
-      [ "already_set", "group__monad.html#ggaf5abc43f8d09588556c4c65b53485c0da25621f93230ec01ef6ead2516f3613ce", null ],
       [ "no_state", "group__monad.html#ggaf5abc43f8d09588556c4c65b53485c0dac537dcef56fd6ff75592c0220fd3dae1", null ],
       [ "exception_present", "group__monad.html#ggaf5abc43f8d09588556c4c65b53485c0da621bbc00c646a321b70c18a067da2eb2", null ]
     ] ],

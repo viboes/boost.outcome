@@ -10,6 +10,7 @@ var searchData=
   ['basic_5fpromise',['basic_promise',['../classboost_1_1outcome_1_1v1__xxx_1_1lightweight__futures_1_1basic__promise.html',1,'boost::outcome::v1_xxx::lightweight_futures']]],
   ['bind',['bind',['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a82ead6109f3d65ca4bc984208918f941',1,'boost::outcome::v1_xxx::basic_monad']]],
   ['boost',['boost',['../namespaceboost.html',1,'']]],
+  ['boost_5foutcome_5fcatch_5fall_5fexception_5fto_5fresult',['BOOST_OUTCOME_CATCH_ALL_EXCEPTION_TO_RESULT',['../group__macro__helpers.html#gab76324edce7c10037344911b04100397',1,'monad.hpp']]],
   ['boost_5foutcome_5fcatch_5fexception_5fto_5fresult',['BOOST_OUTCOME_CATCH_EXCEPTION_TO_RESULT',['../group__macro__helpers.html#gaacf14d3429ad0bc72a6ba40e7f283b43',1,'monad.hpp']]],
   ['boost_5foutcome_5fdisable_5fdefault_5fsingle_5fbyte_5fvalue_5fstorage',['BOOST_OUTCOME_DISABLE_DEFAULT_SINGLE_BYTE_VALUE_STORAGE',['../value__storage_8hpp.html#ac2a2b810558f3103b7d9e24fe27bae7c',1,'value_storage.hpp']]],
   ['boost_5foutcome_5fexpected_5fdefault_5ferror_5ftype',['BOOST_OUTCOME_EXPECTED_DEFAULT_ERROR_TYPE',['../monad_8hpp.html#a9e7dcdfa1e8a28b6d89ef81248fdba90',1,'monad.hpp']]],

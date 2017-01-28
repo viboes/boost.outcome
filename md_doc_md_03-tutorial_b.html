@@ -103,7 +103,7 @@ $(document).ready(function(){initNavTree('md_doc_md_03-tutorial_b.html','');});
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#expected_is_unstable">Expected is unstable</a></li>
+<ul><li class="level1"><a href="#expected_is_unstable">Expected is unstable!!!</a></li>
 <li class="level1"><a href="#expected_is_bad">Unrestricted use of expected<T, E> is bad practice</a></li>
 <li class="level1"><a href="#expected_boilerplate">Unrestricted use of expected<T, E> means typing more boilerplate</a></li>
 <li class="level1"><a href="#error_codes_insufficient">std::error_code CAN replace your custom error types</a></li>
@@ -121,7 +121,7 @@ $(document).ready(function(){initNavTree('md_doc_md_03-tutorial_b.html','');});
 <p><br/>
 </p>
 <h1><a class="anchor" id="expected_is_unstable"></a>
-Expected is unstable</h1>
+Expected is unstable!!!</h1>
 <p>Outcome's implementation of Expected WILL track the LEWG Expected proposal. No API backwards compatibility will be maintained, so if proposed LEWG Expected breaks your code, so will Outcome's Expected.</p>
 <p>If you would like to use a stable API, Outcome's refinements of <code>outcome&lt;T&gt;</code> and <code>result&lt;T&gt;</code> are expected to be API stable, or else pin yourself to an older git SHA revision of the Outcome library.</p>
 <hr/>
@@ -235,7 +235,17 @@ Unrestricted use of expected&lt;T, E&gt; is bad practice</h1>
 <div class="line"><span class="keyword">static</span> constexpr MathError NegativeSquareRoot = std::errc::argument_out_of_domain;  </div>
 <div class="line"></div>
 <div class="line"><span class="keyword">using</span> MathResult = outcome::expected&lt;double, MathError&gt;;</div>
-</div><!-- fragment --><p>Anything which can "speak" <code>std::error_code</code> can now work perfectly with your error code system because you are using a standard error code domain (i.e. the POSIX error code domain).</p>
+</div><!-- fragment --><p>Anything which can "speak" <code>std::error_code</code> can now work perfectly with your error code system because you are using a standard error code domain (i.e. the POSIX error code domain). And for reference, the C++ 11 STL ships with these ready to go predefined error categories and error enumerations:</p>
+<dl>
+<dt><a href="http://en.cppreference.com/w/cpp/error/generic_category"><code>std::generic_category()</code></a> with corresponding enumeration <a href="http://en.cppreference.com/w/cpp/error/errc"><code>std::errc</code></a> </dt>
+<dd>The POSIX standard error code domain as retrieved by the <code>errno</code> variable after calling a POSIX function. </dd>
+<dt><a href="http://en.cppreference.com/w/cpp/error/system_category"><code>std::system_category()</code></a> with a platform specific enumeration </dt>
+<dd>The "usual" error code domain for your particular host OS, so on Linux/FreeBSD/OS X/Android this is the exact same domain as <code>generic_category()</code>. On Microsoft Windows this is the error code domain as returned by the Win32 <code>GetLastError()</code> function. Other platforms can vary. </dd>
+<dt><a href="http://en.cppreference.com/w/cpp/io/iostream_category"><code>std::iostream_category()</code></a> with corresponding enumeration <a href="http://en.cppreference.com/w/cpp/io/io_errc"><code>std::io_errc</code></a> </dt>
+<dd>The STL iostreams error code domain. </dd>
+<dt><a href="http://en.cppreference.com/w/cpp/thread/future/future_category"><code>std::future_category()</code></a> with corresponding enumeration <a href="http://en.cppreference.com/w/cpp/thread/future_errc"><code>std::future_errc</code></a> </dt>
+<dd>The STL future-promise error code domain. </dd>
+</dl>
 <p>But let's say you really, really wanted to have your own custom error code scheme, this is how you tell C++ 11's standard error code infrastructure about your custom error code domain:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;system_error&gt;</span>  <span class="comment">// bring in std::error_code et al</span></div>
@@ -667,8 +677,12 @@ std::error_code CAN replace your custom error types</h1>
 <div class="line">  <span class="comment">// Construct from a generic problem</span></div>
 <div class="line">  file_error(std::errc problem, <span class="keyword">const</span> <span class="keywordtype">char</span> *_path) : code(std::<a class="code" href="group__monad.html#gab6204dd7620b0e495220e76988359589">make_error_code</a>(problem)), path(_path) {}</div>
 <div class="line">  <span class="comment">// Construct from an errno</span></div>
-<div class="line">  file_error(<span class="keywordtype">int</span> _errno, <span class="keyword">const</span> <span class="keywordtype">char</span> *_path) : code(_errno, std::system_category()), path(_path) {}</div>
-<div class="line">  <span class="comment">// Construct from an extended error code</span></div>
+<div class="line"><span class="preprocessor">#ifdef _MSC_VER  // On MSVC the POSIX open()/read() etc functions are generic_category</span></div>
+<div class="line"><span class="preprocessor"></span>  file_error(<span class="keywordtype">int</span> _errno, <span class="keyword">const</span> <span class="keywordtype">char</span> *_path) : code(_errno, std::generic_category()), path(_path) {}</div>
+<div class="line"><span class="preprocessor">#else</span></div>
+<div class="line"><span class="preprocessor"></span>  file_error(<span class="keywordtype">int</span> _errno, <span class="keyword">const</span> <span class="keywordtype">char</span> *_path) : code(_errno, std::system_category()), path(_path) {}</div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="preprocessor"></span>  <span class="comment">// Construct from an extended error code</span></div>
 <div class="line">  file_error(extended_error ec, <span class="keyword">const</span> <span class="keywordtype">char</span> *_path) : code(static_cast&lt;int&gt;(ec), detail::extended_error_category()), path(_path) {}</div>
 <div class="line">};</div>
 <div class="line"></div>
@@ -709,7 +723,7 @@ std::error_code CAN replace your custom error types</h1>
 <div class="line">    std::cerr &lt;&lt; <span class="stringliteral">&quot;Failed to open file &quot;</span> &lt;&lt; h.error().path &lt;&lt; <span class="stringliteral">&quot; due to &quot;</span> &lt;&lt; h.error().code &lt;&lt; std::endl;</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-</div><!-- fragment --><p> As you can now see, we still have a custom error type, but it's now a <code>std::error_code</code> combined with payload. A big improvement with this design is that the errors returned by the system calls are now preserved perfectly rather than being converted into some generic "i/o failed" error code. The failure to allocate memory is now returned using the standard error code for that event, and the only error condition which is truly bespoke <code>format_corrupt</code> gets its own error code category.</p>
+</div><!-- fragment --><p> As you can now see, we still have a custom error type, but it's now a <code>std::error_code</code> combined with payload. A big improvement with this design is that the errors returned by the system calls are now preserved perfectly rather than being converted into some generic "i/o failed" error code, and in fact because we use <code>system_category</code> for the error codes returned by the host OS, we lose no information whatsoever about the original error. The failure to allocate memory is now returned using the standard error code for that event, and the only error condition which is truly bespoke <code>format_corrupt</code> gets its own error code category.</p>
 <p>As much as the second example is much better design, it still has a custom error type the use of which precludes using convenience macros like <code>BOOST_OUTCOME_TRY</code> across disjoint domains of error. If that's acceptable to you, then work away, but be aware that Outcome's refinements of <code>outcome&lt;T&gt;</code> and <code>result&lt;T&gt;</code> don't use a <code>std::error_code</code>, they instead use an <code>outcome::error_code_extended</code> which extends <code>std::error_code</code> with most of the common payloads that most people would want to transmit with their errors.</p>
 <p><code>error_code_extended</code> won't of course cover truly bespoke needs, and if you are finding your custom error type is getting richly featured enough to require <a href="http://en.cppreference.com/w/cpp/language/destructor#Trivial_destructor">a non-trivial destructor</a> then you should be aware that <code>expected&lt;T, E&gt;</code> must always use the lowest common denominator between <code>T</code> and <code>E</code>, so if your <code>E</code> has a non-trivial destructor, so will all <code>expected&lt;T, E&gt;</code>. This can mean that compilers will "blow out" code where such <code>expected&lt;T, E&gt;</code> is used i.e. generate a lot of code bloat. Again, if that's acceptable to you for your use case, then work away. But if that worries or bothers you, then you had best stick to trivial custom error types or better still, use Outcome's refinements of <code>outcome&lt;T&gt;</code> and <code>result&lt;T&gt;</code> which remove that choice entirely and give you in return a less boilerplate and more powerful programming experience. That is exactly the subject of Part C of this tutorial, next. </p>
 </div></div><!-- contents -->
