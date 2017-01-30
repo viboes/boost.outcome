@@ -114,6 +114,7 @@ $(document).ready(function(){initNavTree('md_doc_md_02-tutorial_a.html','');});
 </li>
 </ul>
 </li>
+<li class="level1"><a href="#expected_is_unstable">Expected is unstable!!!</a></li>
 <li class="level1"><a href="#expected_example">Short example program using expected<T, E></a></li>
 </ul>
 </div>
@@ -125,6 +126,9 @@ $(document).ready(function(){initNavTree('md_doc_md_02-tutorial_a.html','');});
 <li>The second part (<a class="el" href="md_doc_md_03-tutorial_b.html#tutorial_whynot">part B</a>) describes why you probably ought to not use unrestricted <code>expected&lt;T, E&gt;</code> in any real world code base and why you ought to use the refinements of <code>outcome&lt;T&gt;</code> or <code>result&lt;T&gt;</code> instead.</li>
 <li>The third part (<a class="el" href="md_doc_md_04-tutorial_c.html#tutorial_outcome">part C</a>) walks you through using Outcome's refinements <code>outcome&lt;T&gt;</code> and <code>result&lt;T&gt;</code>, plus its <code>extended_error_code</code>. Usage is very similar to Expected, but with less typing and more convenient extensions.</li>
 </ol>
+<hr/>
+<p><br/>
+</p>
 <h1><a class="anchor" id="c-style"></a>
 C style error handling: integer returns</h1>
 <p>Historically C++ 98 code has taken one of two design patterns when returning errors from functions. This pattern is taken from C, and indeed is pure C:</p>
@@ -485,6 +489,17 @@ Expected's observers</h3>
 </div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>You should be aware that Outcome's Expected implementation varies from the above in a few very minor ways. It also provides a considerable number of extensions. See <a class="el" href="md_doc_md_08-expectedsynopsis.html#outcome_expected_reference">Outcome's implementation of Expected</a> for an exact detail.</dd></dl>
 <p>As inferred in the example code cases earlier, you can check if an <code>expected&lt;T, E&gt;</code> has an expected value via a simple test for boolean true or more explicitly via <code>.has_value()</code> before retrieving the value using <code>.value()</code>. A useful shortcut can be <code>.value_or()</code> where you would otherwise write a ternary operation selecting on the Expected having an expected value.</p>
 <p>Finally, the current proposal before WG21 has not yet added a mechanism for testing if the Expected is valueless or not, so you currently have no way of testing for that except by catching the exception thrown. It <em>may</em> mirror <code>std::variant&lt;...&gt;</code>'s <code>valueless_by_exception()</code> observer function, or it may choose something else. Outcome's implementation of Expected implements a '.empty()' extension, this seemed to fit the rest of STL the best.</p>
+<hr/>
+<p><br/>
+</p>
+<h1><a class="anchor" id="expected_is_unstable"></a>
+Expected is unstable!!!</h1>
+<p>Before we say or do anything else, we need to clearly state:</p>
+<dl class="section warning"><dt>Warning</dt><dd>Outcome's implementation of Expected WILL track the LEWG Expected proposal. No API backwards compatibility will be maintained, so if proposed LEWG Expected breaks your code, so will Outcome's Expected.</dd></dl>
+<p>If you would like to use a stable API, Outcome's refinements of <code>outcome&lt;T&gt;</code> and <code>result&lt;T&gt;</code> are expected to be API stable, or else pin yourself to an older git SHA revision of the Outcome library.</p>
+<hr/>
+<p><br/>
+</p>
 <h1><a class="anchor" id="expected_example"></a>
 Short example program using expected&lt;T, E&gt;</h1>
 <p>Up until now we have been referring to Expected via the namespace <code>std::experimental</code>. Outcome obviously does not provide Expected in that namespace, instead it uses the outcome namespace which you can find via either of these forms:</p>

@@ -24,10 +24,10 @@ var NAVTREE =
           [ "Expected's observers", "md_doc_md_02-tutorial_a.html#expected_observers", null ]
         ] ]
       ] ],
+      [ "Expected is unstable!!!", "md_doc_md_02-tutorial_a.html#expected_is_unstable", null ],
       [ "Short example program using expected<T, E>", "md_doc_md_02-tutorial_a.html#expected_example", null ]
     ] ],
     [ "Tutorial part B: Don't use expected<T, E>!", "md_doc_md_03-tutorial_b.html", [
-      [ "Expected is unstable!!!", "md_doc_md_03-tutorial_b.html#expected_is_unstable", null ],
       [ "Unrestricted use of expected<T, E> is bad practice", "md_doc_md_03-tutorial_b.html#expected_is_bad", null ],
       [ "Unrestricted use of expected<T, E> means typing more boilerplate", "md_doc_md_03-tutorial_b.html#expected_boilerplate", null ],
       [ "std::error_code CAN replace your custom error types", "md_doc_md_03-tutorial_b.html#error_codes_insufficient", null ]

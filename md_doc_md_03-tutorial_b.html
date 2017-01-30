@@ -103,8 +103,7 @@ $(document).ready(function(){initNavTree('md_doc_md_03-tutorial_b.html','');});
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#expected_is_unstable">Expected is unstable!!!</a></li>
-<li class="level1"><a href="#expected_is_bad">Unrestricted use of expected<T, E> is bad practice</a></li>
+<ul><li class="level1"><a href="#expected_is_bad">Unrestricted use of expected<T, E> is bad practice</a></li>
 <li class="level1"><a href="#expected_boilerplate">Unrestricted use of expected<T, E> means typing more boilerplate</a></li>
 <li class="level1"><a href="#error_codes_insufficient">std::error_code CAN replace your custom error types</a></li>
 </ul>
@@ -120,10 +119,20 @@ $(document).ready(function(){initNavTree('md_doc_md_03-tutorial_b.html','');});
 <hr/>
 <p><br/>
 </p>
-<h1><a class="anchor" id="expected_is_unstable"></a>
-Expected is unstable!!!</h1>
-<p>Outcome's implementation of Expected WILL track the LEWG Expected proposal. No API backwards compatibility will be maintained, so if proposed LEWG Expected breaks your code, so will Outcome's Expected.</p>
-<p>If you would like to use a stable API, Outcome's refinements of <code>outcome&lt;T&gt;</code> and <code>result&lt;T&gt;</code> are expected to be API stable, or else pin yourself to an older git SHA revision of the Outcome library.</p>
+<p>This part of the tutorial is a bit unusual as it's a sort of polemic against what most consider to be one of the best parts of <code>expected&lt;T, E&gt;</code>: that you can and should choose any arbitrary type <code>E</code> on a case by case basis as is conventional in other languages such as Rust or Swift. Hopefully by the end of this part you will be persuaded to always <em>restrict</em> your use of <code>expected&lt;T, E&gt;</code> in C++ to one of:</p>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; <span class="keyword">using</span> <a class="code" href="group__monad.html#ga91e1fe11dbebea15458d882d078d6eb5">result</a> = outcome::expected&lt;T, std::error_code&gt;;</div>
+<div class="line"><span class="keyword">using</span> bad_result_access = outcome::bad_expected_access&lt;std::error_code&gt;;</div>
+</div><!-- fragment --><p>... or ...</p>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; <span class="keyword">using</span> <a class="code" href="group__monad.html#ga91e1fe11dbebea15458d882d078d6eb5">result</a> = outcome::expected&lt;T, std::exception_ptr&gt;;</div>
+<div class="line"><span class="keyword">using</span> bad_result_access = outcome::bad_expected_access&lt;std::exception_ptr&gt;;</div>
+</div><!-- fragment --><p>... where the latter is a superset of the former, because you can wrap any arbitrary <code>std::error_code</code> instance into a <code>std::exception_ptr</code> instance using the C++ 11 STL error code wrapping C++ exception type <code>std::system_error</code>:</p>
+<div class="fragment"><div class="line">std::error_code ec;</div>
+<div class="line">std::exception_ptr e = std::make_exception_ptr(std::system_error(ec));</div>
+<div class="line"></div>
+<div class="line"><span class="comment">// OR</span></div>
+<div class="line"></div>
+<div class="line">std::exception_ptr e = std::make_exception_ptr(std::system_error(ec, <span class="stringliteral">&quot;custom what() string&quot;</span>));</div>
+</div><!-- fragment --><p>The reason why this polemic is needed is because during the many pre-reviews of Outcome on Boost, SG14 and Reddit, it became clear that the choice that Outcome made to hard code the error type to error codes or exception pointers in Outcome's refinements of <code>outcome&lt;T&gt;</code> and <code>result&lt;T&gt;</code> was not at all clear to most people interested in using <code>expected&lt;T, E&gt;</code>. It became clear that the rationale would need to be spelled out, and that is this part B of the tutorial.</p>
 <hr/>
 <p><br/>
 </p>
