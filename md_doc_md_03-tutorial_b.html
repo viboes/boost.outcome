@@ -687,9 +687,9 @@ std::error_code CAN replace your custom error types</h1>
 <div class="line">  file_error(std::errc problem, <span class="keyword">const</span> <span class="keywordtype">char</span> *_path) : code(std::<a class="code" href="group__monad.html#gab6204dd7620b0e495220e76988359589">make_error_code</a>(problem)), path(_path) {}</div>
 <div class="line">  <span class="comment">// Construct from an errno</span></div>
 <div class="line"><span class="preprocessor">#ifdef _MSC_VER  // On MSVC the POSIX open()/read() etc functions are generic_category</span></div>
-<div class="line"><span class="preprocessor"></span>  file_error(<span class="keywordtype">int</span> _errno, <span class="keyword">const</span> <span class="keywordtype">char</span> *_path) : code(_errno, std::generic_category()), path(_path) {}</div>
+<div class="line"><span class="preprocessor"></span>  file_error(<span class="keywordtype">int</span> _errno, <span class="keyword">const</span> <span class="keywordtype">char</span> *_path) : code(_errno, std::<a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx_1_1deatomiced__categories.html#a3f5465fc0be7c82b0c0b0bb5419ea59e">generic_category</a>()), path(_path) {}</div>
 <div class="line"><span class="preprocessor">#else</span></div>
-<div class="line"><span class="preprocessor"></span>  file_error(<span class="keywordtype">int</span> _errno, <span class="keyword">const</span> <span class="keywordtype">char</span> *_path) : code(_errno, std::system_category()), path(_path) {}</div>
+<div class="line"><span class="preprocessor"></span>  file_error(<span class="keywordtype">int</span> _errno, <span class="keyword">const</span> <span class="keywordtype">char</span> *_path) : code(_errno, std::<a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx_1_1deatomiced__categories.html#a9bd112823854cf5d6b347f1e14a02807">system_category</a>()), path(_path) {}</div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"><span class="preprocessor"></span>  <span class="comment">// Construct from an extended error code</span></div>
 <div class="line">  file_error(extended_error ec, <span class="keyword">const</span> <span class="keywordtype">char</span> *_path) : code(static_cast&lt;int&gt;(ec), detail::extended_error_category()), path(_path) {}</div>

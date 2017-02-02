@@ -190,6 +190,9 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespaceboost_1_1outcome_1_1v1__xxx"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html">boost::outcome::v1_xxx</a></td></tr>
 <tr class="memdesc:namespaceboost_1_1outcome_1_1v1__xxx"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inline namespace for this version of Outcome. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespaceboost_1_1outcome_1_1v1__xxx_1_1deatomiced__categories"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx_1_1deatomiced__categories.html">boost::outcome::v1_xxx::deatomiced_categories</a></td></tr>
+<tr class="memdesc:namespaceboost_1_1outcome_1_1v1__xxx_1_1deatomiced__categories"><td class="mdescLeft">&#160;</td><td class="mdescRight">De-atomiced error categories, prevents the STL inlining an atomic fence when fetching these error categories. <br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
@@ -346,6 +349,22 @@ Functions</h2></td></tr>
 <tr class="memitem:aa3997a8b00f62af89d4c240b469a9cbd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa3997a8b00f62af89d4c240b469a9cbd"></a>
 boost_lite::ringbuffer_log::simple_ringbuffer_log&lt; 4096 &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>boost::outcome::v1_xxx::extended_error_code_log</b> ()</td></tr>
 <tr class="separator:aa3997a8b00f62af89d4c240b469a9cbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af32d227a7f17acde670e77300a8524b8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af32d227a7f17acde670e77300a8524b8"></a>
+BOOSTLITE_NOINLINE const <br class="typebreak"/>
+std::error_category &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>boost::outcome::v1_xxx::deatomiced_categories::detail::_generic_category</b> ()</td></tr>
+<tr class="separator:af32d227a7f17acde670e77300a8524b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89d5238cf18645063328dd5d151c7f5f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a89d5238cf18645063328dd5d151c7f5f"></a>
+BOOSTLITE_NOINLINE const <br class="typebreak"/>
+std::error_category &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>boost::outcome::v1_xxx::deatomiced_categories::detail::_system_category</b> ()</td></tr>
+<tr class="separator:a89d5238cf18645063328dd5d151c7f5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f5465fc0be7c82b0c0b0bb5419ea59e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3f5465fc0be7c82b0c0b0bb5419ea59e"></a>
+const std::error_category &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx_1_1deatomiced__categories.html#a3f5465fc0be7c82b0c0b0bb5419ea59e">boost::outcome::v1_xxx::deatomiced_categories::generic_category</a> ()</td></tr>
+<tr class="memdesc:a3f5465fc0be7c82b0c0b0bb5419ea59e"><td class="mdescLeft">&#160;</td><td class="mdescRight">De-atomic fascade for std::generic_category() <br/></td></tr>
+<tr class="separator:a3f5465fc0be7c82b0c0b0bb5419ea59e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9bd112823854cf5d6b347f1e14a02807"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9bd112823854cf5d6b347f1e14a02807"></a>
+const std::error_category &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx_1_1deatomiced__categories.html#a9bd112823854cf5d6b347f1e14a02807">boost::outcome::v1_xxx::deatomiced_categories::system_category</a> ()</td></tr>
+<tr class="memdesc:a9bd112823854cf5d6b347f1e14a02807"><td class="mdescLeft">&#160;</td><td class="mdescRight">De-atomic fascade for std::system_category() <br/></td></tr>
+<tr class="separator:a9bd112823854cf5d6b347f1e14a02807"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1ea9f13657c8a103f777e260d57185e0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1ea9f13657c8a103f777e260d57185e0"></a>
 std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>boost::outcome::v1_xxx::operator&lt;&lt;</b> (std::ostream &amp;s, const error_code_extended &amp;ec)</td></tr>
 <tr class="separator:a1ea9f13657c8a103f777e260d57185e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -713,7 +732,7 @@ constexpr unexpect_t&#160;</td><td class="memItemRight" valign="bottom"><a class
 <div class="line">  if(!unique.has_value())                                                                                                                                                                                                                                                                                                      \</div>
 <div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga61c46f3be4c8e19586871d20f37b5f10">BOOST_OUTCOME_V1_NAMESPACE::as_void</a>(unique);                                                                                                                                                                                                                                                                        \</div>
 <div class="line">  auto v(std::move(std::move(unique).<span class="keyword">get</span>()))</div>
-<div class="ttc" id="group__expected_html_ga61c46f3be4c8e19586871d20f37b5f10"><div class="ttname"><a href="group__expected.html#ga61c46f3be4c8e19586871d20f37b5f10">boost::outcome::v1_xxx::as_void</a></div><div class="ttdeci">expected&lt; void, E &gt; as_void(const expected&lt; T, E &gt; &amp;v)</div><div class="ttdoc">Makes a void expected from an input expected, forwarding any emptiness or error. </div><div class="ttdef"><b>Definition:</b> monad.hpp:2368</div></div>
+<div class="ttc" id="group__expected_html_ga61c46f3be4c8e19586871d20f37b5f10"><div class="ttname"><a href="group__expected.html#ga61c46f3be4c8e19586871d20f37b5f10">boost::outcome::v1_xxx::as_void</a></div><div class="ttdeci">expected&lt; void, E &gt; as_void(const expected&lt; T, E &gt; &amp;v)</div><div class="ttdoc">Makes a void expected from an input expected, forwarding any emptiness or error. </div><div class="ttdef"><b>Definition:</b> monad.hpp:2402</div></div>
 </div><!-- fragment -->
 </div>
 </div>

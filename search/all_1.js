@@ -37,6 +37,7 @@ var searchData=
   ['boost_5foutcome_5fversion_5fminor',['BOOST_OUTCOME_VERSION_MINOR',['../group__config.html#ga71a5814792412b99aa4f995fc7fb58bb',1,'version.hpp']]],
   ['boost_5foutcome_5fversion_5fpatch',['BOOST_OUTCOME_VERSION_PATCH',['../group__config.html#ga241132a09b68e794f9e6a8523322dabd',1,'version.hpp']]],
   ['boost_5foutcome_5fversion_5frevision',['BOOST_OUTCOME_VERSION_REVISION',['../group__config.html#ga9335ba2139af64697e1640e7ca94c336',1,'version.hpp']]],
+  ['deatomiced_5fcategories',['deatomiced_categories',['../namespaceboost_1_1outcome_1_1v1__xxx_1_1deatomiced__categories.html',1,'boost::outcome::v1_xxx']]],
   ['outcome',['outcome',['../namespaceboost_1_1outcome.html',1,'boost']]],
   ['v1_5fxxx',['v1_xxx',['../namespaceboost_1_1outcome_1_1v1__xxx.html',1,'boost::outcome']]]
 ];

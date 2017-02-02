@@ -5,5 +5,6 @@ var searchData=
   ['set_5fstate',['set_state',['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a8cd5e78749578b7f2c605f51224371ce',1,'boost::outcome::v1_xxx::basic_monad']]],
   ['set_5fvalue',['set_value',['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a358a2619d49f82069ccfccd2fc596e34',1,'boost::outcome::v1_xxx::basic_monad::set_value(const value_type &amp;v)'],['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#ac28e981cccad95fa40e7f8a1d28cea8d',1,'boost::outcome::v1_xxx::basic_monad::set_value(value_type &amp;&amp;v)'],['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a2e224fd8b81c22213e925819cf40e407',1,'boost::outcome::v1_xxx::basic_monad::set_value()']]],
   ['support',['Support',['../support.html',1,'']]],
-  ['swap',['swap',['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a052e0e9921d7a93b87e87dbb5bb6a199',1,'boost::outcome::v1_xxx::basic_monad::swap()'],['../group__monad.html#ga2ffab91838224f042fe7ed1b108e5ad7',1,'std::swap()']]]
+  ['swap',['swap',['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a052e0e9921d7a93b87e87dbb5bb6a199',1,'boost::outcome::v1_xxx::basic_monad::swap()'],['../group__monad.html#ga2ffab91838224f042fe7ed1b108e5ad7',1,'std::swap()']]],
+  ['system_5fcategory',['system_category',['../namespaceboost_1_1outcome_1_1v1__xxx_1_1deatomiced__categories.html#a9bd112823854cf5d6b347f1e14a02807',1,'boost::outcome::v1_xxx::deatomiced_categories']]]
 ];

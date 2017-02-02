@@ -229,7 +229,7 @@ of noexcept"</em> which will be described later.</p>
 <div class="line">  <span class="keywordflow">if</span>(fd == -1)</div>
 <div class="line">  {</div>
 <div class="line">    <span class="comment">// Construct an error code in the OS errors domain</span></div>
-<div class="line">    ec = std::error_code(errno, std::system_category());</div>
+<div class="line">    ec = std::error_code(errno, <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx_1_1deatomiced__categories.html#a9bd112823854cf5d6b347f1e14a02807">std::system_category</a>());</div>
 <div class="line">    <span class="keywordflow">return</span> {};</div>
 <div class="line">  }</div>
 <div class="line">  <span class="keyword">auto</span> *p = <span class="keyword">new</span>(std::nothrow) some_derived_handle_implementation(fd, ec);</div>
@@ -310,7 +310,7 @@ std::experimental::expected&lt;T, E&gt; (on standards track)</h2>
 <div class="line">  <span class="keywordtype">int</span> fd = open(path, O_RDONLY);</div>
 <div class="line">  <span class="keywordflow">if</span>(fd == -1)</div>
 <div class="line">  {</div>
-<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga03e1e619a559e7f336621b1092e28527">std::experimental::make_unexpected</a>(std::error_code(errno, std::system_category());</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga03e1e619a559e7f336621b1092e28527">std::experimental::make_unexpected</a>(std::error_code(errno, <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx_1_1deatomiced__categories.html#a9bd112823854cf5d6b347f1e14a02807">std::system_category</a>());</div>
 <div class="line">  }</div>
 <div class="line">  std::error_code ec;</div>
 <div class="line">  <span class="keyword">auto</span> *p = <span class="keyword">new</span>(std::nothrow) some_derived_handle_implementation(fd, ec);</div>
@@ -355,7 +355,7 @@ islands of exception throw" design pattern which is much more natural:</p>
 <div class="line">    <span class="keywordflow">if</span>(fd == -1)</div>
 <div class="line">    {</div>
 <div class="line">      <span class="comment">// Convert errno into a platform specific error code and wrap that in a throw of a system error</span></div>
-<div class="line">      <span class="keywordflow">throw</span> std::system_error(std::error_code(errno, std::system_category()));</div>
+<div class="line">      <span class="keywordflow">throw</span> std::system_error(std::error_code(errno, <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx_1_1deatomiced__categories.html#a9bd112823854cf5d6b347f1e14a02807">std::system_category</a>()));</div>
 <div class="line">    }</div>
 <div class="line">    <span class="comment">// Implicit conversion to T (handle_ref)</span></div>
 <div class="line">    <span class="keywordflow">return</span> make_handle_ref&lt;some_derived_handle_implementation&gt;(fd);</div>

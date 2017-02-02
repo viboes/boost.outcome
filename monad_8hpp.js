@@ -53,6 +53,8 @@ var monad_8hpp =
       [ "no_state", "monad_8hpp.html#ggaf5abc43f8d09588556c4c65b53485c0dac537dcef56fd6ff75592c0220fd3dae1", null ],
       [ "exception_present", "monad_8hpp.html#ggaf5abc43f8d09588556c4c65b53485c0da621bbc00c646a321b70c18a067da2eb2", null ]
     ] ],
+    [ "_generic_category", "monad_8hpp.html#af32d227a7f17acde670e77300a8524b8", null ],
+    [ "_system_category", "monad_8hpp.html#a89d5238cf18645063328dd5d151c7f5f", null ],
     [ "as_outcome", "monad_8hpp.html#gae530c39aba6722190036aaeb7bf411f7", null ],
     [ "as_outcome", "monad_8hpp.html#ga2e3dc2abb1f8c417f57826c578b5aea6", null ],
     [ "as_result", "monad_8hpp.html#gac0eff505d8bb5f39bd701be19fbdaac5", null ],
@@ -63,6 +65,7 @@ var monad_8hpp =
     [ "as_void", "monad_8hpp.html#ga61c46f3be4c8e19586871d20f37b5f10", null ],
     [ "emplace_function_ptr", "monad_8hpp.html#a89ddbe5df34aa20e4b2d363a4d9440b5", null ],
     [ "extended_error_code_log", "monad_8hpp.html#aa3997a8b00f62af89d4c240b469a9cbd", null ],
+    [ "generic_category", "monad_8hpp.html#a3f5465fc0be7c82b0c0b0bb5419ea59e", null ],
     [ "make_bad_expected_access", "monad_8hpp.html#a3f2827754aa774f72b31a16abc7f543b", null ],
     [ "make_bad_expected_access", "monad_8hpp.html#a40e374a39ee3f205d77c19ec0ebe400e", null ],
     [ "make_empty_option", "monad_8hpp.html#ga85a0d8107c763a68a4705ed56d0d5fdf", null ],
@@ -117,5 +120,6 @@ var monad_8hpp =
     [ "operator==", "monad_8hpp.html#a63db4c206ada0cb03a5a1fbe0d626ba7", null ],
     [ "operator==", "monad_8hpp.html#a147f8ba9e3c7a623a65cc76df64693f4", null ],
     [ "swap", "monad_8hpp.html#ga2ffab91838224f042fe7ed1b108e5ad7", null ],
+    [ "system_category", "monad_8hpp.html#a9bd112823854cf5d6b347f1e14a02807", null ],
     [ "unexpect", "monad_8hpp.html#ga71d06dbe1034b67b00f3f69839c548ae", null ]
 ];

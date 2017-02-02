@@ -1,5 +1,6 @@
 var namespaceboost_1_1outcome_1_1v1__xxx =
 [
+    [ "deatomiced_categories", "namespaceboost_1_1outcome_1_1v1__xxx_1_1deatomiced__categories.html", null ],
     [ "lightweight_futures", null, [
       [ "basic_promise", "classboost_1_1outcome_1_1v1__xxx_1_1lightweight__futures_1_1basic__promise.html", null ],
       [ "basic_future", "classboost_1_1outcome_1_1v1__xxx_1_1lightweight__futures_1_1basic__future.html", null ]
