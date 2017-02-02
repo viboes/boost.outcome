@@ -15,9 +15,11 @@ var searchData=
   ['error_5ftype',['error_type',['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a5379280650f538d04d7b64d6831a6790',1,'boost::outcome::v1_xxx::basic_monad::error_type()'],['../classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access.html#adf40d997faa1e516d254ad0307c7de0f',1,'boost::outcome::v1_xxx::bad_expected_access::error_type()'],['../classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access_3_01void_01_4.html#aaa954e5715759ae2d5e68ee32e475b67',1,'boost::outcome::v1_xxx::bad_expected_access&lt; void &gt;::error_type()']]],
   ['exception_5for',['exception_or',['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a25ec642ef378cede1f92b46f1b525efa',1,'boost::outcome::v1_xxx::basic_monad']]],
   ['exception_5fpresent',['exception_present',['../group__monad.html#ggaf5abc43f8d09588556c4c65b53485c0da621bbc00c646a321b70c18a067da2eb2',1,'boost::outcome::v1_xxx']]],
-  ['exception_5ft',['exception_t',['../structboost_1_1outcome_1_1v1__xxx_1_1exception__t.html',1,'boost::outcome::v1_xxx']]],
   ['exception_5ft',['exception_t',['../group__monad.html#ga93fd76af06145e1e6544d9c27bd080d0',1,'boost::outcome::v1_xxx']]],
+  ['exception_5ft',['exception_t',['../structboost_1_1outcome_1_1v1__xxx_1_1exception__t.html',1,'boost::outcome::v1_xxx']]],
   ['exception_5ftype',['exception_type',['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a48807a8961a0fd5619a9dbda945102bd',1,'boost::outcome::v1_xxx::basic_monad']]],
   ['expected',['expected',['../group__expected.html#ga7440167038cbd110405573cf2bd873ad',1,'boost::outcome::v1_xxx']]],
-  ['extended_5fmessage',['extended_message',['../classboost_1_1outcome_1_1v1__xxx_1_1error__code__extended.html#ac3515ee4d07660f5bc12d660f7ecf2e0',1,'boost::outcome::v1_xxx::error_code_extended']]]
+  ['extended_5fmessage',['extended_message',['../classboost_1_1outcome_1_1v1__xxx_1_1error__code__extended.html#ac3515ee4d07660f5bc12d660f7ecf2e0',1,'boost::outcome::v1_xxx::error_code_extended']]],
+  ['expected_3ct_2c_20e_3e_20in_20context',['Expected&lt;T, E&gt; in Context',['../md_doc_md_02-tutorial_a.html',1,'']]],
+  ['expected_3ct_2c_20e_3e_20in_20practice',['Expected&lt;T, E&gt; in Practice',['../md_doc_md_03-tutorial_b.html',1,'']]]
 ];

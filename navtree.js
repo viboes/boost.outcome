@@ -5,14 +5,11 @@ var NAVTREE =
     [ "Prerequisites", "prerequisites.html", null ],
     [ "Support", "support.html", null ],
     [ "Installing, building and testing Outcome", "md_doc_md_01-installation.html", [
-      [ "Installing on Windows", "md_doc_md_01-installation.html#windows", null ],
-      [ "Installing on Ubuntu/Debian", "md_doc_md_01-installation.html#ubuntu", null ],
-      [ "Installing on OS X", "md_doc_md_01-installation.html#osx", null ],
-      [ "Installing via source tarball (all other platforms)", "md_doc_md_01-installation.html#tarball", null ],
+      [ "Installing via source tarball", "md_doc_md_01-installation.html#tarball", null ],
       [ "Installing via git subrepository into your project's git repository", "md_doc_md_01-installation.html#gitsubrepo", null ],
       [ "Running the unit test suite", "md_doc_md_01-installation.html#unittests", null ]
     ] ],
-    [ "Tutorial part A: Outcome's expected<T, E>", "md_doc_md_02-tutorial_a.html", [
+    [ "Expected<T, E> in Context", "md_doc_md_02-tutorial_a.html", [
       [ "C style error handling: integer returns", "md_doc_md_02-tutorial_a.html#c-style", null ],
       [ "C++ 98 style error handling: throwing exceptions", "md_doc_md_02-tutorial_a.html#cpp98-style", null ],
       [ "C++ 11 style error handling: error_code and noexcept", "md_doc_md_02-tutorial_a.html#cpp11-style", null ],
@@ -27,12 +24,12 @@ var NAVTREE =
       [ "Expected is unstable!!!", "md_doc_md_02-tutorial_a.html#expected_is_unstable", null ],
       [ "Short example program using expected<T, E>", "md_doc_md_02-tutorial_a.html#expected_example", null ]
     ] ],
-    [ "Tutorial part B: Don't use the E in expected<T, E>!", "md_doc_md_03-tutorial_b.html", [
+    [ "Expected<T, E> in Practice", "md_doc_md_03-tutorial_b.html", [
       [ "Unrestricted use of expected<T, E> is bad practice", "md_doc_md_03-tutorial_b.html#expected_is_bad", null ],
       [ "Unrestricted use of expected<T, E> means typing more boilerplate", "md_doc_md_03-tutorial_b.html#expected_boilerplate", null ],
       [ "std::error_code CAN replace your custom error types", "md_doc_md_03-tutorial_b.html#error_codes_insufficient", null ]
     ] ],
-    [ "Tutorial part C: Outcome's outcome<T>, result<T> and option<T>", "md_doc_md_04-tutorial_c.html", [
+    [ "Refining Expected<T, E>", "md_doc_md_04-tutorial_c.html", [
       [ "Outcome's extended std::error_code", "md_doc_md_04-tutorial_c.html#error_code_extended", null ],
       [ "Outcome's outcome<T>, result<T> and option<T> refinements", "md_doc_md_04-tutorial_c.html#outcome_overview", null ],
       [ "Outcome's helper free functions", "md_doc_md_04-tutorial_c.html#outcome_helpers", null ],

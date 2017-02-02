@@ -18,7 +18,7 @@ var indexSectionsWithContent =
   8: "en",
   9: "b",
   10: "ciu",
-  11: "dfhipst"
+  11: "defhiprst"
 };
 
 var indexSectionNames =

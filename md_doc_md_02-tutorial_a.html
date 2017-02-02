@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>boost.outcome: Tutorial part A: Outcome&#39;s expected&lt;T, E&gt;</title>
+<title>boost.outcome: Expected&lt;T, E&gt; in Context</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,7 +99,7 @@ $(document).ready(function(){initNavTree('md_doc_md_02-tutorial_a.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Tutorial part A: Outcome's expected&lt;T, E&gt; </div>  </div>
+<div class="title">Expected&lt;T, E&gt; in Context </div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
@@ -119,12 +119,11 @@ $(document).ready(function(){initNavTree('md_doc_md_02-tutorial_a.html','');});
 </ul>
 </div>
 <div class="textblock"><p><a class="anchor" id="tutorial_expected"></a></p>
-<p>Outcome provides a number of utility classes useful for ultra lightweight and constant time error handling in C++ 14 and later. One of these is <a class="el" href="md_doc_md_08-expectedsynopsis.html#outcome_expected_reference">a highly conforming expected&lt;T, E&gt; implementation</a> which is currently before the ISO C++ standards Library Evolution Working Group for standardisation. <code>expected&lt;T, E&gt;</code> is a very flexible and generic utility class allowing perhaps too much unwise customisation in the hands of its users, so Outcome also provides a family of more hard coded and deliberately less flexible refinements to <code>expected&lt;T, E&gt;</code> called <code>outcome&lt;T&gt;</code> and <code>result&lt;T&gt;</code> the use of which ought to generate more maintainable code bases and require less typing of boilerplate by the programmer.</p>
-<p>This tutorial is therefore split into three parts:</p>
+<p>Outcome's design rationale and tutorial is split into three parts:</p>
 <ol type="1">
-<li>The first part (part A, this part) provides a broad overview of error handling in C++ in general and how the <code>expected&lt;T, E&gt;</code> proposed for standardisation will contribute to that big menu of error handling design patterns available to the C++ programmer. This part isn't relevant to Outcome the library, but places it in context.</li>
-<li>The second part (<a class="el" href="md_doc_md_03-tutorial_b.html#tutorial_whynot">part B</a>) describes why you probably ought to not use unrestricted <code>expected&lt;T, E&gt;</code> in any real world code base and why you ought to use the refinements of <code>outcome&lt;T&gt;</code> or <code>result&lt;T&gt;</code> instead.</li>
-<li>The third part (<a class="el" href="md_doc_md_04-tutorial_c.html#tutorial_outcome">part C</a>) walks you through using Outcome's refinements <code>outcome&lt;T&gt;</code> and <code>result&lt;T&gt;</code>, plus its <code>extended_error_code</code>. Usage is very similar to Expected, but with less typing and more convenient extensions.</li>
+<li>The first part (part A, this part) provides a broad overview of error handling in C++ in general and how the <code>expected&lt;T, E&gt;</code> proposed for standardisation will contribute to that big menu of error handling design patterns available to the C++ programmer. This part places Outcome the library in context.</li>
+<li>The second part (<a class="el" href="md_doc_md_03-tutorial_b.html#tutorial_whynot">part B</a>) describes some design anti-patterns common with inexperienced usage of <code>expected&lt;T, E&gt;</code> in C++ which you ought to avoid. It shows you how to use <code>expected&lt;T, E&gt;</code> in a way which integrates well with the C++ 11 STL's standard error code facilities <code>std::error_code</code> and <code>std::error_category</code>.</li>
+<li>The third part (<a class="el" href="md_doc_md_04-tutorial_c.html#tutorial_outcome">part C</a>) walks you through using Outcome's <code>expected&lt;T, E&gt;</code> refinements <code>outcome&lt;T&gt;</code> and <code>result&lt;T&gt;</code>, plus its <code>extended_error_code</code>. Usage is very similar to Expected, but with less typing, less runtime overhead and more convenient extensions.</li>
 </ol>
 <hr/>
 <p><br/>

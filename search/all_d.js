@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['refining_20expected_3ct_2c_20e_3e',['Refining Expected&lt;T, E&gt;',['../md_doc_md_04-tutorial_c.html',1,'']]],
   ['raw_5fbacktrace',['raw_backtrace',['../classboost_1_1outcome_1_1v1__xxx_1_1error__code__extended.html#a710b220bca81347ed5a55b5e2c1a7108',1,'boost::outcome::v1_xxx::error_code_extended']]],
   ['raw_5ferror_5ftype',['raw_error_type',['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a0abb2aa8a380b8b7a952c34efd7d5fce',1,'boost::outcome::v1_xxx::basic_monad']]],
   ['raw_5fexception_5ftype',['raw_exception_type',['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a0792e769f183f071bb42cb3a09fc2dff',1,'boost::outcome::v1_xxx::basic_monad']]],
