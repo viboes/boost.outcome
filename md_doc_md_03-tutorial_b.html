@@ -103,9 +103,12 @@ $(document).ready(function(){initNavTree('md_doc_md_03-tutorial_b.html','');});
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#expected_is_bad">Unrestricted use of expected<T, E> is bad practice</a></li>
-<li class="level1"><a href="#expected_boilerplate">Unrestricted use of expected<T, E> means typing more boilerplate</a></li>
-<li class="level1"><a href="#error_codes_insufficient">std::error_code CAN replace your custom error types</a></li>
+<ul><li class="level1"><a href="#expected_simple_e_is_bad">Simple E types in expected<T, E> is bad practice in C++</a></li>
+<li class="level1"><a href="#custom_error_codes">Marking up your custom error code domain so the STL understands it</a></li>
+<li class="level1"><a href="#expected_tension">The tension between type safety and convenient programming</a><ul><li class="level2"><a href="#try_operation">The TRY operation</a></li>
+</ul>
+</li>
+<li class="level1"><a href="#expected_payload">Sending payload with your custom error type</a></li>
 </ul>
 </div>
 <div class="textblock"><p><a class="anchor" id="tutorial_whynot"></a></p>
@@ -118,27 +121,9 @@ $(document).ready(function(){initNavTree('md_doc_md_03-tutorial_b.html','');});
 <hr/>
 <p><br/>
 </p>
-<p>This part of the tutorial is a bit unusual as it's a sort of polemic against what most consider to be one of the best parts of <code>expected&lt;T, E&gt;</code>: that you can and should choose any arbitrary type <code>E</code> on a case by case basis as is conventional in other languages such as Rust or Swift. Hopefully by the end of this part you will be persuaded to always <em>restrict</em> your use of <code>expected&lt;T, E&gt;</code> in C++ to one of:</p>
-<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; <span class="keyword">using</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a91e1fe11dbebea15458d882d078d6eb5">result</a> = outcome::expected&lt;T, std::error_code&gt;;</div>
-<div class="line"><span class="keyword">using</span> bad_result_access = outcome::bad_expected_access&lt;std::error_code&gt;;</div>
-</div><!-- fragment --><p>... or ...</p>
-<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; <span class="keyword">using</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a91e1fe11dbebea15458d882d078d6eb5">result</a> = outcome::expected&lt;T, std::exception_ptr&gt;;</div>
-<div class="line"><span class="keyword">using</span> bad_result_access = outcome::bad_expected_access&lt;std::exception_ptr&gt;;</div>
-</div><!-- fragment --><p>... where the latter is a superset of the former, because you can wrap any arbitrary <code>std::error_code</code> instance into a <code>std::exception_ptr</code> instance using the C++ 11 STL error code wrapping C++ exception type <code>std::system_error</code>:</p>
-<div class="fragment"><div class="line">std::error_code ec;</div>
-<div class="line">std::exception_ptr e = std::make_exception_ptr(std::system_error(ec));</div>
-<div class="line"></div>
-<div class="line"><span class="comment">// OR</span></div>
-<div class="line"></div>
-<div class="line">std::exception_ptr e = std::make_exception_ptr(std::system_error(ec, <span class="stringliteral">&quot;custom what() string&quot;</span>));</div>
-</div><!-- fragment --><p>The reason why this polemic is needed is because during the many pre-reviews of Outcome on Boost, SG14 and Reddit, it became clear that the choice that Outcome made to hard code the error type to error codes or exception pointers in Outcome's refinements of <code>outcome&lt;T&gt;</code> and <code>result&lt;T&gt;</code> was not at all clear to most people interested in using <code>expected&lt;T, E&gt;</code>. It became clear that the rationale would need to be spelled out, and that is this part B of the tutorial.</p>
-<p>As with all polemical texts, you may find yourself disagreeing with everything in this section and that therefore you will think the hardcoded <code>E</code> refinements of <code>outcome&lt;T&gt;</code> and <code>result&lt;T&gt;</code> will be of no use to you. Two things should be noted. The first is that the hard coding allows the refinements to do a fair bit of tedious boilerplate for you, so the refinements are undoubtedly less tedious to program with if you accept the hard coding. The second is that even if you profoundly disagree with everything in this section, there is no obligation to use anything in Outcome outside what was already described in part A and in <a class="el" href="md_doc_md_08-expectedsynopsis.html#outcome_expected_reference">the reference API page for Outcome's Expected implementation</a>. Outcome's Expected implementation is high quality, and should be competitive with any future STL implementation of <code>expected&lt;T, E&gt;</code>.</p>
-<hr/>
-<p><br/>
-</p>
-<h1><a class="anchor" id="expected_is_bad"></a>
-Unrestricted use of expected&lt;T, E&gt; is bad practice</h1>
-<p>Most people very keen on Expected entering C++ will be coming from a Swift or especially Rust background where when you use <code>Result&lt;T, E&gt;</code>, you invariably supply a bespoke enum of error codes for type E like this fragment of Rust:</p>
+<h1><a class="anchor" id="expected_simple_e_is_bad"></a>
+Simple E types in expected&lt;T, E&gt; is bad practice in C++</h1>
+<p>Most people very keen on Expected entering C++ will be coming from a Swift or especially Rust background where when you use <code>Result&lt;T, E&gt;</code>, you invariably supply a bespoke enum of error codes for type <code>E</code> like this fragment of Rust:</p>
 <div class="fragment"><div class="line">pub <span class="keyword">enum</span> MathError {</div>
 <div class="line">  DivisionByZero,</div>
 <div class="line">  NegativeLogarithm,</div>
@@ -148,100 +133,13 @@ Unrestricted use of expected&lt;T, E&gt; is bad practice</h1>
 <div class="line">pub type MathResult = Result&lt;f64, MathError&gt;;</div>
 </div><!-- fragment --><p>I will tell you now that this is a <b>bad idea</b> in large C++ codebases or in any code expected to be used by others, and you should not do this with <code>expected&lt;T, E&gt;</code>.</p>
 <p>The first reason is because C++ 11 brought in an infrastructure from Boost which allows you to <em>non-intrusively</em> mark up <b>any</b> arbitrary third party error code system to tell the C++ standard library about it such that any other C++ code using that system can handle any third party error situation <em>without being recompiled</em> and <em>without losing information</em>. If you refuse to use the C++ 11 standard way of working with error codes, then you are being <b>anti-social</b> to other C++ code and devaluing the experience of anybody else who works with your code. Moreover, it is extremely easy to do the right thing and use the standard C++ 11 infrastructure for error codes, and a worked example follows below.</p>
-<p>The second reason is that if everybody goes off and locally defines their own custom error code system, you multiply significantly the number of <code>expected&lt;T, E&gt;</code> permutations which the compiler has to deal with. That means slower compile and link times, just because you couldn't be bothered to use the standard library's infrastructure for error codes. You also force programmers coming later to your code to deal with a multitude of local error code domains which may or may not mean the same thing. Expect a multiplication of lots of little switch statements mapping one small domain of error code to another, all of which must be maintained and parsed by programmers coming later to your codebase. The growing maintenance burden over time is obvious, and a further worked example follows below.</p>
-<p>The third reason is that the C++ 11 standard library already provides an enum of the most common error codes for you so you don't feel like going off and reinventing the wheel. It's called <a href="http://en.cppreference.com/w/cpp/error/errc"><code>std::errc</code></a> and it has the following contents:</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;system_error&gt;</span>  <span class="comment">// header to bring in this enum</span></div>
-<div class="line"></div>
-<div class="line"><span class="keyword">namespace </span>std</div>
-<div class="line">{</div>
-<div class="line">  <span class="keyword">enum class</span> errc</div>
-<div class="line">  {</div>
-<div class="line">    address_family_not_supported        = EAFNOSUPPORT,</div>
-<div class="line">    address_in_use                      = EADDRINUSE,</div>
-<div class="line">    address_not_available               = EADDRNOTAVAIL,</div>
-<div class="line">    already_connected                   = EISCONN,</div>
-<div class="line">    argument_list_too_long              = E2BIG,</div>
-<div class="line">    argument_out_of_domain              = EDOM,</div>
-<div class="line">    bad_address                         = EFAULT,</div>
-<div class="line">    bad_file_descriptor                 = EBADF,</div>
-<div class="line">    bad_message                         = EBADMSG,</div>
-<div class="line">    broken_pipe                         = EPIPE,</div>
-<div class="line">    connection_aborted                  = ECONNABORTED,</div>
-<div class="line">    connection_already_in_progress      = EALREADY,</div>
-<div class="line">    connection_refused                  = ECONNREFUSED,</div>
-<div class="line">    connection_reset                    = ECONNRESET,</div>
-<div class="line">    cross_device_link                   = EXDEV,</div>
-<div class="line">    destination_address_required        = EDESTADDRREQ,</div>
-<div class="line">    device_or_resource_busy             = EBUSY,</div>
-<div class="line">    directory_not_empty                 = ENOTEMPTY,</div>
-<div class="line">    executable_format_error             = ENOEXEC,</div>
-<div class="line">    file_exists                         = EEXIST,</div>
-<div class="line">    file_too_large                      = EFBIG,</div>
-<div class="line">    filename_too_long                   = ENAMETOOLONG,</div>
-<div class="line">    function_not_supported              = ENOSYS,</div>
-<div class="line">    host_unreachable                    = EHOSTUNREACH,</div>
-<div class="line">    identifier_removed                  = EIDRM,</div>
-<div class="line">    illegal_byte_sequence               = EILSEQ,</div>
-<div class="line">    inappropriate_io_control_operation  = ENOTTY,</div>
-<div class="line">    interrupted                         = EINTR,</div>
-<div class="line">    invalid_argument                    = EINVAL,</div>
-<div class="line">    invalid_seek                        = ESPIPE,</div>
-<div class="line">    io_error                            = EIO,</div>
-<div class="line">    is_a_directory                      = EISDIR,</div>
-<div class="line">    message_size                        = EMSGSIZE,</div>
-<div class="line">    network_down                        = ENETDOWN,</div>
-<div class="line">    network_reset                       = ENETRESET,</div>
-<div class="line">    network_unreachable                 = ENETUNREACH,</div>
-<div class="line">    no_buffer_space                     = ENOBUFS,</div>
-<div class="line">    no_child_process                    = ECHILD,</div>
-<div class="line">    no_link                             = ENOLINK,</div>
-<div class="line">    no_lock_available                   = ENOLCK,</div>
-<div class="line">    no_message_available                = ENODATA,</div>
-<div class="line">    no_message                          = ENOMSG,</div>
-<div class="line">    no_protocol_option                  = ENOPROTOOPT,</div>
-<div class="line">    no_space_on_device                  = ENOSPC,</div>
-<div class="line">    no_stream_resources                 = ENOSR,</div>
-<div class="line">    no_such_device_or_address           = ENXIO,</div>
-<div class="line">    no_such_device                      = ENODEV,</div>
-<div class="line">    no_such_file_or_directory           = ENOENT,</div>
-<div class="line">    no_such_process                     = ESRCH,</div>
-<div class="line">    not_a_directory                     = ENOTDIR,</div>
-<div class="line">    not_a_socket                        = ENOTSOCK,</div>
-<div class="line">    not_a_stream                        = ENOSTR,</div>
-<div class="line">    not_connected                       = ENOTCONN,</div>
-<div class="line">    not_enough_memory                   = ENOMEM,</div>
-<div class="line">    not_supported                       = ENOTSUP,</div>
-<div class="line">    operation_canceled                  = ECANCELED,</div>
-<div class="line">    operation_in_progress               = EINPROGRESS,</div>
-<div class="line">    operation_not_permitted             = EPERM,</div>
-<div class="line">    operation_not_supported             = EOPNOTSUPP,</div>
-<div class="line">    operation_would_block               = EWOULDBLOCK,</div>
-<div class="line">    owner_dead                          = EOWNERDEAD,</div>
-<div class="line">    permission_denied                   = EACCES,</div>
-<div class="line">    protocol_error                      = EPROTO,</div>
-<div class="line">    protocol_not_supported              = EPROTONOSUPPORT,</div>
-<div class="line">    read_only_file_system               = EROFS,</div>
-<div class="line">    resource_deadlock_would_occur       = EDEADLK,</div>
-<div class="line">    resource_unavailable_try_again      = EAGAIN,</div>
-<div class="line">    result_out_of_range                 = ERANGE,</div>
-<div class="line">    state_not_recoverable               = ENOTRECOVERABLE,</div>
-<div class="line">    stream_timeout                      = ETIME,</div>
-<div class="line">    text_file_busy                      = ETXTBSY,</div>
-<div class="line">    timed_out                           = ETIMEDOUT,</div>
-<div class="line">    too_many_files_open_in_system       = ENFILE,</div>
-<div class="line">    too_many_files_open                 = EMFILE,</div>
-<div class="line">    too_many_links                      = EMLINK,</div>
-<div class="line">    too_many_symbolic_link_levels       = ELOOP,</div>
-<div class="line">    value_too_large                     = EOVERFLOW,</div>
-<div class="line">    wrong_protocol_type                 = EPROTOTYPE</div>
-<div class="line">  };</div>
-<div class="line">}</div>
-</div><!-- fragment --><p>As you will note, these are the standard POSIX error codes, and most of the time you'll find that whatever custom error code domain you are about to write can be adequately covered by <code>std::errc</code>. In fact, let's try it:</p>
+<p>The second reason is that if everybody goes off and locally defines their own custom error code system, you force programmers coming later to your code to deal with a multitude of local error code domains which may or may not mean the same thing. Expect a multiplication of lots of little switch statements mapping one small domain of error code to another, all of which must be maintained and parsed by programmers coming later to your codebase. The growing maintenance burden over time is obvious, and a further worked example follows below.</p>
+<p>The third reason is that the C++ 11 standard library already provides an enum of the most common error codes for you so you don't feel like going off and reinventing the wheel. It's called <a href="http://en.cppreference.com/w/cpp/error/errc"><code>std::errc</code></a> brought in by <code>include &lt;system_error&gt;</code> and as you'll see, it contains the standard POSIX error codes, and most of the time you'll find that whatever custom error code domain you are about to write can be adequately covered by <code>std::errc</code>. In fact, let's try it:</p>
 <div class="fragment"><div class="line"><span class="comment">// Mathematical &quot;errors&quot; we want to catch</span></div>
 <div class="line"><span class="keyword">using</span> MathError = std::error_code;</div>
-<div class="line"><span class="keyword">static</span> constexpr MathError DivisionByZero = std::errc::result_out_of_range;</div>
-<div class="line"><span class="keyword">static</span> constexpr MathError NegativeLogarithm = std::errc::argument_out_of_domain;</div>
-<div class="line"><span class="keyword">static</span> constexpr MathError NegativeSquareRoot = std::errc::argument_out_of_domain;  </div>
+<div class="line"><span class="keyword">static</span> <span class="keyword">const</span> MathError DivisionByZero = <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ab6204dd7620b0e495220e76988359589">std::make_error_code</a>(std::errc::result_out_of_range);</div>
+<div class="line"><span class="keyword">static</span> <span class="keyword">const</span> MathError NegativeLogarithm = <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ab6204dd7620b0e495220e76988359589">std::make_error_code</a>(std::errc::argument_out_of_domain);</div>
+<div class="line"><span class="keyword">static</span> <span class="keyword">const</span> MathError NegativeSquareRoot = <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ab6204dd7620b0e495220e76988359589">std::make_error_code</a>(std::errc::argument_out_of_domain);  </div>
 <div class="line"></div>
 <div class="line"><span class="keyword">using</span> MathResult = outcome::expected&lt;double, MathError&gt;;</div>
 </div><!-- fragment --><p>Anything which can "speak" <code>std::error_code</code> can now work perfectly with your error code system because you are using a standard error code domain (i.e. the POSIX error code domain). And for reference, the C++ 11 STL ships with these ready to go predefined error categories and error enumerations:</p>
@@ -255,15 +153,40 @@ Unrestricted use of expected&lt;T, E&gt; is bad practice</h1>
 <dt><a href="http://en.cppreference.com/w/cpp/thread/future/future_category"><code>std::future_category()</code></a> with corresponding enumeration <a href="http://en.cppreference.com/w/cpp/thread/future_errc"><code>std::future_errc</code></a> </dt>
 <dd>The STL future-promise error code domain. </dd>
 </dl>
-<p>But let's say you really, really wanted to have your own custom error code scheme, this is how you tell C++ 11's standard error code infrastructure about your custom error code domain:</p>
+<p>Because <code>std::error_code</code> is the C++ 11 standard way of doing error codes, <code>expected&lt;T, E&gt;</code> defaults <code>E</code> to <code>std::error_code</code> both in the proposed standard [1] and in Outcome's implementation.</p>
+<p>The big problem with directly using <code>std::error_code</code> as <code>E</code> is the loss of type safety because <code>std::error_code</code> will accept any input implicitly convertible. So you can write this code and the compiler won't complain:</p>
+<div class="fragment"><div class="line"><span class="comment">// Not a valid MathError, yet the compiler won&#39;t stop you doing this</span></div>
+<div class="line"><span class="keywordflow">return</span> MathResult(<a class="code" href="group__expected.html#ga03e1e619a559e7f336621b1092e28527">make_unexpected</a>(<a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ab6204dd7620b0e495220e76988359589">std::make_error_code</a>(std::errc::executable_format_error)));</div>
+</div><!-- fragment --><p>As is usually the case in C++, fixing this is straightforward but requires typing boilerplate to tell the C++ STL about your custom error type. As how to do this is not well documented [2], next follows a very quick howto guide.</p>
+<p>[1]: The current LEWG Expected proposal defaults <code>E</code> to <code>std::error_condition</code>. We believe this almost certainly to be a defect and it ought to be <code>std::error_code</code>.</p>
+<p>[2]: The only documentation I'm aware of is the quite old guide by Chris Kohlhoff, founder of ASIO and the Networking TS:</p>
+<ul>
+<li><a href="http://blog.think-async.com/2010/04/system-error-support-in-c0x-part-1.html">http://blog.think-async.com/2010/04/system-error-support-in-c0x-part-1.html</a></li>
+<li><a href="http://blog.think-async.com/2010/04/system-error-support-in-c0x-part-2.html">http://blog.think-async.com/2010/04/system-error-support-in-c0x-part-2.html</a></li>
+<li><a href="http://blog.think-async.com/2010/04/system-error-support-in-c0x-part-3.html">http://blog.think-async.com/2010/04/system-error-support-in-c0x-part-3.html</a></li>
+<li><a href="http://blog.think-async.com/2010/04/system-error-support-in-c0x-part-4.html">http://blog.think-async.com/2010/04/system-error-support-in-c0x-part-4.html</a></li>
+<li><a href="http://blog.think-async.com/2010/04/system-error-support-in-c0x-part-5.html">http://blog.think-async.com/2010/04/system-error-support-in-c0x-part-5.html</a></li>
+</ul>
+<hr/>
+<p><br/>
+</p>
+<h1><a class="anchor" id="custom_error_codes"></a>
+Marking up your custom error code domain so the STL understands it</h1>
+<p>Let's get into it! This is how you tell C++ 11's standard error code infrastructure about your custom <code>expected&lt;T, E&gt;</code> error code type so it works well with anything speaking <code>std::error_code</code>:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;system_error&gt;</span>  <span class="comment">// bring in std::error_code et al</span></div>
 <div class="line"></div>
 <div class="line"><span class="comment">// This is the custom error code enum</span></div>
-<div class="line"><span class="keyword">enum class</span> MathError {</div>
-<div class="line">  DivisionByZero,</div>
-<div class="line">  NegativeLogarithm,</div>
-<div class="line">  NegativeSquareRoot</div>
+<div class="line"><span class="keyword">class </span>MathError : <span class="keyword">public</span> std::error_code {</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">  <span class="keyword">enum</span> valid_errors {</div>
+<div class="line">    DivisionByZero,</div>
+<div class="line">    NegativeLogarithm,</div>
+<div class="line">    NegativeSquareRoot</div>
+<div class="line">  };</div>
+<div class="line">  MathError() = <span class="keywordflow">default</span>;  <span class="comment">// Expected requires E to be default constructible</span></div>
+<div class="line">  <span class="comment">// Only allow my construction from my enum</span></div>
+<div class="line">  <span class="keyword">inline</span> MathError(valid_errors c);</div>
 <div class="line">};</div>
 <div class="line"></div>
 <div class="line"><span class="keyword">namespace </span>detail</div>
@@ -277,7 +200,7 @@ Unrestricted use of expected&lt;T, E&gt; is bad practice</h1>
 <div class="line">    <span class="comment">// Return what each enum means in text</span></div>
 <div class="line">    <span class="keyword">virtual</span> std::string message(<span class="keywordtype">int</span> c) <span class="keyword">const</span> <span class="keyword">override</span> <span class="keyword">final</span></div>
 <div class="line">    {</div>
-<div class="line">      <span class="keywordflow">switch</span> (static_cast&lt;MathError&gt;(c))</div>
+<div class="line">      <span class="keywordflow">switch</span> (c)</div>
 <div class="line">      {</div>
 <div class="line">      <span class="keywordflow">case</span> MathError::DivisionByZero:</div>
 <div class="line">        <span class="keywordflow">return</span> <span class="stringliteral">&quot;division by zero&quot;</span>;</div>
@@ -292,7 +215,7 @@ Unrestricted use of expected&lt;T, E&gt; is bad practice</h1>
 <div class="line">    <span class="comment">// OPTIONAL: Allow generic error conditions to be compared to me</span></div>
 <div class="line">    <span class="keyword">virtual</span> std::error_condition default_error_condition(<span class="keywordtype">int</span> c) <span class="keyword">const</span> noexcept <span class="keyword">override</span> <span class="keyword">final</span></div>
 <div class="line">    {</div>
-<div class="line">      <span class="keywordflow">switch</span> (static_cast&lt;MathError&gt;(c))</div>
+<div class="line">      <span class="keywordflow">switch</span> (c)</div>
 <div class="line">      {</div>
 <div class="line">      <span class="keywordflow">case</span> MathError::DivisionByZero:</div>
 <div class="line">        <span class="keywordflow">return</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a5824d43d94ed4cb2593cf39b2d0f354d">make_error_condition</a>(std::errc::result_out_of_range);</div>
@@ -315,18 +238,21 @@ Unrestricted use of expected&lt;T, E&gt; is bad practice</h1>
 <div class="line">  <span class="keywordflow">return</span> c;</div>
 <div class="line">}</div>
 <div class="line"></div>
+<div class="line"><span class="comment">// Now we have the custom error code category, implement the MathError constructor</span></div>
+<div class="line"><span class="keyword">inline</span> MathError::MathError(MathError::valid_errors e) : std::error_code(e, MathError_category()) {}</div>
+<div class="line"></div>
 <div class="line"><span class="comment">// Overload the global make_error_code() free function with our</span></div>
 <div class="line"><span class="comment">// custom enum. It will be found via ADL by the compiler if needed.</span></div>
-<div class="line"><span class="keyword">inline</span> std::error_code <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ab6204dd7620b0e495220e76988359589">make_error_code</a>(MathError e)</div>
+<div class="line"><span class="keyword">inline</span> MathError <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ab6204dd7620b0e495220e76988359589">make_error_code</a>(MathError::valid_errors e)</div>
 <div class="line">{</div>
-<div class="line">  <span class="keywordflow">return</span> std::error_code(static_cast&lt;int&gt;(e), MathError_category());</div>
+<div class="line">  <span class="keywordflow">return</span> MathError(e);</div>
 <div class="line">}</div>
 <div class="line"></div>
 <div class="line"><span class="keyword">namespace </span>std</div>
 <div class="line">{</div>
-<div class="line">  <span class="comment">// Tell the C++ 11 STL metaprogramming that enum MathError</span></div>
+<div class="line">  <span class="comment">// Tell the C++ 11 STL metaprogramming that enum MathError::valid_errors</span></div>
 <div class="line">  <span class="comment">// is registered with the standard error code system</span></div>
-<div class="line">  <span class="keyword">template</span> &lt;&gt; <span class="keyword">struct </span>is_error_code_enum&lt;MathError&gt; : std::true_type</div>
+<div class="line">  <span class="keyword">template</span> &lt;&gt; <span class="keyword">struct </span>is_error_code_enum&lt;MathError::valid_errors&gt; : std::true_type</div>
 <div class="line">  {</div>
 <div class="line">  };</div>
 <div class="line">}</div>
@@ -346,52 +272,20 @@ Unrestricted use of expected&lt;T, E&gt; is bad practice</h1>
 <div class="line">    &lt;&lt; (ec == std::errc::argument_out_of_domain) &lt;&lt; std::endl;</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-</div><!-- fragment --><p> This might look like an awful lot of extra boilerplate, but look at the advantages:</p>
+</div><!-- fragment --><p> This might look like a lot of extra boilerplate over simply using your custom error code enum directly, but look at the advantages:</p>
 <ol type="1">
 <li>Any code which can speak <code>std::error_code</code> can now work with errors from your code, AND without being recompiled.</li>
 <li><code>std::system_error</code> can now wrap your custom error codes seamlessly, allowing your custom error code to be converted into a C++ exception <em>and back out again</em> without losing information.</li>
 <li><code>std::error_code</code> knows how to print itself, and will print your custom error code without extra work from you. As usually you'd need to define a print routine for any custom error code you'd write anyway, there is actually very little extra boilerplate here.</li>
 <li>If you implement the <code>default_error_condition()</code> override, you can allow code exclusively written to understand <code>std::errc</code> alone to examine your custom error code domain for equivalence to the standard error conditions, AND without being recompiled.</li>
+<li>Type safety is preserved, you cannot construct a <code>MathError</code> from anything but the officially sanctioned enums in <code>MathError</code>.</li>
 </ol>
-<p>So to sum up, if you are going to deploy <code>expected&lt;T, E&gt;</code> into your C++ codebase, I <b>urge</b> you do not use unrestricted <code>expected&lt;T, E&gt;</code> because that will tempt people into using custom error enums as type <code>E</code> which I've hopefully proven by now is a bad idea. Instead <em>restrict</em> <code>expected&lt;T, E&gt;</code> to a hard coded error type using something like:</p>
-<div class="fragment"><div class="line"><span class="keyword">namespace </span>my_codes_namespace</div>
-<div class="line">{</div>
-<div class="line">  <span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; <span class="keyword">using</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a91e1fe11dbebea15458d882d078d6eb5">result</a> = expected&lt;T, std::error_code&gt;;</div>
-<div class="line"></div>
-<div class="line">  <span class="comment">// Custom error code enum</span></div>
-<div class="line">  <span class="keyword">enum class</span> MathError {</div>
-<div class="line">    DivisionByZero,</div>
-<div class="line">    NegativeLogarithm,</div>
-<div class="line">    NegativeSquareRoot</div>
-<div class="line">  };</div>
-<div class="line">  ... boilerplate to tell error_code about MathError ...</div>
-<div class="line"></div>
-<div class="line">  <span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; <span class="keyword">inline</span> result&lt;T&gt; <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a559b5e8efc12ededdc3aeecce0d304de">make_result</a>(T &amp;&amp;v)</div>
-<div class="line">  {</div>
-<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga276cc35056dccfdbe461c11d8eeb3d93">make_expected</a>(std::forward&lt;T&gt;(v));</div>
-<div class="line">  }</div>
-<div class="line">  <span class="keyword">inline</span> unexpected_type&lt;std::error_code&gt; make_error(std::error_code ec)</div>
-<div class="line">  {</div>
-<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga03e1e619a559e7f336621b1092e28527">make_unexpected</a>(ec);</div>
-<div class="line">  }</div>
-<div class="line">}</div>
-</div><!-- fragment --><p>Now instead of directly calling Expected's factory functions, simply return all values from your functions using <code>make_result()</code>. Returning a value now becomes:</p>
-<div class="fragment"><div class="line">result&lt;int&gt; foo()</div>
-<div class="line">{</div>
-<div class="line">  <span class="keywordflow">return</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a559b5e8efc12ededdc3aeecce0d304de">make_result</a>(5);</div>
-<div class="line">}</div>
-</div><!-- fragment --><p>Returning an error now becomes:</p>
-<div class="fragment"><div class="line">result&lt;int&gt; foo()</div>
-<div class="line">{</div>
-<div class="line">  <span class="keywordflow">return</span> make_error(MathError::DivisionByZero);</div>
-<div class="line">}</div>
-</div><!-- fragment --><p>... and note that you can feed <code>make_error()</code> any custom error code enum understood by <code>std::error_code</code>.</p>
 <hr/>
 <p><br/>
 </p>
-<h1><a class="anchor" id="expected_boilerplate"></a>
-Unrestricted use of expected&lt;T, E&gt; means typing more boilerplate</h1>
-<p>If you weren't convinced by the previous section, let's look at another problem which unrestricted use of Expected has: the quantity of boilerplate it makes you write.</p>
+<h1><a class="anchor" id="expected_tension"></a>
+The tension between type safety and convenient programming</h1>
+<p>Let's look at another problem which naive direct usage of custom error code enums has: the quantity of boilerplate it makes you write.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;../include/boost/outcome.hpp&quot;</span></div>
 <div class="line"></div>
 <div class="line"><span class="preprocessor">#include &lt;cfloat&gt;</span></div>
@@ -436,7 +330,11 @@ Unrestricted use of expected&lt;T, E&gt; means typing more boilerplate</h1>
 <div class="line">  MathResult1 <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a91e1fe11dbebea15458d882d078d6eb5">result</a> = div(10.0, y);</div>
 <div class="line">  <span class="comment">// If successful, return the result</span></div>
 <div class="line">  <span class="keywordflow">if</span> (result)</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordflow">if</span>(result.value() &lt; 0)</div>
+<div class="line">      <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga03e1e619a559e7f336621b1092e28527">outcome::make_unexpected</a>(MathError2::NegativeSquareRoot);</div>
 <div class="line">    <span class="keywordflow">return</span> (<span class="keywordtype">long</span> <span class="keywordtype">long</span>)(result.value() * 3.0);</div>
+<div class="line">  }</div>
 <div class="line">  <span class="comment">// NOTE: If it failed, convert the MathError1 error code domain into</span></div>
 <div class="line">  <span class="comment">//       the MathError2 error code domain</span></div>
 <div class="line">  <span class="keywordflow">switch</span> (result.error())</div>
@@ -468,7 +366,7 @@ Unrestricted use of expected&lt;T, E&gt; means typing more boilerplate</h1>
 <div class="line">}</div>
 </div><!-- fragment --><p> The example is contrived for sure, but it shows the problem of having lots of local custom error code domains. In the above example, <code>MathError2</code> has a different assignment of integer values to <code>MathError1</code>, but they could simply be different error code enums. As is common in any code base of any size, one layer of functions (<code>div10mul3()</code>) will call into an inner layer of more basic functions (<code>div()</code>) and will need to pass back out any errors encountered.</p>
 <p>There are two things to note in this example. The first is that due to the error code domains being different, you need to convert error codes using a switch statement. The second is that on bad access, Expected throws a templated exception type with the type <code>E</code> as the template parameter. I can tell you that it is far too easy in the real world to accidentally mistype or forget to update the type caught in the catch statement leading to unintentional bugs which are quite tricky to track down.</p>
-<p>Again, restricting <code>expected&lt;T, E&gt;</code> to <code>E = std::error_code</code> makes the code much more maintainable and easy to parse by humans:</p>
+<p>Let's try a different approach. What we do now is to hard code our use of <code>expected&lt;T, E&gt;</code> to <code>E = std::error_code</code> which is made easy for us by the fact it's already been defaulted to that for us by Expected's definition:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;../include/boost/outcome.hpp&quot;</span></div>
 <div class="line"></div>
 <div class="line"><span class="preprocessor">#include &lt;cfloat&gt;</span></div>
@@ -477,18 +375,144 @@ Unrestricted use of expected&lt;T, E&gt; means typing more boilerplate</h1>
 <div class="line"></div>
 <div class="line"><span class="keyword">namespace </span><a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#aab2ff6220205017226794529c863b336">outcome</a> = <a class="code" href="group__config.html#gab113de43db2cd2a4cf1e33b54294944a">BOOST_OUTCOME_V1_NAMESPACE</a>;</div>
 <div class="line"></div>
-<div class="line"><span class="comment">// Restrict expected&lt;T, E&gt;</span></div>
-<div class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; <span class="keyword">using</span> result = outcome::expected&lt;T, std::error_code&gt;;</div>
-<div class="line"><span class="comment">// Restrict bad_expected_access too</span></div>
-<div class="line"><span class="keyword">using</span> bad_result_access = outcome::bad_expected_access&lt;std::error_code&gt;;</div>
+<div class="line"><span class="keyword">class </span>MathError1 : <span class="keyword">public</span> std::error_code {</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">  <span class="keyword">enum</span> valid_errors {</div>
+<div class="line">    DivisionByZero,</div>
+<div class="line">    NegativeLogarithm,</div>
+<div class="line">    NegativeSquareRoot</div>
+<div class="line">  };</div>
+<div class="line">  MathError1() = <span class="keywordflow">default</span>;</div>
+<div class="line">  <span class="comment">// Only allow my construction from my enum</span></div>
+<div class="line">  <span class="keyword">inline</span> MathError1(valid_errors c);</div>
+<div class="line">};</div>
 <div class="line"></div>
-<div class="line">result&lt;double&gt; div(<span class="keywordtype">double</span> x, <span class="keywordtype">double</span> y) noexcept</div>
+<div class="line"><span class="keyword">class </span>MathError2 : <span class="keyword">public</span> std::error_code {</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">  <span class="keyword">enum</span> valid_errors {</div>
+<div class="line">    NegativeSquareRoot,</div>
+<div class="line">    NegativeLogarithm,</div>
+<div class="line">    DivisionByZero</div>
+<div class="line">  };</div>
+<div class="line">  MathError2() = <span class="keywordflow">default</span>;</div>
+<div class="line">  <span class="comment">// Only allow my construction from my enum</span></div>
+<div class="line">  <span class="keyword">inline</span> MathError2(valid_errors c);</div>
+<div class="line">};</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">namespace </span>detail</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">class </span>MathError1_category : <span class="keyword">public</span> std::error_category</div>
+<div class="line">  {</div>
+<div class="line">  <span class="keyword">public</span>:</div>
+<div class="line">    <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keywordtype">char</span> *name() const noexcept override final { <span class="keywordflow">return</span> <span class="stringliteral">&quot;MathError1&quot;</span>; }</div>
+<div class="line">    <span class="keyword">virtual</span> std::string message(<span class="keywordtype">int</span> c) <span class="keyword">const</span> <span class="keyword">override</span> <span class="keyword">final</span></div>
+<div class="line">    {</div>
+<div class="line">      <span class="keywordflow">switch</span> (c)</div>
+<div class="line">      {</div>
+<div class="line">      <span class="keywordflow">case</span> MathError1::DivisionByZero:</div>
+<div class="line">        <span class="keywordflow">return</span> <span class="stringliteral">&quot;division by zero&quot;</span>;</div>
+<div class="line">      <span class="keywordflow">case</span> MathError1::NegativeLogarithm:</div>
+<div class="line">        <span class="keywordflow">return</span> <span class="stringliteral">&quot;logarithm of negative number&quot;</span>;</div>
+<div class="line">      <span class="keywordflow">case</span> MathError1::NegativeSquareRoot:</div>
+<div class="line">        <span class="keywordflow">return</span> <span class="stringliteral">&quot;square root of negative number&quot;</span>;</div>
+<div class="line">      <span class="keywordflow">default</span>:</div>
+<div class="line">        <span class="keywordflow">return</span> <span class="stringliteral">&quot;unknown&quot;</span>;</div>
+<div class="line">      }</div>
+<div class="line">    }</div>
+<div class="line">    <span class="keyword">virtual</span> std::error_condition default_error_condition(<span class="keywordtype">int</span> c) <span class="keyword">const</span> noexcept <span class="keyword">override</span> <span class="keyword">final</span></div>
+<div class="line">    {</div>
+<div class="line">      <span class="keywordflow">switch</span> (c)</div>
+<div class="line">      {</div>
+<div class="line">      <span class="keywordflow">case</span> MathError1::DivisionByZero:</div>
+<div class="line">        <span class="keywordflow">return</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a5824d43d94ed4cb2593cf39b2d0f354d">make_error_condition</a>(std::errc::result_out_of_range);</div>
+<div class="line">      <span class="keywordflow">case</span> MathError1::NegativeLogarithm:</div>
+<div class="line">        <span class="keywordflow">return</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a5824d43d94ed4cb2593cf39b2d0f354d">make_error_condition</a>(std::errc::argument_out_of_domain);</div>
+<div class="line">      <span class="keywordflow">case</span> MathError1::NegativeSquareRoot:</div>
+<div class="line">        <span class="keywordflow">return</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a5824d43d94ed4cb2593cf39b2d0f354d">make_error_condition</a>(std::errc::argument_out_of_domain);</div>
+<div class="line">      <span class="keywordflow">default</span>:</div>
+<div class="line">        <span class="comment">// I have no mapping for this code</span></div>
+<div class="line">        <span class="keywordflow">return</span> std::error_condition(c, *<span class="keyword">this</span>);</div>
+<div class="line">      }</div>
+<div class="line">    }</div>
+<div class="line">  };</div>
+<div class="line">  <span class="keyword">class </span>MathError2_category : <span class="keyword">public</span> std::error_category</div>
+<div class="line">  {</div>
+<div class="line">  <span class="keyword">public</span>:</div>
+<div class="line">    <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keywordtype">char</span> *name() const noexcept override final { <span class="keywordflow">return</span> <span class="stringliteral">&quot;MathError2&quot;</span>; }</div>
+<div class="line">    <span class="keyword">virtual</span> std::string message(<span class="keywordtype">int</span> c) <span class="keyword">const</span> <span class="keyword">override</span> <span class="keyword">final</span></div>
+<div class="line">    {</div>
+<div class="line">      <span class="keywordflow">switch</span> (c)</div>
+<div class="line">      {</div>
+<div class="line">      <span class="keywordflow">case</span> MathError2::NegativeSquareRoot:</div>
+<div class="line">        <span class="keywordflow">return</span> <span class="stringliteral">&quot;square root of negative number&quot;</span>;</div>
+<div class="line">      <span class="keywordflow">case</span> MathError2::NegativeLogarithm:</div>
+<div class="line">        <span class="keywordflow">return</span> <span class="stringliteral">&quot;logarithm of negative number&quot;</span>;</div>
+<div class="line">      <span class="keywordflow">case</span> MathError2::DivisionByZero:</div>
+<div class="line">        <span class="keywordflow">return</span> <span class="stringliteral">&quot;division by zero&quot;</span>;</div>
+<div class="line">      <span class="keywordflow">default</span>:</div>
+<div class="line">        <span class="keywordflow">return</span> <span class="stringliteral">&quot;unknown&quot;</span>;</div>
+<div class="line">      }</div>
+<div class="line">    }</div>
+<div class="line">    <span class="keyword">virtual</span> std::error_condition default_error_condition(<span class="keywordtype">int</span> c) <span class="keyword">const</span> noexcept <span class="keyword">override</span> <span class="keyword">final</span></div>
+<div class="line">    {</div>
+<div class="line">      <span class="keywordflow">switch</span> (c)</div>
+<div class="line">      {</div>
+<div class="line">      <span class="keywordflow">case</span> MathError2::NegativeSquareRoot:</div>
+<div class="line">        <span class="keywordflow">return</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a5824d43d94ed4cb2593cf39b2d0f354d">make_error_condition</a>(std::errc::argument_out_of_domain);</div>
+<div class="line">      <span class="keywordflow">case</span> MathError2::NegativeLogarithm:</div>
+<div class="line">        <span class="keywordflow">return</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a5824d43d94ed4cb2593cf39b2d0f354d">make_error_condition</a>(std::errc::argument_out_of_domain);</div>
+<div class="line">      <span class="keywordflow">case</span> MathError2::DivisionByZero:</div>
+<div class="line">        <span class="keywordflow">return</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a5824d43d94ed4cb2593cf39b2d0f354d">make_error_condition</a>(std::errc::result_out_of_range);</div>
+<div class="line">      <span class="keywordflow">default</span>:</div>
+<div class="line">        <span class="comment">// I have no mapping for this code</span></div>
+<div class="line">        <span class="keywordflow">return</span> std::error_condition(c, *<span class="keyword">this</span>);</div>
+<div class="line">      }</div>
+<div class="line">    }</div>
+<div class="line">  };</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">extern</span> <span class="keyword">const</span> detail::MathError1_category &amp;MathError1_category()</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">static</span> detail::MathError1_category c;</div>
+<div class="line">  <span class="keywordflow">return</span> c;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">extern</span> <span class="keyword">const</span> detail::MathError2_category &amp;MathError2_category()</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">static</span> detail::MathError2_category c;</div>
+<div class="line">  <span class="keywordflow">return</span> c;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">inline</span> MathError1::MathError1(MathError1::valid_errors e) : std::error_code(e, MathError1_category()) {}</div>
+<div class="line"><span class="keyword">inline</span> MathError2::MathError2(MathError2::valid_errors e) : std::error_code(e, MathError2_category()) {}</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">inline</span> MathError1 <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ab6204dd7620b0e495220e76988359589">make_error_code</a>(MathError1::valid_errors e)</div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordflow">return</span> MathError1(e);</div>
+<div class="line">}</div>
+<div class="line"><span class="keyword">inline</span> MathError2 <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ab6204dd7620b0e495220e76988359589">make_error_code</a>(MathError2::valid_errors e)</div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordflow">return</span> MathError2(e);</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">namespace </span>std</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">template</span> &lt;&gt; <span class="keyword">struct </span>is_error_code_enum&lt;MathError1::valid_errors&gt; : std::true_type</div>
+<div class="line">  {</div>
+<div class="line">  };</div>
+<div class="line">  <span class="keyword">template</span> &lt;&gt; <span class="keyword">struct </span>is_error_code_enum&lt;MathError2::valid_errors&gt; : std::true_type</div>
+<div class="line">  {</div>
+<div class="line">  };</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"></div>
+<div class="line"><a class="code" href="group__expected.html#ga7440167038cbd110405573cf2bd873ad">outcome::expected</a>&lt;<span class="keywordtype">double</span> <span class="comment">/*, std::error_code */</span>&gt; div(<span class="keywordtype">double</span> x, <span class="keywordtype">double</span> y) noexcept</div>
 <div class="line">{</div>
 <div class="line">  <span class="keywordflow">if</span> (::fabs(y) &lt; FLT_EPSILON)</div>
 <div class="line">  {</div>
 <div class="line">    <span class="comment">// This operation would fail, instead let&#39;s return the reason of</span></div>
 <div class="line">    <span class="comment">// the failure wrapped in E</span></div>
-<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga03e1e619a559e7f336621b1092e28527">outcome::make_unexpected</a>(<a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ab6204dd7620b0e495220e76988359589">std::make_error_code</a>(std::errc::result_out_of_range));</div>
+<div class="line">    <span class="keywordflow">return</span> outcome::make_unexpected&lt;std::error_code&gt;(MathError1::DivisionByZero);</div>
 <div class="line">  }</div>
 <div class="line">  <span class="keywordflow">else</span></div>
 <div class="line">  {</div>
@@ -497,12 +521,16 @@ Unrestricted use of expected&lt;T, E&gt; means typing more boilerplate</h1>
 <div class="line">  }</div>
 <div class="line">}</div>
 <div class="line"></div>
-<div class="line">result&lt;long long&gt; div10mul3(<span class="keywordtype">double</span> y) noexcept</div>
+<div class="line"><a class="code" href="group__expected.html#ga7440167038cbd110405573cf2bd873ad">outcome::expected</a>&lt;<span class="keywordtype">long</span> <span class="keywordtype">long</span> <span class="comment">/*, std::error_code */</span>&gt; div10mul3(<span class="keywordtype">double</span> y) noexcept</div>
 <div class="line">{</div>
 <div class="line">  <span class="comment">// If calling div() fails, return the same error immediately,</span></div>
-<div class="line">  <span class="comment">// else unpack the T into result</span></div>
-<div class="line">  <a class="code" href="monad_8hpp.html#aa977bf0b7aded30c781c35f956edc1d7">BOOST_OUTCOME_TRY</a>(result, div(10.0, y));</div>
-<div class="line">  <span class="keywordflow">return</span> (<span class="keywordtype">long</span> <span class="keywordtype">long</span>)(result * 3.0);</div>
+<div class="line">  <span class="comment">// else unpack the T into r. REQUIRES type E to be identical!</span></div>
+<div class="line">  <a class="code" href="monad_8hpp.html#aa977bf0b7aded30c781c35f956edc1d7">BOOST_OUTCOME_TRY</a>(r, div(10.0, y));</div>
+<div class="line">  <span class="keywordflow">if</span> (r &lt; 0.0)</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordflow">return</span> outcome::make_unexpected&lt;std::error_code&gt;(MathError2::NegativeSquareRoot);</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keywordflow">return</span> (<span class="keywordtype">long</span> <span class="keywordtype">long</span>)(sqrt(r * 3.0));</div>
 <div class="line">}</div>
 <div class="line"></div>
 <div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">void</span>)</div>
@@ -511,9 +539,8 @@ Unrestricted use of expected&lt;T, E&gt; means typing more boilerplate</h1>
 <div class="line">  {</div>
 <div class="line">    std::cout &lt;&lt; div10mul3(1.0).value() &lt;&lt; std::endl;</div>
 <div class="line">  }</div>
-<div class="line">  <span class="comment">// NOTE: We restricted bad_expected_access above so this is much</span></div>
-<div class="line">  <span class="comment">//       less likely to become accidentally wrong as code evolves</span></div>
-<div class="line">  <span class="keywordflow">catch</span> (<span class="keyword">const</span> bad_result_access &amp;e)</div>
+<div class="line">  <span class="comment">// NOTE: Much less likely to become stale accidentally</span></div>
+<div class="line">  <span class="keywordflow">catch</span> (<span class="keyword">const</span> outcome::bad_expected_access&lt;/* std::error_code */&gt; &amp;e)</div>
 <div class="line">  {</div>
 <div class="line">    <span class="comment">// Also note we can always print the error code because E is</span></div>
 <div class="line">    <span class="comment">// always an error_code</span></div>
@@ -521,8 +548,202 @@ Unrestricted use of expected&lt;T, E&gt; means typing more boilerplate</h1>
 <div class="line">  }</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-</div><!-- fragment --><p> You'll note the use of the convenience macro <code>BOOST_OUTCOME_TRY(var, expr)</code> which provides some of the <code>try</code> keyword in Swift or Rust. The try operation evaluates the expression and if the result returned is an unexpected value, it immediately returns from the current function with the same unexpected value - therefore your type <code>E</code> needs to be the same. If it is an expected value, that value is <em>unwrapped</em> and returned as the result from the try operation.</p>
-<p>Unlike the <code>try</code> keyword, the macro is not an expression so you can't write statements like <code>if(BOOST_OUTCOME_TRY(var, expr))</code> as you can in Rust or Swift, this is due to a limitation of the C++ language (you can't return from functions in an expression). What you can do is to initialise a variable <code>var</code> on the stack to the unwrapped return value from the expression, so you might write:</p>
+</div><!-- fragment --><p> This eliminates the fragile switch statements converting between error code domains in favour of a information loss free transmission. The cost is once again a loss of type safety because a function might return an error code it should never be able to return and the compiler will not complain.</p>
+<p>Mashing together both approaches we can solve the problem of type safety by making <code>MathError2</code> explicitly constructible from <code>MathError1</code>:</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;../include/boost/outcome.hpp&quot;</span></div>
+<div class="line"></div>
+<div class="line"><span class="preprocessor">#include &lt;cfloat&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;cmath&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"></div>
+<div class="line"><span class="keyword">namespace </span><a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#aab2ff6220205017226794529c863b336">outcome</a> = <a class="code" href="group__config.html#gab113de43db2cd2a4cf1e33b54294944a">BOOST_OUTCOME_V1_NAMESPACE</a>;</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">class </span>MathError1 : <span class="keyword">public</span> std::error_code {</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">  <span class="keyword">enum</span> valid_errors {</div>
+<div class="line">    DivisionByZero,</div>
+<div class="line">    NegativeLogarithm,</div>
+<div class="line">    NegativeSquareRoot</div>
+<div class="line">  };</div>
+<div class="line">  MathError1() = <span class="keywordflow">default</span>;</div>
+<div class="line">  <span class="comment">// Only allow my construction from my enum</span></div>
+<div class="line">  <span class="keyword">inline</span> MathError1(valid_errors c);</div>
+<div class="line">};</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">class </span>MathError2 : <span class="keyword">public</span> std::error_code {</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">  <span class="keyword">enum</span> valid_errors {</div>
+<div class="line">    NegativeSquareRoot,</div>
+<div class="line">    NegativeLogarithm,</div>
+<div class="line">    DivisionByZero</div>
+<div class="line">  };</div>
+<div class="line">  MathError2() = <span class="keywordflow">default</span>;</div>
+<div class="line">  <span class="comment">// Allow my construction from my enum</span></div>
+<div class="line">  <span class="keyword">inline</span> MathError2(valid_errors c);</div>
+<div class="line">  <span class="comment">// And from MathError1</span></div>
+<div class="line">  <span class="keyword">explicit</span> MathError2(MathError1 e) : std::error_code(e) {}</div>
+<div class="line">};</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">namespace </span>detail</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">class </span>MathError1_category : <span class="keyword">public</span> std::error_category</div>
+<div class="line">  {</div>
+<div class="line">  <span class="keyword">public</span>:</div>
+<div class="line">    <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keywordtype">char</span> *name() const noexcept override final { <span class="keywordflow">return</span> <span class="stringliteral">&quot;MathError1&quot;</span>; }</div>
+<div class="line">    <span class="keyword">virtual</span> std::string message(<span class="keywordtype">int</span> c) <span class="keyword">const</span> <span class="keyword">override</span> <span class="keyword">final</span></div>
+<div class="line">    {</div>
+<div class="line">      <span class="keywordflow">switch</span> (c)</div>
+<div class="line">      {</div>
+<div class="line">      <span class="keywordflow">case</span> MathError1::DivisionByZero:</div>
+<div class="line">        <span class="keywordflow">return</span> <span class="stringliteral">&quot;division by zero&quot;</span>;</div>
+<div class="line">      <span class="keywordflow">case</span> MathError1::NegativeLogarithm:</div>
+<div class="line">        <span class="keywordflow">return</span> <span class="stringliteral">&quot;logarithm of negative number&quot;</span>;</div>
+<div class="line">      <span class="keywordflow">case</span> MathError1::NegativeSquareRoot:</div>
+<div class="line">        <span class="keywordflow">return</span> <span class="stringliteral">&quot;square root of negative number&quot;</span>;</div>
+<div class="line">      <span class="keywordflow">default</span>:</div>
+<div class="line">        <span class="keywordflow">return</span> <span class="stringliteral">&quot;unknown&quot;</span>;</div>
+<div class="line">      }</div>
+<div class="line">    }</div>
+<div class="line">    <span class="keyword">virtual</span> std::error_condition default_error_condition(<span class="keywordtype">int</span> c) <span class="keyword">const</span> noexcept <span class="keyword">override</span> <span class="keyword">final</span></div>
+<div class="line">    {</div>
+<div class="line">      <span class="keywordflow">switch</span> (c)</div>
+<div class="line">      {</div>
+<div class="line">      <span class="keywordflow">case</span> MathError1::DivisionByZero:</div>
+<div class="line">        <span class="keywordflow">return</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a5824d43d94ed4cb2593cf39b2d0f354d">make_error_condition</a>(std::errc::result_out_of_range);</div>
+<div class="line">      <span class="keywordflow">case</span> MathError1::NegativeLogarithm:</div>
+<div class="line">        <span class="keywordflow">return</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a5824d43d94ed4cb2593cf39b2d0f354d">make_error_condition</a>(std::errc::argument_out_of_domain);</div>
+<div class="line">      <span class="keywordflow">case</span> MathError1::NegativeSquareRoot:</div>
+<div class="line">        <span class="keywordflow">return</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a5824d43d94ed4cb2593cf39b2d0f354d">make_error_condition</a>(std::errc::argument_out_of_domain);</div>
+<div class="line">      <span class="keywordflow">default</span>:</div>
+<div class="line">        <span class="comment">// I have no mapping for this code</span></div>
+<div class="line">        <span class="keywordflow">return</span> std::error_condition(c, *<span class="keyword">this</span>);</div>
+<div class="line">      }</div>
+<div class="line">    }</div>
+<div class="line">  };</div>
+<div class="line">  <span class="keyword">class </span>MathError2_category : <span class="keyword">public</span> std::error_category</div>
+<div class="line">  {</div>
+<div class="line">  <span class="keyword">public</span>:</div>
+<div class="line">    <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keywordtype">char</span> *name() const noexcept override final { <span class="keywordflow">return</span> <span class="stringliteral">&quot;MathError2&quot;</span>; }</div>
+<div class="line">    <span class="keyword">virtual</span> std::string message(<span class="keywordtype">int</span> c) <span class="keyword">const</span> <span class="keyword">override</span> <span class="keyword">final</span></div>
+<div class="line">    {</div>
+<div class="line">      <span class="keywordflow">switch</span> (c)</div>
+<div class="line">      {</div>
+<div class="line">      <span class="keywordflow">case</span> MathError2::NegativeSquareRoot:</div>
+<div class="line">        <span class="keywordflow">return</span> <span class="stringliteral">&quot;square root of negative number&quot;</span>;</div>
+<div class="line">      <span class="keywordflow">case</span> MathError2::NegativeLogarithm:</div>
+<div class="line">        <span class="keywordflow">return</span> <span class="stringliteral">&quot;logarithm of negative number&quot;</span>;</div>
+<div class="line">      <span class="keywordflow">case</span> MathError2::DivisionByZero:</div>
+<div class="line">        <span class="keywordflow">return</span> <span class="stringliteral">&quot;division by zero&quot;</span>;</div>
+<div class="line">      <span class="keywordflow">default</span>:</div>
+<div class="line">        <span class="keywordflow">return</span> <span class="stringliteral">&quot;unknown&quot;</span>;</div>
+<div class="line">      }</div>
+<div class="line">    }</div>
+<div class="line">    <span class="keyword">virtual</span> std::error_condition default_error_condition(<span class="keywordtype">int</span> c) <span class="keyword">const</span> noexcept <span class="keyword">override</span> <span class="keyword">final</span></div>
+<div class="line">    {</div>
+<div class="line">      <span class="keywordflow">switch</span> (c)</div>
+<div class="line">      {</div>
+<div class="line">      <span class="keywordflow">case</span> MathError2::NegativeSquareRoot:</div>
+<div class="line">        <span class="keywordflow">return</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a5824d43d94ed4cb2593cf39b2d0f354d">make_error_condition</a>(std::errc::argument_out_of_domain);</div>
+<div class="line">      <span class="keywordflow">case</span> MathError2::NegativeLogarithm:</div>
+<div class="line">        <span class="keywordflow">return</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a5824d43d94ed4cb2593cf39b2d0f354d">make_error_condition</a>(std::errc::argument_out_of_domain);</div>
+<div class="line">      <span class="keywordflow">case</span> MathError2::DivisionByZero:</div>
+<div class="line">        <span class="keywordflow">return</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a5824d43d94ed4cb2593cf39b2d0f354d">make_error_condition</a>(std::errc::result_out_of_range);</div>
+<div class="line">      <span class="keywordflow">default</span>:</div>
+<div class="line">        <span class="comment">// I have no mapping for this code</span></div>
+<div class="line">        <span class="keywordflow">return</span> std::error_condition(c, *<span class="keyword">this</span>);</div>
+<div class="line">      }</div>
+<div class="line">    }</div>
+<div class="line">  };</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">extern</span> <span class="keyword">const</span> detail::MathError1_category &amp;MathError1_category()</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">static</span> detail::MathError1_category c;</div>
+<div class="line">  <span class="keywordflow">return</span> c;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">extern</span> <span class="keyword">const</span> detail::MathError2_category &amp;MathError2_category()</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">static</span> detail::MathError2_category c;</div>
+<div class="line">  <span class="keywordflow">return</span> c;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">inline</span> MathError1::MathError1(MathError1::valid_errors e) : std::error_code(e, MathError1_category()) {}</div>
+<div class="line"><span class="keyword">inline</span> MathError2::MathError2(MathError2::valid_errors e) : std::error_code(e, MathError2_category()) {}</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">inline</span> MathError1 <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ab6204dd7620b0e495220e76988359589">make_error_code</a>(MathError1::valid_errors e)</div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordflow">return</span> MathError1(e);</div>
+<div class="line">}</div>
+<div class="line"><span class="keyword">inline</span> MathError2 <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ab6204dd7620b0e495220e76988359589">make_error_code</a>(MathError2::valid_errors e)</div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordflow">return</span> MathError2(e);</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">namespace </span>std</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">template</span> &lt;&gt; <span class="keyword">struct </span>is_error_code_enum&lt;MathError1::valid_errors&gt; : std::true_type</div>
+<div class="line">  {</div>
+<div class="line">  };</div>
+<div class="line">  <span class="keyword">template</span> &lt;&gt; <span class="keyword">struct </span>is_error_code_enum&lt;MathError2::valid_errors&gt; : std::true_type</div>
+<div class="line">  {</div>
+<div class="line">  };</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"></div>
+<div class="line">outcome::expected&lt;double, MathError1&gt; div(<span class="keywordtype">double</span> x, <span class="keywordtype">double</span> y) noexcept</div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordflow">if</span> (::fabs(y) &lt; FLT_EPSILON)</div>
+<div class="line">  {</div>
+<div class="line">    <span class="comment">// This operation would fail, instead let&#39;s return the reason of</span></div>
+<div class="line">    <span class="comment">// the failure wrapped in E</span></div>
+<div class="line">    <span class="keywordflow">return</span> outcome::make_unexpected&lt;MathError1&gt;(MathError1::DivisionByZero);</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keywordflow">else</span></div>
+<div class="line">  {</div>
+<div class="line">    <span class="comment">// This operation is valid, return the result wrapped in T</span></div>
+<div class="line">    <span class="keywordflow">return</span> x / y;</div>
+<div class="line">  }</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line">outcome::expected&lt;long long, MathError2&gt; div10mul3(<span class="keywordtype">double</span> y) noexcept</div>
+<div class="line">{</div>
+<div class="line">  <span class="comment">// If calling div() fails, return the same error immediately,</span></div>
+<div class="line">  <span class="comment">// else unpack the T into r. Note we cannot use BOOST_OUTCOME_TRY() here</span></div>
+<div class="line">  <span class="comment">// as the error types are different.</span></div>
+<div class="line">  outcome::expected&lt;double, MathError1&gt; _r = div(10.0, y);</div>
+<div class="line">  <span class="keywordflow">if</span> (!_r)</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga03e1e619a559e7f336621b1092e28527">outcome::make_unexpected</a>(MathError2(_r.error()));  <span class="comment">// note explicit conversion needed</span></div>
+<div class="line">  <span class="keyword">auto</span> r = std::move(_r.value());</div>
+<div class="line">  <span class="keywordflow">if</span> (r &lt; 0.0)</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordflow">return</span> outcome::make_unexpected&lt;MathError2&gt;(MathError2::NegativeSquareRoot);</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keywordflow">return</span> (<span class="keywordtype">long</span> <span class="keywordtype">long</span>)(sqrt(r * 3.0));</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">void</span>)</div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordflow">try</span></div>
+<div class="line">  {</div>
+<div class="line">    std::cout &lt;&lt; div10mul3(1.0).value() &lt;&lt; std::endl;</div>
+<div class="line">  }</div>
+<div class="line">  <span class="comment">// NOTE: Back to becoming easily and silently stale, it&#39;s an unavoidable</span></div>
+<div class="line">  <span class="comment">//       consequence of type safety</span></div>
+<div class="line">  <span class="keywordflow">catch</span> (<span class="keyword">const</span> outcome::bad_expected_access&lt;MathError2&gt; &amp;e)</div>
+<div class="line">  {</div>
+<div class="line">    <span class="comment">// Also note we can always print the error code because E is</span></div>
+<div class="line">    <span class="comment">// always an error_code</span></div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;div10mul3().value() failed due to &quot;</span> &lt;&lt; e.error() &lt;&lt; std::endl;</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+</div><!-- fragment --><p> This approach means that <code>MathError2</code> can contain an error code which has nothing to do with <code>MathError2</code>'s enumerations. This may be confusing initially, but you need to consider the compile time and run time separately - this approach comes with compile time safety but without run time safety.</p>
+<p>So which approach should you use in your code? It depends on the specific application. If your code base needs to tightly specify all the exact errors which can occur in some function call stack rather similarly to <a href="http://en.cppreference.com/w/cpp/language/except_spec">dynamic C++ exception specifications</a>, then the third example is the form you should use. If your code base is mostly a systems abstraction layer where errors from the OS ought to be returned exactly as from the OS, you should leave <code>E</code> default to <code>std::error_code</code> and return <code>std::system_category()</code> error codes from <code>errno</code> or <code>GetLastError()</code> as appropriate. If you don't care and/or you're in a rush, <code>E = std::error_code</code> and returning some enumeration from <code>std::errc</code> will get you working code the quickest (and be aware that Outcome's refinements of <code>expected&lt;T, E&gt;</code> <code>outcome&lt;T&gt;</code> and <code>result&lt;T&gt;</code> hard code the <code>E</code> and will save you typing a fair bit of boilerplate). As the latter two use patterns may be unclear, a worked example follows in the next section.</p>
+<h2><a class="anchor" id="try_operation"></a>
+The TRY operation</h2>
+<p>You may have noted the earlier use of the convenience macro <code>BOOST_OUTCOME_TRY(var, expr)</code> which provides some of the <code>try</code> operator in Swift or Rust. The TRY operation evaluates the expression and if the result returned is an unexpected value, it immediately returns from the current function with the same unexpected value - therefore your type <code>E</code> needs to be identical. If it is an expected value, that value is <em>unwrapped</em> and returned as the result from the TRY operation.</p>
+<p>Unlike the <code>try</code> operator, the macro is not an expression so you can't write statements like <code>if(BOOST_OUTCOME_TRY(var, expr))</code> as you can in Rust or Swift, this is due to a limitation of the C++ language (you can't return from functions in an expression). What you can do is to initialise a variable <code>var</code> on the stack to the unwrapped return value from the expression, so you might write:</p>
 <div class="fragment"><div class="line">expected&lt;std::string, std::error_code&gt; somefunc();</div>
 <div class="line">...</div>
 <div class="line">expected&lt;int, std::error_code&gt; someotherfunc()</div>
@@ -538,9 +759,9 @@ Unrestricted use of expected&lt;T, E&gt; means typing more boilerplate</h1>
 </div><!-- fragment --><hr/>
 <p><br/>
 </p>
-<h1><a class="anchor" id="error_codes_insufficient"></a>
-std::error_code CAN replace your custom error types</h1>
-<p>The final reason that people say they need to use custom error types with Expected is because they need the custom error type to carry custom <em>payload</em> such as data directly relating to the error which occurred, and because <code>std::error_code</code> can only carry a situation-unspecific integer code and category, that it is therefore unsuited for their particular use case. Let's have a look at a typical custom error type carrying payload:</p>
+<h1><a class="anchor" id="expected_payload"></a>
+Sending payload with your custom error type</h1>
+<p>One of the most common error types people write with <code>expected&lt;T, E&gt;</code> is <code>expected&lt;T, std::string&gt;</code> so they can return some arbitrary string explaining the error. This is the simplest example of sending runtime <em>payload</em> with the returned error explaining the error. Let's have a look at a typical naive custom error type carrying payload:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;../include/boost/outcome.hpp&quot;</span></div>
 <div class="line"></div>
 <div class="line"><span class="preprocessor">#include &lt;fcntl.h&gt;</span></div>
@@ -620,7 +841,7 @@ std::error_code CAN replace your custom error types</h1>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 </div><!-- fragment --><p> So here we have a file open function which opens some path returning a reference counted handle to the open file and if that fails, it will return a custom error type with the path of the file which failed as its payload. As much as this is a simple example where the payload carried is just a pointer, you could actually transport any arbitrary data as your payload such as a stack backtrace etc.</p>
-<p>The thing is, <code>std::error_code</code> is exactly the right solution to this problem. A lot of people hung up on their custom error types aren't thinking the problem through using STL fundamentals as building blocks with which to compose better and more elegant solutions:</p>
+<p>Earlier we subclassed <code>std::error_code</code> to add in type safety to prevent the accidental return of errors not permitted by a function's specification. Here we take yet another approach, this time <em>embedding</em> a <code>std::error_code</code> inside our custom error type along with payload:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;../include/boost/outcome.hpp&quot;</span></div>
 <div class="line"></div>
 <div class="line"><span class="preprocessor">#include &lt;fcntl.h&gt;</span></div>
@@ -732,8 +953,8 @@ std::error_code CAN replace your custom error types</h1>
 <div class="line">    std::cerr &lt;&lt; <span class="stringliteral">&quot;Failed to open file &quot;</span> &lt;&lt; h.error().path &lt;&lt; <span class="stringliteral">&quot; due to &quot;</span> &lt;&lt; h.error().code &lt;&lt; std::endl;</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-</div><!-- fragment --><p> As you can now see, we still have a custom error type, but it's now a <code>std::error_code</code> combined with payload. A big improvement with this design is that the errors returned by the system calls are now preserved perfectly rather than being converted into some generic "i/o failed" error code, and in fact because we use <code>system_category</code> for the error codes returned by the host OS, we lose no information whatsoever about the original error. The failure to allocate memory is now returned using the standard error code for that event, and the only error condition which is truly bespoke <code>format_corrupt</code> gets its own error code category.</p>
-<p>As much as the second example is much better design, it still has a custom error type the use of which precludes using convenience macros like <code>BOOST_OUTCOME_TRY</code> across disjoint domains of error. If that's acceptable to you, then work away, but be aware that Outcome's refinements of <code>outcome&lt;T&gt;</code> and <code>result&lt;T&gt;</code> don't use a <code>std::error_code</code>, they instead use an <code>outcome::error_code_extended</code> which extends <code>std::error_code</code> with most of the common payloads that most people would want to transmit with their errors.</p>
+</div><!-- fragment --><p> A nice consequence of this design is that the errors returned by the system calls are preserved perfectly rather than being converted into some generic "i/o failed" error code, and because we use <code>system_category</code> for the error codes returned by the host OS, we lose no information whatsoever about the original error. The failure to allocate memory is now returned using the standard error condition for that event, and the only error code which is truly bespoke <code>format_corrupt</code> gets its own custom error code category.</p>
+<p>As much as the second example is much better design, it still has a custom error type the use of which precludes using convenience macros like <code>BOOST_OUTCOME_TRY</code> across disjoint domains of error. If that's acceptable to you, then work away, but be aware that Outcome's refinements of <code>outcome&lt;T&gt;</code> and <code>result&lt;T&gt;</code> don't use a <code>std::error_code</code>, they instead use an <code>outcome::error_code_extended</code> which extends <code>std::error_code</code> with most of the common payloads that most people would want to transmit along with their errors, such as a custom string.</p>
 <p><code>error_code_extended</code> won't of course cover truly bespoke needs, and if you are finding your custom error type is getting richly featured enough to require <a href="http://en.cppreference.com/w/cpp/language/destructor#Trivial_destructor">a non-trivial destructor</a> then you should be aware that <code>expected&lt;T, E&gt;</code> must always use the lowest common denominator between <code>T</code> and <code>E</code>, so if your <code>E</code> has a non-trivial destructor, so will all <code>expected&lt;T, E&gt;</code>. This can mean that compilers will "blow out" code where such <code>expected&lt;T, E&gt;</code> is used i.e. generate a lot of code bloat. Again, if that's acceptable to you for your use case, then work away. But if that worries or bothers you, then you had best stick to trivial custom error types or better still, use Outcome's refinements of <code>outcome&lt;T&gt;</code> and <code>result&lt;T&gt;</code> which remove that choice entirely and give you in return a less boilerplate and more powerful programming experience. That is exactly the subject of Part C of this tutorial, next. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->

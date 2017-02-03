@@ -232,9 +232,11 @@ var NAVTREEINDEX0 =
 "md_doc_md_02-tutorial_a.html#optional":[4,3,0],
 "md_doc_md_02-tutorial_a.html#sea_of_noexcept":[4,3,1,0],
 "md_doc_md_03-tutorial_b.html":[5],
-"md_doc_md_03-tutorial_b.html#error_codes_insufficient":[5,2],
-"md_doc_md_03-tutorial_b.html#expected_boilerplate":[5,1],
-"md_doc_md_03-tutorial_b.html#expected_is_bad":[5,0],
+"md_doc_md_03-tutorial_b.html#custom_error_codes":[5,1],
+"md_doc_md_03-tutorial_b.html#expected_payload":[5,3],
+"md_doc_md_03-tutorial_b.html#expected_simple_e_is_bad":[5,0],
+"md_doc_md_03-tutorial_b.html#expected_tension":[5,2],
+"md_doc_md_03-tutorial_b.html#try_operation":[5,2,0],
 "md_doc_md_04-tutorial_c.html":[6],
 "md_doc_md_04-tutorial_c.html#error_code_extended":[6,0],
 "md_doc_md_04-tutorial_c.html#outcome_helpers":[6,2],
@@ -247,7 +249,5 @@ var NAVTREEINDEX0 =
 "md_doc_md_07-faq.html#error_chains":[7,2],
 "md_doc_md_07-faq.html#examples_of_use":[7,5],
 "md_doc_md_07-faq.html#outcome_vs_result":[7,3],
-"md_doc_md_07-faq.html#result_vs_outcome":[7,4],
-"md_doc_md_08-expectedsynopsis.html":[8],
-"md_doc_md_08-expectedsynopsis.html#synopsis_bad_expected_access":[8,2]
+"md_doc_md_07-faq.html#result_vs_outcome":[7,4]
 };

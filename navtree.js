@@ -25,9 +25,12 @@ var NAVTREE =
       [ "Short example program using expected<T, E>", "md_doc_md_02-tutorial_a.html#expected_example", null ]
     ] ],
     [ "Expected<T, E> in Practice", "md_doc_md_03-tutorial_b.html", [
-      [ "Unrestricted use of expected<T, E> is bad practice", "md_doc_md_03-tutorial_b.html#expected_is_bad", null ],
-      [ "Unrestricted use of expected<T, E> means typing more boilerplate", "md_doc_md_03-tutorial_b.html#expected_boilerplate", null ],
-      [ "std::error_code CAN replace your custom error types", "md_doc_md_03-tutorial_b.html#error_codes_insufficient", null ]
+      [ "Simple E types in expected<T, E> is bad practice in C++", "md_doc_md_03-tutorial_b.html#expected_simple_e_is_bad", null ],
+      [ "Marking up your custom error code domain so the STL understands it", "md_doc_md_03-tutorial_b.html#custom_error_codes", null ],
+      [ "The tension between type safety and convenient programming", "md_doc_md_03-tutorial_b.html#expected_tension", [
+        [ "The TRY operation", "md_doc_md_03-tutorial_b.html#try_operation", null ]
+      ] ],
+      [ "Sending payload with your custom error type", "md_doc_md_03-tutorial_b.html#expected_payload", null ]
     ] ],
     [ "Refining Expected<T, E>", "md_doc_md_04-tutorial_c.html", [
       [ "Outcome's extended std::error_code", "md_doc_md_04-tutorial_c.html#error_code_extended", null ],
@@ -87,7 +90,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 ".html",
-"md_doc_md_08-expectedsynopsis.html#synopsis_expected"
+"md_doc_md_08-expectedsynopsis.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
