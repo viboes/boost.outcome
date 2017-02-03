@@ -119,10 +119,10 @@ $(document).ready(function(){initNavTree('md_doc_md_03-tutorial_b.html','');});
 <p><br/>
 </p>
 <p>This part of the tutorial is a bit unusual as it's a sort of polemic against what most consider to be one of the best parts of <code>expected&lt;T, E&gt;</code>: that you can and should choose any arbitrary type <code>E</code> on a case by case basis as is conventional in other languages such as Rust or Swift. Hopefully by the end of this part you will be persuaded to always <em>restrict</em> your use of <code>expected&lt;T, E&gt;</code> in C++ to one of:</p>
-<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; <span class="keyword">using</span> <a class="code" href="group__monad.html#ga91e1fe11dbebea15458d882d078d6eb5">result</a> = outcome::expected&lt;T, std::error_code&gt;;</div>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; <span class="keyword">using</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a91e1fe11dbebea15458d882d078d6eb5">result</a> = outcome::expected&lt;T, std::error_code&gt;;</div>
 <div class="line"><span class="keyword">using</span> bad_result_access = outcome::bad_expected_access&lt;std::error_code&gt;;</div>
 </div><!-- fragment --><p>... or ...</p>
-<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; <span class="keyword">using</span> <a class="code" href="group__monad.html#ga91e1fe11dbebea15458d882d078d6eb5">result</a> = outcome::expected&lt;T, std::exception_ptr&gt;;</div>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; <span class="keyword">using</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a91e1fe11dbebea15458d882d078d6eb5">result</a> = outcome::expected&lt;T, std::exception_ptr&gt;;</div>
 <div class="line"><span class="keyword">using</span> bad_result_access = outcome::bad_expected_access&lt;std::exception_ptr&gt;;</div>
 </div><!-- fragment --><p>... where the latter is a superset of the former, because you can wrap any arbitrary <code>std::error_code</code> instance into a <code>std::exception_ptr</code> instance using the C++ 11 STL error code wrapping C++ exception type <code>std::system_error</code>:</p>
 <div class="fragment"><div class="line">std::error_code ec;</div>
@@ -295,11 +295,11 @@ Unrestricted use of expected&lt;T, E&gt; is bad practice</h1>
 <div class="line">      <span class="keywordflow">switch</span> (static_cast&lt;MathError&gt;(c))</div>
 <div class="line">      {</div>
 <div class="line">      <span class="keywordflow">case</span> MathError::DivisionByZero:</div>
-<div class="line">        <span class="keywordflow">return</span> <a class="code" href="group__monad.html#ga5824d43d94ed4cb2593cf39b2d0f354d">make_error_condition</a>(std::errc::result_out_of_range);</div>
+<div class="line">        <span class="keywordflow">return</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a5824d43d94ed4cb2593cf39b2d0f354d">make_error_condition</a>(std::errc::result_out_of_range);</div>
 <div class="line">      <span class="keywordflow">case</span> MathError::NegativeLogarithm:</div>
-<div class="line">        <span class="keywordflow">return</span> <a class="code" href="group__monad.html#ga5824d43d94ed4cb2593cf39b2d0f354d">make_error_condition</a>(std::errc::argument_out_of_domain);</div>
+<div class="line">        <span class="keywordflow">return</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a5824d43d94ed4cb2593cf39b2d0f354d">make_error_condition</a>(std::errc::argument_out_of_domain);</div>
 <div class="line">      <span class="keywordflow">case</span> MathError::NegativeSquareRoot:</div>
-<div class="line">        <span class="keywordflow">return</span> <a class="code" href="group__monad.html#ga5824d43d94ed4cb2593cf39b2d0f354d">make_error_condition</a>(std::errc::argument_out_of_domain);</div>
+<div class="line">        <span class="keywordflow">return</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a5824d43d94ed4cb2593cf39b2d0f354d">make_error_condition</a>(std::errc::argument_out_of_domain);</div>
 <div class="line">      <span class="keywordflow">default</span>:</div>
 <div class="line">        <span class="comment">// I have no mapping for this code</span></div>
 <div class="line">        <span class="keywordflow">return</span> std::error_condition(c, *<span class="keyword">this</span>);</div>
@@ -317,7 +317,7 @@ Unrestricted use of expected&lt;T, E&gt; is bad practice</h1>
 <div class="line"></div>
 <div class="line"><span class="comment">// Overload the global make_error_code() free function with our</span></div>
 <div class="line"><span class="comment">// custom enum. It will be found via ADL by the compiler if needed.</span></div>
-<div class="line"><span class="keyword">inline</span> std::error_code <a class="code" href="group__monad.html#gab6204dd7620b0e495220e76988359589">make_error_code</a>(MathError e)</div>
+<div class="line"><span class="keyword">inline</span> std::error_code <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ab6204dd7620b0e495220e76988359589">make_error_code</a>(MathError e)</div>
 <div class="line">{</div>
 <div class="line">  <span class="keywordflow">return</span> std::error_code(static_cast&lt;int&gt;(e), MathError_category());</div>
 <div class="line">}</div>
@@ -356,7 +356,7 @@ Unrestricted use of expected&lt;T, E&gt; is bad practice</h1>
 <p>So to sum up, if you are going to deploy <code>expected&lt;T, E&gt;</code> into your C++ codebase, I <b>urge</b> you do not use unrestricted <code>expected&lt;T, E&gt;</code> because that will tempt people into using custom error enums as type <code>E</code> which I've hopefully proven by now is a bad idea. Instead <em>restrict</em> <code>expected&lt;T, E&gt;</code> to a hard coded error type using something like:</p>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span>my_codes_namespace</div>
 <div class="line">{</div>
-<div class="line">  <span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; <span class="keyword">using</span> <a class="code" href="group__monad.html#ga91e1fe11dbebea15458d882d078d6eb5">result</a> = expected&lt;T, std::error_code&gt;;</div>
+<div class="line">  <span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; <span class="keyword">using</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a91e1fe11dbebea15458d882d078d6eb5">result</a> = expected&lt;T, std::error_code&gt;;</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">// Custom error code enum</span></div>
 <div class="line">  <span class="keyword">enum class</span> MathError {</div>
@@ -366,7 +366,7 @@ Unrestricted use of expected&lt;T, E&gt; is bad practice</h1>
 <div class="line">  };</div>
 <div class="line">  ... boilerplate to tell error_code about MathError ...</div>
 <div class="line"></div>
-<div class="line">  <span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; <span class="keyword">inline</span> result&lt;T&gt; <a class="code" href="group__monad.html#ga559b5e8efc12ededdc3aeecce0d304de">make_result</a>(T &amp;&amp;v)</div>
+<div class="line">  <span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; <span class="keyword">inline</span> result&lt;T&gt; <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a559b5e8efc12ededdc3aeecce0d304de">make_result</a>(T &amp;&amp;v)</div>
 <div class="line">  {</div>
 <div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga276cc35056dccfdbe461c11d8eeb3d93">make_expected</a>(std::forward&lt;T&gt;(v));</div>
 <div class="line">  }</div>
@@ -378,7 +378,7 @@ Unrestricted use of expected&lt;T, E&gt; is bad practice</h1>
 </div><!-- fragment --><p>Now instead of directly calling Expected's factory functions, simply return all values from your functions using <code>make_result()</code>. Returning a value now becomes:</p>
 <div class="fragment"><div class="line">result&lt;int&gt; foo()</div>
 <div class="line">{</div>
-<div class="line">  <span class="keywordflow">return</span> <a class="code" href="group__monad.html#ga559b5e8efc12ededdc3aeecce0d304de">make_result</a>(5);</div>
+<div class="line">  <span class="keywordflow">return</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a559b5e8efc12ededdc3aeecce0d304de">make_result</a>(5);</div>
 <div class="line">}</div>
 </div><!-- fragment --><p>Returning an error now becomes:</p>
 <div class="fragment"><div class="line">result&lt;int&gt; foo()</div>
@@ -398,7 +398,7 @@ Unrestricted use of expected&lt;T, E&gt; means typing more boilerplate</h1>
 <div class="line"><span class="preprocessor">#include &lt;cmath&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"></div>
-<div class="line"><span class="keyword">namespace </span><a class="code" href="group__monad.html#gaab2ff6220205017226794529c863b336">outcome</a> = <a class="code" href="group__config.html#gab113de43db2cd2a4cf1e33b54294944a">BOOST_OUTCOME_V1_NAMESPACE</a>;</div>
+<div class="line"><span class="keyword">namespace </span><a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#aab2ff6220205017226794529c863b336">outcome</a> = <a class="code" href="group__config.html#gab113de43db2cd2a4cf1e33b54294944a">BOOST_OUTCOME_V1_NAMESPACE</a>;</div>
 <div class="line"></div>
 <div class="line"><span class="comment">// Custom error code domain 1</span></div>
 <div class="line"><span class="keyword">enum class</span> MathError1 {</div>
@@ -433,7 +433,7 @@ Unrestricted use of expected&lt;T, E&gt; means typing more boilerplate</h1>
 <div class="line"></div>
 <div class="line">MathResult2 div10mul3(<span class="keywordtype">double</span> y) noexcept</div>
 <div class="line">{</div>
-<div class="line">  MathResult1 <a class="code" href="group__monad.html#ga91e1fe11dbebea15458d882d078d6eb5">result</a> = div(10.0, y);</div>
+<div class="line">  MathResult1 <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a91e1fe11dbebea15458d882d078d6eb5">result</a> = div(10.0, y);</div>
 <div class="line">  <span class="comment">// If successful, return the result</span></div>
 <div class="line">  <span class="keywordflow">if</span> (result)</div>
 <div class="line">    <span class="keywordflow">return</span> (<span class="keywordtype">long</span> <span class="keywordtype">long</span>)(result.value() * 3.0);</div>
@@ -475,7 +475,7 @@ Unrestricted use of expected&lt;T, E&gt; means typing more boilerplate</h1>
 <div class="line"><span class="preprocessor">#include &lt;cmath&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"></div>
-<div class="line"><span class="keyword">namespace </span><a class="code" href="group__monad.html#gaab2ff6220205017226794529c863b336">outcome</a> = <a class="code" href="group__config.html#gab113de43db2cd2a4cf1e33b54294944a">BOOST_OUTCOME_V1_NAMESPACE</a>;</div>
+<div class="line"><span class="keyword">namespace </span><a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#aab2ff6220205017226794529c863b336">outcome</a> = <a class="code" href="group__config.html#gab113de43db2cd2a4cf1e33b54294944a">BOOST_OUTCOME_V1_NAMESPACE</a>;</div>
 <div class="line"></div>
 <div class="line"><span class="comment">// Restrict expected&lt;T, E&gt;</span></div>
 <div class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; <span class="keyword">using</span> result = outcome::expected&lt;T, std::error_code&gt;;</div>
@@ -488,7 +488,7 @@ Unrestricted use of expected&lt;T, E&gt; means typing more boilerplate</h1>
 <div class="line">  {</div>
 <div class="line">    <span class="comment">// This operation would fail, instead let&#39;s return the reason of</span></div>
 <div class="line">    <span class="comment">// the failure wrapped in E</span></div>
-<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga03e1e619a559e7f336621b1092e28527">outcome::make_unexpected</a>(<a class="code" href="group__monad.html#gab6204dd7620b0e495220e76988359589">std::make_error_code</a>(std::errc::result_out_of_range));</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga03e1e619a559e7f336621b1092e28527">outcome::make_unexpected</a>(<a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ab6204dd7620b0e495220e76988359589">std::make_error_code</a>(std::errc::result_out_of_range));</div>
 <div class="line">  }</div>
 <div class="line">  <span class="keywordflow">else</span></div>
 <div class="line">  {</div>
@@ -553,7 +553,7 @@ std::error_code CAN replace your custom error types</h1>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;memory&gt;</span></div>
 <div class="line"></div>
-<div class="line"><span class="keyword">namespace </span><a class="code" href="group__monad.html#gaab2ff6220205017226794529c863b336">outcome</a> = <a class="code" href="group__config.html#gab113de43db2cd2a4cf1e33b54294944a">BOOST_OUTCOME_V1_NAMESPACE</a>;</div>
+<div class="line"><span class="keyword">namespace </span><a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#aab2ff6220205017226794529c863b336">outcome</a> = <a class="code" href="group__config.html#gab113de43db2cd2a4cf1e33b54294944a">BOOST_OUTCOME_V1_NAMESPACE</a>;</div>
 <div class="line"></div>
 <div class="line"><span class="comment">// RAII for an open file handle</span></div>
 <div class="line"><span class="keyword">class </span>handle</div>
@@ -633,7 +633,7 @@ std::error_code CAN replace your custom error types</h1>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;memory&gt;</span></div>
 <div class="line"></div>
-<div class="line"><span class="keyword">namespace </span><a class="code" href="group__monad.html#gaab2ff6220205017226794529c863b336">outcome</a> = <a class="code" href="group__config.html#gab113de43db2cd2a4cf1e33b54294944a">BOOST_OUTCOME_V1_NAMESPACE</a>;</div>
+<div class="line"><span class="keyword">namespace </span><a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#aab2ff6220205017226794529c863b336">outcome</a> = <a class="code" href="group__config.html#gab113de43db2cd2a4cf1e33b54294944a">BOOST_OUTCOME_V1_NAMESPACE</a>;</div>
 <div class="line"></div>
 <div class="line"><span class="comment">// RAII for an open file handle</span></div>
 <div class="line"><span class="keyword">class </span>handle</div>
@@ -684,7 +684,7 @@ std::error_code CAN replace your custom error types</h1>
 <div class="line">  <span class="keyword">const</span> <span class="keywordtype">char</span> *path;</div>
 <div class="line">  file_error() : code(), path(nullptr) {}</div>
 <div class="line">  <span class="comment">// Construct from a generic problem</span></div>
-<div class="line">  file_error(std::errc problem, <span class="keyword">const</span> <span class="keywordtype">char</span> *_path) : code(std::<a class="code" href="group__monad.html#gab6204dd7620b0e495220e76988359589">make_error_code</a>(problem)), path(_path) {}</div>
+<div class="line">  file_error(std::errc problem, <span class="keyword">const</span> <span class="keywordtype">char</span> *_path) : code(std::<a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ab6204dd7620b0e495220e76988359589">make_error_code</a>(problem)), path(_path) {}</div>
 <div class="line">  <span class="comment">// Construct from an errno</span></div>
 <div class="line"><span class="preprocessor">#ifdef _MSC_VER  // On MSVC the POSIX open()/read() etc functions are generic_category</span></div>
 <div class="line"><span class="preprocessor"></span>  file_error(<span class="keywordtype">int</span> _errno, <span class="keyword">const</span> <span class="keywordtype">char</span> *_path) : code(_errno, std::<a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx_1_1deatomiced__categories.html#a3f5465fc0be7c82b0c0b0bb5419ea59e">generic_category</a>()), path(_path) {}</div>

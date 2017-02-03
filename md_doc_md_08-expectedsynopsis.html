@@ -164,7 +164,7 @@ unexpected_type&lt;E&gt;</h1>
 <div class="line"></div>
 <div class="line">}}}</div>
 </div><!-- fragment --> </td><td width="62%" valign="top"><div class="fragment"><div class="line"><span class="keyword">namespace </span>boost {</div>
-<div class="line"><span class="keyword">namespace </span><a class="code" href="group__monad.html#gaab2ff6220205017226794529c863b336">outcome</a> {</div>
+<div class="line"><span class="keyword">namespace </span><a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#aab2ff6220205017226794529c863b336">outcome</a> {</div>
 <div class="line"><span class="keyword">inline</span> <span class="keyword">namespace </span>v1_xxx {</div>
 <div class="line">  <span class="comment">// X.Y.3, Unexpected object type</span></div>
 <div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> E&gt;</div>
@@ -205,8 +205,8 @@ unexpected_type&lt;E&gt;</h1>
 <div class="line">  <a class="code" href="group__expected.html#gaf61cb3012566f621329133c01f17c647">unexpected_type</a>() = <span class="keyword">delete</span>;</div>
 <div class="line">  constexpr <span class="keyword">explicit</span> <a class="code" href="group__expected.html#gaf61cb3012566f621329133c01f17c647">unexpected_type</a>(<span class="keyword">const</span> E&amp;);</div>
 <div class="line">  constexpr <span class="keyword">explicit</span> <a class="code" href="group__expected.html#gaf61cb3012566f621329133c01f17c647">unexpected_type</a>(E&amp;&amp;);</div>
-<div class="line">  constexpr <span class="keyword">const</span> E&amp; <a class="code" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">value</a>() <span class="keyword">const</span>;</div>
-<div class="line">  constexpr E &amp; <a class="code" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">value</a>();</div>
+<div class="line">  constexpr <span class="keyword">const</span> E&amp; <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ab1740f6220ea9c91b5fd5a9263c6b316">value</a>() <span class="keyword">const</span>;</div>
+<div class="line">  constexpr E &amp; <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ab1740f6220ea9c91b5fd5a9263c6b316">value</a>();</div>
 <div class="line"><span class="keyword">private</span>:</div>
 <div class="line">  E val; <span class="comment">// exposition only</span></div>
 <div class="line">};</div>
@@ -216,8 +216,8 @@ unexpected_type&lt;E&gt;</h1>
 <div class="line">  <a class="code" href="group__expected.html#gaf61cb3012566f621329133c01f17c647">unexpected_type</a>() = <span class="keywordflow">default</span>;</div>
 <div class="line">  constexpr <span class="keyword">explicit</span> <a class="code" href="group__expected.html#gaf61cb3012566f621329133c01f17c647">unexpected_type</a>(<span class="keyword">const</span> E&amp;);</div>
 <div class="line">  constexpr <span class="keyword">explicit</span> <a class="code" href="group__expected.html#gaf61cb3012566f621329133c01f17c647">unexpected_type</a>(E&amp;&amp;);</div>
-<div class="line">  constexpr <span class="keyword">const</span> E&amp; <a class="code" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">value</a>() <span class="keyword">const</span>;</div>
-<div class="line">  constexpr E &amp; <a class="code" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">value</a>();</div>
+<div class="line">  constexpr <span class="keyword">const</span> E&amp; <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ab1740f6220ea9c91b5fd5a9263c6b316">value</a>() <span class="keyword">const</span>;</div>
+<div class="line">  constexpr E &amp; <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ab1740f6220ea9c91b5fd5a9263c6b316">value</a>();</div>
 <div class="line"><span class="keyword">private</span>:</div>
 <div class="line">  E val; <span class="comment">// exposition only</span></div>
 <div class="line">};</div>
@@ -317,7 +317,7 @@ expected&lt;T, E&gt;</h1>
 <div class="line">    constexpr <span class="keywordtype">bool</span> operator&gt;=(<span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;, <span class="keyword">const</span> expected&lt;T,E&gt;&amp;);</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">// X.Z.11, Specialized algorithms</span></div>
-<div class="line">  <span class="keywordtype">void</span> <a class="code" href="group__monad.html#ga2ffab91838224f042fe7ed1b108e5ad7">swap</a>(expected&lt;T,E&gt;&amp;, expected&lt;T,E&gt;&amp;) noexcept(see below);</div>
+<div class="line">  <span class="keywordtype">void</span> swap(expected&lt;T,E&gt;&amp;, expected&lt;T,E&gt;&amp;) noexcept(see below);</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">// X.Z.12, Factories</span></div>
 <div class="line">  template &lt;class T&gt;</div>
@@ -340,7 +340,7 @@ expected&lt;T, E&gt;</h1>
 <div class="line">  template &lt;class E&gt; struct hash&lt;<a class="code" href="group__expected.html#ga7440167038cbd110405573cf2bd873ad">expected</a>&lt;<span class="keywordtype">void</span>,E&gt;&gt;;</div>
 <div class="line">}}}</div>
 </div><!-- fragment --> </td><td width="62%" valign="top"><div class="fragment"><div class="line"><span class="keyword">namespace </span>boost {</div>
-<div class="line"><span class="keyword">namespace </span><a class="code" href="group__monad.html#gaab2ff6220205017226794529c863b336">outcome</a> {</div>
+<div class="line"><span class="keyword">namespace </span><a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#aab2ff6220205017226794529c863b336">outcome</a> {</div>
 <div class="line"><span class="keyword">inline</span> <span class="keyword">namespace </span>v1_xxx {</div>
 <div class="line">  <span class="comment">// X.Z.4, expected for object types</span></div>
 <div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E = std::error_code&gt;</div>
@@ -427,7 +427,7 @@ expected&lt;T, E&gt;</h1>
 <div class="line"></div>
 <div class="line"></div>
 <div class="line">  <span class="comment">// X.Z.11, Specialized algorithms</span></div>
-<div class="line">  <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="group__monad.html#ga2ffab91838224f042fe7ed1b108e5ad7">swap</a>(expected&lt;T,E&gt;&amp;, expected&lt;T,E&gt;&amp;) noexcept(see below);</div>
+<div class="line">  <span class="keyword">inline</span> <span class="keywordtype">void</span> swap(expected&lt;T,E&gt;&amp;, expected&lt;T,E&gt;&amp;) noexcept(see below);</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">// X.Z.12, Factories</span></div>
 <div class="line">  template &lt;class T, class E = std::error_code&gt;</div>
@@ -508,7 +508,7 @@ expected&lt;T, E&gt;</h1>
 <div class="line">    <span class="keywordtype">void</span> emplace(initializer_list&lt;U&gt;, Args&amp;&amp;...);</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">// X.Z.4.4, swap</span></div>
-<div class="line">  <span class="keywordtype">void</span> <a class="code" href="group__monad.html#ga2ffab91838224f042fe7ed1b108e5ad7">swap</a>(expected&amp;) noexcept(see below);</div>
+<div class="line">  <span class="keywordtype">void</span> swap(expected&amp;) noexcept(see below);</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">// X.Z.4.5, observers</span></div>
 <div class="line">  constexpr const T* operator -&gt;() const;</div>
@@ -544,10 +544,10 @@ expected&lt;T, E&gt;</h1>
 </div><!-- fragment --> </td><td width="62%" valign="top"><div class="fragment"><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
 <div class="line"><span class="keyword">class </span><a class="code" href="group__expected.html#ga7440167038cbd110405573cf2bd873ad">expected</a></div>
 <div class="line">{</div>
-<div class="line">  static_assert(!<a class="code" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">std::is_constructible&lt;T, E&gt;::value</a>, <span class="stringliteral">&quot;value_type cannot be constructible from error_type&quot;</span>);</div>
-<div class="line">  static_assert(!<a class="code" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">std::is_constructible&lt;E, T&gt;::value</a>, <span class="stringliteral">&quot;error_type cannot be constructible from value_type&quot;</span>);</div>
-<div class="line">  static_assert(<a class="code" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">std::is_void&lt;E&gt;::value</a> || <a class="code" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">std::is_nothrow_copy_constructible&lt;E&gt;::value</a>, <span class="stringliteral">&quot;error_type must be nothrow copy constructible&quot;</span>);</div>
-<div class="line">  static_assert(<a class="code" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">std::is_void&lt;E&gt;::value</a> || <a class="code" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">std::is_nothrow_move_constructible&lt;E&gt;::value</a>, <span class="stringliteral">&quot;error_type must be nothrow move constructible&quot;</span>);</div>
+<div class="line">  static_assert(!<a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ab1740f6220ea9c91b5fd5a9263c6b316">std::is_constructible&lt;T, E&gt;::value</a>, <span class="stringliteral">&quot;value_type cannot be constructible from error_type&quot;</span>);</div>
+<div class="line">  static_assert(!<a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ab1740f6220ea9c91b5fd5a9263c6b316">std::is_constructible&lt;E, T&gt;::value</a>, <span class="stringliteral">&quot;error_type cannot be constructible from value_type&quot;</span>);</div>
+<div class="line">  static_assert(<a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ab1740f6220ea9c91b5fd5a9263c6b316">std::is_void&lt;E&gt;::value</a> || <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ab1740f6220ea9c91b5fd5a9263c6b316">std::is_nothrow_copy_constructible&lt;E&gt;::value</a>, <span class="stringliteral">&quot;error_type must be nothrow copy constructible&quot;</span>);</div>
+<div class="line">  static_assert(<a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ab1740f6220ea9c91b5fd5a9263c6b316">std::is_void&lt;E&gt;::value</a> || <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ab1740f6220ea9c91b5fd5a9263c6b316">std::is_nothrow_move_constructible&lt;E&gt;::value</a>, <span class="stringliteral">&quot;error_type must be nothrow move constructible&quot;</span>);</div>
 <div class="line"><span class="keyword">public</span>:</div>
 <div class="line">  <span class="keyword">using</span> value_type = devoid&lt;T&gt;;  <span class="comment">// If T is void, an unusable but helpfully named type</span></div>
 <div class="line">  <span class="keyword">using</span> error_type = devoid&lt;E&gt;;  <span class="comment">// This traps attempts to use with a useful compiler error</span></div>
@@ -591,7 +591,7 @@ expected&lt;T, E&gt;</h1>
 <div class="line">    <span class="keywordtype">void</span> emplace(initializer_list&lt;U&gt;, Args&amp;&amp;...);</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">// X.Z.4.4, swap</span></div>
-<div class="line">  <span class="keywordtype">void</span> <a class="code" href="group__monad.html#ga2ffab91838224f042fe7ed1b108e5ad7">swap</a>(<a class="code" href="group__expected.html#ga7440167038cbd110405573cf2bd873ad">expected</a>&amp;) noexcept(is_nothrow_move_constructible &amp;&amp; is_trivially_destructible);</div>
+<div class="line">  <span class="keywordtype">void</span> swap(<a class="code" href="group__expected.html#ga7440167038cbd110405573cf2bd873ad">expected</a>&amp;) noexcept(is_nothrow_move_constructible &amp;&amp; is_trivially_destructible);</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">// X.Z.4.5, observers</span></div>
 <div class="line">  constexpr const T* operator -&gt;() const;</div>
@@ -661,7 +661,7 @@ expected&lt;T, E&gt;</h1>
 <div class="line">  <span class="comment">// Observers</span></div>
 <div class="line">  constexpr explicit operator boost_lite::tribool::tribool() const noexcept;   <span class="comment">// other if monad empty, false if monad errored/excepted</span></div>
 <div class="line">  constexpr <span class="keywordtype">bool</span> is_ready() const noexcept;                                    <span class="comment">// i.e. not empty</span></div>
-<div class="line">  constexpr <span class="keywordtype">bool</span> <a class="code" href="group__monad.html#ga68770961e182715930ad64ca244b645e">empty</a>() const noexcept;</div>
+<div class="line">  constexpr <span class="keywordtype">bool</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a68770961e182715930ad64ca244b645e">empty</a>() const noexcept;</div>
 <div class="line">  constexpr <span class="keywordtype">bool</span> has_error() const noexcept;</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">// Setting value_type, disposes any previous state</span></div>
@@ -690,8 +690,8 @@ bad_expected_access&lt;E&gt;</h1>
 <div class="line"><span class="keyword">public</span>:</div>
 <div class="line">  <span class="keyword">explicit</span> bad_expected_access(E);</div>
 <div class="line"></div>
-<div class="line">  constexpr error_type <span class="keyword">const</span>&amp; <a class="code" href="group__monad.html#ga1a1a8470c4efc3a52412f3ecc79a0060">error</a>() <span class="keyword">const</span>;</div>
-<div class="line">  error_type&amp; <a class="code" href="group__monad.html#ga1a1a8470c4efc3a52412f3ecc79a0060">error</a>();</div>
+<div class="line">  constexpr error_type <span class="keyword">const</span>&amp; <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a1a1a8470c4efc3a52412f3ecc79a0060">error</a>() <span class="keyword">const</span>;</div>
+<div class="line">  error_type&amp; <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a1a1a8470c4efc3a52412f3ecc79a0060">error</a>();</div>
 <div class="line">};</div>
 </div><!-- fragment --> </td><td width="62%" valign="top"><div class="fragment"><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> E&gt;</div>
 <div class="line"><span class="keyword">class </span>bad_expected_access : <span class="keyword">public</span> logic_error {</div>

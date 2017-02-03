@@ -109,7 +109,6 @@ $(document).ready(function(){initNavTree('monad_8hpp.html','');});
 <a href="#namespaces">Namespaces</a> &#124;
 <a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
@@ -120,9 +119,11 @@ $(document).ready(function(){initNavTree('monad_8hpp.html','');});
 <p>Provides a lightweight simple monadic value transport.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="config_8hpp_source.html">config.hpp</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="error__code__extended_8hpp_source.html">error_code_extended.hpp</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="monad__error_8hpp_source.html">monad_error.hpp</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="value__storage_8hpp_source.html">value_storage.hpp</a>&quot;</code><br/>
-<code>#include &quot;../boost-lite/include/ringbuffer_log.hpp&quot;</code><br/>
 <code>#include &quot;../boost-lite/include/tribool.hpp&quot;</code><br/>
+<code>#include &quot;<a class="el" href="advanced__support_8hpp_source.html">advanced_support.hpp</a>&quot;</code><br/>
 <code>#include &quot;detail/monad_policy.ipp&quot;</code><br/>
 <code>#include &quot;detail/expected_policy.ipp&quot;</code><br/>
 </div>
@@ -130,33 +131,8 @@ $(document).ready(function(){initNavTree('monad_8hpp.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1error__code__extended.html">boost::outcome::v1_xxx::error_code_extended</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Keeps additional information about a std::error_code like custom error message, backtrace etc. Can be safely type sliced into a std::error_code.  <a href="classboost_1_1outcome_1_1v1__xxx_1_1error__code__extended.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1traits_1_1is__callable__is__well__formed.html">boost::outcome::v1_xxx::traits::is_callable_is_well_formed&lt; F, A &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is the callable F called with Arg well formed?  <a href="structboost_1_1outcome_1_1v1__xxx_1_1traits_1_1is__callable__is__well__formed.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1traits_1_1has__call__operator.html">boost::outcome::v1_xxx::traits::has_call_operator&lt; F, Arg &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Is F a class type and does it have a call operator callable with Arg?  <a href="structboost_1_1outcome_1_1v1__xxx_1_1traits_1_1has__call__operator.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1traits_1_1callable__argument__traits.html">boost::outcome::v1_xxx::traits::callable_argument_traits&lt; F, A &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">If callable F were to be called with A, tell me about the call.  <a href="structboost_1_1outcome_1_1v1__xxx_1_1traits_1_1callable__argument__traits.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1monad__error.html">boost::outcome::v1_xxx::monad_error</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A monad exception object.  <a href="classboost_1_1outcome_1_1v1__xxx_1_1monad__error.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html">boost::outcome::v1_xxx::basic_monad&lt; Impl &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html">boost::outcome::v1_xxx::basic_monad&lt; implementation_policy &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements a configurable lightweight simple monadic value transport with the same semantics and API as a future.  <a href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstd_1_1is__error__code__enum_3_01boost_1_1outcome_1_1v1__xxx_1_1monad__errc_01_4.html">std::is_error_code_enum&lt; boost::outcome::v1_xxx::monad_errc &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tells the STL this is an error code enum.  <a href="structstd_1_1is__error__code__enum_3_01boost_1_1outcome_1_1v1__xxx_1_1monad__errc_01_4.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstd_1_1is__error__condition__enum_3_01boost_1_1outcome_1_1v1__xxx_1_1monad__errc_01_4.html">std::is_error_condition_enum&lt; boost::outcome::v1_xxx::monad_errc &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tells the STL this is an error condition enum.  <a href="structstd_1_1is__error__condition__enum_3_01boost_1_1outcome_1_1v1__xxx_1_1monad__errc_01_4.html#details">More...</a><br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1lightweight__futures_1_1basic__promise.html">boost::outcome::v1_xxx::lightweight_futures::basic_promise&lt; R &gt;</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1lightweight__futures_1_1basic__future.html">boost::outcome::v1_xxx::lightweight_futures::basic_future&lt; R &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1in__place__t.html">boost::outcome::v1_xxx::in_place_t</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tag type for in_place construction.  <a href="structboost_1_1outcome_1_1v1__xxx_1_1in__place__t.html#details">More...</a><br/></td></tr>
@@ -164,12 +140,12 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1is__monad.html">boost::outcome::v1_xxx::is_monad&lt; M &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">True if the type passed is a monad or a reference to a monad.  <a href="structboost_1_1outcome_1_1v1__xxx_1_1is__monad.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html">boost::outcome::v1_xxx::basic_monad&lt; Impl &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html">boost::outcome::v1_xxx::basic_monad&lt; implementation_policy &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements a configurable lightweight simple monadic value transport with the same semantics and API as a future.  <a href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1from__value__storage__type__t.html">boost::outcome::v1_xxx::basic_monad&lt; Impl &gt;::from_value_storage_type_t</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1from__value__storage__type__t.html">boost::outcome::v1_xxx::basic_monad&lt; implementation_policy &gt;::from_value_storage_type_t</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1empty__type.html">boost::outcome::v1_xxx::basic_monad&lt; Impl &gt;::empty_type</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1empty__type.html">boost::outcome::v1_xxx::basic_monad&lt; implementation_policy &gt;::empty_type</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tag type for an empty monad.  <a href="structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1empty__type.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access.html">boost::outcome::v1_xxx::bad_expected_access&lt; E &gt;</a></td></tr>
@@ -189,9 +165,6 @@ Namespaces</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespaceboost_1_1outcome_1_1v1__xxx"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html">boost::outcome::v1_xxx</a></td></tr>
 <tr class="memdesc:namespaceboost_1_1outcome_1_1v1__xxx"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inline namespace for this version of Outcome. <br/></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespaceboost_1_1outcome_1_1v1__xxx_1_1deatomiced__categories"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx_1_1deatomiced__categories.html">boost::outcome::v1_xxx::deatomiced_categories</a></td></tr>
-<tr class="memdesc:namespaceboost_1_1outcome_1_1v1__xxx_1_1deatomiced__categories"><td class="mdescLeft">&#160;</td><td class="mdescRight">De-atomiced error categories, prevents the STL inlining an atomic fence when fetching these error categories. <br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
@@ -228,9 +201,6 @@ Macros</h2></td></tr>
 <tr class="memitem:a720ab83b6492ca1b31516a3cfbf6275e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a720ab83b6492ca1b31516a3cfbf6275e"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>BOOST_OUTCOME_MONAD_H</b></td></tr>
 <tr class="separator:a720ab83b6492ca1b31516a3cfbf6275e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6eb2d78f2e3d039fefdd7bdd2c5336a1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6eb2d78f2e3d039fefdd7bdd2c5336a1"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>BOOST_OUTCOME_ERROR_CODE_EXTENDED_CREATION_HOOK</b></td></tr>
-<tr class="separator:a6eb2d78f2e3d039fefdd7bdd2c5336a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a78c2bf36a933759c6cd003ab28f4caf6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a78c2bf36a933759c6cd003ab28f4caf6"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>BOOST_OUTCOME_MONAD_NAME</b>&#160;&#160;&#160;monad</td></tr>
 <tr class="separator:a78c2bf36a933759c6cd003ab28f4caf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -278,49 +248,21 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a3a9d95b52886fa2a0e2452117a5ca655"><td class="memTemplParams" colspan="2"><a class="anchor" id="a3a9d95b52886fa2a0e2452117a5ca655"></a>
-template&lt;typename T , T N&gt; </td></tr>
-<tr class="memitem:a3a9d95b52886fa2a0e2452117a5ca655"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>boost::outcome::v1_xxx::detail::make_integer_sequence</b> = typename moredetail::make_integer_sequence_impl&lt; T, N &gt;::type</td></tr>
-<tr class="separator:a3a9d95b52886fa2a0e2452117a5ca655"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a39d705475a47ef260cf6c44e05732a61"><td class="memTemplParams" colspan="2"><a class="anchor" id="a39d705475a47ef260cf6c44e05732a61"></a>
-template&lt;size_t... Ints&gt; </td></tr>
-<tr class="memitem:a39d705475a47ef260cf6c44e05732a61"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>boost::outcome::v1_xxx::detail::index_sequence</b> = integer_sequence&lt; size_t, Ints...&gt;</td></tr>
-<tr class="separator:a39d705475a47ef260cf6c44e05732a61"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad58127faf00bbe8640c8f671468ee848"><td class="memTemplParams" colspan="2"><a class="anchor" id="ad58127faf00bbe8640c8f671468ee848"></a>
-template&lt;size_t N&gt; </td></tr>
-<tr class="memitem:ad58127faf00bbe8640c8f671468ee848"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>boost::outcome::v1_xxx::detail::make_index_sequence</b> = make_integer_sequence&lt; size_t, N &gt;</td></tr>
-<tr class="separator:ad58127faf00bbe8640c8f671468ee848"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad3b53d63fba82d8bece5c1b1e61b9bdf"><td class="memTemplParams" colspan="2"><a class="anchor" id="ad3b53d63fba82d8bece5c1b1e61b9bdf"></a>
-template&lt;class R , class C , class Policy &gt; </td></tr>
-<tr class="memitem:ad3b53d63fba82d8bece5c1b1e61b9bdf"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>boost::outcome::v1_xxx::detail::do_next</b> = do_simple_continuation&lt; R, C, basic_monad, Policy &gt;</td></tr>
-<tr class="separator:ad3b53d63fba82d8bece5c1b1e61b9bdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3bb1b1f935558f1f1ecd341e82679ae1"><td class="memTemplParams" colspan="2"><a class="anchor" id="a3bb1b1f935558f1f1ecd341e82679ae1"></a>
-template&lt;class M &gt; </td></tr>
-<tr class="memitem:a3bb1b1f935558f1f1ecd341e82679ae1"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>boost::outcome::v1_xxx::detail::do_unwrap</b> = do_unwrap2&lt; is_monad_monad&lt; M &gt;::value, M &gt;</td></tr>
-<tr class="separator:a3bb1b1f935558f1f1ecd341e82679ae1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af4297077176261b3743fe5011592a1b2"><td class="memTemplParams" colspan="2"><a class="anchor" id="af4297077176261b3743fe5011592a1b2"></a>
-template&lt;class R , class C , class M &gt; </td></tr>
-<tr class="memitem:af4297077176261b3743fe5011592a1b2"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>boost::outcome::v1_xxx::detail::do_bind</b> = do_continuation&lt; true, R, C, M &gt;</td></tr>
-<tr class="separator:af4297077176261b3743fe5011592a1b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abd72fd13237eac80f9151e80393fb157"><td class="memTemplParams" colspan="2"><a class="anchor" id="abd72fd13237eac80f9151e80393fb157"></a>
-template&lt;class R , class C , class M &gt; </td></tr>
-<tr class="memitem:abd72fd13237eac80f9151e80393fb157"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><b>boost::outcome::v1_xxx::detail::do_map</b> = do_continuation&lt; false, R, C, M &gt;</td></tr>
-<tr class="separator:abd72fd13237eac80f9151e80393fb157"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaab2ff6220205017226794529c863b336"><td class="memTemplParams" colspan="2"><a class="anchor" id="gaab2ff6220205017226794529c863b336"></a>
+<tr class="memitem:aab2ff6220205017226794529c863b336"><td class="memTemplParams" colspan="2"><a class="anchor" id="aab2ff6220205017226794529c863b336"></a>
 template&lt;typename R &gt; </td></tr>
-<tr class="memitem:gaab2ff6220205017226794529c863b336"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#gaab2ff6220205017226794529c863b336">boost::outcome::v1_xxx::outcome</a> = basic_monad&lt; detail::monad_policy&lt; R &gt;&gt;</td></tr>
-<tr class="memdesc:gaab2ff6220205017226794529c863b336"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>outcome&lt;R&gt;</code> can hold a fixed variant list of empty, a type <code>R</code>, a lightweight <code>std::error_code</code> or a heavier <code>std::exception_ptr</code> at a space cost of <code>max(24, sizeof(R)+8)</code>. This corresponds to <code>tribool::unknown</code>, <code>tribool::true_</code>, <code>tribool::false_</code> and <code>tribool::false_</code> respectively. <br/></td></tr>
-<tr class="separator:gaab2ff6220205017226794529c863b336"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga91e1fe11dbebea15458d882d078d6eb5"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga91e1fe11dbebea15458d882d078d6eb5"></a>
+<tr class="memitem:aab2ff6220205017226794529c863b336"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#aab2ff6220205017226794529c863b336">boost::outcome::v1_xxx::outcome</a> = basic_monad&lt; detail::monad_policy&lt; R &gt;&gt;</td></tr>
+<tr class="memdesc:aab2ff6220205017226794529c863b336"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>outcome&lt;R&gt;</code> can hold a fixed variant list of empty, a type <code>R</code>, a lightweight <code>std::error_code</code> or a heavier <code>std::exception_ptr</code> at a space cost of <code>max(24, sizeof(R)+8)</code>. This corresponds to <code>tribool::unknown</code>, <code>tribool::true_</code>, <code>tribool::false_</code> and <code>tribool::false_</code> respectively. <br/></td></tr>
+<tr class="separator:aab2ff6220205017226794529c863b336"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91e1fe11dbebea15458d882d078d6eb5"><td class="memTemplParams" colspan="2"><a class="anchor" id="a91e1fe11dbebea15458d882d078d6eb5"></a>
 template&lt;typename R &gt; </td></tr>
-<tr class="memitem:ga91e1fe11dbebea15458d882d078d6eb5"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga91e1fe11dbebea15458d882d078d6eb5">boost::outcome::v1_xxx::result</a> = basic_monad&lt; detail::result_policy&lt; R &gt;&gt;</td></tr>
-<tr class="memdesc:ga91e1fe11dbebea15458d882d078d6eb5"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>result&lt;R&gt;</code> can hold a fixed variant list of empty, a type <code>R</code> or a lightweight <code>std::error_code</code> at a space cost of <code>max(24, sizeof(R)+8)</code>. This corresponds to <code>tribool::unknown</code>, <code>tribool::true_</code> and <code>tribool::false_</code> respectively. This specialisation looks deliberately like Rust's <code>Result&lt;T&gt;</code>. <br/></td></tr>
-<tr class="separator:ga91e1fe11dbebea15458d882d078d6eb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0d0fd5ca15cb339df9aa8e829a8ea5e0"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga0d0fd5ca15cb339df9aa8e829a8ea5e0"></a>
+<tr class="memitem:a91e1fe11dbebea15458d882d078d6eb5"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a91e1fe11dbebea15458d882d078d6eb5">boost::outcome::v1_xxx::result</a> = basic_monad&lt; detail::result_policy&lt; R &gt;&gt;</td></tr>
+<tr class="memdesc:a91e1fe11dbebea15458d882d078d6eb5"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>result&lt;R&gt;</code> can hold a fixed variant list of empty, a type <code>R</code> or a lightweight <code>std::error_code</code> at a space cost of <code>max(24, sizeof(R)+8)</code>. This corresponds to <code>tribool::unknown</code>, <code>tribool::true_</code> and <code>tribool::false_</code> respectively. This specialisation looks deliberately like Rust's <code>Result&lt;T&gt;</code>. <br/></td></tr>
+<tr class="separator:a91e1fe11dbebea15458d882d078d6eb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d0fd5ca15cb339df9aa8e829a8ea5e0"><td class="memTemplParams" colspan="2"><a class="anchor" id="a0d0fd5ca15cb339df9aa8e829a8ea5e0"></a>
 template&lt;typename R &gt; </td></tr>
-<tr class="memitem:ga0d0fd5ca15cb339df9aa8e829a8ea5e0"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga0d0fd5ca15cb339df9aa8e829a8ea5e0">boost::outcome::v1_xxx::option</a> = basic_monad&lt; detail::option_policy&lt; R &gt;&gt;</td></tr>
-<tr class="memdesc:ga0d0fd5ca15cb339df9aa8e829a8ea5e0"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>option&lt;R&gt;</code> can hold a fixed variant list of empty or a type <code>R</code> at a space cost of <code>sizeof(value_storage&lt;R&gt;)</code> which is usually <code>sizeof(R)+8</code>, but may be smaller if <code>value_storage&lt;R&gt;</code> is specialised. This corresponds to <code>tribool::unknown</code> and <code>tribool::true_</code> respectively. This specialisation looks deliberately like Rust's <code>Option&lt;T&gt;</code>. <br/></td></tr>
-<tr class="separator:ga0d0fd5ca15cb339df9aa8e829a8ea5e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d0fd5ca15cb339df9aa8e829a8ea5e0"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a0d0fd5ca15cb339df9aa8e829a8ea5e0">boost::outcome::v1_xxx::option</a> = basic_monad&lt; detail::option_policy&lt; R &gt;&gt;</td></tr>
+<tr class="memdesc:a0d0fd5ca15cb339df9aa8e829a8ea5e0"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>option&lt;R&gt;</code> can hold a fixed variant list of empty or a type <code>R</code> at a space cost of <code>sizeof(value_storage&lt;R&gt;)</code> which is usually <code>sizeof(R)+8</code>, but may be smaller if <code>value_storage&lt;R&gt;</code> is specialised. This corresponds to <code>tribool::unknown</code> and <code>tribool::true_</code> respectively. This specialisation looks deliberately like Rust's <code>Option&lt;T&gt;</code>. <br/></td></tr>
+<tr class="separator:a0d0fd5ca15cb339df9aa8e829a8ea5e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7440167038cbd110405573cf2bd873ad"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga7440167038cbd110405573cf2bd873ad"></a>
 template&lt;typename R , typename E  = BOOST_OUTCOME_EXPECTED_DEFAULT_ERROR_TYPE&gt; </td></tr>
 <tr class="memitem:ga7440167038cbd110405573cf2bd873ad"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__expected.html#ga7440167038cbd110405573cf2bd873ad">boost::outcome::v1_xxx::expected</a> = basic_monad&lt; detail::expected_policy&lt; R, E &gt;&gt;</td></tr>
@@ -336,58 +278,8 @@ using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gro
 <tr class="memdesc:ga43a5a0da82bcdf70d885e62ca9d5528a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tag type for unexpected. <br/></td></tr>
 <tr class="separator:ga43a5a0da82bcdf70d885e62ca9d5528a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:gaf5abc43f8d09588556c4c65b53485c0d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__monad.html#gaf5abc43f8d09588556c4c65b53485c0d">boost::outcome::v1_xxx::monad_errc</a> { <a class="el" href="group__monad.html#ggaf5abc43f8d09588556c4c65b53485c0dac537dcef56fd6ff75592c0220fd3dae1">boost::outcome::v1_xxx::monad_errc::no_state</a> = 2, 
-<a class="el" href="group__monad.html#ggaf5abc43f8d09588556c4c65b53485c0da621bbc00c646a321b70c18a067da2eb2">boost::outcome::v1_xxx::monad_errc::exception_present</a> = 3
- }</td></tr>
-<tr class="memdesc:gaf5abc43f8d09588556c4c65b53485c0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumeration of the ways in which a monad operation may fail.  <a href="group__monad.html#gaf5abc43f8d09588556c4c65b53485c0d">More...</a><br/></td></tr>
-<tr class="separator:gaf5abc43f8d09588556c4c65b53485c0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aa3997a8b00f62af89d4c240b469a9cbd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa3997a8b00f62af89d4c240b469a9cbd"></a>
-boost_lite::ringbuffer_log::simple_ringbuffer_log&lt; 4096 &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>boost::outcome::v1_xxx::extended_error_code_log</b> ()</td></tr>
-<tr class="separator:aa3997a8b00f62af89d4c240b469a9cbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af32d227a7f17acde670e77300a8524b8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af32d227a7f17acde670e77300a8524b8"></a>
-BOOSTLITE_NOINLINE const <br class="typebreak"/>
-std::error_category &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>boost::outcome::v1_xxx::deatomiced_categories::detail::_generic_category</b> ()</td></tr>
-<tr class="separator:af32d227a7f17acde670e77300a8524b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89d5238cf18645063328dd5d151c7f5f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a89d5238cf18645063328dd5d151c7f5f"></a>
-BOOSTLITE_NOINLINE const <br class="typebreak"/>
-std::error_category &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>boost::outcome::v1_xxx::deatomiced_categories::detail::_system_category</b> ()</td></tr>
-<tr class="separator:a89d5238cf18645063328dd5d151c7f5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f5465fc0be7c82b0c0b0bb5419ea59e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3f5465fc0be7c82b0c0b0bb5419ea59e"></a>
-const std::error_category &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx_1_1deatomiced__categories.html#a3f5465fc0be7c82b0c0b0bb5419ea59e">boost::outcome::v1_xxx::deatomiced_categories::generic_category</a> ()</td></tr>
-<tr class="memdesc:a3f5465fc0be7c82b0c0b0bb5419ea59e"><td class="mdescLeft">&#160;</td><td class="mdescRight">De-atomic fascade for std::generic_category() <br/></td></tr>
-<tr class="separator:a3f5465fc0be7c82b0c0b0bb5419ea59e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9bd112823854cf5d6b347f1e14a02807"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9bd112823854cf5d6b347f1e14a02807"></a>
-const std::error_category &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx_1_1deatomiced__categories.html#a9bd112823854cf5d6b347f1e14a02807">boost::outcome::v1_xxx::deatomiced_categories::system_category</a> ()</td></tr>
-<tr class="memdesc:a9bd112823854cf5d6b347f1e14a02807"><td class="mdescLeft">&#160;</td><td class="mdescRight">De-atomic fascade for std::system_category() <br/></td></tr>
-<tr class="separator:a9bd112823854cf5d6b347f1e14a02807"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1ea9f13657c8a103f777e260d57185e0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1ea9f13657c8a103f777e260d57185e0"></a>
-std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>boost::outcome::v1_xxx::operator&lt;&lt;</b> (std::ostream &amp;s, const error_code_extended &amp;ec)</td></tr>
-<tr class="separator:a1ea9f13657c8a103f777e260d57185e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga13e71a6619b46ebe84986aecb270ffa2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga13e71a6619b46ebe84986aecb270ffa2"></a>
-const _detail::monad_category &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__monad.html#ga13e71a6619b46ebe84986aecb270ffa2">boost::outcome::v1_xxx::monad_category</a> ()</td></tr>
-<tr class="memdesc:ga13e71a6619b46ebe84986aecb270ffa2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a reference to a monad error category. Note the address of one of these may not be constant throughout the process as per the ISO spec. <br/></td></tr>
-<tr class="separator:ga13e71a6619b46ebe84986aecb270ffa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab6204dd7620b0e495220e76988359589"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab6204dd7620b0e495220e76988359589"></a>
-stl11::error_code&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__monad.html#gab6204dd7620b0e495220e76988359589">boost::outcome::v1_xxx::make_error_code</a> (monad_errc e)</td></tr>
-<tr class="memdesc:gab6204dd7620b0e495220e76988359589"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADL looked up by the STL to convert a monad_errc into an error_code. <br/></td></tr>
-<tr class="separator:gab6204dd7620b0e495220e76988359589"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5824d43d94ed4cb2593cf39b2d0f354d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5824d43d94ed4cb2593cf39b2d0f354d"></a>
-stl11::error_condition&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__monad.html#ga5824d43d94ed4cb2593cf39b2d0f354d">boost::outcome::v1_xxx::make_error_condition</a> (monad_errc e)</td></tr>
-<tr class="memdesc:ga5824d43d94ed4cb2593cf39b2d0f354d"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADL looked up by the STL to convert a monad_errc into an error_condition. <br/></td></tr>
-<tr class="separator:ga5824d43d94ed4cb2593cf39b2d0f354d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af451fc43ccb8cf396904dd9e271f0ba9"><td class="memTemplParams" colspan="2"><a class="anchor" id="af451fc43ccb8cf396904dd9e271f0ba9"></a>
-template&lt;class R , class U &gt; </td></tr>
-<tr class="memitem:af451fc43ccb8cf396904dd9e271f0ba9"><td class="memTemplItemLeft" align="right" valign="top">function_ptr&lt; R &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>boost::outcome::v1_xxx::detail::make_function_ptr</b> (U &amp;&amp;f)</td></tr>
-<tr class="separator:af451fc43ccb8cf396904dd9e271f0ba9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89ddbe5df34aa20e4b2d363a4d9440b5"><td class="memTemplParams" colspan="2"><a class="anchor" id="a89ddbe5df34aa20e4b2d363a4d9440b5"></a>
-template&lt;class R , class U , class... Args&gt; </td></tr>
-<tr class="memitem:a89ddbe5df34aa20e4b2d363a4d9440b5"><td class="memTemplItemLeft" align="right" valign="top">function_ptr&lt; R &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>boost::outcome::v1_xxx::detail::emplace_function_ptr</b> (Args &amp;&amp;...args)</td></tr>
-<tr class="separator:a89ddbe5df34aa20e4b2d363a4d9440b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a63db4c206ada0cb03a5a1fbe0d626ba7"><td class="memTemplParams" colspan="2"><a class="anchor" id="a63db4c206ada0cb03a5a1fbe0d626ba7"></a>
 template&lt;class Policy1 , class Policy2 &gt; </td></tr>
 <tr class="memitem:a63db4c206ada0cb03a5a1fbe0d626ba7"><td class="memTemplItemLeft" align="right" valign="top">constexpr std::enable_if<br class="typebreak"/>
@@ -432,206 +324,206 @@ _is_comparable&lt; basic_monad<br class="typebreak"/>
 ::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a3dfd218a8d296c6876ee093f7236eb8f">boost::outcome::v1_xxx::operator!=</a> (const basic_monad&lt; Policy1 &gt; &amp;a, const basic_monad&lt; Policy2 &gt; &amp;b)</td></tr>
 <tr class="memdesc:a3dfd218a8d296c6876ee093f7236eb8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">True if this monad does not exactly equal the other monad (associative) <br/></td></tr>
 <tr class="separator:a3dfd218a8d296c6876ee093f7236eb8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6965ad141b9cf5cc08f26684ea54967d"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga6965ad141b9cf5cc08f26684ea54967d"></a>
+<tr class="memitem:a6965ad141b9cf5cc08f26684ea54967d"><td class="memTemplParams" colspan="2"><a class="anchor" id="a6965ad141b9cf5cc08f26684ea54967d"></a>
 template&lt;class T &gt; </td></tr>
-<tr class="memitem:ga6965ad141b9cf5cc08f26684ea54967d"><td class="memTemplItemLeft" align="right" valign="top">constexpr outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga6965ad141b9cf5cc08f26684ea54967d">boost::outcome::v1_xxx::make_outcome</a> (T &amp;&amp;v)</td></tr>
-<tr class="memdesc:ga6965ad141b9cf5cc08f26684ea54967d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an outcome from the type passed. <br/></td></tr>
-<tr class="separator:ga6965ad141b9cf5cc08f26684ea54967d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaedb38ac1fcaae9fdc019a82d76ffdd9b"><td class="memTemplParams" colspan="2"><a class="anchor" id="gaedb38ac1fcaae9fdc019a82d76ffdd9b"></a>
+<tr class="memitem:a6965ad141b9cf5cc08f26684ea54967d"><td class="memTemplItemLeft" align="right" valign="top">constexpr outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a6965ad141b9cf5cc08f26684ea54967d">boost::outcome::v1_xxx::make_outcome</a> (T &amp;&amp;v)</td></tr>
+<tr class="memdesc:a6965ad141b9cf5cc08f26684ea54967d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an outcome from the type passed. <br/></td></tr>
+<tr class="separator:a6965ad141b9cf5cc08f26684ea54967d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aedb38ac1fcaae9fdc019a82d76ffdd9b"><td class="memTemplParams" colspan="2"><a class="anchor" id="aedb38ac1fcaae9fdc019a82d76ffdd9b"></a>
 template&lt;class T &gt; </td></tr>
-<tr class="memitem:gaedb38ac1fcaae9fdc019a82d76ffdd9b"><td class="memTemplItemLeft" align="right" valign="top">constexpr outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#gaedb38ac1fcaae9fdc019a82d76ffdd9b">boost::outcome::v1_xxx::make_outcome</a> (const T &amp;v)</td></tr>
-<tr class="memdesc:gaedb38ac1fcaae9fdc019a82d76ffdd9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an outcome from the type passed. <br/></td></tr>
-<tr class="separator:gaedb38ac1fcaae9fdc019a82d76ffdd9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2cbada16dcc6af63be3da3910cf991c9"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga2cbada16dcc6af63be3da3910cf991c9"></a>
+<tr class="memitem:aedb38ac1fcaae9fdc019a82d76ffdd9b"><td class="memTemplItemLeft" align="right" valign="top">constexpr outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#aedb38ac1fcaae9fdc019a82d76ffdd9b">boost::outcome::v1_xxx::make_outcome</a> (const T &amp;v)</td></tr>
+<tr class="memdesc:aedb38ac1fcaae9fdc019a82d76ffdd9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an outcome from the type passed. <br/></td></tr>
+<tr class="separator:aedb38ac1fcaae9fdc019a82d76ffdd9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2cbada16dcc6af63be3da3910cf991c9"><td class="memTemplParams" colspan="2"><a class="anchor" id="a2cbada16dcc6af63be3da3910cf991c9"></a>
 template&lt;class T  = void&gt; </td></tr>
-<tr class="memitem:ga2cbada16dcc6af63be3da3910cf991c9"><td class="memTemplItemLeft" align="right" valign="top">outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga2cbada16dcc6af63be3da3910cf991c9">boost::outcome::v1_xxx::make_outcome</a> (error_code_extended v)</td></tr>
-<tr class="memdesc:ga2cbada16dcc6af63be3da3910cf991c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an errored outcome of type T. <br/></td></tr>
-<tr class="separator:ga2cbada16dcc6af63be3da3910cf991c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5ff527de79abd9d31bbd96057ff58f1c"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga5ff527de79abd9d31bbd96057ff58f1c"></a>
+<tr class="memitem:a2cbada16dcc6af63be3da3910cf991c9"><td class="memTemplItemLeft" align="right" valign="top">outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a2cbada16dcc6af63be3da3910cf991c9">boost::outcome::v1_xxx::make_outcome</a> (error_code_extended v)</td></tr>
+<tr class="memdesc:a2cbada16dcc6af63be3da3910cf991c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an errored outcome of type T. <br/></td></tr>
+<tr class="separator:a2cbada16dcc6af63be3da3910cf991c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ff527de79abd9d31bbd96057ff58f1c"><td class="memTemplParams" colspan="2"><a class="anchor" id="a5ff527de79abd9d31bbd96057ff58f1c"></a>
 template&lt;class T  = void&gt; </td></tr>
-<tr class="memitem:ga5ff527de79abd9d31bbd96057ff58f1c"><td class="memTemplItemLeft" align="right" valign="top">outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga5ff527de79abd9d31bbd96057ff58f1c">boost::outcome::v1_xxx::make_outcome</a> (std::exception_ptr v)</td></tr>
-<tr class="memdesc:ga5ff527de79abd9d31bbd96057ff58f1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an excepted outcome of type T. <br/></td></tr>
-<tr class="separator:ga5ff527de79abd9d31bbd96057ff58f1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5c8a609f3c8813c0908690fefc9f61b8"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga5c8a609f3c8813c0908690fefc9f61b8"></a>
+<tr class="memitem:a5ff527de79abd9d31bbd96057ff58f1c"><td class="memTemplItemLeft" align="right" valign="top">outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a5ff527de79abd9d31bbd96057ff58f1c">boost::outcome::v1_xxx::make_outcome</a> (std::exception_ptr v)</td></tr>
+<tr class="memdesc:a5ff527de79abd9d31bbd96057ff58f1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an excepted outcome of type T. <br/></td></tr>
+<tr class="separator:a5ff527de79abd9d31bbd96057ff58f1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c8a609f3c8813c0908690fefc9f61b8"><td class="memTemplParams" colspan="2"><a class="anchor" id="a5c8a609f3c8813c0908690fefc9f61b8"></a>
 template&lt;class T  = void&gt; </td></tr>
-<tr class="memitem:ga5c8a609f3c8813c0908690fefc9f61b8"><td class="memTemplItemLeft" align="right" valign="top">constexpr outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga5c8a609f3c8813c0908690fefc9f61b8">boost::outcome::v1_xxx::make_outcome</a> ()</td></tr>
-<tr class="memdesc:ga5c8a609f3c8813c0908690fefc9f61b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an empty outcome of type T. <br/></td></tr>
-<tr class="separator:ga5c8a609f3c8813c0908690fefc9f61b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadfda8cccf3a09f8ee574f3eee65db59e"><td class="memTemplParams" colspan="2"><a class="anchor" id="gadfda8cccf3a09f8ee574f3eee65db59e"></a>
+<tr class="memitem:a5c8a609f3c8813c0908690fefc9f61b8"><td class="memTemplItemLeft" align="right" valign="top">constexpr outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a5c8a609f3c8813c0908690fefc9f61b8">boost::outcome::v1_xxx::make_outcome</a> ()</td></tr>
+<tr class="memdesc:a5c8a609f3c8813c0908690fefc9f61b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an empty outcome of type T. <br/></td></tr>
+<tr class="separator:a5c8a609f3c8813c0908690fefc9f61b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adfda8cccf3a09f8ee574f3eee65db59e"><td class="memTemplParams" colspan="2"><a class="anchor" id="adfda8cccf3a09f8ee574f3eee65db59e"></a>
 template&lt;class T  = void&gt; </td></tr>
-<tr class="memitem:gadfda8cccf3a09f8ee574f3eee65db59e"><td class="memTemplItemLeft" align="right" valign="top">constexpr outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#gadfda8cccf3a09f8ee574f3eee65db59e">boost::outcome::v1_xxx::make_empty_outcome</a> ()</td></tr>
-<tr class="memdesc:gadfda8cccf3a09f8ee574f3eee65db59e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an empty outcome of type T. <br/></td></tr>
-<tr class="separator:gadfda8cccf3a09f8ee574f3eee65db59e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaddfb03f7b310708ac4e529c5fe24da57"><td class="memTemplParams" colspan="2"><a class="anchor" id="gaddfb03f7b310708ac4e529c5fe24da57"></a>
+<tr class="memitem:adfda8cccf3a09f8ee574f3eee65db59e"><td class="memTemplItemLeft" align="right" valign="top">constexpr outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#adfda8cccf3a09f8ee574f3eee65db59e">boost::outcome::v1_xxx::make_empty_outcome</a> ()</td></tr>
+<tr class="memdesc:adfda8cccf3a09f8ee574f3eee65db59e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an empty outcome of type T. <br/></td></tr>
+<tr class="separator:adfda8cccf3a09f8ee574f3eee65db59e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:addfb03f7b310708ac4e529c5fe24da57"><td class="memTemplParams" colspan="2"><a class="anchor" id="addfb03f7b310708ac4e529c5fe24da57"></a>
 template&lt;class T &gt; </td></tr>
-<tr class="memitem:gaddfb03f7b310708ac4e529c5fe24da57"><td class="memTemplItemLeft" align="right" valign="top">constexpr outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#gaddfb03f7b310708ac4e529c5fe24da57">boost::outcome::v1_xxx::make_ready_outcome</a> (T &amp;&amp;v)</td></tr>
-<tr class="memdesc:gaddfb03f7b310708ac4e529c5fe24da57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a ready outcome from the type passed. <br/></td></tr>
-<tr class="separator:gaddfb03f7b310708ac4e529c5fe24da57"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa3cd6f5fc64ec44431c9a130368e486f"><td class="memTemplParams" colspan="2"><a class="anchor" id="gaa3cd6f5fc64ec44431c9a130368e486f"></a>
+<tr class="memitem:addfb03f7b310708ac4e529c5fe24da57"><td class="memTemplItemLeft" align="right" valign="top">constexpr outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#addfb03f7b310708ac4e529c5fe24da57">boost::outcome::v1_xxx::make_ready_outcome</a> (T &amp;&amp;v)</td></tr>
+<tr class="memdesc:addfb03f7b310708ac4e529c5fe24da57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a ready outcome from the type passed. <br/></td></tr>
+<tr class="separator:addfb03f7b310708ac4e529c5fe24da57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3cd6f5fc64ec44431c9a130368e486f"><td class="memTemplParams" colspan="2"><a class="anchor" id="aa3cd6f5fc64ec44431c9a130368e486f"></a>
 template&lt;class T &gt; </td></tr>
-<tr class="memitem:gaa3cd6f5fc64ec44431c9a130368e486f"><td class="memTemplItemLeft" align="right" valign="top">constexpr outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#gaa3cd6f5fc64ec44431c9a130368e486f">boost::outcome::v1_xxx::make_ready_outcome</a> (const T &amp;v)</td></tr>
-<tr class="memdesc:gaa3cd6f5fc64ec44431c9a130368e486f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a ready outcome from the type passed. <br/></td></tr>
-<tr class="separator:gaa3cd6f5fc64ec44431c9a130368e486f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaafac3f1531826af2115f7259e0f993cf"><td class="memTemplParams" colspan="2"><a class="anchor" id="gaafac3f1531826af2115f7259e0f993cf"></a>
+<tr class="memitem:aa3cd6f5fc64ec44431c9a130368e486f"><td class="memTemplItemLeft" align="right" valign="top">constexpr outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#aa3cd6f5fc64ec44431c9a130368e486f">boost::outcome::v1_xxx::make_ready_outcome</a> (const T &amp;v)</td></tr>
+<tr class="memdesc:aa3cd6f5fc64ec44431c9a130368e486f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a ready outcome from the type passed. <br/></td></tr>
+<tr class="separator:aa3cd6f5fc64ec44431c9a130368e486f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafac3f1531826af2115f7259e0f993cf"><td class="memTemplParams" colspan="2"><a class="anchor" id="aafac3f1531826af2115f7259e0f993cf"></a>
 template&lt;class T  = void&gt; </td></tr>
-<tr class="memitem:gaafac3f1531826af2115f7259e0f993cf"><td class="memTemplItemLeft" align="right" valign="top">constexpr outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#gaafac3f1531826af2115f7259e0f993cf">boost::outcome::v1_xxx::make_ready_outcome</a> ()</td></tr>
-<tr class="memdesc:gaafac3f1531826af2115f7259e0f993cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a ready outcome from the type passed. <br/></td></tr>
-<tr class="separator:gaafac3f1531826af2115f7259e0f993cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafac3f1531826af2115f7259e0f993cf"><td class="memTemplItemLeft" align="right" valign="top">constexpr outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#aafac3f1531826af2115f7259e0f993cf">boost::outcome::v1_xxx::make_ready_outcome</a> ()</td></tr>
+<tr class="memdesc:aafac3f1531826af2115f7259e0f993cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a ready outcome from the type passed. <br/></td></tr>
+<tr class="separator:aafac3f1531826af2115f7259e0f993cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9e486ae6d2d538e63e21d8d49009810f"><td class="memTemplParams" colspan="2"><a class="anchor" id="a9e486ae6d2d538e63e21d8d49009810f"></a>
 template&lt;&gt; </td></tr>
 <tr class="memitem:a9e486ae6d2d538e63e21d8d49009810f"><td class="memTemplItemLeft" align="right" valign="top">outcome&lt; void &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>boost::outcome::v1_xxx::make_ready_outcome&lt; void &gt;</b> ()</td></tr>
 <tr class="separator:a9e486ae6d2d538e63e21d8d49009810f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga32c259d35a71b8a671e062519c2a0465"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga32c259d35a71b8a671e062519c2a0465"></a>
+<tr class="memitem:a32c259d35a71b8a671e062519c2a0465"><td class="memTemplParams" colspan="2"><a class="anchor" id="a32c259d35a71b8a671e062519c2a0465"></a>
 template&lt;class T  = void&gt; </td></tr>
-<tr class="memitem:ga32c259d35a71b8a671e062519c2a0465"><td class="memTemplItemLeft" align="right" valign="top">outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga32c259d35a71b8a671e062519c2a0465">boost::outcome::v1_xxx::make_errored_outcome</a> (error_code_extended v)</td></tr>
-<tr class="memdesc:ga32c259d35a71b8a671e062519c2a0465"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make an errored outcome from the type passed. <br/></td></tr>
-<tr class="separator:ga32c259d35a71b8a671e062519c2a0465"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga957407dac2e29027b1de74afba958e35"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga957407dac2e29027b1de74afba958e35"></a>
+<tr class="memitem:a32c259d35a71b8a671e062519c2a0465"><td class="memTemplItemLeft" align="right" valign="top">outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a32c259d35a71b8a671e062519c2a0465">boost::outcome::v1_xxx::make_errored_outcome</a> (error_code_extended v)</td></tr>
+<tr class="memdesc:a32c259d35a71b8a671e062519c2a0465"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make an errored outcome from the type passed. <br/></td></tr>
+<tr class="separator:a32c259d35a71b8a671e062519c2a0465"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a957407dac2e29027b1de74afba958e35"><td class="memTemplParams" colspan="2"><a class="anchor" id="a957407dac2e29027b1de74afba958e35"></a>
 template&lt;class T  = void&gt; </td></tr>
-<tr class="memitem:ga957407dac2e29027b1de74afba958e35"><td class="memTemplItemLeft" align="right" valign="top">outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga957407dac2e29027b1de74afba958e35">boost::outcome::v1_xxx::make_errored_outcome</a> (int e, const char *extended=nullptr)</td></tr>
-<tr class="memdesc:ga957407dac2e29027b1de74afba958e35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a generic errored outcome from the errno passed. <br/></td></tr>
-<tr class="separator:ga957407dac2e29027b1de74afba958e35"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga768281695a2f5e4fcad226c8bdbe4e2a"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga768281695a2f5e4fcad226c8bdbe4e2a"></a>
+<tr class="memitem:a957407dac2e29027b1de74afba958e35"><td class="memTemplItemLeft" align="right" valign="top">outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a957407dac2e29027b1de74afba958e35">boost::outcome::v1_xxx::make_errored_outcome</a> (int e, const char *extended=nullptr)</td></tr>
+<tr class="memdesc:a957407dac2e29027b1de74afba958e35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a generic errored outcome from the errno passed. <br/></td></tr>
+<tr class="separator:a957407dac2e29027b1de74afba958e35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a768281695a2f5e4fcad226c8bdbe4e2a"><td class="memTemplParams" colspan="2"><a class="anchor" id="a768281695a2f5e4fcad226c8bdbe4e2a"></a>
 template&lt;class T  = void&gt; </td></tr>
-<tr class="memitem:ga768281695a2f5e4fcad226c8bdbe4e2a"><td class="memTemplItemLeft" align="right" valign="top">constexpr outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga768281695a2f5e4fcad226c8bdbe4e2a">boost::outcome::v1_xxx::make_errored_outcome</a> (unsigned long e, const char *extended=nullptr)</td></tr>
-<tr class="memdesc:ga768281695a2f5e4fcad226c8bdbe4e2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a system errored outcome from the code passed. <br/></td></tr>
-<tr class="separator:ga768281695a2f5e4fcad226c8bdbe4e2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadc7e203492bd1b5ee6f6ea0ae190a95e"><td class="memTemplParams" colspan="2"><a class="anchor" id="gadc7e203492bd1b5ee6f6ea0ae190a95e"></a>
+<tr class="memitem:a768281695a2f5e4fcad226c8bdbe4e2a"><td class="memTemplItemLeft" align="right" valign="top">constexpr outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a768281695a2f5e4fcad226c8bdbe4e2a">boost::outcome::v1_xxx::make_errored_outcome</a> (unsigned long e, const char *extended=nullptr)</td></tr>
+<tr class="memdesc:a768281695a2f5e4fcad226c8bdbe4e2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a system errored outcome from the code passed. <br/></td></tr>
+<tr class="separator:a768281695a2f5e4fcad226c8bdbe4e2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc7e203492bd1b5ee6f6ea0ae190a95e"><td class="memTemplParams" colspan="2"><a class="anchor" id="adc7e203492bd1b5ee6f6ea0ae190a95e"></a>
 template&lt;class T  = void&gt; </td></tr>
-<tr class="memitem:gadc7e203492bd1b5ee6f6ea0ae190a95e"><td class="memTemplItemLeft" align="right" valign="top">outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#gadc7e203492bd1b5ee6f6ea0ae190a95e">boost::outcome::v1_xxx::make_exceptional_outcome</a> (std::exception_ptr v=std::current_exception())</td></tr>
-<tr class="memdesc:gadc7e203492bd1b5ee6f6ea0ae190a95e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make an excepted outcome from the type passed. <br/></td></tr>
-<tr class="separator:gadc7e203492bd1b5ee6f6ea0ae190a95e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga559b5e8efc12ededdc3aeecce0d304de"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga559b5e8efc12ededdc3aeecce0d304de"></a>
+<tr class="memitem:adc7e203492bd1b5ee6f6ea0ae190a95e"><td class="memTemplItemLeft" align="right" valign="top">outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#adc7e203492bd1b5ee6f6ea0ae190a95e">boost::outcome::v1_xxx::make_exceptional_outcome</a> (std::exception_ptr v=std::current_exception())</td></tr>
+<tr class="memdesc:adc7e203492bd1b5ee6f6ea0ae190a95e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make an excepted outcome from the type passed. <br/></td></tr>
+<tr class="separator:adc7e203492bd1b5ee6f6ea0ae190a95e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a559b5e8efc12ededdc3aeecce0d304de"><td class="memTemplParams" colspan="2"><a class="anchor" id="a559b5e8efc12ededdc3aeecce0d304de"></a>
 template&lt;class T &gt; </td></tr>
-<tr class="memitem:ga559b5e8efc12ededdc3aeecce0d304de"><td class="memTemplItemLeft" align="right" valign="top">constexpr result&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga559b5e8efc12ededdc3aeecce0d304de">boost::outcome::v1_xxx::make_result</a> (T &amp;&amp;v)</td></tr>
-<tr class="memdesc:ga559b5e8efc12ededdc3aeecce0d304de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a result from the type passed. <br/></td></tr>
-<tr class="separator:ga559b5e8efc12ededdc3aeecce0d304de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6828dd2254d99a9759229733f52f60a4"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga6828dd2254d99a9759229733f52f60a4"></a>
+<tr class="memitem:a559b5e8efc12ededdc3aeecce0d304de"><td class="memTemplItemLeft" align="right" valign="top">constexpr result&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a559b5e8efc12ededdc3aeecce0d304de">boost::outcome::v1_xxx::make_result</a> (T &amp;&amp;v)</td></tr>
+<tr class="memdesc:a559b5e8efc12ededdc3aeecce0d304de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a result from the type passed. <br/></td></tr>
+<tr class="separator:a559b5e8efc12ededdc3aeecce0d304de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6828dd2254d99a9759229733f52f60a4"><td class="memTemplParams" colspan="2"><a class="anchor" id="a6828dd2254d99a9759229733f52f60a4"></a>
 template&lt;class T &gt; </td></tr>
-<tr class="memitem:ga6828dd2254d99a9759229733f52f60a4"><td class="memTemplItemLeft" align="right" valign="top">constexpr result&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga6828dd2254d99a9759229733f52f60a4">boost::outcome::v1_xxx::make_result</a> (const T &amp;v)</td></tr>
-<tr class="memdesc:ga6828dd2254d99a9759229733f52f60a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a result from the type passed. <br/></td></tr>
-<tr class="separator:ga6828dd2254d99a9759229733f52f60a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga00f295e5d9ea903b2477e631e46bea3e"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga00f295e5d9ea903b2477e631e46bea3e"></a>
+<tr class="memitem:a6828dd2254d99a9759229733f52f60a4"><td class="memTemplItemLeft" align="right" valign="top">constexpr result&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a6828dd2254d99a9759229733f52f60a4">boost::outcome::v1_xxx::make_result</a> (const T &amp;v)</td></tr>
+<tr class="memdesc:a6828dd2254d99a9759229733f52f60a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a result from the type passed. <br/></td></tr>
+<tr class="separator:a6828dd2254d99a9759229733f52f60a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00f295e5d9ea903b2477e631e46bea3e"><td class="memTemplParams" colspan="2"><a class="anchor" id="a00f295e5d9ea903b2477e631e46bea3e"></a>
 template&lt;class T  = void&gt; </td></tr>
-<tr class="memitem:ga00f295e5d9ea903b2477e631e46bea3e"><td class="memTemplItemLeft" align="right" valign="top">result&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga00f295e5d9ea903b2477e631e46bea3e">boost::outcome::v1_xxx::make_result</a> (error_code_extended v)</td></tr>
-<tr class="memdesc:ga00f295e5d9ea903b2477e631e46bea3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an errored result of type T. <br/></td></tr>
-<tr class="separator:ga00f295e5d9ea903b2477e631e46bea3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae9b39f9a3247cc669105aab8a414fd37"><td class="memTemplParams" colspan="2"><a class="anchor" id="gae9b39f9a3247cc669105aab8a414fd37"></a>
+<tr class="memitem:a00f295e5d9ea903b2477e631e46bea3e"><td class="memTemplItemLeft" align="right" valign="top">result&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a00f295e5d9ea903b2477e631e46bea3e">boost::outcome::v1_xxx::make_result</a> (error_code_extended v)</td></tr>
+<tr class="memdesc:a00f295e5d9ea903b2477e631e46bea3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an errored result of type T. <br/></td></tr>
+<tr class="separator:a00f295e5d9ea903b2477e631e46bea3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9b39f9a3247cc669105aab8a414fd37"><td class="memTemplParams" colspan="2"><a class="anchor" id="ae9b39f9a3247cc669105aab8a414fd37"></a>
 template&lt;class T  = void&gt; </td></tr>
-<tr class="memitem:gae9b39f9a3247cc669105aab8a414fd37"><td class="memTemplItemLeft" align="right" valign="top">constexpr result&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#gae9b39f9a3247cc669105aab8a414fd37">boost::outcome::v1_xxx::make_result</a> ()</td></tr>
-<tr class="memdesc:gae9b39f9a3247cc669105aab8a414fd37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an empty result of type T. <br/></td></tr>
-<tr class="separator:gae9b39f9a3247cc669105aab8a414fd37"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4bff5754b64adeb2708ab9bec52aff57"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga4bff5754b64adeb2708ab9bec52aff57"></a>
+<tr class="memitem:ae9b39f9a3247cc669105aab8a414fd37"><td class="memTemplItemLeft" align="right" valign="top">constexpr result&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ae9b39f9a3247cc669105aab8a414fd37">boost::outcome::v1_xxx::make_result</a> ()</td></tr>
+<tr class="memdesc:ae9b39f9a3247cc669105aab8a414fd37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an empty result of type T. <br/></td></tr>
+<tr class="separator:ae9b39f9a3247cc669105aab8a414fd37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4bff5754b64adeb2708ab9bec52aff57"><td class="memTemplParams" colspan="2"><a class="anchor" id="a4bff5754b64adeb2708ab9bec52aff57"></a>
 template&lt;class T  = void&gt; </td></tr>
-<tr class="memitem:ga4bff5754b64adeb2708ab9bec52aff57"><td class="memTemplItemLeft" align="right" valign="top">constexpr result&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga4bff5754b64adeb2708ab9bec52aff57">boost::outcome::v1_xxx::make_empty_result</a> ()</td></tr>
-<tr class="memdesc:ga4bff5754b64adeb2708ab9bec52aff57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an empty result of type T. <br/></td></tr>
-<tr class="separator:ga4bff5754b64adeb2708ab9bec52aff57"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8a14014596a489c7b9741c4194f1a06f"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga8a14014596a489c7b9741c4194f1a06f"></a>
+<tr class="memitem:a4bff5754b64adeb2708ab9bec52aff57"><td class="memTemplItemLeft" align="right" valign="top">constexpr result&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a4bff5754b64adeb2708ab9bec52aff57">boost::outcome::v1_xxx::make_empty_result</a> ()</td></tr>
+<tr class="memdesc:a4bff5754b64adeb2708ab9bec52aff57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an empty result of type T. <br/></td></tr>
+<tr class="separator:a4bff5754b64adeb2708ab9bec52aff57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a14014596a489c7b9741c4194f1a06f"><td class="memTemplParams" colspan="2"><a class="anchor" id="a8a14014596a489c7b9741c4194f1a06f"></a>
 template&lt;class T &gt; </td></tr>
-<tr class="memitem:ga8a14014596a489c7b9741c4194f1a06f"><td class="memTemplItemLeft" align="right" valign="top">constexpr result&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga8a14014596a489c7b9741c4194f1a06f">boost::outcome::v1_xxx::make_ready_result</a> (T &amp;&amp;v)</td></tr>
-<tr class="memdesc:ga8a14014596a489c7b9741c4194f1a06f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a result from the type passed. <br/></td></tr>
-<tr class="separator:ga8a14014596a489c7b9741c4194f1a06f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad3860813fcb7c13a46cad332133cfc25"><td class="memTemplParams" colspan="2"><a class="anchor" id="gad3860813fcb7c13a46cad332133cfc25"></a>
+<tr class="memitem:a8a14014596a489c7b9741c4194f1a06f"><td class="memTemplItemLeft" align="right" valign="top">constexpr result&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a8a14014596a489c7b9741c4194f1a06f">boost::outcome::v1_xxx::make_ready_result</a> (T &amp;&amp;v)</td></tr>
+<tr class="memdesc:a8a14014596a489c7b9741c4194f1a06f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a result from the type passed. <br/></td></tr>
+<tr class="separator:a8a14014596a489c7b9741c4194f1a06f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3860813fcb7c13a46cad332133cfc25"><td class="memTemplParams" colspan="2"><a class="anchor" id="ad3860813fcb7c13a46cad332133cfc25"></a>
 template&lt;class T &gt; </td></tr>
-<tr class="memitem:gad3860813fcb7c13a46cad332133cfc25"><td class="memTemplItemLeft" align="right" valign="top">constexpr result&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#gad3860813fcb7c13a46cad332133cfc25">boost::outcome::v1_xxx::make_ready_result</a> (const T &amp;v)</td></tr>
-<tr class="memdesc:gad3860813fcb7c13a46cad332133cfc25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a result from the type passed. <br/></td></tr>
-<tr class="separator:gad3860813fcb7c13a46cad332133cfc25"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabc05b498031064ec9e6ed4cca732c5d3"><td class="memTemplParams" colspan="2"><a class="anchor" id="gabc05b498031064ec9e6ed4cca732c5d3"></a>
+<tr class="memitem:ad3860813fcb7c13a46cad332133cfc25"><td class="memTemplItemLeft" align="right" valign="top">constexpr result&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ad3860813fcb7c13a46cad332133cfc25">boost::outcome::v1_xxx::make_ready_result</a> (const T &amp;v)</td></tr>
+<tr class="memdesc:ad3860813fcb7c13a46cad332133cfc25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a result from the type passed. <br/></td></tr>
+<tr class="separator:ad3860813fcb7c13a46cad332133cfc25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc05b498031064ec9e6ed4cca732c5d3"><td class="memTemplParams" colspan="2"><a class="anchor" id="abc05b498031064ec9e6ed4cca732c5d3"></a>
 template&lt;class T  = void&gt; </td></tr>
-<tr class="memitem:gabc05b498031064ec9e6ed4cca732c5d3"><td class="memTemplItemLeft" align="right" valign="top">constexpr result&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#gabc05b498031064ec9e6ed4cca732c5d3">boost::outcome::v1_xxx::make_ready_result</a> ()</td></tr>
-<tr class="memdesc:gabc05b498031064ec9e6ed4cca732c5d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a result from the type passed. <br/></td></tr>
-<tr class="separator:gabc05b498031064ec9e6ed4cca732c5d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc05b498031064ec9e6ed4cca732c5d3"><td class="memTemplItemLeft" align="right" valign="top">constexpr result&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#abc05b498031064ec9e6ed4cca732c5d3">boost::outcome::v1_xxx::make_ready_result</a> ()</td></tr>
+<tr class="memdesc:abc05b498031064ec9e6ed4cca732c5d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a result from the type passed. <br/></td></tr>
+<tr class="separator:abc05b498031064ec9e6ed4cca732c5d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abdd2455df8724ffa1efb9943f29ebb6d"><td class="memTemplParams" colspan="2"><a class="anchor" id="abdd2455df8724ffa1efb9943f29ebb6d"></a>
 template&lt;&gt; </td></tr>
 <tr class="memitem:abdd2455df8724ffa1efb9943f29ebb6d"><td class="memTemplItemLeft" align="right" valign="top">result&lt; void &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>boost::outcome::v1_xxx::make_ready_result&lt; void &gt;</b> ()</td></tr>
 <tr class="separator:abdd2455df8724ffa1efb9943f29ebb6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6175fc3a5c4bb5ab9f782654e96bb354"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga6175fc3a5c4bb5ab9f782654e96bb354"></a>
+<tr class="memitem:a6175fc3a5c4bb5ab9f782654e96bb354"><td class="memTemplParams" colspan="2"><a class="anchor" id="a6175fc3a5c4bb5ab9f782654e96bb354"></a>
 template&lt;class T  = void&gt; </td></tr>
-<tr class="memitem:ga6175fc3a5c4bb5ab9f782654e96bb354"><td class="memTemplItemLeft" align="right" valign="top">result&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga6175fc3a5c4bb5ab9f782654e96bb354">boost::outcome::v1_xxx::make_errored_result</a> (error_code_extended v)</td></tr>
-<tr class="memdesc:ga6175fc3a5c4bb5ab9f782654e96bb354"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make an errored result from the type passed. <br/></td></tr>
-<tr class="separator:ga6175fc3a5c4bb5ab9f782654e96bb354"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0f57f84218bf0e13f6319609adc7e03c"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga0f57f84218bf0e13f6319609adc7e03c"></a>
+<tr class="memitem:a6175fc3a5c4bb5ab9f782654e96bb354"><td class="memTemplItemLeft" align="right" valign="top">result&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a6175fc3a5c4bb5ab9f782654e96bb354">boost::outcome::v1_xxx::make_errored_result</a> (error_code_extended v)</td></tr>
+<tr class="memdesc:a6175fc3a5c4bb5ab9f782654e96bb354"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make an errored result from the type passed. <br/></td></tr>
+<tr class="separator:a6175fc3a5c4bb5ab9f782654e96bb354"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f57f84218bf0e13f6319609adc7e03c"><td class="memTemplParams" colspan="2"><a class="anchor" id="a0f57f84218bf0e13f6319609adc7e03c"></a>
 template&lt;class T  = void&gt; </td></tr>
-<tr class="memitem:ga0f57f84218bf0e13f6319609adc7e03c"><td class="memTemplItemLeft" align="right" valign="top">constexpr result&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga0f57f84218bf0e13f6319609adc7e03c">boost::outcome::v1_xxx::make_errored_result</a> (int e, const char *extended=nullptr)</td></tr>
-<tr class="memdesc:ga0f57f84218bf0e13f6319609adc7e03c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a generic errored outcome from the errno passed. <br/></td></tr>
-<tr class="separator:ga0f57f84218bf0e13f6319609adc7e03c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0ee9f3b12c9f643bea51b050836f9115"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga0ee9f3b12c9f643bea51b050836f9115"></a>
+<tr class="memitem:a0f57f84218bf0e13f6319609adc7e03c"><td class="memTemplItemLeft" align="right" valign="top">constexpr result&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a0f57f84218bf0e13f6319609adc7e03c">boost::outcome::v1_xxx::make_errored_result</a> (int e, const char *extended=nullptr)</td></tr>
+<tr class="memdesc:a0f57f84218bf0e13f6319609adc7e03c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a generic errored outcome from the errno passed. <br/></td></tr>
+<tr class="separator:a0f57f84218bf0e13f6319609adc7e03c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ee9f3b12c9f643bea51b050836f9115"><td class="memTemplParams" colspan="2"><a class="anchor" id="a0ee9f3b12c9f643bea51b050836f9115"></a>
 template&lt;class T  = void&gt; </td></tr>
-<tr class="memitem:ga0ee9f3b12c9f643bea51b050836f9115"><td class="memTemplItemLeft" align="right" valign="top">constexpr result&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga0ee9f3b12c9f643bea51b050836f9115">boost::outcome::v1_xxx::make_errored_result</a> (unsigned long e, const char *extended=nullptr)</td></tr>
-<tr class="memdesc:ga0ee9f3b12c9f643bea51b050836f9115"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a system errored outcome from the code passed. <br/></td></tr>
-<tr class="separator:ga0ee9f3b12c9f643bea51b050836f9115"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7729448d32a8fd9ee4a34fc84152e165"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga7729448d32a8fd9ee4a34fc84152e165"></a>
+<tr class="memitem:a0ee9f3b12c9f643bea51b050836f9115"><td class="memTemplItemLeft" align="right" valign="top">constexpr result&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a0ee9f3b12c9f643bea51b050836f9115">boost::outcome::v1_xxx::make_errored_result</a> (unsigned long e, const char *extended=nullptr)</td></tr>
+<tr class="memdesc:a0ee9f3b12c9f643bea51b050836f9115"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a system errored outcome from the code passed. <br/></td></tr>
+<tr class="separator:a0ee9f3b12c9f643bea51b050836f9115"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7729448d32a8fd9ee4a34fc84152e165"><td class="memTemplParams" colspan="2"><a class="anchor" id="a7729448d32a8fd9ee4a34fc84152e165"></a>
 template&lt;class T &gt; </td></tr>
-<tr class="memitem:ga7729448d32a8fd9ee4a34fc84152e165"><td class="memTemplItemLeft" align="right" valign="top">constexpr option&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga7729448d32a8fd9ee4a34fc84152e165">boost::outcome::v1_xxx::make_option</a> (T &amp;&amp;v)</td></tr>
-<tr class="memdesc:ga7729448d32a8fd9ee4a34fc84152e165"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a option from the type passed. <br/></td></tr>
-<tr class="separator:ga7729448d32a8fd9ee4a34fc84152e165"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga65efd2af5ed17063df929d7d4d354f3b"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga65efd2af5ed17063df929d7d4d354f3b"></a>
+<tr class="memitem:a7729448d32a8fd9ee4a34fc84152e165"><td class="memTemplItemLeft" align="right" valign="top">constexpr option&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a7729448d32a8fd9ee4a34fc84152e165">boost::outcome::v1_xxx::make_option</a> (T &amp;&amp;v)</td></tr>
+<tr class="memdesc:a7729448d32a8fd9ee4a34fc84152e165"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a option from the type passed. <br/></td></tr>
+<tr class="separator:a7729448d32a8fd9ee4a34fc84152e165"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65efd2af5ed17063df929d7d4d354f3b"><td class="memTemplParams" colspan="2"><a class="anchor" id="a65efd2af5ed17063df929d7d4d354f3b"></a>
 template&lt;class T &gt; </td></tr>
-<tr class="memitem:ga65efd2af5ed17063df929d7d4d354f3b"><td class="memTemplItemLeft" align="right" valign="top">constexpr option&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga65efd2af5ed17063df929d7d4d354f3b">boost::outcome::v1_xxx::make_option</a> (const T &amp;v)</td></tr>
-<tr class="memdesc:ga65efd2af5ed17063df929d7d4d354f3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a option from the type passed. <br/></td></tr>
-<tr class="separator:ga65efd2af5ed17063df929d7d4d354f3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga91bdd5cc02fbeeb47fe28099a0b9a5b8"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga91bdd5cc02fbeeb47fe28099a0b9a5b8"></a>
+<tr class="memitem:a65efd2af5ed17063df929d7d4d354f3b"><td class="memTemplItemLeft" align="right" valign="top">constexpr option&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a65efd2af5ed17063df929d7d4d354f3b">boost::outcome::v1_xxx::make_option</a> (const T &amp;v)</td></tr>
+<tr class="memdesc:a65efd2af5ed17063df929d7d4d354f3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a option from the type passed. <br/></td></tr>
+<tr class="separator:a65efd2af5ed17063df929d7d4d354f3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91bdd5cc02fbeeb47fe28099a0b9a5b8"><td class="memTemplParams" colspan="2"><a class="anchor" id="a91bdd5cc02fbeeb47fe28099a0b9a5b8"></a>
 template&lt;class T  = void&gt; </td></tr>
-<tr class="memitem:ga91bdd5cc02fbeeb47fe28099a0b9a5b8"><td class="memTemplItemLeft" align="right" valign="top">constexpr option&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga91bdd5cc02fbeeb47fe28099a0b9a5b8">boost::outcome::v1_xxx::make_option</a> ()</td></tr>
-<tr class="memdesc:ga91bdd5cc02fbeeb47fe28099a0b9a5b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an empty option of type T. <br/></td></tr>
-<tr class="separator:ga91bdd5cc02fbeeb47fe28099a0b9a5b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga85a0d8107c763a68a4705ed56d0d5fdf"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga85a0d8107c763a68a4705ed56d0d5fdf"></a>
+<tr class="memitem:a91bdd5cc02fbeeb47fe28099a0b9a5b8"><td class="memTemplItemLeft" align="right" valign="top">constexpr option&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a91bdd5cc02fbeeb47fe28099a0b9a5b8">boost::outcome::v1_xxx::make_option</a> ()</td></tr>
+<tr class="memdesc:a91bdd5cc02fbeeb47fe28099a0b9a5b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an empty option of type T. <br/></td></tr>
+<tr class="separator:a91bdd5cc02fbeeb47fe28099a0b9a5b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85a0d8107c763a68a4705ed56d0d5fdf"><td class="memTemplParams" colspan="2"><a class="anchor" id="a85a0d8107c763a68a4705ed56d0d5fdf"></a>
 template&lt;class T  = void&gt; </td></tr>
-<tr class="memitem:ga85a0d8107c763a68a4705ed56d0d5fdf"><td class="memTemplItemLeft" align="right" valign="top">constexpr option&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga85a0d8107c763a68a4705ed56d0d5fdf">boost::outcome::v1_xxx::make_empty_option</a> ()</td></tr>
-<tr class="memdesc:ga85a0d8107c763a68a4705ed56d0d5fdf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an empty option of type T. <br/></td></tr>
-<tr class="separator:ga85a0d8107c763a68a4705ed56d0d5fdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga770b7101b357cfdaae3929559c70b627"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga770b7101b357cfdaae3929559c70b627"></a>
+<tr class="memitem:a85a0d8107c763a68a4705ed56d0d5fdf"><td class="memTemplItemLeft" align="right" valign="top">constexpr option&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a85a0d8107c763a68a4705ed56d0d5fdf">boost::outcome::v1_xxx::make_empty_option</a> ()</td></tr>
+<tr class="memdesc:a85a0d8107c763a68a4705ed56d0d5fdf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an empty option of type T. <br/></td></tr>
+<tr class="separator:a85a0d8107c763a68a4705ed56d0d5fdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a770b7101b357cfdaae3929559c70b627"><td class="memTemplParams" colspan="2"><a class="anchor" id="a770b7101b357cfdaae3929559c70b627"></a>
 template&lt;class T &gt; </td></tr>
-<tr class="memitem:ga770b7101b357cfdaae3929559c70b627"><td class="memTemplItemLeft" align="right" valign="top">constexpr option&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga770b7101b357cfdaae3929559c70b627">boost::outcome::v1_xxx::make_ready_option</a> (T &amp;&amp;v)</td></tr>
-<tr class="memdesc:ga770b7101b357cfdaae3929559c70b627"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a option from the type passed. <br/></td></tr>
-<tr class="separator:ga770b7101b357cfdaae3929559c70b627"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga12a691944097d95764a03cf4f498eaee"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga12a691944097d95764a03cf4f498eaee"></a>
+<tr class="memitem:a770b7101b357cfdaae3929559c70b627"><td class="memTemplItemLeft" align="right" valign="top">constexpr option&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a770b7101b357cfdaae3929559c70b627">boost::outcome::v1_xxx::make_ready_option</a> (T &amp;&amp;v)</td></tr>
+<tr class="memdesc:a770b7101b357cfdaae3929559c70b627"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a option from the type passed. <br/></td></tr>
+<tr class="separator:a770b7101b357cfdaae3929559c70b627"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12a691944097d95764a03cf4f498eaee"><td class="memTemplParams" colspan="2"><a class="anchor" id="a12a691944097d95764a03cf4f498eaee"></a>
 template&lt;class T &gt; </td></tr>
-<tr class="memitem:ga12a691944097d95764a03cf4f498eaee"><td class="memTemplItemLeft" align="right" valign="top">constexpr option&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga12a691944097d95764a03cf4f498eaee">boost::outcome::v1_xxx::make_ready_option</a> (const T &amp;v)</td></tr>
-<tr class="memdesc:ga12a691944097d95764a03cf4f498eaee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a option from the type passed. <br/></td></tr>
-<tr class="separator:ga12a691944097d95764a03cf4f498eaee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga80952fc111f8ff64dddb86ed7edaa306"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga80952fc111f8ff64dddb86ed7edaa306"></a>
+<tr class="memitem:a12a691944097d95764a03cf4f498eaee"><td class="memTemplItemLeft" align="right" valign="top">constexpr option&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a12a691944097d95764a03cf4f498eaee">boost::outcome::v1_xxx::make_ready_option</a> (const T &amp;v)</td></tr>
+<tr class="memdesc:a12a691944097d95764a03cf4f498eaee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a option from the type passed. <br/></td></tr>
+<tr class="separator:a12a691944097d95764a03cf4f498eaee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80952fc111f8ff64dddb86ed7edaa306"><td class="memTemplParams" colspan="2"><a class="anchor" id="a80952fc111f8ff64dddb86ed7edaa306"></a>
 template&lt;class T  = void&gt; </td></tr>
-<tr class="memitem:ga80952fc111f8ff64dddb86ed7edaa306"><td class="memTemplItemLeft" align="right" valign="top">constexpr option&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga80952fc111f8ff64dddb86ed7edaa306">boost::outcome::v1_xxx::make_ready_option</a> ()</td></tr>
-<tr class="memdesc:ga80952fc111f8ff64dddb86ed7edaa306"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a option from the type passed. <br/></td></tr>
-<tr class="separator:ga80952fc111f8ff64dddb86ed7edaa306"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80952fc111f8ff64dddb86ed7edaa306"><td class="memTemplItemLeft" align="right" valign="top">constexpr option&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a80952fc111f8ff64dddb86ed7edaa306">boost::outcome::v1_xxx::make_ready_option</a> ()</td></tr>
+<tr class="memdesc:a80952fc111f8ff64dddb86ed7edaa306"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a option from the type passed. <br/></td></tr>
+<tr class="separator:a80952fc111f8ff64dddb86ed7edaa306"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a87b908b646df0fb2aef8b57c3e1e6cac"><td class="memTemplParams" colspan="2"><a class="anchor" id="a87b908b646df0fb2aef8b57c3e1e6cac"></a>
 template&lt;&gt; </td></tr>
 <tr class="memitem:a87b908b646df0fb2aef8b57c3e1e6cac"><td class="memTemplItemLeft" align="right" valign="top">constexpr option&lt; void &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>boost::outcome::v1_xxx::make_ready_option&lt; void &gt;</b> ()</td></tr>
 <tr class="separator:a87b908b646df0fb2aef8b57c3e1e6cac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae530c39aba6722190036aaeb7bf411f7"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
-<tr class="memitem:gae530c39aba6722190036aaeb7bf411f7"><td class="memTemplItemLeft" align="right" valign="top">constexpr outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#gae530c39aba6722190036aaeb7bf411f7">boost::outcome::v1_xxx::as_outcome</a> (result&lt; T &gt; &amp;&amp;v)</td></tr>
-<tr class="memdesc:gae530c39aba6722190036aaeb7bf411f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an outcome from a result.  <a href="group__monad.html#gae530c39aba6722190036aaeb7bf411f7">More...</a><br/></td></tr>
-<tr class="separator:gae530c39aba6722190036aaeb7bf411f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2e3dc2abb1f8c417f57826c578b5aea6"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
-<tr class="memitem:ga2e3dc2abb1f8c417f57826c578b5aea6"><td class="memTemplItemLeft" align="right" valign="top">constexpr outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga2e3dc2abb1f8c417f57826c578b5aea6">boost::outcome::v1_xxx::as_outcome</a> (const result&lt; T &gt; &amp;v)</td></tr>
-<tr class="memdesc:ga2e3dc2abb1f8c417f57826c578b5aea6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an outcome from a result.  <a href="group__monad.html#ga2e3dc2abb1f8c417f57826c578b5aea6">More...</a><br/></td></tr>
-<tr class="separator:ga2e3dc2abb1f8c417f57826c578b5aea6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac0eff505d8bb5f39bd701be19fbdaac5"><td class="memTemplParams" colspan="2"><a class="anchor" id="gac0eff505d8bb5f39bd701be19fbdaac5"></a>
+<tr class="memitem:ae530c39aba6722190036aaeb7bf411f7"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:ae530c39aba6722190036aaeb7bf411f7"><td class="memTemplItemLeft" align="right" valign="top">constexpr outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ae530c39aba6722190036aaeb7bf411f7">boost::outcome::v1_xxx::as_outcome</a> (result&lt; T &gt; &amp;&amp;v)</td></tr>
+<tr class="memdesc:ae530c39aba6722190036aaeb7bf411f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an outcome from a result.  <a href="#ae530c39aba6722190036aaeb7bf411f7">More...</a><br/></td></tr>
+<tr class="separator:ae530c39aba6722190036aaeb7bf411f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e3dc2abb1f8c417f57826c578b5aea6"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:a2e3dc2abb1f8c417f57826c578b5aea6"><td class="memTemplItemLeft" align="right" valign="top">constexpr outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a2e3dc2abb1f8c417f57826c578b5aea6">boost::outcome::v1_xxx::as_outcome</a> (const result&lt; T &gt; &amp;v)</td></tr>
+<tr class="memdesc:a2e3dc2abb1f8c417f57826c578b5aea6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an outcome from a result.  <a href="#a2e3dc2abb1f8c417f57826c578b5aea6">More...</a><br/></td></tr>
+<tr class="separator:a2e3dc2abb1f8c417f57826c578b5aea6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0eff505d8bb5f39bd701be19fbdaac5"><td class="memTemplParams" colspan="2"><a class="anchor" id="ac0eff505d8bb5f39bd701be19fbdaac5"></a>
 template&lt;class T &gt; </td></tr>
-<tr class="memitem:gac0eff505d8bb5f39bd701be19fbdaac5"><td class="memTemplItemLeft" align="right" valign="top">constexpr result&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#gac0eff505d8bb5f39bd701be19fbdaac5">boost::outcome::v1_xxx::as_result</a> (option&lt; T &gt; &amp;&amp;v)</td></tr>
-<tr class="memdesc:gac0eff505d8bb5f39bd701be19fbdaac5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a result from an option. <br/></td></tr>
-<tr class="separator:gac0eff505d8bb5f39bd701be19fbdaac5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga45531f0b41d78b899d1f6d286842eb8a"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga45531f0b41d78b899d1f6d286842eb8a"></a>
+<tr class="memitem:ac0eff505d8bb5f39bd701be19fbdaac5"><td class="memTemplItemLeft" align="right" valign="top">constexpr result&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ac0eff505d8bb5f39bd701be19fbdaac5">boost::outcome::v1_xxx::as_result</a> (option&lt; T &gt; &amp;&amp;v)</td></tr>
+<tr class="memdesc:ac0eff505d8bb5f39bd701be19fbdaac5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a result from an option. <br/></td></tr>
+<tr class="separator:ac0eff505d8bb5f39bd701be19fbdaac5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45531f0b41d78b899d1f6d286842eb8a"><td class="memTemplParams" colspan="2"><a class="anchor" id="a45531f0b41d78b899d1f6d286842eb8a"></a>
 template&lt;class T &gt; </td></tr>
-<tr class="memitem:ga45531f0b41d78b899d1f6d286842eb8a"><td class="memTemplItemLeft" align="right" valign="top">constexpr result&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga45531f0b41d78b899d1f6d286842eb8a">boost::outcome::v1_xxx::as_result</a> (const option&lt; T &gt; &amp;v)</td></tr>
-<tr class="memdesc:ga45531f0b41d78b899d1f6d286842eb8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a result from an option. <br/></td></tr>
-<tr class="separator:ga45531f0b41d78b899d1f6d286842eb8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga31623e855d816d8be8b796107e29d4f7"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga31623e855d816d8be8b796107e29d4f7"></a>
+<tr class="memitem:a45531f0b41d78b899d1f6d286842eb8a"><td class="memTemplItemLeft" align="right" valign="top">constexpr result&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a45531f0b41d78b899d1f6d286842eb8a">boost::outcome::v1_xxx::as_result</a> (const option&lt; T &gt; &amp;v)</td></tr>
+<tr class="memdesc:a45531f0b41d78b899d1f6d286842eb8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a result from an option. <br/></td></tr>
+<tr class="separator:a45531f0b41d78b899d1f6d286842eb8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31623e855d816d8be8b796107e29d4f7"><td class="memTemplParams" colspan="2"><a class="anchor" id="a31623e855d816d8be8b796107e29d4f7"></a>
 template&lt;class T &gt; </td></tr>
-<tr class="memitem:ga31623e855d816d8be8b796107e29d4f7"><td class="memTemplItemLeft" align="right" valign="top">outcome&lt; void &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga31623e855d816d8be8b796107e29d4f7">boost::outcome::v1_xxx::as_void</a> (const outcome&lt; T &gt; &amp;v)</td></tr>
-<tr class="memdesc:ga31623e855d816d8be8b796107e29d4f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a void outcome from an input outcome, forwarding any emptiness, error or exception. <br/></td></tr>
-<tr class="separator:ga31623e855d816d8be8b796107e29d4f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga31623e855d816d8be8b796107e29d4f7"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga31623e855d816d8be8b796107e29d4f7"></a>
+<tr class="memitem:a31623e855d816d8be8b796107e29d4f7"><td class="memTemplItemLeft" align="right" valign="top">outcome&lt; void &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a31623e855d816d8be8b796107e29d4f7">boost::outcome::v1_xxx::as_void</a> (const outcome&lt; T &gt; &amp;v)</td></tr>
+<tr class="memdesc:a31623e855d816d8be8b796107e29d4f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a void outcome from an input outcome, forwarding any emptiness, error or exception. <br/></td></tr>
+<tr class="separator:a31623e855d816d8be8b796107e29d4f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb33249a27a08d644f0444f8764bfb82"><td class="memTemplParams" colspan="2"><a class="anchor" id="afb33249a27a08d644f0444f8764bfb82"></a>
 template&lt;class T &gt; </td></tr>
-<tr class="memitem:ga31623e855d816d8be8b796107e29d4f7"><td class="memTemplItemLeft" align="right" valign="top">result&lt; void &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ga31623e855d816d8be8b796107e29d4f7">boost::outcome::v1_xxx::as_void</a> (const result&lt; T &gt; &amp;v)</td></tr>
-<tr class="memdesc:ga31623e855d816d8be8b796107e29d4f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a void result from an input result, forwarding any emptiness or error. <br/></td></tr>
-<tr class="separator:ga31623e855d816d8be8b796107e29d4f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga31623e855d816d8be8b796107e29d4f7"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga31623e855d816d8be8b796107e29d4f7"></a>
+<tr class="memitem:afb33249a27a08d644f0444f8764bfb82"><td class="memTemplItemLeft" align="right" valign="top">result&lt; void &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#afb33249a27a08d644f0444f8764bfb82">boost::outcome::v1_xxx::as_void</a> (const result&lt; T &gt; &amp;v)</td></tr>
+<tr class="memdesc:afb33249a27a08d644f0444f8764bfb82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a void result from an input result, forwarding any emptiness or error. <br/></td></tr>
+<tr class="separator:afb33249a27a08d644f0444f8764bfb82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a425047c788bdd42b9f54cc49ee972bf8"><td class="memTemplParams" colspan="2"><a class="anchor" id="a425047c788bdd42b9f54cc49ee972bf8"></a>
 template&lt;class T &gt; </td></tr>
-<tr class="memitem:ga31623e855d816d8be8b796107e29d4f7"><td class="memTemplItemLeft" align="right" valign="top">BOOSTLITE_CONSTEXPR option&lt; void &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ga31623e855d816d8be8b796107e29d4f7">boost::outcome::v1_xxx::as_void</a> (const option&lt; T &gt; &amp;v)</td></tr>
-<tr class="memdesc:ga31623e855d816d8be8b796107e29d4f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a void option from an input option, forwarding any emptiness. <br/></td></tr>
-<tr class="separator:ga31623e855d816d8be8b796107e29d4f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a425047c788bdd42b9f54cc49ee972bf8"><td class="memTemplItemLeft" align="right" valign="top">BOOSTLITE_CONSTEXPR option&lt; void &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a425047c788bdd42b9f54cc49ee972bf8">boost::outcome::v1_xxx::as_void</a> (const option&lt; T &gt; &amp;v)</td></tr>
+<tr class="memdesc:a425047c788bdd42b9f54cc49ee972bf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a void option from an input option, forwarding any emptiness. <br/></td></tr>
+<tr class="separator:a425047c788bdd42b9f54cc49ee972bf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3f2827754aa774f72b31a16abc7f543b"><td class="memTemplParams" colspan="2"><a class="anchor" id="a3f2827754aa774f72b31a16abc7f543b"></a>
 template&lt;class E &gt; </td></tr>
 <tr class="memitem:a3f2827754aa774f72b31a16abc7f543b"><td class="memTemplItemLeft" align="right" valign="top">bad_expected_access&lt; E &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>boost::outcome::v1_xxx::make_bad_expected_access</b> (const E &amp;v) noexcept</td></tr>
@@ -683,11 +575,11 @@ template&lt;class T , class E &gt; </td></tr>
 <tr class="memitem:ga61c46f3be4c8e19586871d20f37b5f10"><td class="memTemplItemLeft" align="right" valign="top">expected&lt; void, E &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__expected.html#ga61c46f3be4c8e19586871d20f37b5f10">boost::outcome::v1_xxx::as_void</a> (const expected&lt; T, E &gt; &amp;v)</td></tr>
 <tr class="memdesc:ga61c46f3be4c8e19586871d20f37b5f10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a void expected from an input expected, forwarding any emptiness or error. <br/></td></tr>
 <tr class="separator:ga61c46f3be4c8e19586871d20f37b5f10"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2ffab91838224f042fe7ed1b108e5ad7"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga2ffab91838224f042fe7ed1b108e5ad7"></a>
+<tr class="memitem:a2ffab91838224f042fe7ed1b108e5ad7"><td class="memTemplParams" colspan="2"><a class="anchor" id="a2ffab91838224f042fe7ed1b108e5ad7"></a>
 template&lt;class Impl &gt; </td></tr>
-<tr class="memitem:ga2ffab91838224f042fe7ed1b108e5ad7"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__monad.html#ga2ffab91838224f042fe7ed1b108e5ad7">std::swap</a> (<a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html">boost::outcome::v1_xxx::basic_monad</a>&lt; Impl &gt; &amp;a, <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html">boost::outcome::v1_xxx::basic_monad</a>&lt; Impl &gt; &amp;b)</td></tr>
-<tr class="memdesc:ga2ffab91838224f042fe7ed1b108e5ad7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specialise swap for basic_monad. <br/></td></tr>
-<tr class="separator:ga2ffab91838224f042fe7ed1b108e5ad7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ffab91838224f042fe7ed1b108e5ad7"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>std::swap</b> (<a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html">boost::outcome::v1_xxx::basic_monad</a>&lt; Impl &gt; &amp;a, <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html">boost::outcome::v1_xxx::basic_monad</a>&lt; Impl &gt; &amp;b)</td></tr>
+<tr class="memdesc:a2ffab91838224f042fe7ed1b108e5ad7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specialise swap for basic_monad. <br/></td></tr>
+<tr class="separator:a2ffab91838224f042fe7ed1b108e5ad7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -732,7 +624,7 @@ constexpr unexpect_t&#160;</td><td class="memItemRight" valign="bottom"><a class
 <div class="line">  if(!unique.has_value())                                                                                                                                                                                                                                                                                                      \</div>
 <div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga61c46f3be4c8e19586871d20f37b5f10">BOOST_OUTCOME_V1_NAMESPACE::as_void</a>(unique);                                                                                                                                                                                                                                                                        \</div>
 <div class="line">  auto v(std::move(std::move(unique).<span class="keyword">get</span>()))</div>
-<div class="ttc" id="group__expected_html_ga61c46f3be4c8e19586871d20f37b5f10"><div class="ttname"><a href="group__expected.html#ga61c46f3be4c8e19586871d20f37b5f10">boost::outcome::v1_xxx::as_void</a></div><div class="ttdeci">expected&lt; void, E &gt; as_void(const expected&lt; T, E &gt; &amp;v)</div><div class="ttdoc">Makes a void expected from an input expected, forwarding any emptiness or error. </div><div class="ttdef"><b>Definition:</b> monad.hpp:2402</div></div>
+<div class="ttc" id="group__expected_html_ga61c46f3be4c8e19586871d20f37b5f10"><div class="ttname"><a href="group__expected.html#ga61c46f3be4c8e19586871d20f37b5f10">boost::outcome::v1_xxx::as_void</a></div><div class="ttdeci">expected&lt; void, E &gt; as_void(const expected&lt; T, E &gt; &amp;v)</div><div class="ttdoc">Makes a void expected from an input expected, forwarding any emptiness or error. </div><div class="ttdef"><b>Definition:</b> monad.hpp:1202</div></div>
 </div><!-- fragment -->
 </div>
 </div>

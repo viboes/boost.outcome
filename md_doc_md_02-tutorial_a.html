@@ -238,7 +238,7 @@ of noexcept"</em> which will be described later.</p>
 <div class="line">    close(fd);</div>
 <div class="line">    <span class="comment">// Construct an error code matching the generic OS error equivalent</span></div>
 <div class="line">    <span class="comment">// to the ENOMEM error condition</span></div>
-<div class="line">    ec = <a class="code" href="group__monad.html#gab6204dd7620b0e495220e76988359589">std::make_error_code</a>(std::errc::not_enough_memory);</div>
+<div class="line">    ec = <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ab6204dd7620b0e495220e76988359589">std::make_error_code</a>(std::errc::not_enough_memory);</div>
 <div class="line">    <span class="keywordflow">return</span> {};</div>
 <div class="line">  }</div>
 <div class="line">  <span class="keywordflow">if</span>(ec)</div>
@@ -319,7 +319,7 @@ std::experimental::expected&lt;T, E&gt; (on standards track)</h2>
 <div class="line">    close(fd);</div>
 <div class="line">    <span class="comment">// C++ 11 lets you convert generic portable error_condition&#39;s into a platform</span></div>
 <div class="line">    <span class="comment">// specific error_code like this</span></div>
-<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga03e1e619a559e7f336621b1092e28527">std::experimental::make_unexpected</a>(<a class="code" href="group__monad.html#gab6204dd7620b0e495220e76988359589">std::make_error_code</a>(std::errc::not_enough_memory));</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga03e1e619a559e7f336621b1092e28527">std::experimental::make_unexpected</a>(<a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ab6204dd7620b0e495220e76988359589">std::make_error_code</a>(std::errc::not_enough_memory));</div>
 <div class="line">  }</div>
 <div class="line">  <span class="comment">// The some_derived_handle_implementation constructor failed</span></div>
 <div class="line">  <span class="keywordflow">if</span>(ec)</div>
@@ -407,10 +407,10 @@ Expected's bad_expected_access&lt;E&gt;</h3>
 <div class="line"></div>
 <div class="line">  <span class="keyword">explicit</span> bad_expected_access(<span class="keyword">const</span> error_type &amp;e) noexcept;</div>
 <div class="line"></div>
-<div class="line">  <span class="keyword">const</span> error_type &amp;<a class="code" href="group__monad.html#ga1a1a8470c4efc3a52412f3ecc79a0060">error</a>() const &amp; noexcept;</div>
-<div class="line">  error_type &amp;<a class="code" href="group__monad.html#ga1a1a8470c4efc3a52412f3ecc79a0060">error</a>() &amp; noexcept;</div>
-<div class="line">  const error_type &amp;&amp;<a class="code" href="group__monad.html#ga1a1a8470c4efc3a52412f3ecc79a0060">error</a>() const &amp;&amp; noexcept;</div>
-<div class="line">  error_type &amp;&amp;<a class="code" href="group__monad.html#ga1a1a8470c4efc3a52412f3ecc79a0060">error</a>() &amp;&amp; noexcept;</div>
+<div class="line">  <span class="keyword">const</span> error_type &amp;<a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a1a1a8470c4efc3a52412f3ecc79a0060">error</a>() const &amp; noexcept;</div>
+<div class="line">  error_type &amp;<a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a1a1a8470c4efc3a52412f3ecc79a0060">error</a>() &amp; noexcept;</div>
+<div class="line">  const error_type &amp;&amp;<a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a1a1a8470c4efc3a52412f3ecc79a0060">error</a>() const &amp;&amp; noexcept;</div>
+<div class="line">  error_type &amp;&amp;<a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a1a1a8470c4efc3a52412f3ecc79a0060">error</a>() &amp;&amp; noexcept;</div>
 <div class="line">};</div>
 <div class="line"></div>
 <div class="line"><span class="comment">// This is currently an extension to the proposal by Outcome, but we think it highly</span></div>
@@ -423,7 +423,7 @@ Expected's bad_expected_access&lt;E&gt;</h3>
 <div class="line">  <span class="keyword">explicit</span> bad_expected_access() noexcept;</div>
 <div class="line">};</div>
 </div><!-- fragment --><p>So for example, if you tried to get the value of an Expected when it was errored, you would see this:</p>
-<div class="fragment"><div class="line">std::experimental::expected&lt;int, std::error_code&gt; a(<a class="code" href="group__expected.html#ga03e1e619a559e7f336621b1092e28527">std::experimental::make_unexpected</a>(<a class="code" href="group__monad.html#gab6204dd7620b0e495220e76988359589">std::make_error_code</a>(std::errc::no_such_file_or_directory)));</div>
+<div class="fragment"><div class="line">std::experimental::expected&lt;int, std::error_code&gt; a(<a class="code" href="group__expected.html#ga03e1e619a559e7f336621b1092e28527">std::experimental::make_unexpected</a>(<a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ab6204dd7620b0e495220e76988359589">std::make_error_code</a>(std::errc::no_such_file_or_directory)));</div>
 <div class="line"><span class="keywordflow">try</span></div>
 <div class="line">{</div>
 <div class="line">  <span class="comment">// a is errored, so this will throw</span></div>
@@ -464,14 +464,14 @@ Expected's observers</h3>
 <div class="line">  constexpr <span class="keywordtype">bool</span> has_value() const noexcept;</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">// Returns a lvalue or rvalue ref to the stored value_type if there is one, else throws a bad_expected_access&lt;E&gt;</span></div>
-<div class="line">  constexpr const T&amp; <a class="code" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">value</a>() const&amp;;</div>
-<div class="line">  constexpr T&amp; <a class="code" href="group__monad.html#gab1740f6220ea9c91b5fd5a9263c6b316">value</a>() &amp;;</div>
+<div class="line">  constexpr const T&amp; <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ab1740f6220ea9c91b5fd5a9263c6b316">value</a>() const&amp;;</div>
+<div class="line">  constexpr T&amp; <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ab1740f6220ea9c91b5fd5a9263c6b316">value</a>() &amp;;</div>
 <div class="line">  constexpr const T&amp;&amp; value() const &amp;&amp;;</div>
 <div class="line">  constexpr T&amp;&amp; value() &amp;&amp;;</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">// Returns a lvalue or rvalue ref to the stored error_type if there is one, else undefined behaviour</span></div>
-<div class="line">  constexpr const E&amp; <a class="code" href="group__monad.html#ga1a1a8470c4efc3a52412f3ecc79a0060">error</a>() const&amp;;</div>
-<div class="line">  E&amp; <a class="code" href="group__monad.html#ga1a1a8470c4efc3a52412f3ecc79a0060">error</a>() &amp;;</div>
+<div class="line">  constexpr const E&amp; <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a1a1a8470c4efc3a52412f3ecc79a0060">error</a>() const&amp;;</div>
+<div class="line">  E&amp; <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a1a1a8470c4efc3a52412f3ecc79a0060">error</a>() &amp;;</div>
 <div class="line">  constexpr E&amp;&amp; error() &amp;&amp;;</div>
 <div class="line">  constexpr const E&amp;&amp; error() const &amp;&amp;;</div>
 <div class="line"></div>
@@ -503,10 +503,10 @@ Expected is unstable!!!</h1>
 Short example program using expected&lt;T, E&gt;</h1>
 <p>Up until now we have been referring to Expected via the namespace <code>std::experimental</code>. Outcome obviously does not provide Expected in that namespace, instead it uses the outcome namespace which you can find via either of these forms:</p>
 <div class="fragment"><div class="line"><span class="comment">// Traditional: use SOME version Boost.Outcome visible to the compiler/linker</span></div>
-<div class="line"><span class="keyword">namespace </span><a class="code" href="group__monad.html#gaab2ff6220205017226794529c863b336">outcome</a> = <a class="code" href="group__monad.html#gaab2ff6220205017226794529c863b336">boost::outcome</a>;</div>
+<div class="line"><span class="keyword">namespace </span><a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#aab2ff6220205017226794529c863b336">outcome</a> = <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#aab2ff6220205017226794529c863b336">boost::outcome</a>;</div>
 <div class="line"></div>
 <div class="line"><span class="comment">// Better: use EXACTLY the Boost.Outcome visible in the current translation unit</span></div>
-<div class="line"><span class="keyword">namespace </span><a class="code" href="group__monad.html#gaab2ff6220205017226794529c863b336">outcome</a> = <a class="code" href="group__config.html#gab113de43db2cd2a4cf1e33b54294944a">BOOST_OUTCOME_V1_NAMESPACE</a>;</div>
+<div class="line"><span class="keyword">namespace </span><a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#aab2ff6220205017226794529c863b336">outcome</a> = <a class="code" href="group__config.html#gab113de43db2cd2a4cf1e33b54294944a">BOOST_OUTCOME_V1_NAMESPACE</a>;</div>
 </div><!-- fragment --><p>The <code>BOOST_OUTCOME_V1_NAMESPACE</code> macro encodes a unique hexadecimal value per release. This guarantees that the linker will not substitute a different version of Outcome than the Outcome you compiled against. It is therefore recommended that you use the <code>BOOST_OUTCOME_V1_NAMESPACE</code> macro.</p>
 <p>This example program using <code>expected&lt;T, E&gt;</code> replicates <a href="http://rustbyexample.com/std/result.html">the use example in the documentation for Rust's <code>Result&lt;T, E&gt;</code></a>. As you will see in Tutorial part B, you would be unwise to use <code>expected&lt;T, E&gt;</code> like this in large C++ programs.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;../include/boost/outcome.hpp&quot;</span></div>
@@ -515,7 +515,7 @@ Short example program using expected&lt;T, E&gt;</h1>
 <div class="line"><span class="preprocessor">#include &lt;cmath&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"></div>
-<div class="line"><span class="keyword">namespace </span><a class="code" href="group__monad.html#gaab2ff6220205017226794529c863b336">outcome</a> = <a class="code" href="group__config.html#gab113de43db2cd2a4cf1e33b54294944a">BOOST_OUTCOME_V1_NAMESPACE</a>;</div>
+<div class="line"><span class="keyword">namespace </span><a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#aab2ff6220205017226794529c863b336">outcome</a> = <a class="code" href="group__config.html#gab113de43db2cd2a4cf1e33b54294944a">BOOST_OUTCOME_V1_NAMESPACE</a>;</div>
 <div class="line"></div>
 <div class="line"><span class="comment">// Replicates example usage of Result&lt;T, E&gt; from http://rustbyexample.com/std/result.html</span></div>
 <div class="line"><span class="keyword">namespace </span>checked</div>

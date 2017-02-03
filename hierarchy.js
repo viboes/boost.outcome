@@ -1,15 +1,13 @@
 var hierarchy =
 [
     [ "base", null, [
-      [ "boost::outcome::v1_xxx::basic_monad< Impl >", "classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html", null ]
+      [ "boost::outcome::v1_xxx::basic_monad< implementation_policy >", "classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html", null ]
     ] ],
-    [ "boost::outcome::v1_xxx::lightweight_futures::basic_future< R >", "classboost_1_1outcome_1_1v1__xxx_1_1lightweight__futures_1_1basic__future.html", null ],
-    [ "boost::outcome::v1_xxx::lightweight_futures::basic_promise< R >", "classboost_1_1outcome_1_1v1__xxx_1_1lightweight__futures_1_1basic__promise.html", null ],
     [ "boost::outcome::v1_xxx::traits::detail::callable_argument_traits< is_callable_is_well_formed< F, A >::value, F, A >", null, [
       [ "boost::outcome::v1_xxx::traits::callable_argument_traits< F, A >", "structboost_1_1outcome_1_1v1__xxx_1_1traits_1_1callable__argument__traits.html", null ]
     ] ],
     [ "boost::outcome::v1_xxx::empty_t", "structboost_1_1outcome_1_1v1__xxx_1_1empty__t.html", null ],
-    [ "boost::outcome::v1_xxx::basic_monad< Impl >::empty_type", "structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1empty__type.html", null ],
+    [ "boost::outcome::v1_xxx::basic_monad< implementation_policy >::empty_type", "structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1empty__type.html", null ],
     [ "error_code", null, [
       [ "boost::outcome::v1_xxx::error_code_extended", "classboost_1_1outcome_1_1v1__xxx_1_1error__code__extended.html", null ]
     ] ],
@@ -30,7 +28,7 @@ var hierarchy =
         [ "boost::outcome::v1_xxx::is_monad< M >", "structboost_1_1outcome_1_1v1__xxx_1_1is__monad.html", null ]
       ] ]
     ] ],
-    [ "boost::outcome::v1_xxx::basic_monad< Impl >::from_value_storage_type_t", "structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1from__value__storage__type__t.html", null ],
+    [ "boost::outcome::v1_xxx::basic_monad< implementation_policy >::from_value_storage_type_t", "structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1from__value__storage__type__t.html", null ],
     [ "boost::outcome::v1_xxx::in_place_t", "structboost_1_1outcome_1_1v1__xxx_1_1in__place__t.html", null ],
     [ "boost::outcome::v1_xxx::traits::is_callable_is_well_formed< F, A >", "structboost_1_1outcome_1_1v1__xxx_1_1traits_1_1is__callable__is__well__formed.html", null ],
     [ "system_error", null, [
