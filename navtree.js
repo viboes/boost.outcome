@@ -37,7 +37,7 @@ var NAVTREE =
       [ "Outcome's outcome<T>, result<T> and option<T> refinements", "md_doc_md_04-tutorial_c.html#outcome_overview", null ],
       [ "Outcome's helper free functions", "md_doc_md_04-tutorial_c.html#outcome_helpers", null ],
       [ "Outcome's helper macros", "md_doc_md_04-tutorial_c.html#outcome_macros", null ],
-      [ "Example of usage of the refinements", "md_doc_md_04-tutorial_c.html#outcome_usage", null ]
+      [ "Example of usage of Outcome's expected<T, E> refinements", "md_doc_md_04-tutorial_c.html#outcome_usage", null ]
     ] ],
     [ "Frequently Asked Questions", "md_doc_md_07-faq.html", [
       [ "Hard coding error_code and exception_ptr is incredibly restrictive and ruins Outcome for me. Can you not do that please (i.e. make it more like expected<T, E> with its arbitrary type E)?", "md_doc_md_07-faq.html#dontlike", null ],
@@ -53,7 +53,6 @@ var NAVTREE =
       [ "bad_expected_access<E>", "md_doc_md_08-expectedsynopsis.html#synopsis_bad_expected_access", null ]
     ] ],
     [ "History and Acknowledgements", "md_doc_md_09-acknowledgements.html", null ],
-    [ "Todo List", "todo.html", null ],
     [ "Modules", "modules.html", "modules" ],
     [ "Namespaces", null, [
       [ "Namespace List", "namespaces.html", "namespaces" ],
