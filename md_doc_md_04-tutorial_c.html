@@ -341,7 +341,238 @@ Outcome's helper macros</h1>
 </p>
 <h1><a class="anchor" id="outcome_usage"></a>
 Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
-<p>todo </p>
+<p>The final code example is a reasonably long one which places, side by side, an implementation written using <code>expected&lt;T, E&gt;</code> beside one using <code>result&lt;T&gt;</code>. The program is a find regex in files utility written using C++ 14 and the Filesystem TS.</p>
+<table class="doxtable">
+<tr>
+<td><div class="fragment"><div class="line"><span class="keyword">class </span>mapped_string_view : <span class="keyword">public</span> std::string_view</div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordtype">bool</span> _disabled;</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">  constexpr mapped_string_view() noexcept : _disabled(true) {}</div>
+<div class="line">  mapped_string_view(<span class="keywordtype">char</span> *s, <span class="keywordtype">size_t</span> l) noexcept : std::string_view(s, l), _disabled(<span class="keyword">false</span>) {}</div>
+<div class="line">  mapped_string_view(mapped_string_view &amp;&amp;o) noexcept : std::string_view(std::move(o)), _disabled(o._disabled) { o._disabled = <span class="keyword">true</span>; }</div>
+<div class="line">  mapped_string_view &amp;operator=(mapped_string_view &amp;&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line">  ~mapped_string_view()</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordflow">if</span> (!_disabled)</div>
+<div class="line">    {</div>
+<div class="line"><span class="preprocessor">#ifdef _WIN32</span></div>
+<div class="line"><span class="preprocessor"></span>      UnmapViewOfFile(this-&gt;data());</div>
+<div class="line"><span class="preprocessor">#else</span></div>
+<div class="line"><span class="preprocessor"></span>      munmap((<span class="keywordtype">void</span> *) this-&gt;data(), this-&gt;size());</div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="preprocessor"></span>    }</div>
+<div class="line">  }</div>
+<div class="line">};</div>
+<div class="line"><span class="keyword">static</span> outcome::expected&lt;mapped_string_view&gt; map_file_into_memory(filesystem::path p) noexcept</div>
+<div class="line">{</div>
+<div class="line"><span class="preprocessor">#ifdef _WIN32</span></div>
+<div class="line"><span class="preprocessor"></span>  HANDLE fh, mh;</div>
+<div class="line">  DWORD ec;</div>
+<div class="line">  fh = CreateFile(p.c_str(), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,</div>
+<div class="line">    <span class="keyword">nullptr</span>, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, <span class="keyword">nullptr</span>);</div>
+<div class="line">  <span class="keywordflow">if</span> (INVALID_HANDLE_VALUE == fh)</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(std::error_code(GetLastError(), <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx_1_1deatomiced__categories.html#a9bd112823854cf5d6b347f1e14a02807">std::system_category</a>()));</div>
+<div class="line">  }</div>
+<div class="line">  BY_HANDLE_FILE_INFORMATION bhfi;</div>
+<div class="line">  memset(&amp;bhfi, 0, <span class="keyword">sizeof</span>(bhfi));</div>
+<div class="line">  <span class="keywordflow">if</span> (!GetFileInformationByHandle(fh, &amp;bhfi))</div>
+<div class="line">  {</div>
+<div class="line">    ec = GetLastError();</div>
+<div class="line">    CloseHandle(fh);</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(std::error_code(ec, <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx_1_1deatomiced__categories.html#a9bd112823854cf5d6b347f1e14a02807">std::system_category</a>()));</div>
+<div class="line">  }</div>
+<div class="line">  uint64_t length = ((uint64_t) bhfi.nFileSizeHigh &lt;&lt; 32) | bhfi.nFileSizeLow;</div>
+<div class="line">  mh = CreateFileMapping(fh, <span class="keyword">nullptr</span>, PAGE_READONLY, 0, 0, <span class="keyword">nullptr</span>);</div>
+<div class="line">  ec = GetLastError();</div>
+<div class="line">  CloseHandle(fh);</div>
+<div class="line">  <span class="keywordflow">if</span> (INVALID_HANDLE_VALUE == mh)</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(std::error_code(ec, <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx_1_1deatomiced__categories.html#a9bd112823854cf5d6b347f1e14a02807">std::system_category</a>()));</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keywordtype">char</span> *addr = (<span class="keywordtype">char</span> *) MapViewOfFile(mh, FILE_MAP_READ, 0, 0, 0);</div>
+<div class="line">  ec = GetLastError();</div>
+<div class="line">  CloseHandle(mh);</div>
+<div class="line">  <span class="keywordflow">if</span> (!addr)</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(std::error_code(ec, <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx_1_1deatomiced__categories.html#a9bd112823854cf5d6b347f1e14a02807">std::system_category</a>()));</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keywordflow">return</span> mapped_string_view(addr, (<span class="keywordtype">size_t</span>) length);</div>
+<div class="line"><span class="preprocessor">#else</span></div>
+<div class="line"><span class="preprocessor"></span>  <span class="keywordtype">int</span> fh, ec;</div>
+<div class="line">  fh = open(p.c_str(), O_RDONLY);</div>
+<div class="line">  <span class="keywordflow">if</span> (-1 == fh)</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(std::error_code(errno, <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx_1_1deatomiced__categories.html#a9bd112823854cf5d6b347f1e14a02807">std::system_category</a>()));</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keyword">struct </span>stat st;</div>
+<div class="line">  memset(&amp;st, 0, <span class="keyword">sizeof</span>(st));</div>
+<div class="line">  <span class="keywordflow">if</span> (-1 == fstat(fh, &amp;st))</div>
+<div class="line">  {</div>
+<div class="line">    ec = errno;</div>
+<div class="line">    close(fh);</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(std::error_code(ec, <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx_1_1deatomiced__categories.html#a9bd112823854cf5d6b347f1e14a02807">std::system_category</a>()));</div>
+<div class="line">  }</div>
+<div class="line">  uint64_t length = st.st_size;</div>
+<div class="line">  <span class="keywordtype">char</span> *addr = (<span class="keywordtype">char</span> *)mmap(<span class="keyword">nullptr</span>, length, PROT_READ, MAP_SHARED, fh, 0);</div>
+<div class="line">  ec = errno;</div>
+<div class="line">  close(fh);</div>
+<div class="line">  <span class="keywordflow">if</span> (!addr)</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(std::error_code(ec, <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx_1_1deatomiced__categories.html#a9bd112823854cf5d6b347f1e14a02807">std::system_category</a>()));</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keywordflow">return</span> mapped_string_view(addr, (<span class="keywordtype">size_t</span>)length);</div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="preprocessor"></span>}</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">static</span> outcome::expected&lt;std::vector&lt;filesystem::path&gt;&gt; find_regex_in_files(<span class="keyword">const</span> std::regex &amp;re, filesystem::directory_iterator dit, <span class="keywordtype">size_t</span> depth = 0) noexcept</div>
+<div class="line">{</div>
+<div class="line">  std::vector&lt;filesystem::path&gt; ret;</div>
+<div class="line">  <span class="keywordflow">try</span></div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;p : dit)</div>
+<div class="line">    {</div>
+<div class="line">      <span class="keywordflow">if</span> (filesystem::is_directory(p.status()))</div>
+<div class="line">      {</div>
+<div class="line">        std::error_code ec;</div>
+<div class="line">        filesystem::directory_iterator nit(p.path(), ec);</div>
+<div class="line">        <span class="keywordflow">if</span> (ec)</div>
+<div class="line">          <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(ec);</div>
+<div class="line">        <a class="code" href="monad_8hpp.html#aa977bf0b7aded30c781c35f956edc1d7">BOOST_OUTCOME_TRY</a>(results, find_regex_in_files(re, std::move(nit), depth + 1));</div>
+<div class="line">        <span class="comment">// Merge found results from subdirectory into me</span></div>
+<div class="line">        ret.reserve(ret.size() + results.size());</div>
+<div class="line">        std::move(results.begin(), results.end(), std::back_inserter(ret));</div>
+<div class="line">      }</div>
+<div class="line">      <span class="comment">// Try to map the file into memory</span></div>
+<div class="line">      <a class="code" href="monad_8hpp.html#aa977bf0b7aded30c781c35f956edc1d7">BOOST_OUTCOME_TRY</a>(view, map_file_into_memory(p.path()));</div>
+<div class="line">      <span class="comment">// regex doesn&#39;t have a string_view overload yet ...</span></div>
+<div class="line">      <span class="keywordflow">if</span>(std::regex_search(view.data(), re))</div>
+<div class="line">        ret.push_back(p.path());</div>
+<div class="line">    }</div>
+<div class="line">    <span class="keywordflow">return</span> ret;</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::bad_alloc &amp;)</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(<a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ab6204dd7620b0e495220e76988359589">std::make_error_code</a>(std::errc::not_enough_memory));</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keywordflow">catch</span> (...)</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(<a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ab6204dd7620b0e495220e76988359589">std::make_error_code</a>(std::errc::resource_unavailable_try_again));</div>
+<div class="line">  }</div>
+<div class="line">}</div>
+</div><!-- fragment --> </td><td><div class="fragment"><div class="line"><span class="keyword">class </span>mapped_string_view : <span class="keyword">public</span> std::string_view</div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordtype">bool</span> _disabled;</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">  constexpr mapped_string_view() noexcept : _disabled(true) {}</div>
+<div class="line">  mapped_string_view(<span class="keywordtype">char</span> *s, <span class="keywordtype">size_t</span> l) noexcept : std::string_view(s, l), _disabled(<span class="keyword">false</span>) {}</div>
+<div class="line">  mapped_string_view(mapped_string_view &amp;&amp;o) noexcept : std::string_view(std::move(o)), _disabled(o._disabled) { o._disabled = <span class="keyword">true</span>; }</div>
+<div class="line">  mapped_string_view &amp;operator=(mapped_string_view &amp;&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line">  ~mapped_string_view()</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordflow">if</span> (!_disabled)</div>
+<div class="line">    {</div>
+<div class="line"><span class="preprocessor">#ifdef _WIN32</span></div>
+<div class="line"><span class="preprocessor"></span>      UnmapViewOfFile(this-&gt;data());</div>
+<div class="line"><span class="preprocessor">#else</span></div>
+<div class="line"><span class="preprocessor"></span>      munmap((<span class="keywordtype">void</span> *) this-&gt;data(), this-&gt;size());</div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="preprocessor"></span>    }</div>
+<div class="line">  }</div>
+<div class="line">};</div>
+<div class="line"><span class="keyword">static</span> outcome::result&lt;mapped_string_view&gt; map_file_into_memory(filesystem::path p) noexcept</div>
+<div class="line">{</div>
+<div class="line"><span class="preprocessor">#ifdef _WIN32</span></div>
+<div class="line"><span class="preprocessor"></span>  HANDLE fh, mh;</div>
+<div class="line">  DWORD ec;</div>
+<div class="line">  fh = CreateFile(p.c_str(), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,</div>
+<div class="line">    <span class="keyword">nullptr</span>, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, <span class="keyword">nullptr</span>);</div>
+<div class="line">  <span class="keywordflow">if</span> (INVALID_HANDLE_VALUE == fh)</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordflow">return</span> outcome::make_errored_result&lt;&gt;(GetLastError());</div>
+<div class="line">  }</div>
+<div class="line">  BY_HANDLE_FILE_INFORMATION bhfi;</div>
+<div class="line">  memset(&amp;bhfi, 0, <span class="keyword">sizeof</span>(bhfi));</div>
+<div class="line">  <span class="keywordflow">if</span> (!GetFileInformationByHandle(fh, &amp;bhfi))</div>
+<div class="line">  {</div>
+<div class="line">    ec = GetLastError();</div>
+<div class="line">    CloseHandle(fh);</div>
+<div class="line">    <span class="keywordflow">return</span> outcome::make_errored_result&lt;&gt;(ec);</div>
+<div class="line">  }</div>
+<div class="line">  uint64_t length = ((uint64_t) bhfi.nFileSizeHigh &lt;&lt; 32) | bhfi.nFileSizeLow;</div>
+<div class="line">  mh = CreateFileMapping(fh, <span class="keyword">nullptr</span>, PAGE_READONLY, 0, 0, <span class="keyword">nullptr</span>);</div>
+<div class="line">  ec = GetLastError();</div>
+<div class="line">  CloseHandle(fh);</div>
+<div class="line">  <span class="keywordflow">if</span> (INVALID_HANDLE_VALUE == mh)</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordflow">return</span> outcome::make_errored_result&lt;&gt;(ec);</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keywordtype">char</span> *addr = (<span class="keywordtype">char</span> *) MapViewOfFile(mh, FILE_MAP_READ, 0, 0, 0);</div>
+<div class="line">  ec = GetLastError();</div>
+<div class="line">  CloseHandle(mh);</div>
+<div class="line">  <span class="keywordflow">if</span> (!addr)</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordflow">return</span> outcome::make_errored_result&lt;&gt;(ec);</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keywordflow">return</span> mapped_string_view(addr, (<span class="keywordtype">size_t</span>) length);</div>
+<div class="line"><span class="preprocessor">#else</span></div>
+<div class="line"><span class="preprocessor"></span>  <span class="keywordtype">int</span> fh, ec;</div>
+<div class="line">  fh = open(p.c_str(), O_RDONLY);</div>
+<div class="line">  <span class="keywordflow">if</span> (-1 == fh)</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordflow">return</span> outcome::make_errored_result&lt;&gt;(errno);</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keyword">struct </span>stat st;</div>
+<div class="line">  memset(&amp;st, 0, <span class="keyword">sizeof</span>(st));</div>
+<div class="line">  <span class="keywordflow">if</span> (-1 == fstat(fh, &amp;st))</div>
+<div class="line">  {</div>
+<div class="line">    ec = errno;</div>
+<div class="line">    close(fh);</div>
+<div class="line">    <span class="keywordflow">return</span> outcome::make_errored_result&lt;&gt;(ec);</div>
+<div class="line">  }</div>
+<div class="line">  uint64_t length = st.st_size;</div>
+<div class="line">  <span class="keywordtype">char</span> *addr = (<span class="keywordtype">char</span> *)mmap(<span class="keyword">nullptr</span>, length, PROT_READ, MAP_SHARED, fh, 0);</div>
+<div class="line">  ec = errno;</div>
+<div class="line">  close(fh);</div>
+<div class="line">  <span class="keywordflow">if</span> (!addr)</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a6175fc3a5c4bb5ab9f782654e96bb354">outcome::make_errored_result</a>(ec);</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keywordflow">return</span> mapped_string_view(addr, (<span class="keywordtype">size_t</span>)length);</div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="preprocessor"></span>}</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">static</span> outcome::result&lt;std::vector&lt;filesystem::path&gt;&gt; find_regex_in_files(<span class="keyword">const</span> std::regex &amp;re, filesystem::directory_iterator dit, <span class="keywordtype">size_t</span> depth = 0) noexcept</div>
+<div class="line">{</div>
+<div class="line">  std::vector&lt;filesystem::path&gt; ret;</div>
+<div class="line">  <span class="keywordflow">try</span></div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;p : dit)</div>
+<div class="line">    {</div>
+<div class="line">      <span class="keywordflow">if</span> (filesystem::is_directory(p.status()))</div>
+<div class="line">      {</div>
+<div class="line">        std::error_code ec;</div>
+<div class="line">        filesystem::directory_iterator nit(p.path(), ec);</div>
+<div class="line">        <span class="keywordflow">if</span> (ec)</div>
+<div class="line">          <span class="keywordflow">return</span> outcome::make_errored_result&lt;&gt;(outcome::error_code_extended(ec));</div>
+<div class="line">        <a class="code" href="monad_8hpp.html#aa977bf0b7aded30c781c35f956edc1d7">BOOST_OUTCOME_TRY</a>(results, find_regex_in_files(re, std::move(nit), depth + 1));</div>
+<div class="line">        <span class="comment">// Merge found results from subdirectory into me</span></div>
+<div class="line">        ret.reserve(ret.size() + results.size());</div>
+<div class="line">        std::move(results.begin(), results.end(), std::back_inserter(ret));</div>
+<div class="line">      }</div>
+<div class="line">      <span class="comment">// Try to map the file into memory</span></div>
+<div class="line">      <a class="code" href="monad_8hpp.html#aa977bf0b7aded30c781c35f956edc1d7">BOOST_OUTCOME_TRY</a>(view, map_file_into_memory(p.path()));</div>
+<div class="line">      <span class="comment">// regex doesn&#39;t have a string_view overload yet ...</span></div>
+<div class="line">      <span class="keywordflow">if</span>(std::regex_search(view.data(), re))</div>
+<div class="line">        ret.push_back(p.path());</div>
+<div class="line">    }</div>
+<div class="line">    <span class="keywordflow">return</span> ret;</div>
+<div class="line">  }</div>
+<div class="line">  <a class="code" href="group__macro__helpers.html#gab76324edce7c10037344911b04100397">BOOST_OUTCOME_CATCH_ALL_EXCEPTION_TO_RESULT</a></div>
+<div class="line">}</div>
+</div><!-- fragment -->  </td></tr>
+</table>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

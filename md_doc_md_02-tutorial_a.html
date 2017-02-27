@@ -310,7 +310,7 @@ std::experimental::expected&lt;T, E&gt; (on standards track)</h2>
 <div class="line">  <span class="keywordtype">int</span> fd = open(path, O_RDONLY);</div>
 <div class="line">  <span class="keywordflow">if</span>(fd == -1)</div>
 <div class="line">  {</div>
-<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga03e1e619a559e7f336621b1092e28527">std::experimental::make_unexpected</a>(std::error_code(errno, <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx_1_1deatomiced__categories.html#a9bd112823854cf5d6b347f1e14a02807">std::system_category</a>());</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">std::experimental::make_unexpected</a>(std::error_code(errno, <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx_1_1deatomiced__categories.html#a9bd112823854cf5d6b347f1e14a02807">std::system_category</a>());</div>
 <div class="line">  }</div>
 <div class="line">  std::error_code ec;</div>
 <div class="line">  <span class="keyword">auto</span> *p = <span class="keyword">new</span>(std::nothrow) some_derived_handle_implementation(fd, ec);</div>
@@ -319,13 +319,13 @@ std::experimental::expected&lt;T, E&gt; (on standards track)</h2>
 <div class="line">    close(fd);</div>
 <div class="line">    <span class="comment">// C++ 11 lets you convert generic portable error_condition&#39;s into a platform</span></div>
 <div class="line">    <span class="comment">// specific error_code like this</span></div>
-<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga03e1e619a559e7f336621b1092e28527">std::experimental::make_unexpected</a>(<a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ab6204dd7620b0e495220e76988359589">std::make_error_code</a>(std::errc::not_enough_memory));</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">std::experimental::make_unexpected</a>(<a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ab6204dd7620b0e495220e76988359589">std::make_error_code</a>(std::errc::not_enough_memory));</div>
 <div class="line">  }</div>
 <div class="line">  <span class="comment">// The some_derived_handle_implementation constructor failed</span></div>
 <div class="line">  <span class="keywordflow">if</span>(ec)</div>
 <div class="line">  {</div>
 <div class="line">    <span class="keyword">delete</span> p;</div>
-<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga03e1e619a559e7f336621b1092e28527">std::experimental::make_unexpected</a>(std::move(ec));</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">std::experimental::make_unexpected</a>(std::move(ec));</div>
 <div class="line">  }</div>
 <div class="line">  <span class="keywordflow">return</span> handle_ref(p);  <span class="comment">// expected&lt;&gt; takes implicit conversion to type T</span></div>
 <div class="line">}</div>
@@ -364,7 +364,7 @@ islands of exception throw" design pattern which is much more natural:</p>
 <div class="line">  {</div>
 <div class="line">    <span class="keywordflow">if</span>(fd != -1)</div>
 <div class="line">      close(fd);</div>
-<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga03e1e619a559e7f336621b1092e28527">std::experimental::make_unexpected</a>(std::current_exception());</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">std::experimental::make_unexpected</a>(std::current_exception());</div>
 <div class="line">  }</div>
 <div class="line">}</div>
 <div class="line">...</div>
@@ -423,7 +423,7 @@ Expected's bad_expected_access&lt;E&gt;</h3>
 <div class="line">  <span class="keyword">explicit</span> bad_expected_access() noexcept;</div>
 <div class="line">};</div>
 </div><!-- fragment --><p>So for example, if you tried to get the value of an Expected when it was errored, you would see this:</p>
-<div class="fragment"><div class="line">std::experimental::expected&lt;int, std::error_code&gt; a(<a class="code" href="group__expected.html#ga03e1e619a559e7f336621b1092e28527">std::experimental::make_unexpected</a>(<a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ab6204dd7620b0e495220e76988359589">std::make_error_code</a>(std::errc::no_such_file_or_directory)));</div>
+<div class="fragment"><div class="line">std::experimental::expected&lt;int, std::error_code&gt; a(<a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">std::experimental::make_unexpected</a>(<a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ab6204dd7620b0e495220e76988359589">std::make_error_code</a>(std::errc::no_such_file_or_directory)));</div>
 <div class="line"><span class="keywordflow">try</span></div>
 <div class="line">{</div>
 <div class="line">  <span class="comment">// a is errored, so this will throw</span></div>
@@ -535,7 +535,7 @@ Short example program using expected&lt;T, E&gt;</h1>
 <div class="line">    {</div>
 <div class="line">      <span class="comment">// This operation would fail, instead let&#39;s return the reason of</span></div>
 <div class="line">      <span class="comment">// the failure wrapped in E</span></div>
-<div class="line">      <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga03e1e619a559e7f336621b1092e28527">outcome::make_unexpected</a>(MathError::DivisionByZero);</div>
+<div class="line">      <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(MathError::DivisionByZero);</div>
 <div class="line">    }</div>
 <div class="line">    <span class="keywordflow">else</span></div>
 <div class="line">    {</div>
@@ -547,14 +547,14 @@ Short example program using expected&lt;T, E&gt;</h1>
 <div class="line">  MathResult sqrt(<span class="keywordtype">double</span> x) noexcept</div>
 <div class="line">  {</div>
 <div class="line">    <span class="keywordflow">if</span>(x &lt; 0.0)</div>
-<div class="line">      <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga03e1e619a559e7f336621b1092e28527">outcome::make_unexpected</a>(MathError::NegativeSquareRoot);</div>
+<div class="line">      <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(MathError::NegativeSquareRoot);</div>
 <div class="line">    return ::sqrt(x);</div>
 <div class="line">  }</div>
 <div class="line"></div>
 <div class="line">  MathResult ln(<span class="keywordtype">double</span> x) noexcept</div>
 <div class="line">  {</div>
 <div class="line">    <span class="keywordflow">if</span>(x &lt; 0.0)</div>
-<div class="line">      <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga03e1e619a559e7f336621b1092e28527">outcome::make_unexpected</a>(MathError::NegativeLogarithm);</div>
+<div class="line">      <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(MathError::NegativeLogarithm);</div>
 <div class="line">    return ::log(x);</div>
 <div class="line">  }</div>
 <div class="line">}</div>

@@ -40,11 +40,8 @@ var NAVTREE =
       [ "Example of usage of Outcome's expected<T, E> refinements", "md_doc_md_04-tutorial_c.html#outcome_usage", null ]
     ] ],
     [ "Frequently Asked Questions", "md_doc_md_07-faq.html", [
-      [ "Hard coding error_code and exception_ptr is incredibly restrictive and ruins Outcome for me. Can you not do that please (i.e. make it more like expected<T, E> with its arbitrary type E)?", "md_doc_md_07-faq.html#dontlike", null ],
-      [ "I want to use a custom enum as the error type, not an error_code!", "md_doc_md_07-faq.html#custom_enum", null ],
       [ "How do I implement chains of errors to transport errors happening whilst handling another error?", "md_doc_md_07-faq.html#error_chains", null ],
-      [ "When should I use a result<T> instead of an outcome<T>?", "md_doc_md_07-faq.html#outcome_vs_result", null ],
-      [ "When should I use Outcome instead of expected<T, E>?", "md_doc_md_07-faq.html#result_vs_outcome", null ],
+      [ "If outcome<T> is a strict superset of result<T>, why ever use result<T>?", "md_doc_md_07-faq.html#outcome_vs_result", null ],
       [ "Are there some real world code bases using Outcome I can study?", "md_doc_md_07-faq.html#examples_of_use", null ]
     ] ],
     [ "Detail: Outcome's implementation of Expected", "md_doc_md_08-expectedsynopsis.html", [
@@ -89,7 +86,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 ".html",
-"md_doc_md_08-expectedsynopsis.html"
+"md_doc_md_08-expectedsynopsis.html#synopsis_unexpected_type"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

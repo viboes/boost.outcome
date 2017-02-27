@@ -18,7 +18,7 @@ var group__expected =
     [ "make_expected_from_error", "group__expected.html#ga726f6c276fd09c5036f20811239b0c8e", null ],
     [ "make_expected_from_error", "group__expected.html#gafb8fef1c192879efd3d8baa9e1d5fb29", null ],
     [ "make_expected_from_error", "group__expected.html#ga2b20ead4762b8cc52a81dbcde62e4b4f", null ],
-    [ "make_unexpected", "group__expected.html#ga03e1e619a559e7f336621b1092e28527", null ],
+    [ "make_unexpected", "group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b", null ],
     [ "make_unexpected", "group__expected.html#gabd55e36a8c81909ef08420b0f59c2d7c", null ],
     [ "unexpect", "group__expected.html#ga71d06dbe1034b67b00f3f69839c548ae", null ]
 ];
