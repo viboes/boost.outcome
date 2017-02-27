@@ -344,7 +344,7 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <p>The final code example is a reasonably long one which places, side by side, an implementation written using <code>expected&lt;T, E&gt;</code> beside one using <code>result&lt;T&gt;</code>. The program is a find regex in files utility written using C++ 14 and the Filesystem TS.</p>
 <table class="doxtable">
 <tr>
-<td><div class="fragment"><div class="line"><span class="keyword">class </span>mapped_string_view : <span class="keyword">public</span> std::string_view</div>
+<td valign="top"><div class="fragment"><div class="line"><span class="keyword">class </span>mapped_string_view : <span class="keyword">public</span> std::string_view</div>
 <div class="line">{</div>
 <div class="line">  <span class="keywordtype">bool</span> _disabled;</div>
 <div class="line"><span class="keyword">public</span>:</div>
@@ -461,7 +461,7 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(<a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ab6204dd7620b0e495220e76988359589">std::make_error_code</a>(std::errc::resource_unavailable_try_again));</div>
 <div class="line">  }</div>
 <div class="line">}</div>
-</div><!-- fragment --> </td><td><div class="fragment"><div class="line"><span class="keyword">class </span>mapped_string_view : <span class="keyword">public</span> std::string_view</div>
+</div><!-- fragment --> </td><td valign="top"><div class="fragment"><div class="line"><span class="keyword">class </span>mapped_string_view : <span class="keyword">public</span> std::string_view</div>
 <div class="line">{</div>
 <div class="line">  <span class="keywordtype">bool</span> _disabled;</div>
 <div class="line"><span class="keyword">public</span>:</div>
@@ -573,6 +573,13 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">}</div>
 </div><!-- fragment -->  </td></tr>
 </table>
+<p>As you can see, in the above use case there is not much difference between using <code>expected&lt;T, E = std::error_code&gt;</code> or <code>result&lt;T&gt;</code>:</p>
+<ol type="1">
+<li>Instead of typing <code>outcome::make_unexpected(std::error_code(GetLastError(), std::system_category()))</code> you can type <code>outcome::make_errored_result&lt;&gt;(GetLastError())</code>.</li>
+<li>Instead of typing out a sequence of exception catch clauses, you can use <code>BOOST_OUTCOME_CATCH_ALL_EXCEPTION_TO_RESULT</code>.</li>
+</ol>
+<p>Much of the time, code using <code>expected&lt;T, E = std::error_code&gt;</code> and <code>result&lt;T&gt;</code> will look very similar, especially when you are avoiding "default actions" by being careful to always explicitly check state of a transport before using it. If on the other hand you don't bother with those manual checks and instead rely on the default actions performed when you try something not possible, you gets quite different code outcomes:</p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>In progress </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
