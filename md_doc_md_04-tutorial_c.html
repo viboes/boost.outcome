@@ -341,7 +341,8 @@ Outcome's helper macros</h1>
 </p>
 <h1><a class="anchor" id="outcome_usage"></a>
 Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
-<p>The final code example is a reasonably long one which places, side by side, an implementation written using <code>expected&lt;T, E&gt;</code> beside one using <code>result&lt;T&gt;</code>. The program is a find regex in files utility written using C++ 14 and the Filesystem TS.</p>
+<p>The final set of code examples are reasonably long ones which place, side by side, an implementation written using <code>expected&lt;T, E&gt;</code> beside one using <code>result&lt;T&gt;</code> so you can both see usage of Outcome in real world code, and also the differences enabled by the refinements.</p>
+<p>The first program is a find regex in files utility written using C++ 14 and the Filesystem TS:</p>
 <table class="doxtable">
 <tr>
 <td valign="top"><div class="fragment"><div class="line"><span class="keyword">class </span>mapped_string_view : <span class="keyword">public</span> std::string_view</div>
@@ -578,7 +579,8 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <li>Instead of typing <code>outcome::make_unexpected(std::error_code(GetLastError(), std::system_category()))</code> you can type <code>outcome::make_errored_result&lt;&gt;(GetLastError())</code>.</li>
 <li>Instead of typing out a sequence of exception catch clauses, you can use <code>BOOST_OUTCOME_CATCH_ALL_EXCEPTION_TO_RESULT</code>.</li>
 </ol>
-<p>Much of the time, code using <code>expected&lt;T, E = std::error_code&gt;</code> and <code>result&lt;T&gt;</code> will look very similar, especially when you are avoiding "default actions" by being careful to always explicitly check state of a transport before using it. If on the other hand you don't bother with those manual checks and instead rely on the default actions performed when you try something not possible, you gets quite different code outcomes:</p>
+<p>This similarity is because the above code avoids "default actions" by being careful to always explicitly check state of a transport before using it. <code>result&lt;T&gt;</code> was also intentionally designed to be substitutable by automation for an <code>expected&lt;T, E = std::error_code&gt;</code> using find and replace regex in files. This ought to ease a retrofitting of an existing codebase using Expected to use Outcome's refinements.</p>
+<p>The second program demonstrates much more of Outcome's refinements in action:</p>
 <dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>In progress </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
