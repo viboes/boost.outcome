@@ -345,7 +345,119 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <p>The first program is a find regex in files utility written using C++ 14 and the Filesystem TS:</p>
 <table class="doxtable">
 <tr>
+<th>Outcome refinements</th><th>Expected </th></tr>
+<tr>
 <td valign="top"><div class="fragment"><div class="line"><span class="keyword">class </span>mapped_string_view : <span class="keyword">public</span> std::string_view</div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordtype">bool</span> _disabled;</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">  constexpr mapped_string_view() noexcept : _disabled(true) {}</div>
+<div class="line">  mapped_string_view(<span class="keywordtype">char</span> *s, <span class="keywordtype">size_t</span> l) noexcept : std::string_view(s, l), _disabled(<span class="keyword">false</span>) {}</div>
+<div class="line">  mapped_string_view(mapped_string_view &amp;&amp;o) noexcept : std::string_view(std::move(o)), _disabled(o._disabled) { o._disabled = <span class="keyword">true</span>; }</div>
+<div class="line">  mapped_string_view &amp;operator=(mapped_string_view &amp;&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line">  ~mapped_string_view()</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordflow">if</span> (!_disabled)</div>
+<div class="line">    {</div>
+<div class="line"><span class="preprocessor">#ifdef _WIN32</span></div>
+<div class="line"><span class="preprocessor"></span>      UnmapViewOfFile(this-&gt;data());</div>
+<div class="line"><span class="preprocessor">#else</span></div>
+<div class="line"><span class="preprocessor"></span>      munmap((<span class="keywordtype">void</span> *) this-&gt;data(), this-&gt;size());</div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="preprocessor"></span>    }</div>
+<div class="line">  }</div>
+<div class="line">};</div>
+<div class="line"><span class="keyword">static</span> outcome::result&lt;mapped_string_view&gt; map_file_into_memory(filesystem::path p) noexcept</div>
+<div class="line">{</div>
+<div class="line"><span class="preprocessor">#ifdef _WIN32</span></div>
+<div class="line"><span class="preprocessor"></span>  HANDLE fh, mh;</div>
+<div class="line">  DWORD ec;</div>
+<div class="line">  fh = CreateFile(p.c_str(), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,</div>
+<div class="line">    <span class="keyword">nullptr</span>, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, <span class="keyword">nullptr</span>);</div>
+<div class="line">  <span class="keywordflow">if</span> (INVALID_HANDLE_VALUE == fh)</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordflow">return</span> outcome::make_errored_result&lt;&gt;(GetLastError());</div>
+<div class="line">  }</div>
+<div class="line">  BY_HANDLE_FILE_INFORMATION bhfi;</div>
+<div class="line">  memset(&amp;bhfi, 0, <span class="keyword">sizeof</span>(bhfi));</div>
+<div class="line">  <span class="keywordflow">if</span> (!GetFileInformationByHandle(fh, &amp;bhfi))</div>
+<div class="line">  {</div>
+<div class="line">    ec = GetLastError();</div>
+<div class="line">    CloseHandle(fh);</div>
+<div class="line">    <span class="keywordflow">return</span> outcome::make_errored_result&lt;&gt;(ec);</div>
+<div class="line">  }</div>
+<div class="line">  uint64_t length = ((uint64_t) bhfi.nFileSizeHigh &lt;&lt; 32) | bhfi.nFileSizeLow;</div>
+<div class="line">  mh = CreateFileMapping(fh, <span class="keyword">nullptr</span>, PAGE_READONLY, 0, 0, <span class="keyword">nullptr</span>);</div>
+<div class="line">  ec = GetLastError();</div>
+<div class="line">  CloseHandle(fh);</div>
+<div class="line">  <span class="keywordflow">if</span> (INVALID_HANDLE_VALUE == mh)</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordflow">return</span> outcome::make_errored_result&lt;&gt;(ec);</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keywordtype">char</span> *addr = (<span class="keywordtype">char</span> *) MapViewOfFile(mh, FILE_MAP_READ, 0, 0, 0);</div>
+<div class="line">  ec = GetLastError();</div>
+<div class="line">  CloseHandle(mh);</div>
+<div class="line">  <span class="keywordflow">if</span> (!addr)</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordflow">return</span> outcome::make_errored_result&lt;&gt;(ec);</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keywordflow">return</span> mapped_string_view(addr, (<span class="keywordtype">size_t</span>) length);</div>
+<div class="line"><span class="preprocessor">#else</span></div>
+<div class="line"><span class="preprocessor"></span>  <span class="keywordtype">int</span> fh, ec;</div>
+<div class="line">  fh = open(p.c_str(), O_RDONLY);</div>
+<div class="line">  <span class="keywordflow">if</span> (-1 == fh)</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordflow">return</span> outcome::make_errored_result&lt;&gt;(errno);</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keyword">struct </span>stat st;</div>
+<div class="line">  memset(&amp;st, 0, <span class="keyword">sizeof</span>(st));</div>
+<div class="line">  <span class="keywordflow">if</span> (-1 == fstat(fh, &amp;st))</div>
+<div class="line">  {</div>
+<div class="line">    ec = errno;</div>
+<div class="line">    close(fh);</div>
+<div class="line">    <span class="keywordflow">return</span> outcome::make_errored_result&lt;&gt;(ec);</div>
+<div class="line">  }</div>
+<div class="line">  uint64_t length = st.st_size;</div>
+<div class="line">  <span class="keywordtype">char</span> *addr = (<span class="keywordtype">char</span> *)mmap(<span class="keyword">nullptr</span>, length, PROT_READ, MAP_SHARED, fh, 0);</div>
+<div class="line">  ec = errno;</div>
+<div class="line">  close(fh);</div>
+<div class="line">  <span class="keywordflow">if</span> (!addr)</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a6175fc3a5c4bb5ab9f782654e96bb354">outcome::make_errored_result</a>(ec);</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keywordflow">return</span> mapped_string_view(addr, (<span class="keywordtype">size_t</span>)length);</div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="preprocessor"></span>}</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">static</span> outcome::result&lt;std::vector&lt;filesystem::path&gt;&gt; find_regex_in_files(<span class="keyword">const</span> std::regex &amp;re, filesystem::directory_iterator dit, <span class="keywordtype">size_t</span> depth = 0) noexcept</div>
+<div class="line">{</div>
+<div class="line">  std::vector&lt;filesystem::path&gt; ret;</div>
+<div class="line">  <span class="keywordflow">try</span></div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;p : dit)</div>
+<div class="line">    {</div>
+<div class="line">      <span class="keywordflow">if</span> (filesystem::is_directory(p.status()))</div>
+<div class="line">      {</div>
+<div class="line">        std::error_code ec;</div>
+<div class="line">        filesystem::directory_iterator nit(p.path(), ec);</div>
+<div class="line">        <span class="keywordflow">if</span> (ec)</div>
+<div class="line">          <span class="keywordflow">return</span> outcome::make_errored_result&lt;&gt;(ec);</div>
+<div class="line">        <a class="code" href="monad_8hpp.html#aa977bf0b7aded30c781c35f956edc1d7">BOOST_OUTCOME_TRY</a>(results, find_regex_in_files(re, std::move(nit), depth + 1));</div>
+<div class="line">        <span class="comment">// Merge found results from subdirectory into me</span></div>
+<div class="line">        ret.reserve(ret.size() + results.size());</div>
+<div class="line">        std::move(results.begin(), results.end(), std::back_inserter(ret));</div>
+<div class="line">      }</div>
+<div class="line">      <span class="comment">// Try to map the file into memory</span></div>
+<div class="line">      <a class="code" href="monad_8hpp.html#aa977bf0b7aded30c781c35f956edc1d7">BOOST_OUTCOME_TRY</a>(view, map_file_into_memory(p.path()));</div>
+<div class="line">      <span class="comment">// regex doesn&#39;t have a string_view overload yet ...</span></div>
+<div class="line">      <span class="keywordflow">if</span>(std::regex_search(view.data(), re))</div>
+<div class="line">        ret.push_back(p.path());</div>
+<div class="line">    }</div>
+<div class="line">    <span class="keywordflow">return</span> ret;</div>
+<div class="line">  }</div>
+<div class="line">  <a class="code" href="group__macro__helpers.html#gab76324edce7c10037344911b04100397">BOOST_OUTCOME_CATCH_ALL_EXCEPTION_TO_RESULT</a></div>
+<div class="line">}</div>
+</div><!-- fragment --> </td><td valign="top"><div class="fragment"><div class="line"><span class="keyword">class </span>mapped_string_view : <span class="keyword">public</span> std::string_view</div>
 <div class="line">{</div>
 <div class="line">  <span class="keywordtype">bool</span> _disabled;</div>
 <div class="line"><span class="keyword">public</span>:</div>
@@ -462,116 +574,6 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(<a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ab6204dd7620b0e495220e76988359589">std::make_error_code</a>(std::errc::resource_unavailable_try_again));</div>
 <div class="line">  }</div>
 <div class="line">}</div>
-</div><!-- fragment --> </td><td valign="top"><div class="fragment"><div class="line"><span class="keyword">class </span>mapped_string_view : <span class="keyword">public</span> std::string_view</div>
-<div class="line">{</div>
-<div class="line">  <span class="keywordtype">bool</span> _disabled;</div>
-<div class="line"><span class="keyword">public</span>:</div>
-<div class="line">  constexpr mapped_string_view() noexcept : _disabled(true) {}</div>
-<div class="line">  mapped_string_view(<span class="keywordtype">char</span> *s, <span class="keywordtype">size_t</span> l) noexcept : std::string_view(s, l), _disabled(<span class="keyword">false</span>) {}</div>
-<div class="line">  mapped_string_view(mapped_string_view &amp;&amp;o) noexcept : std::string_view(std::move(o)), _disabled(o._disabled) { o._disabled = <span class="keyword">true</span>; }</div>
-<div class="line">  mapped_string_view &amp;operator=(mapped_string_view &amp;&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line">  ~mapped_string_view()</div>
-<div class="line">  {</div>
-<div class="line">    <span class="keywordflow">if</span> (!_disabled)</div>
-<div class="line">    {</div>
-<div class="line"><span class="preprocessor">#ifdef _WIN32</span></div>
-<div class="line"><span class="preprocessor"></span>      UnmapViewOfFile(this-&gt;data());</div>
-<div class="line"><span class="preprocessor">#else</span></div>
-<div class="line"><span class="preprocessor"></span>      munmap((<span class="keywordtype">void</span> *) this-&gt;data(), this-&gt;size());</div>
-<div class="line"><span class="preprocessor">#endif</span></div>
-<div class="line"><span class="preprocessor"></span>    }</div>
-<div class="line">  }</div>
-<div class="line">};</div>
-<div class="line"><span class="keyword">static</span> outcome::result&lt;mapped_string_view&gt; map_file_into_memory(filesystem::path p) noexcept</div>
-<div class="line">{</div>
-<div class="line"><span class="preprocessor">#ifdef _WIN32</span></div>
-<div class="line"><span class="preprocessor"></span>  HANDLE fh, mh;</div>
-<div class="line">  DWORD ec;</div>
-<div class="line">  fh = CreateFile(p.c_str(), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,</div>
-<div class="line">    <span class="keyword">nullptr</span>, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, <span class="keyword">nullptr</span>);</div>
-<div class="line">  <span class="keywordflow">if</span> (INVALID_HANDLE_VALUE == fh)</div>
-<div class="line">  {</div>
-<div class="line">    <span class="keywordflow">return</span> outcome::make_errored_result&lt;&gt;(GetLastError());</div>
-<div class="line">  }</div>
-<div class="line">  BY_HANDLE_FILE_INFORMATION bhfi;</div>
-<div class="line">  memset(&amp;bhfi, 0, <span class="keyword">sizeof</span>(bhfi));</div>
-<div class="line">  <span class="keywordflow">if</span> (!GetFileInformationByHandle(fh, &amp;bhfi))</div>
-<div class="line">  {</div>
-<div class="line">    ec = GetLastError();</div>
-<div class="line">    CloseHandle(fh);</div>
-<div class="line">    <span class="keywordflow">return</span> outcome::make_errored_result&lt;&gt;(ec);</div>
-<div class="line">  }</div>
-<div class="line">  uint64_t length = ((uint64_t) bhfi.nFileSizeHigh &lt;&lt; 32) | bhfi.nFileSizeLow;</div>
-<div class="line">  mh = CreateFileMapping(fh, <span class="keyword">nullptr</span>, PAGE_READONLY, 0, 0, <span class="keyword">nullptr</span>);</div>
-<div class="line">  ec = GetLastError();</div>
-<div class="line">  CloseHandle(fh);</div>
-<div class="line">  <span class="keywordflow">if</span> (INVALID_HANDLE_VALUE == mh)</div>
-<div class="line">  {</div>
-<div class="line">    <span class="keywordflow">return</span> outcome::make_errored_result&lt;&gt;(ec);</div>
-<div class="line">  }</div>
-<div class="line">  <span class="keywordtype">char</span> *addr = (<span class="keywordtype">char</span> *) MapViewOfFile(mh, FILE_MAP_READ, 0, 0, 0);</div>
-<div class="line">  ec = GetLastError();</div>
-<div class="line">  CloseHandle(mh);</div>
-<div class="line">  <span class="keywordflow">if</span> (!addr)</div>
-<div class="line">  {</div>
-<div class="line">    <span class="keywordflow">return</span> outcome::make_errored_result&lt;&gt;(ec);</div>
-<div class="line">  }</div>
-<div class="line">  <span class="keywordflow">return</span> mapped_string_view(addr, (<span class="keywordtype">size_t</span>) length);</div>
-<div class="line"><span class="preprocessor">#else</span></div>
-<div class="line"><span class="preprocessor"></span>  <span class="keywordtype">int</span> fh, ec;</div>
-<div class="line">  fh = open(p.c_str(), O_RDONLY);</div>
-<div class="line">  <span class="keywordflow">if</span> (-1 == fh)</div>
-<div class="line">  {</div>
-<div class="line">    <span class="keywordflow">return</span> outcome::make_errored_result&lt;&gt;(errno);</div>
-<div class="line">  }</div>
-<div class="line">  <span class="keyword">struct </span>stat st;</div>
-<div class="line">  memset(&amp;st, 0, <span class="keyword">sizeof</span>(st));</div>
-<div class="line">  <span class="keywordflow">if</span> (-1 == fstat(fh, &amp;st))</div>
-<div class="line">  {</div>
-<div class="line">    ec = errno;</div>
-<div class="line">    close(fh);</div>
-<div class="line">    <span class="keywordflow">return</span> outcome::make_errored_result&lt;&gt;(ec);</div>
-<div class="line">  }</div>
-<div class="line">  uint64_t length = st.st_size;</div>
-<div class="line">  <span class="keywordtype">char</span> *addr = (<span class="keywordtype">char</span> *)mmap(<span class="keyword">nullptr</span>, length, PROT_READ, MAP_SHARED, fh, 0);</div>
-<div class="line">  ec = errno;</div>
-<div class="line">  close(fh);</div>
-<div class="line">  <span class="keywordflow">if</span> (!addr)</div>
-<div class="line">  {</div>
-<div class="line">    <span class="keywordflow">return</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a6175fc3a5c4bb5ab9f782654e96bb354">outcome::make_errored_result</a>(ec);</div>
-<div class="line">  }</div>
-<div class="line">  <span class="keywordflow">return</span> mapped_string_view(addr, (<span class="keywordtype">size_t</span>)length);</div>
-<div class="line"><span class="preprocessor">#endif</span></div>
-<div class="line"><span class="preprocessor"></span>}</div>
-<div class="line"></div>
-<div class="line"><span class="keyword">static</span> outcome::result&lt;std::vector&lt;filesystem::path&gt;&gt; find_regex_in_files(<span class="keyword">const</span> std::regex &amp;re, filesystem::directory_iterator dit, <span class="keywordtype">size_t</span> depth = 0) noexcept</div>
-<div class="line">{</div>
-<div class="line">  std::vector&lt;filesystem::path&gt; ret;</div>
-<div class="line">  <span class="keywordflow">try</span></div>
-<div class="line">  {</div>
-<div class="line">    <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;p : dit)</div>
-<div class="line">    {</div>
-<div class="line">      <span class="keywordflow">if</span> (filesystem::is_directory(p.status()))</div>
-<div class="line">      {</div>
-<div class="line">        std::error_code ec;</div>
-<div class="line">        filesystem::directory_iterator nit(p.path(), ec);</div>
-<div class="line">        <span class="keywordflow">if</span> (ec)</div>
-<div class="line">          <span class="keywordflow">return</span> outcome::make_errored_result&lt;&gt;(outcome::error_code_extended(ec));</div>
-<div class="line">        <a class="code" href="monad_8hpp.html#aa977bf0b7aded30c781c35f956edc1d7">BOOST_OUTCOME_TRY</a>(results, find_regex_in_files(re, std::move(nit), depth + 1));</div>
-<div class="line">        <span class="comment">// Merge found results from subdirectory into me</span></div>
-<div class="line">        ret.reserve(ret.size() + results.size());</div>
-<div class="line">        std::move(results.begin(), results.end(), std::back_inserter(ret));</div>
-<div class="line">      }</div>
-<div class="line">      <span class="comment">// Try to map the file into memory</span></div>
-<div class="line">      <a class="code" href="monad_8hpp.html#aa977bf0b7aded30c781c35f956edc1d7">BOOST_OUTCOME_TRY</a>(view, map_file_into_memory(p.path()));</div>
-<div class="line">      <span class="comment">// regex doesn&#39;t have a string_view overload yet ...</span></div>
-<div class="line">      <span class="keywordflow">if</span>(std::regex_search(view.data(), re))</div>
-<div class="line">        ret.push_back(p.path());</div>
-<div class="line">    }</div>
-<div class="line">    <span class="keywordflow">return</span> ret;</div>
-<div class="line">  }</div>
-<div class="line">  <a class="code" href="group__macro__helpers.html#gab76324edce7c10037344911b04100397">BOOST_OUTCOME_CATCH_ALL_EXCEPTION_TO_RESULT</a></div>
-<div class="line">}</div>
 </div><!-- fragment -->  </td></tr>
 </table>
 <p>As you can see, in the above use case there is not much difference between using <code>expected&lt;T, E = std::error_code&gt;</code> or <code>result&lt;T&gt;</code>:</p>
@@ -579,9 +581,329 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <li>Instead of typing <code>outcome::make_unexpected(std::error_code(GetLastError(), std::system_category()))</code> you can type <code>outcome::make_errored_result&lt;&gt;(GetLastError())</code>.</li>
 <li>Instead of typing out a sequence of exception catch clauses, you can use <code>BOOST_OUTCOME_CATCH_ALL_EXCEPTION_TO_RESULT</code>.</li>
 </ol>
-<p>This similarity is because the above code avoids "default actions" by being careful to always explicitly check state of a transport before using it. <code>result&lt;T&gt;</code> was also intentionally designed to be substitutable by automation for an <code>expected&lt;T, E = std::error_code&gt;</code> using find and replace regex in files. This ought to ease a retrofitting of an existing codebase using Expected to use Outcome's refinements.</p>
-<p>The second program demonstrates much more of Outcome's refinements in action:</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>In progress </dd></dl>
+<p>This similarity is because the above code avoids "default actions" by being careful to always explicitly check state of a transport before using it. <code>result&lt;T&gt;</code> was intentionally designed to be substitutable by automation for an <code>expected&lt;T, E = std::error_code&gt;</code> using find and replace regex in files. This ought to ease a retrofitting of an existing codebase using Expected to use Outcome's refinements.</p>
+<p>The second program demonstrates much more of Outcome's refinements in action. It is a simple Executor implementation modelled on the Networking TS/ASIO's i/o completion handlers and i/o service. When work is posted to the service, the next available thread worker will execute that work. Handlers are permitted to return a lightweight error code to indicate a routine error, or throw an exception to indicate an abortable situation has occurred.</p>
+<table class="doxtable">
+<tr>
+<th>Outcome refinements</th><th>Expected </th></tr>
+<tr>
+<td valign="top"><div class="fragment"><div class="line"><span class="comment">/* This is an implementation of a futures based Executor as proposed by P0443R1</span></div>
+<div class="line"><span class="comment">http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0443r1.html using the</span></div>
+<div class="line"><span class="comment">ASIO/Networking TS io_service as a model.</span></div>
+<div class="line"><span class="comment"></span></div>
+<div class="line"><span class="comment">ASIO propagates exception throws by handlers out of the corresponding run().</span></div>
+<div class="line"><span class="comment">Executors don&#39;t do that, and neither does this implementation.</span></div>
+<div class="line"><span class="comment">*/</span></div>
+<div class="line"><span class="keyword">class </span>io_service</div>
+<div class="line">{</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">  <span class="keyword">using</span> io_handler = void(std::error_code &amp;ec, <span class="keywordtype">size_t</span> bytes_transferred);</div>
+<div class="line"><span class="keyword">private</span>:</div>
+<div class="line">  std::mutex _lock;</div>
+<div class="line">  std::deque&lt;std::packaged_task&lt;outcome::outcome&lt;void&gt;(size_t)&gt;&gt; _work;</div>
+<div class="line">  std::condition_variable _newwork;</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line"></div>
+<div class="line">  <span class="comment">// Call the i/o handler at some future point in some future thread, returning immediately</span></div>
+<div class="line">  outcome::result&lt;std::future&lt;outcome::outcome&lt;void&gt;&gt;&gt; post(std::function&lt;io_handler&gt; f) noexcept</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordflow">try</span></div>
+<div class="line">    {</div>
+<div class="line">      <span class="comment">// Make a packaged task rebinding the completion handler</span></div>
+<div class="line">      std::packaged_task&lt;outcome::outcome&lt;void&gt;(size_t)&gt; rebound([f = std::move(f)](<span class="keywordtype">size_t</span> bytes_transferred)</div>
+<div class="line">        -&gt;outcome::outcome&lt;void&gt;</div>
+<div class="line">      {</div>
+<div class="line">        <span class="keywordflow">try</span></div>
+<div class="line">        {</div>
+<div class="line">          std::error_code ec;</div>
+<div class="line">          <span class="comment">// Call the handler, if he returns an error code return that,</span></div>
+<div class="line">          <span class="comment">// if he throws return the exception thrown</span></div>
+<div class="line">          f(ec, bytes_transferred);</div>
+<div class="line">          <span class="keywordflow">if</span> (ec)</div>
+<div class="line">            <span class="keywordflow">return</span> outcome::make_errored_outcome&lt;&gt;(ec);</div>
+<div class="line">          <span class="keywordflow">return</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#addfb03f7b310708ac4e529c5fe24da57">outcome::make_ready_outcome</a>();</div>
+<div class="line">        }</div>
+<div class="line">        <span class="keywordflow">catch</span> (...)</div>
+<div class="line">        {</div>
+<div class="line">          <span class="keywordflow">return</span> outcome::make_exceptional_outcome&lt;&gt;();</div>
+<div class="line">        }</div>
+<div class="line">      });</div>
+<div class="line">      <span class="comment">// Fetching the future can throw a STL exception</span></div>
+<div class="line">      std::future&lt;outcome::outcome&lt;void&gt;&gt; f(rebound.get_future());</div>
+<div class="line">      {</div>
+<div class="line">        std::lock_guard&lt;decltype(_lock)&gt; g(_lock);</div>
+<div class="line">        <span class="comment">// Extending the deque can throw a STL exception</span></div>
+<div class="line">        _work.push_back(std::move(rebound));</div>
+<div class="line">        _newwork.notify_one();</div>
+<div class="line">      }</div>
+<div class="line">      <span class="keywordflow">return</span> std::move(f);</div>
+<div class="line">    }</div>
+<div class="line">    <span class="comment">// Catch all STL exception throws and return a corresponding result</span></div>
+<div class="line">    <a class="code" href="group__macro__helpers.html#gab76324edce7c10037344911b04100397">BOOST_OUTCOME_CATCH_ALL_EXCEPTION_TO_RESULT</a></div>
+<div class="line">  }</div>
+<div class="line"></div>
+<div class="line">  <span class="comment">/* Call the i/o handler in some thread, returning when it completes.</span></div>
+<div class="line"><span class="comment">  Note that ASIO&#39;s io_service calls this dispatch(), but the Executors proposal calls it execute()</span></div>
+<div class="line"><span class="comment">  */</span></div>
+<div class="line">  outcome::outcome&lt;void&gt; execute(std::function&lt;io_handler&gt; f) noexcept</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordflow">try</span></div>
+<div class="line">    {</div>
+<div class="line">      <span class="comment">// If post() returns a failure in its result, then this will throw</span></div>
+<div class="line">      <span class="comment">// a system_error with that error code</span></div>
+<div class="line">      <span class="comment">// The future.get() may throw too.</span></div>
+<div class="line">      <span class="keywordflow">return</span> post(std::move(f)).value().get();</div>
+<div class="line">    }</div>
+<div class="line">    <span class="comment">// Convert all STL exception throws into the equivalent error code</span></div>
+<div class="line">    <span class="comment">// such that the returned outcome will be errored, not excepted.</span></div>
+<div class="line">    <span class="comment">// Note if the result returned by post() was errored it will have</span></div>
+<div class="line">    <span class="comment">// been thrown as a system_error, this will convert it back to its</span></div>
+<div class="line">    <span class="comment">// original error code.</span></div>
+<div class="line">    <a class="code" href="group__macro__helpers.html#gaacf14d3429ad0bc72a6ba40e7f283b43">BOOST_OUTCOME_CATCH_EXCEPTION_TO_RESULT</a></div>
+<div class="line">    <span class="keywordflow">catch</span> (...)</div>
+<div class="line">    {</div>
+<div class="line">      <span class="comment">// For any non-STL exception throws, return as an excepted outcome</span></div>
+<div class="line">      <span class="keywordflow">return</span> outcome::make_exceptional_outcome&lt;&gt;();</div>
+<div class="line">    }</div>
+<div class="line">  }</div>
+<div class="line"></div>
+<div class="line"></div>
+<div class="line"></div>
+<div class="line"></div>
+<div class="line">  <span class="comment">// If there are handlers pending, execute up to one of them</span></div>
+<div class="line">  <span class="keywordtype">size_t</span> run_one() noexcept</div>
+<div class="line">  {</div>
+<div class="line">    std::unique_lock&lt;decltype(_lock)&gt; g(_lock);</div>
+<div class="line">    <span class="keywordflow">if</span> (_work.empty())</div>
+<div class="line">      <span class="keywordflow">return</span> 0;</div>
+<div class="line"></div>
+<div class="line">    std::packaged_task&lt;outcome::outcome&lt;void&gt;(size_t)&gt; mywork(std::move(_work.front()));</div>
+<div class="line">    _work.pop_front();</div>
+<div class="line">    g.unlock();</div>
+<div class="line">    <span class="comment">// Call the completion handler with some arbitrary bytes_transferred</span></div>
+<div class="line">    mywork(78);</div>
+<div class="line">    <span class="keywordflow">return</span> 1;</div>
+<div class="line">  }</div>
+<div class="line"></div>
+<div class="line">  <span class="comment">// If there is no work, sleep until work arrives, else execute as much work as possible</span></div>
+<div class="line">  <span class="keywordtype">size_t</span> run() noexcept</div>
+<div class="line">  {</div>
+<div class="line">    {</div>
+<div class="line">      std::unique_lock&lt;decltype(_lock)&gt; g(_lock);</div>
+<div class="line">      <span class="keywordflow">if</span> (_work.empty())</div>
+<div class="line">      {</div>
+<div class="line">        _newwork.wait(g);  <span class="comment">// allow spurious wakeups</span></div>
+<div class="line">      }</div>
+<div class="line">    }</div>
+<div class="line">    <span class="keywordtype">size_t</span> executed = 0;</div>
+<div class="line">    <span class="keywordflow">while</span> (run_one())</div>
+<div class="line">      executed++;</div>
+<div class="line">    <span class="keywordflow">return</span> executed;</div>
+<div class="line">  }</div>
+<div class="line">};</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">struct </span>work</div>
+<div class="line">{</div>
+<div class="line">  io_service *ios;</div>
+<div class="line">  <span class="keywordtype">size_t</span> count;</div>
+<div class="line">  constexpr work(io_service &amp;_ios) : ios(&amp;_ios), count(0) {}</div>
+<div class="line">  <span class="keywordtype">void</span> operator()(std::error_code &amp;ec, <span class="keywordtype">size_t</span> bytes_transferred)</div>
+<div class="line">  {</div>
+<div class="line">    ++count;</div>
+<div class="line">    <span class="keywordflow">if</span> (count &lt; 10000000)</div>
+<div class="line">    {</div>
+<div class="line">      <span class="comment">// Call myself again. Note I can simply call value() to</span></div>
+<div class="line">      <span class="comment">// cause the result to throw a system_error with any error code</span></div>
+<div class="line">      ios-&gt;post(std::ref(*<span class="keyword">this</span>)).value();</div>
+<div class="line">    }</div>
+<div class="line">  }</div>
+<div class="line">};</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">void</span>)</div>
+<div class="line">{</div>
+<div class="line">  io_service ios;</div>
+<div class="line">  std::vector&lt;work&gt; works(std::thread::hardware_concurrency(), work(ios));</div>
+<div class="line">  std::vector&lt;std::thread&gt; threads;</div>
+<div class="line">  <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> n = 0; n &lt; std::thread::hardware_concurrency(); n++)</div>
+<div class="line">  {</div>
+<div class="line">    threads.push_back(std::thread([&amp;ios] {</div>
+<div class="line">      ios.run();</div>
+<div class="line">    }));</div>
+<div class="line">  }</div>
+<div class="line">  std::this_thread::sleep_for(std::chrono::seconds(1));</div>
+<div class="line">  <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> n = 0; n &lt; std::thread::hardware_concurrency(); n++)</div>
+<div class="line">  {</div>
+<div class="line">    <span class="comment">// Note I can simply call value() to cause the result to throw</span></div>
+<div class="line">    <span class="comment">// a system_error with any error code</span></div>
+<div class="line">    ios.post(works[n]).value();</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;i : threads)</div>
+<div class="line">    i.join();</div>
+<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+</div><!-- fragment --> </td><td valign="top"><div class="fragment"><div class="line"><span class="comment">/* This is an implementation of a futures based Executor as proposed by P0443R1</span></div>
+<div class="line"><span class="comment">http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0443r1.html using the</span></div>
+<div class="line"><span class="comment">ASIO/Networking TS io_service as a model.</span></div>
+<div class="line"><span class="comment"></span></div>
+<div class="line"><span class="comment">ASIO propagates exception throws by handlers out of the corresponding run().</span></div>
+<div class="line"><span class="comment">Executors don&#39;t do that, and neither does this implementation.</span></div>
+<div class="line"><span class="comment">*/</span></div>
+<div class="line"><span class="keyword">class </span>io_service</div>
+<div class="line">{</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">  <span class="keyword">using</span> io_handler = void(std::error_code &amp;ec, <span class="keywordtype">size_t</span> bytes_transferred);</div>
+<div class="line"><span class="keyword">private</span>:</div>
+<div class="line">  std::mutex _lock;</div>
+<div class="line">  std::deque&lt;std::packaged_task&lt;outcome::expected&lt;void&gt;(size_t)&gt;&gt; _work;</div>
+<div class="line">  std::condition_variable _newwork;</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line"></div>
+<div class="line">  <span class="comment">// Call the i/o handler at some future point in some future thread, returning immediately</span></div>
+<div class="line">  outcome::expected&lt;std::future&lt;outcome::expected&lt;void&gt;&gt;, std::exception_ptr&gt; post(std::function&lt;io_handler&gt; f) noexcept</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordflow">try</span></div>
+<div class="line">    {</div>
+<div class="line">      <span class="comment">// Make a packaged task rebinding the completion handler</span></div>
+<div class="line">      std::packaged_task&lt;outcome::expected&lt;void&gt;(size_t)&gt; rebound([f = std::move(f)](<span class="keywordtype">size_t</span> bytes_transferred)</div>
+<div class="line">        -&gt;outcome::expected&lt;void&gt;</div>
+<div class="line">      {</div>
+<div class="line">        <span class="comment">// Note we let exception throws be handled by the packaged_task</span></div>
+<div class="line"></div>
+<div class="line">        std::error_code ec;</div>
+<div class="line">        <span class="comment">// Call the handler, if he returns an error code return that,</span></div>
+<div class="line">        <span class="comment">// if he throws return the exception thrown</span></div>
+<div class="line">        f(ec, bytes_transferred);</div>
+<div class="line">        <span class="keywordflow">if</span> (ec)</div>
+<div class="line">          <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(ec);</div>
+<div class="line">        <span class="keywordflow">return</span> {};</div>
+<div class="line">      });</div>
+<div class="line">      <span class="comment">// Fetching the future can throw a STL exception</span></div>
+<div class="line">      std::future&lt;outcome::expected&lt;void&gt;&gt; f(rebound.get_future());</div>
+<div class="line">      {</div>
+<div class="line">        std::lock_guard&lt;decltype(_lock)&gt; g(_lock);</div>
+<div class="line">        <span class="comment">// Extending the deque can throw a STL exception</span></div>
+<div class="line">        _work.push_back(std::move(rebound));</div>
+<div class="line">        _newwork.notify_one();</div>
+<div class="line">      }</div>
+<div class="line">      <span class="keywordflow">return</span> std::move(f);</div>
+<div class="line">    }</div>
+<div class="line">    <span class="keywordflow">catch</span> (...)</div>
+<div class="line">    {</div>
+<div class="line">      <span class="comment">// Return the exception thrown</span></div>
+<div class="line">      <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(std::current_exception());</div>
+<div class="line">    }</div>
+<div class="line">  }</div>
+<div class="line"></div>
+<div class="line"></div>
+<div class="line"></div>
+<div class="line"></div>
+<div class="line">  <span class="comment">/* Call the i/o handler in some thread, returning when it completes.</span></div>
+<div class="line"><span class="comment">  Note that ASIO&#39;s io_service calls this dispatch(), but the Executors proposal calls it execute()</span></div>
+<div class="line"><span class="comment">  */</span></div>
+<div class="line">  outcome::expected&lt;void, outcome::expected&lt;std::error_code, std::exception_ptr&gt;&gt; execute(std::function&lt;io_handler&gt; f) noexcept</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordflow">try</span></div>
+<div class="line">    {</div>
+<div class="line">      <span class="comment">// If post() returns a failure in its result, then this will throw</span></div>
+<div class="line">      std::future&lt;outcome::expected&lt;void&gt;&gt; fut = post(std::move(f)).value();</div>
+<div class="line">      <span class="comment">// Might rethrow any exception thrown by the handler, that will get caught below</span></div>
+<div class="line">      outcome::expected&lt;void&gt; v = fut.get();</div>
+<div class="line">      <span class="comment">// If the handler succeeded, return success, else return its error code</span></div>
+<div class="line">      <span class="keywordflow">if</span> (v)</div>
+<div class="line">        <span class="keywordflow">return</span> {};</div>
+<div class="line">      <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(v.error());</div>
+<div class="line">    }</div>
+<div class="line">    <span class="keywordflow">catch</span> (<span class="keyword">const</span> outcome::bad_expected_access&lt;std::exception_ptr&gt; &amp;e)</div>
+<div class="line">    {</div>
+<div class="line">      <span class="comment">// This called when post() failed internally to do the dispatch</span></div>
+<div class="line">      <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(<a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(e.error()));</div>
+<div class="line">    }</div>
+<div class="line">    <span class="keywordflow">catch</span> (...)</div>
+<div class="line">    {</div>
+<div class="line">      <span class="comment">// Return the exception thrown</span></div>
+<div class="line">      <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(<a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(std::current_exception()));</div>
+<div class="line">    }</div>
+<div class="line">  }</div>
+<div class="line"></div>
+<div class="line">  <span class="comment">// If there are handlers pending, execute up to one of them</span></div>
+<div class="line">  <span class="keywordtype">size_t</span> run_one() noexcept</div>
+<div class="line">  {</div>
+<div class="line">    std::unique_lock&lt;decltype(_lock)&gt; g(_lock);</div>
+<div class="line">    <span class="keywordflow">if</span> (_work.empty())</div>
+<div class="line">      <span class="keywordflow">return</span> 0;</div>
+<div class="line"></div>
+<div class="line">    std::packaged_task&lt;outcome::expected&lt;void&gt;(size_t)&gt; mywork(std::move(_work.front()));</div>
+<div class="line">    _work.pop_front();</div>
+<div class="line">    g.unlock();</div>
+<div class="line">    <span class="comment">// Call the completion handler with some arbitrary bytes_transferred</span></div>
+<div class="line">    mywork(78);</div>
+<div class="line">    <span class="keywordflow">return</span> 1;</div>
+<div class="line">  }</div>
+<div class="line"></div>
+<div class="line">  <span class="comment">// If there is no work, sleep until work arrives, else execute as much work as possible</span></div>
+<div class="line">  <span class="keywordtype">size_t</span> run() noexcept</div>
+<div class="line">  {</div>
+<div class="line">    {</div>
+<div class="line">      std::unique_lock&lt;decltype(_lock)&gt; g(_lock);</div>
+<div class="line">      <span class="keywordflow">if</span> (_work.empty())</div>
+<div class="line">      {</div>
+<div class="line">        _newwork.wait(g);  <span class="comment">// allow spurious wakeups</span></div>
+<div class="line">      }</div>
+<div class="line">    }</div>
+<div class="line">    <span class="keywordtype">size_t</span> executed = 0;</div>
+<div class="line">    <span class="keywordflow">while</span> (run_one())</div>
+<div class="line">      executed++;</div>
+<div class="line">    <span class="keywordflow">return</span> executed;</div>
+<div class="line">  }</div>
+<div class="line">};</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">struct </span>work</div>
+<div class="line">{</div>
+<div class="line">  io_service *ios;</div>
+<div class="line">  <span class="keywordtype">size_t</span> count;</div>
+<div class="line">  constexpr work(io_service &amp;_ios) : ios(&amp;_ios), count(0) {}</div>
+<div class="line">  <span class="keywordtype">void</span> operator()(std::error_code &amp;ec, <span class="keywordtype">size_t</span> bytes_transferred)</div>
+<div class="line">  {</div>
+<div class="line">    ++count;</div>
+<div class="line">    <span class="keywordflow">if</span> (count &lt; 10000000)</div>
+<div class="line">    {</div>
+<div class="line">      <span class="comment">// Call myself again</span></div>
+<div class="line">      <span class="keyword">auto</span> ret = ios-&gt;post(std::ref(*<span class="keyword">this</span>));</div>
+<div class="line">      <span class="keywordflow">if</span> (!ret)</div>
+<div class="line">        std::rethrow_exception(ret.error());</div>
+<div class="line">    }</div>
+<div class="line">  }</div>
+<div class="line">};</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">void</span>)</div>
+<div class="line">{</div>
+<div class="line">  io_service ios;</div>
+<div class="line">  std::vector&lt;work&gt; works(std::thread::hardware_concurrency(), work(ios));</div>
+<div class="line">  std::vector&lt;std::thread&gt; threads;</div>
+<div class="line">  <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> n = 0; n &lt; std::thread::hardware_concurrency(); n++)</div>
+<div class="line">  {</div>
+<div class="line">    threads.push_back(std::thread([&amp;ios] {</div>
+<div class="line">      ios.run();</div>
+<div class="line">    }));</div>
+<div class="line">  }</div>
+<div class="line">  std::this_thread::sleep_for(std::chrono::seconds(1));</div>
+<div class="line">  <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> n = 0; n &lt; std::thread::hardware_concurrency(); n++)</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keyword">auto</span> ret = ios.post(works[n]);</div>
+<div class="line">    <span class="keywordflow">if</span> (!ret)</div>
+<div class="line">      std::rethrow_exception(ret.error());</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;i : threads)</div>
+<div class="line">    i.join();</div>
+<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+</div><!-- fragment -->  </td></tr>
+</table>
+<p>You'll note how more convoluted the Expected implementation is, in particular the public API with the signature: </p>
+<div class="fragment"><div class="line">outcome::expected&lt;void, outcome::expected&lt;std::error_code, std::exception_ptr&gt;&gt; execute(std::function&lt;io_handler&gt; f) noexcept;</div>
+</div><!-- fragment --><p> This is a nested Expected used to transport one of two unexpected values. In real world usage of Expected you'll find yourself writing this more than you'd prefer and indeed a historical edition of the Expected proposal had special convenience semantics for them. The current proposal does not however, so you end up writing clunky code.</p>
+<p>Indeed, it would be worse again if it weren't for the <code>std::future</code> being used to carry any exception throws for us which lets us skip a nested Expected. One could entirely and legitimately argue that the Expected implementation should simply rethrow any transported exceptions instead of messing around with nested Expected, however the "sea of noexcept" public API design would then be lost and the two examples no longer equivalent.</p>
+<p>To conclude, this aspect of simplifying the programmer's effort to write "sea of noexcept" API designs is precisely what Outcome's refinements are intended for. If Outcome's refinements suit well your code base, they should let you write clearer, more maintainable and less buggy code. <em>Buen provecho!</em> </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

@@ -1,7 +1,9 @@
 var classboost_1_1outcome_1_1v1__xxx_1_1basic__monad =
 [
     [ "empty_type", "structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1empty__type.html", "structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1empty__type" ],
+    [ "explicit_conversion_from_different_policy", "structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1explicit__conversion__from__different__policy.html", null ],
     [ "from_value_storage_type_t", "structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1from__value__storage__type__t.html", null ],
+    [ "implicit_conversion_from_different_policy", "structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1implicit__conversion__from__different__policy.html", null ],
     [ "_is_comparable", "classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a633613a661ada84fc4ac221a0b9c37eb", null ],
     [ "_is_constructible", "classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a4b74df5ca4ef2c07609adacea62d5ca3", null ],
     [ "error_type", "classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a42c5c45cf1f7726765680d47347bf461", null ],
@@ -28,8 +30,9 @@ var classboost_1_1outcome_1_1v1__xxx_1_1basic__monad =
     [ "basic_monad", "classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a8b1fbce4a05315cd94e111e25b93f6cd", null ],
     [ "basic_monad", "classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a6c1967eea53dd27a0c0b9d47d48db905", null ],
     [ "basic_monad", "classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#ab9c8da6ff56a679edaf6d97744646f94", null ],
-    [ "basic_monad", "classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a5d277bba46bea1db5ceb9268229d3be7", null ],
-    [ "basic_monad", "classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a2d61756cc3d52b04d22c0d6ff3d4149d", null ],
+    [ "basic_monad", "classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a795b24c6864ca56ce1043a8ff89b4f9f", null ],
+    [ "basic_monad", "classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a8534317e23d595563da43e293fa946cd", null ],
+    [ "basic_monad", "classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a951b5850b4cdad2c2d355eeae717dc82", null ],
     [ "basic_monad", "classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a128246e13c9d489816fc42efa80bc5b0", null ],
     [ "basic_monad", "classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a8ecb102ad0e23ea8e813564e89b71b48", null ],
     [ "basic_monad", "classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a8ee8b073b660bc3e46c75c01c76b9cec", null ],

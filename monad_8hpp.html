@@ -148,6 +148,10 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1empty__type.html">boost::outcome::v1_xxx::basic_monad&lt; implementation_policy &gt;::empty_type</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tag type for an empty monad.  <a href="structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1empty__type.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1explicit__conversion__from__different__policy.html">boost::outcome::v1_xxx::basic_monad&lt; implementation_policy &gt;::explicit_conversion_from_different_policy</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1implicit__conversion__from__different__policy.html">boost::outcome::v1_xxx::basic_monad&lt; implementation_policy &gt;::implicit_conversion_from_different_policy</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access.html">boost::outcome::v1_xxx::bad_expected_access&lt; E &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The exception type thrown when you try to access an errored expected.  <a href="classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -339,6 +343,11 @@ template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:a2cbada16dcc6af63be3da3910cf991c9"><td class="memTemplItemLeft" align="right" valign="top">outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a2cbada16dcc6af63be3da3910cf991c9">boost::outcome::v1_xxx::make_outcome</a> (error_code_extended v)</td></tr>
 <tr class="memdesc:a2cbada16dcc6af63be3da3910cf991c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an errored outcome of type T. <br/></td></tr>
 <tr class="separator:a2cbada16dcc6af63be3da3910cf991c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84753d70b1761300b5f6afcff9285f0e"><td class="memTemplParams" colspan="2"><a class="anchor" id="a84753d70b1761300b5f6afcff9285f0e"></a>
+template&lt;class T  = void&gt; </td></tr>
+<tr class="memitem:a84753d70b1761300b5f6afcff9285f0e"><td class="memTemplItemLeft" align="right" valign="top">outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a84753d70b1761300b5f6afcff9285f0e">boost::outcome::v1_xxx::make_outcome</a> (std::error_code v)</td></tr>
+<tr class="memdesc:a84753d70b1761300b5f6afcff9285f0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an errored outcome of type T. <br/></td></tr>
+<tr class="separator:a84753d70b1761300b5f6afcff9285f0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5ff527de79abd9d31bbd96057ff58f1c"><td class="memTemplParams" colspan="2"><a class="anchor" id="a5ff527de79abd9d31bbd96057ff58f1c"></a>
 template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:a5ff527de79abd9d31bbd96057ff58f1c"><td class="memTemplItemLeft" align="right" valign="top">outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a5ff527de79abd9d31bbd96057ff58f1c">boost::outcome::v1_xxx::make_outcome</a> (std::exception_ptr v)</td></tr>
@@ -378,6 +387,11 @@ template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:a32c259d35a71b8a671e062519c2a0465"><td class="memTemplItemLeft" align="right" valign="top">outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a32c259d35a71b8a671e062519c2a0465">boost::outcome::v1_xxx::make_errored_outcome</a> (error_code_extended v)</td></tr>
 <tr class="memdesc:a32c259d35a71b8a671e062519c2a0465"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make an errored outcome from the type passed. <br/></td></tr>
 <tr class="separator:a32c259d35a71b8a671e062519c2a0465"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57a1606bd1233bcb31cfbf31410b23a8"><td class="memTemplParams" colspan="2"><a class="anchor" id="a57a1606bd1233bcb31cfbf31410b23a8"></a>
+template&lt;class T  = void&gt; </td></tr>
+<tr class="memitem:a57a1606bd1233bcb31cfbf31410b23a8"><td class="memTemplItemLeft" align="right" valign="top">outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a57a1606bd1233bcb31cfbf31410b23a8">boost::outcome::v1_xxx::make_errored_outcome</a> (std::error_code v)</td></tr>
+<tr class="memdesc:a57a1606bd1233bcb31cfbf31410b23a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make an errored outcome from the type passed. <br/></td></tr>
+<tr class="separator:a57a1606bd1233bcb31cfbf31410b23a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a957407dac2e29027b1de74afba958e35"><td class="memTemplParams" colspan="2"><a class="anchor" id="a957407dac2e29027b1de74afba958e35"></a>
 template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:a957407dac2e29027b1de74afba958e35"><td class="memTemplItemLeft" align="right" valign="top">outcome&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a957407dac2e29027b1de74afba958e35">boost::outcome::v1_xxx::make_errored_outcome</a> (int e, const char *extended=nullptr)</td></tr>
@@ -408,6 +422,11 @@ template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:a00f295e5d9ea903b2477e631e46bea3e"><td class="memTemplItemLeft" align="right" valign="top">result&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a00f295e5d9ea903b2477e631e46bea3e">boost::outcome::v1_xxx::make_result</a> (error_code_extended v)</td></tr>
 <tr class="memdesc:a00f295e5d9ea903b2477e631e46bea3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an errored result of type T. <br/></td></tr>
 <tr class="separator:a00f295e5d9ea903b2477e631e46bea3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d6d7684a53e5028f43ebdf52145381f"><td class="memTemplParams" colspan="2"><a class="anchor" id="a6d6d7684a53e5028f43ebdf52145381f"></a>
+template&lt;class T  = void&gt; </td></tr>
+<tr class="memitem:a6d6d7684a53e5028f43ebdf52145381f"><td class="memTemplItemLeft" align="right" valign="top">result&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a6d6d7684a53e5028f43ebdf52145381f">boost::outcome::v1_xxx::make_result</a> (std::error_code v)</td></tr>
+<tr class="memdesc:a6d6d7684a53e5028f43ebdf52145381f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes an errored result of type T. <br/></td></tr>
+<tr class="separator:a6d6d7684a53e5028f43ebdf52145381f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae9b39f9a3247cc669105aab8a414fd37"><td class="memTemplParams" colspan="2"><a class="anchor" id="ae9b39f9a3247cc669105aab8a414fd37"></a>
 template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:ae9b39f9a3247cc669105aab8a414fd37"><td class="memTemplItemLeft" align="right" valign="top">constexpr result&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ae9b39f9a3247cc669105aab8a414fd37">boost::outcome::v1_xxx::make_result</a> ()</td></tr>
@@ -442,6 +461,11 @@ template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:a6175fc3a5c4bb5ab9f782654e96bb354"><td class="memTemplItemLeft" align="right" valign="top">result&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a6175fc3a5c4bb5ab9f782654e96bb354">boost::outcome::v1_xxx::make_errored_result</a> (error_code_extended v)</td></tr>
 <tr class="memdesc:a6175fc3a5c4bb5ab9f782654e96bb354"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make an errored result from the type passed. <br/></td></tr>
 <tr class="separator:a6175fc3a5c4bb5ab9f782654e96bb354"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a305958d3b5fe01f713a5a0b046ba8f60"><td class="memTemplParams" colspan="2"><a class="anchor" id="a305958d3b5fe01f713a5a0b046ba8f60"></a>
+template&lt;class T  = void&gt; </td></tr>
+<tr class="memitem:a305958d3b5fe01f713a5a0b046ba8f60"><td class="memTemplItemLeft" align="right" valign="top">result&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a305958d3b5fe01f713a5a0b046ba8f60">boost::outcome::v1_xxx::make_errored_result</a> (std::error_code v)</td></tr>
+<tr class="memdesc:a305958d3b5fe01f713a5a0b046ba8f60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make an errored result from the type passed. <br/></td></tr>
+<tr class="separator:a305958d3b5fe01f713a5a0b046ba8f60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0f57f84218bf0e13f6319609adc7e03c"><td class="memTemplParams" colspan="2"><a class="anchor" id="a0f57f84218bf0e13f6319609adc7e03c"></a>
 template&lt;class T  = void&gt; </td></tr>
 <tr class="memitem:a0f57f84218bf0e13f6319609adc7e03c"><td class="memTemplItemLeft" align="right" valign="top">constexpr result&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a0f57f84218bf0e13f6319609adc7e03c">boost::outcome::v1_xxx::make_errored_result</a> (int e, const char *extended=nullptr)</td></tr>
@@ -626,7 +650,7 @@ constexpr unexpect_t&#160;</td><td class="memItemRight" valign="bottom"><a class
 <div class="line">  if(!unique.has_value())                                                                                                                                                                                                                                                                                                      \</div>
 <div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga61c46f3be4c8e19586871d20f37b5f10">BOOST_OUTCOME_V1_NAMESPACE::as_void</a>(unique);                                                                                                                                                                                                                                                                        \</div>
 <div class="line">  auto v(std::move(std::move(unique).<span class="keyword">get</span>()))</div>
-<div class="ttc" id="group__expected_html_ga61c46f3be4c8e19586871d20f37b5f10"><div class="ttname"><a href="group__expected.html#ga61c46f3be4c8e19586871d20f37b5f10">boost::outcome::v1_xxx::as_void</a></div><div class="ttdeci">expected&lt; void, E &gt; as_void(const expected&lt; T, E &gt; &amp;v)</div><div class="ttdoc">Makes a void expected from an input expected, forwarding any emptiness or error. </div><div class="ttdef"><b>Definition:</b> monad.hpp:1202</div></div>
+<div class="ttc" id="group__expected_html_ga61c46f3be4c8e19586871d20f37b5f10"><div class="ttname"><a href="group__expected.html#ga61c46f3be4c8e19586871d20f37b5f10">boost::outcome::v1_xxx::as_void</a></div><div class="ttdeci">expected&lt; void, E &gt; as_void(const expected&lt; T, E &gt; &amp;v)</div><div class="ttdoc">Makes a void expected from an input expected, forwarding any emptiness or error. </div><div class="ttdef"><b>Definition:</b> monad.hpp:1234</div></div>
 </div><!-- fragment -->
 </div>
 </div>

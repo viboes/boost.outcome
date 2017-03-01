@@ -16,10 +16,11 @@ var searchData=
   ['error_5ftype',['error_type',['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a42c5c45cf1f7726765680d47347bf461',1,'boost::outcome::v1_xxx::basic_monad::error_type()'],['../classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access.html#adf40d997faa1e516d254ad0307c7de0f',1,'boost::outcome::v1_xxx::bad_expected_access::error_type()'],['../classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access_3_01void_01_4.html#aaa954e5715759ae2d5e68ee32e475b67',1,'boost::outcome::v1_xxx::bad_expected_access&lt; void &gt;::error_type()']]],
   ['exception_5for',['exception_or',['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a2dbd52682468fe80576ff3d4012402aa',1,'boost::outcome::v1_xxx::basic_monad']]],
   ['exception_5fpresent',['exception_present',['../namespaceboost_1_1outcome_1_1v1__xxx.html#af5abc43f8d09588556c4c65b53485c0da621bbc00c646a321b70c18a067da2eb2',1,'boost::outcome::v1_xxx']]],
-  ['exception_5ft',['exception_t',['../structboost_1_1outcome_1_1v1__xxx_1_1exception__t.html',1,'boost::outcome::v1_xxx']]],
   ['exception_5ft',['exception_t',['../namespaceboost_1_1outcome_1_1v1__xxx.html#a93fd76af06145e1e6544d9c27bd080d0',1,'boost::outcome::v1_xxx']]],
+  ['exception_5ft',['exception_t',['../structboost_1_1outcome_1_1v1__xxx_1_1exception__t.html',1,'boost::outcome::v1_xxx']]],
   ['exception_5ftype',['exception_type',['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#ae8455835eb8adf36b70e50d1bc119686',1,'boost::outcome::v1_xxx::basic_monad']]],
   ['expected',['expected',['../group__expected.html#ga7440167038cbd110405573cf2bd873ad',1,'boost::outcome::v1_xxx']]],
+  ['explicit_5fconversion_5ffrom_5fdifferent_5fpolicy',['explicit_conversion_from_different_policy',['../structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1explicit__conversion__from__different__policy.html',1,'boost::outcome::v1_xxx::basic_monad']]],
   ['extended_5fmessage',['extended_message',['../classboost_1_1outcome_1_1v1__xxx_1_1error__code__extended.html#ac3515ee4d07660f5bc12d660f7ecf2e0',1,'boost::outcome::v1_xxx::error_code_extended']]],
   ['expected_3ct_2c_20e_3e_20in_20context',['Expected&lt;T, E&gt; in Context',['../md_doc_md_02-tutorial_a.html',1,'']]],
   ['expected_3ct_2c_20e_3e_20in_20practice',['Expected&lt;T, E&gt; in Practice',['../md_doc_md_03-tutorial_b.html',1,'']]]
