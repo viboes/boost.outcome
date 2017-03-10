@@ -22,5 +22,7 @@ var searchData=
   ['monad_5fcategory',['monad_category',['../namespaceboost_1_1outcome_1_1v1__xxx.html#a13e71a6619b46ebe84986aecb270ffa2',1,'boost::outcome::v1_xxx']]],
   ['monad_5ferrc',['monad_errc',['../namespaceboost_1_1outcome_1_1v1__xxx.html#af5abc43f8d09588556c4c65b53485c0d',1,'boost::outcome::v1_xxx']]],
   ['monad_5ferror',['monad_error',['../classboost_1_1outcome_1_1v1__xxx_1_1monad__error.html',1,'boost::outcome::v1_xxx']]],
-  ['monad_5ferror_2ehpp',['monad_error.hpp',['../monad__error_8hpp.html',1,'']]]
+  ['monad_5ferror_2ehpp',['monad_error.hpp',['../monad__error_8hpp.html',1,'']]],
+  ['move_5fif',['move_if',['../structboost_1_1outcome_1_1v1__xxx_1_1policy_1_1move__if.html',1,'boost::outcome::v1_xxx::policy']]],
+  ['move_5fif_3c_20false_2c_20t_20_3e',['move_if&lt; false, T &gt;',['../structboost_1_1outcome_1_1v1__xxx_1_1policy_1_1move__if_3_01false_00_01_t_01_4.html',1,'boost::outcome::v1_xxx::policy']]]
 ];

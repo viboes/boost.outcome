@@ -3,6 +3,7 @@ var hierarchy =
     [ "base", null, [
       [ "boost::outcome::v1_xxx::basic_monad< implementation_policy >", "classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html", null ]
     ] ],
+    [ "boost::outcome::v1_xxx::policy::basic_monad_storage< _implementation_policy >", "structboost_1_1outcome_1_1v1__xxx_1_1policy_1_1basic__monad__storage.html", null ],
     [ "boost::outcome::v1_xxx::traits::detail::callable_argument_traits< is_callable_is_well_formed< F, A >::value, F, A >", null, [
       [ "boost::outcome::v1_xxx::traits::callable_argument_traits< F, A >", "structboost_1_1outcome_1_1v1__xxx_1_1traits_1_1callable__argument__traits.html", null ]
     ] ],
@@ -19,7 +20,6 @@ var hierarchy =
       ] ]
     ] ],
     [ "boost::outcome::v1_xxx::exception_t", "structboost_1_1outcome_1_1v1__xxx_1_1exception__t.html", null ],
-    [ "boost::outcome::v1_xxx::basic_monad< implementation_policy >::explicit_conversion_from_different_policy", "structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1explicit__conversion__from__different__policy.html", null ],
     [ "false_type", null, [
       [ "boost::outcome::v1_xxx::enable_single_byte_value_storage< _value_type >", "structboost_1_1outcome_1_1v1__xxx_1_1enable__single__byte__value__storage.html", null ],
       [ "boost::outcome::v1_xxx::traits::detail::has_call_operator<std::is_class< F >::value, F, Arg >", null, [
@@ -30,9 +30,10 @@ var hierarchy =
       ] ]
     ] ],
     [ "boost::outcome::v1_xxx::basic_monad< implementation_policy >::from_value_storage_type_t", "structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1from__value__storage__type__t.html", null ],
-    [ "boost::outcome::v1_xxx::basic_monad< implementation_policy >::implicit_conversion_from_different_policy", "structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1implicit__conversion__from__different__policy.html", null ],
     [ "boost::outcome::v1_xxx::in_place_t", "structboost_1_1outcome_1_1v1__xxx_1_1in__place__t.html", null ],
     [ "boost::outcome::v1_xxx::traits::is_callable_is_well_formed< F, A >", "structboost_1_1outcome_1_1v1__xxx_1_1traits_1_1is__callable__is__well__formed.html", null ],
+    [ "boost::outcome::v1_xxx::policy::move_if< enable, T >", "structboost_1_1outcome_1_1v1__xxx_1_1policy_1_1move__if.html", null ],
+    [ "boost::outcome::v1_xxx::policy::move_if< false, T >", "structboost_1_1outcome_1_1v1__xxx_1_1policy_1_1move__if_3_01false_00_01_t_01_4.html", null ],
     [ "system_error", null, [
       [ "boost::outcome::v1_xxx::monad_error", "classboost_1_1outcome_1_1v1__xxx_1_1monad__error.html", null ]
     ] ],
@@ -43,7 +44,8 @@ var hierarchy =
       [ "std::is_error_condition_enum< boost::outcome::v1_xxx::monad_errc >", "structstd_1_1is__error__condition__enum_3_01boost_1_1outcome_1_1v1__xxx_1_1monad__errc_01_4.html", null ]
     ] ],
     [ "type", null, [
-      [ "boost::outcome::v1_xxx::value_storage< _value_type, _error_type, _exception_type >", "classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html", null ]
+      [ "boost::outcome::v1_xxx::value_storage< _value_type, _error_type, _exception_type >", "classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html", null ],
+      [ "boost::outcome::v1_xxx::value_storage< typename implementation_policy::value_type, typename implementation_policy::error_type, typename implementation_policy::exception_type >", "classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html", null ]
     ] ],
     [ "boost::outcome::v1_xxx::value_t", "structboost_1_1outcome_1_1v1__xxx_1_1value__t.html", null ]
 ];

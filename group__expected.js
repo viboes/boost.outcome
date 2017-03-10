@@ -8,9 +8,9 @@ var group__expected =
       [ "error", "classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access.html#a2a3021013c0f10ed693de0a6d46f20e8", null ],
       [ "error", "classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access.html#aca3a40ae5f1a02b47267c6f23697d88d", null ]
     ] ],
-    [ "expected", "group__expected.html#ga7440167038cbd110405573cf2bd873ad", null ],
+    [ "expected", "group__expected.html#ga1e05b5045e0a943c9e013f8e391695ae", null ],
     [ "unexpect_t", "group__expected.html#ga43a5a0da82bcdf70d885e62ca9d5528a", null ],
-    [ "unexpected_type", "group__expected.html#gaf61cb3012566f621329133c01f17c647", null ],
+    [ "unexpected_type", "group__expected.html#gaa7f5bc4b5722b0aabfc0cb9d8bc22d51", null ],
     [ "as_void", "group__expected.html#ga61c46f3be4c8e19586871d20f37b5f10", null ],
     [ "make_expected", "group__expected.html#ga276cc35056dccfdbe461c11d8eeb3d93", null ],
     [ "make_expected", "group__expected.html#gafb7486a3c995e0d931f9528b07955cd6", null ],

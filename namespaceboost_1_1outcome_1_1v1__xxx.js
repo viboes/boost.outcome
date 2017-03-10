@@ -1,6 +1,7 @@
 var namespaceboost_1_1outcome_1_1v1__xxx =
 [
     [ "deatomiced_categories", "namespaceboost_1_1outcome_1_1v1__xxx_1_1deatomiced__categories.html", null ],
+    [ "policy", "namespaceboost_1_1outcome_1_1v1__xxx_1_1policy.html", "namespaceboost_1_1outcome_1_1v1__xxx_1_1policy" ],
     [ "traits", null, [
       [ "is_callable_is_well_formed", "structboost_1_1outcome_1_1v1__xxx_1_1traits_1_1is__callable__is__well__formed.html", "structboost_1_1outcome_1_1v1__xxx_1_1traits_1_1is__callable__is__well__formed" ],
       [ "has_call_operator", "structboost_1_1outcome_1_1v1__xxx_1_1traits_1_1has__call__operator.html", null ],

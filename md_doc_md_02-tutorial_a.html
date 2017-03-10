@@ -439,7 +439,7 @@ Expected's bad_expected_access&lt;E&gt;</h3>
 Expected's observers</h3>
 <p>Generally speaking you will not want Expected to throw <code>bad_expected_access&lt;E&gt;</code> as a try-catch cycle is a lot less efficient than simply asking an <code>expected&lt;T, E&gt;</code> instance what state it has before accessing it. Expected has the following highly unsurprising observers with standard STL semantics and meaning matching those in <code>std::optional&lt;T&gt;</code> and <code>std::variant&lt;...&gt;</code>:</p>
 <div class="fragment"><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
-<div class="line"><span class="keyword">class </span><a class="code" href="group__expected.html#ga7440167038cbd110405573cf2bd873ad">expected</a></div>
+<div class="line"><span class="keyword">class </span><a class="code" href="group__expected.html#ga1e05b5045e0a943c9e013f8e391695ae">expected</a></div>
 <div class="line">{</div>
 <div class="line"><span class="keyword">public</span>:</div>
 <div class="line">  <span class="keyword">using</span> value_type = T;</div>
@@ -476,7 +476,7 @@ Expected's observers</h3>
 <div class="line">  constexpr const E&amp;&amp; error() const &amp;&amp;;</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">// Returns the stored error_type as an unexpected_type&lt;E&gt; if there is one, else undefined behaviour</span></div>
-<div class="line">  constexpr <a class="code" href="group__expected.html#gaf61cb3012566f621329133c01f17c647">unexpected_type</a>&lt;E&gt; get_unexpected() const;</div>
+<div class="line">  constexpr <a class="code" href="group__expected.html#gaa7f5bc4b5722b0aabfc0cb9d8bc22d51">unexpected_type</a>&lt;E&gt; get_unexpected() const;</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">// If currently storing a value_type, returns that, else the parameter passed  </span></div>
 <div class="line">  template &lt;class U&gt;</div>
@@ -503,10 +503,10 @@ Expected is unstable!!!</h1>
 Short example program using expected&lt;T, E&gt;</h1>
 <p>Up until now we have been referring to Expected via the namespace <code>std::experimental</code>. Outcome obviously does not provide Expected in that namespace, instead it uses the outcome namespace which you can find via either of these forms:</p>
 <div class="fragment"><div class="line"><span class="comment">// Traditional: use SOME version Boost.Outcome visible to the compiler/linker</span></div>
-<div class="line"><span class="keyword">namespace </span><a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#aab2ff6220205017226794529c863b336">outcome</a> = <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#aab2ff6220205017226794529c863b336">boost::outcome</a>;</div>
+<div class="line"><span class="keyword">namespace </span><a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a0e20514a9fd26882fe6dc8c5e21a9943">outcome</a> = <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a0e20514a9fd26882fe6dc8c5e21a9943">boost::outcome</a>;</div>
 <div class="line"></div>
 <div class="line"><span class="comment">// Better: use EXACTLY the Boost.Outcome visible in the current translation unit</span></div>
-<div class="line"><span class="keyword">namespace </span><a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#aab2ff6220205017226794529c863b336">outcome</a> = <a class="code" href="group__config.html#gab113de43db2cd2a4cf1e33b54294944a">BOOST_OUTCOME_V1_NAMESPACE</a>;</div>
+<div class="line"><span class="keyword">namespace </span><a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a0e20514a9fd26882fe6dc8c5e21a9943">outcome</a> = <a class="code" href="group__config.html#gab113de43db2cd2a4cf1e33b54294944a">BOOST_OUTCOME_V1_NAMESPACE</a>;</div>
 </div><!-- fragment --><p>The <code>BOOST_OUTCOME_V1_NAMESPACE</code> macro encodes a unique hexadecimal value per release. This guarantees that the linker will not substitute a different version of Outcome than the Outcome you compiled against. It is therefore recommended that you use the <code>BOOST_OUTCOME_V1_NAMESPACE</code> macro.</p>
 <p>This example program using <code>expected&lt;T, E&gt;</code> replicates <a href="http://rustbyexample.com/std/result.html">the use example in the documentation for Rust's <code>Result&lt;T, E&gt;</code></a>. As you will see in Tutorial part B, you would be unwise to use <code>expected&lt;T, E&gt;</code> like this in large C++ programs.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;../include/boost/outcome.hpp&quot;</span></div>
@@ -515,7 +515,7 @@ Short example program using expected&lt;T, E&gt;</h1>
 <div class="line"><span class="preprocessor">#include &lt;cmath&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"></div>
-<div class="line"><span class="keyword">namespace </span><a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#aab2ff6220205017226794529c863b336">outcome</a> = <a class="code" href="group__config.html#gab113de43db2cd2a4cf1e33b54294944a">BOOST_OUTCOME_V1_NAMESPACE</a>;</div>
+<div class="line"><span class="keyword">namespace </span><a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a0e20514a9fd26882fe6dc8c5e21a9943">outcome</a> = <a class="code" href="group__config.html#gab113de43db2cd2a4cf1e33b54294944a">BOOST_OUTCOME_V1_NAMESPACE</a>;</div>
 <div class="line"></div>
 <div class="line"><span class="comment">// Replicates example usage of Result&lt;T, E&gt; from http://rustbyexample.com/std/result.html</span></div>
 <div class="line"><span class="keyword">namespace </span>checked</div>

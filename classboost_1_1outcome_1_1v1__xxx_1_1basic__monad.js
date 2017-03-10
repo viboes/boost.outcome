@@ -1,9 +1,7 @@
 var classboost_1_1outcome_1_1v1__xxx_1_1basic__monad =
 [
     [ "empty_type", "structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1empty__type.html", "structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1empty__type" ],
-    [ "explicit_conversion_from_different_policy", "structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1explicit__conversion__from__different__policy.html", null ],
     [ "from_value_storage_type_t", "structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1from__value__storage__type__t.html", null ],
-    [ "implicit_conversion_from_different_policy", "structboost_1_1outcome_1_1v1__xxx_1_1basic__monad_1_1implicit__conversion__from__different__policy.html", null ],
     [ "_is_comparable", "classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a633613a661ada84fc4ac221a0b9c37eb", null ],
     [ "_is_constructible", "classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a4b74df5ca4ef2c07609adacea62d5ca3", null ],
     [ "error_type", "classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a42c5c45cf1f7726765680d47347bf461", null ],
