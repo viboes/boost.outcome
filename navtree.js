@@ -86,7 +86,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 ".html",
-"md_doc_md_08-expectedsynopsis.html#synopsis_expected"
+"classboost_1_1outcome_1_1v1__xxx_1_1outcome.html#af4b06d159ef7316a925cf02b83c47c3f",
+"monad_8hpp.html#a957407dac2e29027b1de74afba958e35"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -8,12 +8,12 @@
 var indexSectionsWithContent =
 {
   0: "abcdefghimnoprstuv",
-  1: "bcefhimv",
+  1: "bcefhimorv",
   2: "b",
   3: "acemov",
   4: "abceghimnorsuv",
   5: "ehiuv",
-  6: "eiortuv",
+  6: "eirtuv",
   7: "m",
   8: "en",
   9: "b",

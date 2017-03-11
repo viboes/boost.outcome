@@ -110,17 +110,15 @@ $(document).ready(function(){initNavTree('group__expected.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1expected.html">boost::outcome::v1_xxx::expected&lt; R, E &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>expected&lt;R&gt;</code> can hold a fixed variant list of empty, a type <code>R</code> or a lightweight <code>std::error_code</code> at a space cost of <code>max(24, sizeof(R)+8)</code>. This corresponds to <code>tribool::unknown</code>, <code>tribool::true_</code> and <code>tribool::false_</code> respectively. This specialisation matches the proposed Expected implementation before standards.  <a href="classboost_1_1outcome_1_1v1__xxx_1_1expected.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access.html">boost::outcome::v1_xxx::bad_expected_access&lt; E &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The exception type thrown when you try to access an errored expected.  <a href="classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga1e05b5045e0a943c9e013f8e391695ae"><td class="memTemplParams" colspan="2"><a class="anchor" id="ga1e05b5045e0a943c9e013f8e391695ae"></a>
-template&lt;typename R , typename E  = BOOST_OUTCOME_EXPECTED_DEFAULT_ERROR_TYPE&gt; </td></tr>
-<tr class="memitem:ga1e05b5045e0a943c9e013f8e391695ae"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__expected.html#ga1e05b5045e0a943c9e013f8e391695ae">boost::outcome::v1_xxx::expected</a> = basic_monad&lt; policy::expected_policy&lt; R, E &gt;&gt;</td></tr>
-<tr class="memdesc:ga1e05b5045e0a943c9e013f8e391695ae"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>expected&lt;R&gt;</code> can hold a fixed variant list of empty, a type <code>R</code> or a lightweight <code>std::error_code</code> at a space cost of <code>max(24, sizeof(R)+8)</code>. This corresponds to <code>tribool::unknown</code>, <code>tribool::true_</code> and <code>tribool::false_</code> respectively. This specialisation matches the proposed Expected implementation before standards. <br/></td></tr>
-<tr class="separator:ga1e05b5045e0a943c9e013f8e391695ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa7f5bc4b5722b0aabfc0cb9d8bc22d51"><td class="memTemplParams" colspan="2"><a class="anchor" id="gaa7f5bc4b5722b0aabfc0cb9d8bc22d51"></a>
 template&lt;typename E &gt; </td></tr>
 <tr class="memitem:gaa7f5bc4b5722b0aabfc0cb9d8bc22d51"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__expected.html#gaa7f5bc4b5722b0aabfc0cb9d8bc22d51">boost::outcome::v1_xxx::unexpected_type</a> = basic_monad&lt; policy::expected_policy&lt; void, E &gt;&gt;</td></tr>

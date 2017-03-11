@@ -182,17 +182,17 @@ Outcome's extended std::error_code</h1>
 <h1><a class="anchor" id="outcome_overview"></a>
 Outcome's outcome&lt;T&gt;, result&lt;T&gt; and option&lt;T&gt; refinements</h1>
 <p>Outcome provides additional refinements of <code>expected&lt;T, E&gt;</code> designed to make your programming life easier if you are willing to accept the hard coding of <code>E</code> to one of <code>error_code_extended</code> or <code>std::exception_ptr</code>. As a rough <b>semantic</b> map onto <code>optional&lt;T&gt;</code>, <code>variant&lt;...&gt;</code> and <code>expected&lt;T, E&gt;</code>:</p>
-<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; <span class="keyword">using</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ad04a867c8c8cb3c117426b88bcb5a97b">option</a> = std::optional&lt;T&gt;;</div>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; <span class="keyword">using</span> option = std::optional&lt;T&gt;;</div>
 <div class="line"></div>
 <div class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; <span class="keyword">using</span> result = std::optional&lt;</div>
-<div class="line">  <a class="code" href="group__expected.html#ga1e05b5045e0a943c9e013f8e391695ae">std::experimental::expected</a>&lt;</div>
+<div class="line">  std::experimental::expected&lt;</div>
 <div class="line">    T,</div>
 <div class="line">    error_code_extended</div>
 <div class="line">  &gt;</div>
 <div class="line">&gt;;</div>
 <div class="line"></div>
-<div class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; <span class="keyword">using</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a0e20514a9fd26882fe6dc8c5e21a9943">outcome</a> = std::optional&lt;</div>
-<div class="line">  <a class="code" href="group__expected.html#ga1e05b5045e0a943c9e013f8e391695ae">std::experimental::expected</a>&lt;</div>
+<div class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; <span class="keyword">using</span> outcome = std::optional&lt;</div>
+<div class="line">  std::experimental::expected&lt;</div>
 <div class="line">    T,</div>
 <div class="line">    std::variant&lt;</div>
 <div class="line">      error_code_extended,</div>

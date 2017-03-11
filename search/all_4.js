@@ -19,7 +19,7 @@ var searchData=
   ['exception_5ft',['exception_t',['../structboost_1_1outcome_1_1v1__xxx_1_1exception__t.html',1,'boost::outcome::v1_xxx']]],
   ['exception_5ft',['exception_t',['../namespaceboost_1_1outcome_1_1v1__xxx.html#a93fd76af06145e1e6544d9c27bd080d0',1,'boost::outcome::v1_xxx']]],
   ['exception_5ftype',['exception_type',['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#ae8455835eb8adf36b70e50d1bc119686',1,'boost::outcome::v1_xxx::basic_monad::exception_type()'],['../structboost_1_1outcome_1_1v1__xxx_1_1policy_1_1basic__monad__storage.html#a587004b1ecc02d81de60eef864010464',1,'boost::outcome::v1_xxx::policy::basic_monad_storage::exception_type()']]],
-  ['expected',['expected',['../group__expected.html#ga1e05b5045e0a943c9e013f8e391695ae',1,'boost::outcome::v1_xxx']]],
+  ['expected',['expected',['../classboost_1_1outcome_1_1v1__xxx_1_1expected.html',1,'boost::outcome::v1_xxx']]],
   ['extended_5fmessage',['extended_message',['../classboost_1_1outcome_1_1v1__xxx_1_1error__code__extended.html#ac3515ee4d07660f5bc12d660f7ecf2e0',1,'boost::outcome::v1_xxx::error_code_extended']]],
   ['expected_3ct_2c_20e_3e_20in_20context',['Expected&lt;T, E&gt; in Context',['../md_doc_md_02-tutorial_a.html',1,'']]],
   ['expected_3ct_2c_20e_3e_20in_20practice',['Expected&lt;T, E&gt; in Practice',['../md_doc_md_03-tutorial_b.html',1,'']]]

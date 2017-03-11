@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['type',['type',['../structboost_1_1outcome_1_1v1__xxx_1_1traits_1_1is__callable__is__well__formed.html#afca331bf33600ac23f9aa22ec8c85836',1,'boost::outcome::v1_xxx::traits::is_callable_is_well_formed']]]
+  ['unexpect_5ft',['unexpect_t',['../group__expected.html#ga43a5a0da82bcdf70d885e62ca9d5528a',1,'boost::outcome::v1_xxx']]],
+  ['unexpected_5ftype',['unexpected_type',['../group__expected.html#gaa7f5bc4b5722b0aabfc0cb9d8bc22d51',1,'boost::outcome::v1_xxx']]]
 ];
