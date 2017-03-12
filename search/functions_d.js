@@ -1,4 +1,0 @@
-var searchData=
-[
-  ['value_5for',['value_or',['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#ac1ac76326950d134a879a5aae3e33048',1,'boost::outcome::v1_xxx::basic_monad::value_or(value_type &amp;v)&amp;noexcept'],['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#aba642a90ca2974c90c0487f91db417f9',1,'boost::outcome::v1_xxx::basic_monad::value_or(const value_type &amp;v) const &amp;noexcept'],['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#aa6bf79f0053d663f152fd34ecd1695de',1,'boost::outcome::v1_xxx::basic_monad::value_or(value_type &amp;&amp;v)&amp;&amp;noexcept'],['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a77bfe3ca1cba9a9eff36594bfadf5957',1,'boost::outcome::v1_xxx::basic_monad::value_or(const value_type &amp;&amp;v) const &amp;&amp;noexcept']]]
-];

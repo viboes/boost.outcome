@@ -49,45 +49,13 @@ var NAVTREE =
       [ "expected<T, E>", "md_doc_md_08-expectedsynopsis.html#synopsis_expected", null ],
       [ "bad_expected_access<E>", "md_doc_md_08-expectedsynopsis.html#synopsis_bad_expected_access", null ]
     ] ],
-    [ "History and Acknowledgements", "md_doc_md_09-acknowledgements.html", null ],
-    [ "Modules", "modules.html", "modules" ],
-    [ "Namespaces", null, [
-      [ "Namespace List", "namespaces.html", "namespaces" ],
-      [ "Namespace Members", "namespacemembers.html", [
-        [ "All", "namespacemembers.html", null ],
-        [ "Functions", "namespacemembers_func.html", null ],
-        [ "Variables", "namespacemembers_vars.html", null ],
-        [ "Typedefs", "namespacemembers_type.html", null ],
-        [ "Enumerations", "namespacemembers_enum.html", null ],
-        [ "Enumerator", "namespacemembers_eval.html", null ]
-      ] ]
-    ] ],
-    [ "Classes", null, [
-      [ "Class List", "annotated.html", "annotated" ],
-      [ "Class Index", "classes.html", null ],
-      [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
-      [ "Class Members", "functions.html", [
-        [ "All", "functions.html", null ],
-        [ "Functions", "functions_func.html", null ],
-        [ "Variables", "functions_vars.html", null ],
-        [ "Typedefs", "functions_type.html", null ]
-      ] ]
-    ] ],
-    [ "Files", null, [
-      [ "File List", "files.html", "files" ],
-      [ "File Members", "globals.html", [
-        [ "All", "globals.html", null ],
-        [ "Macros", "globals_defs.html", null ]
-      ] ]
-    ] ]
+    [ "History and Acknowledgements", "md_doc_md_09-acknowledgements.html", null ]
   ] ]
 ];
 
 var NAVTREEINDEX =
 [
-".html",
-"classboost_1_1outcome_1_1v1__xxx_1_1outcome.html#af4b06d159ef7316a925cf02b83c47c3f",
-"monad_8hpp.html#a957407dac2e29027b1de74afba958e35"
+"index.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

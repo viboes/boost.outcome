@@ -46,10 +46,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="modules.html"><span>Modules</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
-      <li><a href="annotated.html"><span>Classes</span></a></li>
-      <li><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -88,7 +84,7 @@ $(document).ready(function(){initNavTree('md_doc_md_02-tutorial_a.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(11)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -229,7 +225,7 @@ of noexcept"</em> which will be described later.</p>
 <div class="line">  <span class="keywordflow">if</span>(fd == -1)</div>
 <div class="line">  {</div>
 <div class="line">    <span class="comment">// Construct an error code in the OS errors domain</span></div>
-<div class="line">    ec = std::error_code(errno, <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx_1_1deatomiced__categories.html#a9bd112823854cf5d6b347f1e14a02807">std::system_category</a>());</div>
+<div class="line">    ec = std::error_code(errno, std::system_category());</div>
 <div class="line">    <span class="keywordflow">return</span> {};</div>
 <div class="line">  }</div>
 <div class="line">  <span class="keyword">auto</span> *p = <span class="keyword">new</span>(std::nothrow) some_derived_handle_implementation(fd, ec);</div>
@@ -238,7 +234,7 @@ of noexcept"</em> which will be described later.</p>
 <div class="line">    close(fd);</div>
 <div class="line">    <span class="comment">// Construct an error code matching the generic OS error equivalent</span></div>
 <div class="line">    <span class="comment">// to the ENOMEM error condition</span></div>
-<div class="line">    ec = <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ab6204dd7620b0e495220e76988359589">std::make_error_code</a>(std::errc::not_enough_memory);</div>
+<div class="line">    ec = std::make_error_code(std::errc::not_enough_memory);</div>
 <div class="line">    <span class="keywordflow">return</span> {};</div>
 <div class="line">  }</div>
 <div class="line">  <span class="keywordflow">if</span>(ec)</div>
@@ -310,7 +306,7 @@ std::experimental::expected&lt;T, E&gt; (on standards track)</h2>
 <div class="line">  <span class="keywordtype">int</span> fd = open(path, O_RDONLY);</div>
 <div class="line">  <span class="keywordflow">if</span>(fd == -1)</div>
 <div class="line">  {</div>
-<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">std::experimental::make_unexpected</a>(std::error_code(errno, <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx_1_1deatomiced__categories.html#a9bd112823854cf5d6b347f1e14a02807">std::system_category</a>());</div>
+<div class="line">    <span class="keywordflow">return</span> std::experimental::make_unexpected(std::error_code(errno, std::system_category());</div>
 <div class="line">  }</div>
 <div class="line">  std::error_code ec;</div>
 <div class="line">  <span class="keyword">auto</span> *p = <span class="keyword">new</span>(std::nothrow) some_derived_handle_implementation(fd, ec);</div>
@@ -319,13 +315,13 @@ std::experimental::expected&lt;T, E&gt; (on standards track)</h2>
 <div class="line">    close(fd);</div>
 <div class="line">    <span class="comment">// C++ 11 lets you convert generic portable error_condition&#39;s into a platform</span></div>
 <div class="line">    <span class="comment">// specific error_code like this</span></div>
-<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">std::experimental::make_unexpected</a>(<a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ab6204dd7620b0e495220e76988359589">std::make_error_code</a>(std::errc::not_enough_memory));</div>
+<div class="line">    <span class="keywordflow">return</span> std::experimental::make_unexpected(std::make_error_code(std::errc::not_enough_memory));</div>
 <div class="line">  }</div>
 <div class="line">  <span class="comment">// The some_derived_handle_implementation constructor failed</span></div>
 <div class="line">  <span class="keywordflow">if</span>(ec)</div>
 <div class="line">  {</div>
 <div class="line">    <span class="keyword">delete</span> p;</div>
-<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">std::experimental::make_unexpected</a>(std::move(ec));</div>
+<div class="line">    <span class="keywordflow">return</span> std::experimental::make_unexpected(std::move(ec));</div>
 <div class="line">  }</div>
 <div class="line">  <span class="keywordflow">return</span> handle_ref(p);  <span class="comment">// expected&lt;&gt; takes implicit conversion to type T</span></div>
 <div class="line">}</div>
@@ -355,7 +351,7 @@ islands of exception throw" design pattern which is much more natural:</p>
 <div class="line">    <span class="keywordflow">if</span>(fd == -1)</div>
 <div class="line">    {</div>
 <div class="line">      <span class="comment">// Convert errno into a platform specific error code and wrap that in a throw of a system error</span></div>
-<div class="line">      <span class="keywordflow">throw</span> std::system_error(std::error_code(errno, <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx_1_1deatomiced__categories.html#a9bd112823854cf5d6b347f1e14a02807">std::system_category</a>()));</div>
+<div class="line">      <span class="keywordflow">throw</span> std::system_error(std::error_code(errno, std::system_category()));</div>
 <div class="line">    }</div>
 <div class="line">    <span class="comment">// Implicit conversion to T (handle_ref)</span></div>
 <div class="line">    <span class="keywordflow">return</span> make_handle_ref&lt;some_derived_handle_implementation&gt;(fd);</div>
@@ -364,7 +360,7 @@ islands of exception throw" design pattern which is much more natural:</p>
 <div class="line">  {</div>
 <div class="line">    <span class="keywordflow">if</span>(fd != -1)</div>
 <div class="line">      close(fd);</div>
-<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">std::experimental::make_unexpected</a>(std::current_exception());</div>
+<div class="line">    <span class="keywordflow">return</span> std::experimental::make_unexpected(std::current_exception());</div>
 <div class="line">  }</div>
 <div class="line">}</div>
 <div class="line">...</div>
@@ -407,10 +403,10 @@ Expected's bad_expected_access&lt;E&gt;</h3>
 <div class="line"></div>
 <div class="line">  <span class="keyword">explicit</span> bad_expected_access(<span class="keyword">const</span> error_type &amp;e) noexcept;</div>
 <div class="line"></div>
-<div class="line">  <span class="keyword">const</span> error_type &amp;<a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a1a1a8470c4efc3a52412f3ecc79a0060">error</a>() const &amp; noexcept;</div>
-<div class="line">  error_type &amp;<a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a1a1a8470c4efc3a52412f3ecc79a0060">error</a>() &amp; noexcept;</div>
-<div class="line">  const error_type &amp;&amp;<a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a1a1a8470c4efc3a52412f3ecc79a0060">error</a>() const &amp;&amp; noexcept;</div>
-<div class="line">  error_type &amp;&amp;<a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a1a1a8470c4efc3a52412f3ecc79a0060">error</a>() &amp;&amp; noexcept;</div>
+<div class="line">  <span class="keyword">const</span> error_type &amp;error() const &amp; noexcept;</div>
+<div class="line">  error_type &amp;error() &amp; noexcept;</div>
+<div class="line">  const error_type &amp;&amp;error() const &amp;&amp; noexcept;</div>
+<div class="line">  error_type &amp;&amp;error() &amp;&amp; noexcept;</div>
 <div class="line">};</div>
 <div class="line"></div>
 <div class="line"><span class="comment">// This is currently an extension to the proposal by Outcome, but we think it highly</span></div>
@@ -423,7 +419,7 @@ Expected's bad_expected_access&lt;E&gt;</h3>
 <div class="line">  <span class="keyword">explicit</span> bad_expected_access() noexcept;</div>
 <div class="line">};</div>
 </div><!-- fragment --><p>So for example, if you tried to get the value of an Expected when it was errored, you would see this:</p>
-<div class="fragment"><div class="line">std::experimental::expected&lt;int, std::error_code&gt; a(<a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">std::experimental::make_unexpected</a>(<a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ab6204dd7620b0e495220e76988359589">std::make_error_code</a>(std::errc::no_such_file_or_directory)));</div>
+<div class="fragment"><div class="line">std::experimental::expected&lt;int, std::error_code&gt; a(std::experimental::make_unexpected(std::make_error_code(std::errc::no_such_file_or_directory)));</div>
 <div class="line"><span class="keywordflow">try</span></div>
 <div class="line">{</div>
 <div class="line">  <span class="comment">// a is errored, so this will throw</span></div>
@@ -464,19 +460,19 @@ Expected's observers</h3>
 <div class="line">  constexpr <span class="keywordtype">bool</span> has_value() const noexcept;</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">// Returns a lvalue or rvalue ref to the stored value_type if there is one, else throws a bad_expected_access&lt;E&gt;</span></div>
-<div class="line">  constexpr const T&amp; <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ab1740f6220ea9c91b5fd5a9263c6b316">value</a>() const&amp;;</div>
-<div class="line">  constexpr T&amp; <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#ab1740f6220ea9c91b5fd5a9263c6b316">value</a>() &amp;;</div>
+<div class="line">  constexpr const T&amp; value() const&amp;;</div>
+<div class="line">  constexpr T&amp; value() &amp;;</div>
 <div class="line">  constexpr const T&amp;&amp; value() const &amp;&amp;;</div>
 <div class="line">  constexpr T&amp;&amp; value() &amp;&amp;;</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">// Returns a lvalue or rvalue ref to the stored error_type if there is one, else undefined behaviour</span></div>
-<div class="line">  constexpr const E&amp; <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a1a1a8470c4efc3a52412f3ecc79a0060">error</a>() const&amp;;</div>
-<div class="line">  E&amp; <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a1a1a8470c4efc3a52412f3ecc79a0060">error</a>() &amp;;</div>
+<div class="line">  constexpr const E&amp; error() const&amp;;</div>
+<div class="line">  E&amp; error() &amp;;</div>
 <div class="line">  constexpr E&amp;&amp; error() &amp;&amp;;</div>
 <div class="line">  constexpr const E&amp;&amp; error() const &amp;&amp;;</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">// Returns the stored error_type as an unexpected_type&lt;E&gt; if there is one, else undefined behaviour</span></div>
-<div class="line">  constexpr <a class="code" href="group__expected.html#gaa7f5bc4b5722b0aabfc0cb9d8bc22d51">unexpected_type</a>&lt;E&gt; get_unexpected() const;</div>
+<div class="line">  constexpr unexpected_type&lt;E&gt; get_unexpected() const;</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">// If currently storing a value_type, returns that, else the parameter passed  </span></div>
 <div class="line">  template &lt;class U&gt;</div>
@@ -506,7 +502,7 @@ Short example program using expected&lt;T, E&gt;</h1>
 <div class="line"><span class="keyword">namespace </span>outcome = boost::outcome;</div>
 <div class="line"></div>
 <div class="line"><span class="comment">// Better: use EXACTLY the Boost.Outcome visible in the current translation unit</span></div>
-<div class="line"><span class="keyword">namespace </span>outcome = <a class="code" href="group__config.html#gab113de43db2cd2a4cf1e33b54294944a">BOOST_OUTCOME_V1_NAMESPACE</a>;</div>
+<div class="line"><span class="keyword">namespace </span>outcome = BOOST_OUTCOME_V1_NAMESPACE;</div>
 </div><!-- fragment --><p>The <code>BOOST_OUTCOME_V1_NAMESPACE</code> macro encodes a unique hexadecimal value per release. This guarantees that the linker will not substitute a different version of Outcome than the Outcome you compiled against. It is therefore recommended that you use the <code>BOOST_OUTCOME_V1_NAMESPACE</code> macro.</p>
 <p>This example program using <code>expected&lt;T, E&gt;</code> replicates <a href="http://rustbyexample.com/std/result.html">the use example in the documentation for Rust's <code>Result&lt;T, E&gt;</code></a>. As you will see in Tutorial part B, you would be unwise to use <code>expected&lt;T, E&gt;</code> like this in large C++ programs.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;../include/boost/outcome.hpp&quot;</span></div>
@@ -515,7 +511,7 @@ Short example program using expected&lt;T, E&gt;</h1>
 <div class="line"><span class="preprocessor">#include &lt;cmath&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"></div>
-<div class="line"><span class="keyword">namespace </span>outcome = <a class="code" href="group__config.html#gab113de43db2cd2a4cf1e33b54294944a">BOOST_OUTCOME_V1_NAMESPACE</a>;</div>
+<div class="line"><span class="keyword">namespace </span>outcome = BOOST_OUTCOME_V1_NAMESPACE;</div>
 <div class="line"></div>
 <div class="line"><span class="comment">// Replicates example usage of Result&lt;T, E&gt; from http://rustbyexample.com/std/result.html</span></div>
 <div class="line"><span class="keyword">namespace </span>checked</div>
@@ -535,7 +531,7 @@ Short example program using expected&lt;T, E&gt;</h1>
 <div class="line">    {</div>
 <div class="line">      <span class="comment">// This operation would fail, instead let&#39;s return the reason of</span></div>
 <div class="line">      <span class="comment">// the failure wrapped in E</span></div>
-<div class="line">      <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(MathError::DivisionByZero);</div>
+<div class="line">      <span class="keywordflow">return</span> outcome::make_unexpected(MathError::DivisionByZero);</div>
 <div class="line">    }</div>
 <div class="line">    <span class="keywordflow">else</span></div>
 <div class="line">    {</div>
@@ -547,14 +543,14 @@ Short example program using expected&lt;T, E&gt;</h1>
 <div class="line">  MathResult sqrt(<span class="keywordtype">double</span> x) noexcept</div>
 <div class="line">  {</div>
 <div class="line">    <span class="keywordflow">if</span>(x &lt; 0.0)</div>
-<div class="line">      <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(MathError::NegativeSquareRoot);</div>
+<div class="line">      <span class="keywordflow">return</span> outcome::make_unexpected(MathError::NegativeSquareRoot);</div>
 <div class="line">    return ::sqrt(x);</div>
 <div class="line">  }</div>
 <div class="line"></div>
 <div class="line">  MathResult ln(<span class="keywordtype">double</span> x) noexcept</div>
 <div class="line">  {</div>
 <div class="line">    <span class="keywordflow">if</span>(x &lt; 0.0)</div>
-<div class="line">      <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(MathError::NegativeLogarithm);</div>
+<div class="line">      <span class="keywordflow">return</span> outcome::make_unexpected(MathError::NegativeLogarithm);</div>
 <div class="line">    return ::log(x);</div>
 <div class="line">  }</div>
 <div class="line">}</div>
