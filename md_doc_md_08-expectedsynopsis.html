@@ -46,6 +46,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="modules.html"><span>Modules</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
+      <li><a href="annotated.html"><span>Classes</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -84,7 +87,7 @@ $(document).ready(function(){initNavTree('md_doc_md_08-expectedsynopsis.html',''
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -130,21 +133,21 @@ unexpected_type&lt;E&gt;</h1>
 <div class="line"><span class="keyword">inline</span> <span class="keyword">namespace </span>fundamentals_v3 {</div>
 <div class="line">  <span class="comment">// X.Y.3, Unexpected object type</span></div>
 <div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> E&gt;</div>
-<div class="line">    <span class="keyword">class </span>unexpected_type;</div>
+<div class="line">    <span class="keyword">class </span><a class="code" href="group__expected.html#gaa7f5bc4b5722b0aabfc0cb9d8bc22d51">unexpected_type</a>;</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">// X.Y.4, Unexpected factories</span></div>
 <div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> E&gt;</div>
-<div class="line">    constexpr unexpected_type&lt;decay_t&lt;E&gt;&gt; make_unexpected(E&amp;&amp; v);</div>
+<div class="line">    constexpr unexpected_type&lt;decay_t&lt;E&gt;&gt; <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">make_unexpected</a>(E&amp;&amp; v);</div>
 <div class="line"></div>
 <div class="line"></div>
 <div class="line"></div>
 <div class="line">  <span class="comment">// X.Y.5, unexpected_type relational operators</span></div>
 <div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> E&gt;</div>
 <div class="line">    constexpr <span class="keywordtype">bool</span></div>
-<div class="line">    operator==(<span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;, <span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;);</div>
+<div class="line">    <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a63db4c206ada0cb03a5a1fbe0d626ba7">operator==</a>(<span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;, <span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;);</div>
 <div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> E&gt;</div>
 <div class="line">    constexpr <span class="keywordtype">bool</span></div>
-<div class="line">    operator!=(<span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;, <span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;);</div>
+<div class="line">    <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a45313fa17aa4be05a21363191dacab93">operator!=</a>(<span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;, <span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;);</div>
 <div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> E&gt;</div>
 <div class="line">    constexpr <span class="keywordtype">bool</span></div>
 <div class="line">    operator&lt;(const unexpected_type&lt;E&gt;&amp;, <span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;);</div>
@@ -164,21 +167,21 @@ unexpected_type&lt;E&gt;</h1>
 <div class="line"><span class="keyword">inline</span> <span class="keyword">namespace </span>v1_xxx {</div>
 <div class="line">  <span class="comment">// X.Y.3, Unexpected object type</span></div>
 <div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> E&gt;</div>
-<div class="line">    <span class="keyword">using</span> unexpected_type = expected&lt;void, E&gt;;  <span class="comment">// NOTE This is a template alias!</span></div>
+<div class="line">    <span class="keyword">using</span> <a class="code" href="group__expected.html#gaa7f5bc4b5722b0aabfc0cb9d8bc22d51">unexpected_type</a> = expected&lt;void, E&gt;;  <span class="comment">// NOTE This is a template alias!</span></div>
 <div class="line"></div>
 <div class="line">  <span class="comment">// X.Y.4, Unexpected factories</span></div>
 <div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> E&gt;</div>
-<div class="line">    constexpr <span class="keyword">inline</span> unexpected_type&lt;E&gt; make_unexpected(<span class="keyword">const</span> E&amp; v);</div>
+<div class="line">    constexpr <span class="keyword">inline</span> unexpected_type&lt;E&gt; <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">make_unexpected</a>(<span class="keyword">const</span> E&amp; v);</div>
 <div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> E&gt;</div>
-<div class="line">    constexpr <span class="keyword">inline</span> unexpected_type&lt;E&gt; make_unexpected(E&amp;&amp; v);</div>
+<div class="line">    constexpr <span class="keyword">inline</span> unexpected_type&lt;E&gt; <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">make_unexpected</a>(E&amp;&amp; v);</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">// X.Y.5, unexpected_type relational operators</span></div>
 <div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> E&gt;</div>
 <div class="line">    constexpr <span class="keyword">inline</span> <span class="keywordtype">bool</span></div>
-<div class="line">    operator==(<span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;, <span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;);</div>
+<div class="line">    <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a63db4c206ada0cb03a5a1fbe0d626ba7">operator==</a>(<span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;, <span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;);</div>
 <div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> E&gt;</div>
 <div class="line">    constexpr <span class="keyword">inline</span> <span class="keywordtype">bool</span></div>
-<div class="line">    operator!=(<span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;, <span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;);</div>
+<div class="line">    <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a45313fa17aa4be05a21363191dacab93">operator!=</a>(<span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;, <span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;);</div>
 <div class="line">  <span class="comment">// Other comparison operators not implemented due to</span></div>
 <div class="line">  <span class="comment">// https://akrzemi1.wordpress.com/2014/12/02/a-gotcha-with-optional/</span></div>
 <div class="line"></div>
@@ -196,22 +199,22 @@ unexpected_type&lt;E&gt;</h1>
 </div><!-- fragment -->  </td></tr>
 <tr>
 <td width="38%" valign="top"><div class="fragment"><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> E&gt;</div>
-<div class="line"><span class="keyword">class </span>unexpected_type {</div>
+<div class="line"><span class="keyword">class </span><a class="code" href="group__expected.html#gaa7f5bc4b5722b0aabfc0cb9d8bc22d51">unexpected_type</a> {</div>
 <div class="line"><span class="keyword">public</span>:</div>
-<div class="line">  unexpected_type() = <span class="keyword">delete</span>;</div>
-<div class="line">  constexpr <span class="keyword">explicit</span> unexpected_type(<span class="keyword">const</span> E&amp;);</div>
-<div class="line">  constexpr <span class="keyword">explicit</span> unexpected_type(E&amp;&amp;);</div>
+<div class="line">  <a class="code" href="group__expected.html#gaa7f5bc4b5722b0aabfc0cb9d8bc22d51">unexpected_type</a>() = <span class="keyword">delete</span>;</div>
+<div class="line">  constexpr <span class="keyword">explicit</span> <a class="code" href="group__expected.html#gaa7f5bc4b5722b0aabfc0cb9d8bc22d51">unexpected_type</a>(<span class="keyword">const</span> E&amp;);</div>
+<div class="line">  constexpr <span class="keyword">explicit</span> <a class="code" href="group__expected.html#gaa7f5bc4b5722b0aabfc0cb9d8bc22d51">unexpected_type</a>(E&amp;&amp;);</div>
 <div class="line">  constexpr <span class="keyword">const</span> E&amp; value() <span class="keyword">const</span>;</div>
 <div class="line">  constexpr E &amp; value();</div>
 <div class="line"><span class="keyword">private</span>:</div>
 <div class="line">  E val; <span class="comment">// exposition only</span></div>
 <div class="line">};</div>
 </div><!-- fragment --> </td><td width="62%" valign="top"><div class="fragment"><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> E&gt;</div>
-<div class="line"><span class="keyword">class </span>unexpected_type {                           <span class="comment">// Actually expected&lt;void, E&gt;, below is exposition only</span></div>
+<div class="line"><span class="keyword">class </span><a class="code" href="group__expected.html#gaa7f5bc4b5722b0aabfc0cb9d8bc22d51">unexpected_type</a> {                           <span class="comment">// Actually expected&lt;void, E&gt;, below is exposition only</span></div>
 <div class="line"><span class="keyword">public</span>:</div>
-<div class="line">  unexpected_type() = <span class="keywordflow">default</span>;</div>
-<div class="line">  constexpr <span class="keyword">explicit</span> unexpected_type(<span class="keyword">const</span> E&amp;);</div>
-<div class="line">  constexpr <span class="keyword">explicit</span> unexpected_type(E&amp;&amp;);</div>
+<div class="line">  <a class="code" href="group__expected.html#gaa7f5bc4b5722b0aabfc0cb9d8bc22d51">unexpected_type</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line">  constexpr <span class="keyword">explicit</span> <a class="code" href="group__expected.html#gaa7f5bc4b5722b0aabfc0cb9d8bc22d51">unexpected_type</a>(<span class="keyword">const</span> E&amp;);</div>
+<div class="line">  constexpr <span class="keyword">explicit</span> <a class="code" href="group__expected.html#gaa7f5bc4b5722b0aabfc0cb9d8bc22d51">unexpected_type</a>(E&amp;&amp;);</div>
 <div class="line">  constexpr <span class="keyword">const</span> E&amp; value() <span class="keyword">const</span>;</div>
 <div class="line">  constexpr E &amp; value();</div>
 <div class="line"><span class="keyword">private</span>:</div>
@@ -237,19 +240,19 @@ expected&lt;T, E&gt;</h1>
 <div class="line">    <span class="keyword">class </span>expected&lt;void, E&gt;;</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">// X.Z.6, unexpect tag</span></div>
-<div class="line">  <span class="keyword">struct </span>unexpect_t{</div>
-<div class="line">    unexpect_t() = <span class="keyword">delete</span>;</div>
+<div class="line">  <span class="keyword">struct </span><a class="code" href="group__expected.html#ga43a5a0da82bcdf70d885e62ca9d5528a">unexpect_t</a>{</div>
+<div class="line">    <a class="code" href="group__expected.html#ga43a5a0da82bcdf70d885e62ca9d5528a">unexpect_t</a>() = <span class="keyword">delete</span>;</div>
 <div class="line">  };</div>
-<div class="line">  constexpr unexpect_t unexpect{<span class="stringliteral">&#39;implementation defined&#39;</span>};</div>
+<div class="line">  constexpr <a class="code" href="group__expected.html#ga43a5a0da82bcdf70d885e62ca9d5528a">unexpect_t</a> <a class="code" href="group__expected.html#ga71d06dbe1034b67b00f3f69839c548ae">unexpect</a>{<span class="stringliteral">&#39;implementation defined&#39;</span>};</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">// X.Z.7, class bad_expected_access</span></div>
 <div class="line">  <span class="keyword">class </span>bad_expected_access;</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">// X.Z.8, Expected relational operators</span></div>
 <div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
-<div class="line">    constexpr <span class="keywordtype">bool</span> operator==(<span class="keyword">const</span> expected&lt;T,E&gt;&amp;, <span class="keyword">const</span> expected&lt;T,E&gt;&amp;);</div>
+<div class="line">    constexpr <span class="keywordtype">bool</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a63db4c206ada0cb03a5a1fbe0d626ba7">operator==</a>(<span class="keyword">const</span> expected&lt;T,E&gt;&amp;, <span class="keyword">const</span> expected&lt;T,E&gt;&amp;);</div>
 <div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
-<div class="line">    constexpr <span class="keywordtype">bool</span> operator!=(<span class="keyword">const</span> expected&lt;T,E&gt;&amp;, <span class="keyword">const</span> expected&lt;T,E&gt;&amp;);</div>
+<div class="line">    constexpr <span class="keywordtype">bool</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a45313fa17aa4be05a21363191dacab93">operator!=</a>(<span class="keyword">const</span> expected&lt;T,E&gt;&amp;, <span class="keyword">const</span> expected&lt;T,E&gt;&amp;);</div>
 <div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
 <div class="line">    constexpr <span class="keywordtype">bool</span> operator&lt;(const expected&lt;T,E&gt;&amp;, <span class="keyword">const</span> expected&lt;T,E&gt;&amp;);</div>
 <div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
@@ -261,13 +264,13 @@ expected&lt;T, E&gt;</h1>
 <div class="line"></div>
 <div class="line">  <span class="comment">// X.Z.9, Comparison with T</span></div>
 <div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
-<div class="line">    constexpr <span class="keywordtype">bool</span> operator==(<span class="keyword">const</span> expected&lt;T,E&gt;&amp;, <span class="keyword">const</span> T&amp;);</div>
+<div class="line">    constexpr <span class="keywordtype">bool</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a63db4c206ada0cb03a5a1fbe0d626ba7">operator==</a>(<span class="keyword">const</span> expected&lt;T,E&gt;&amp;, <span class="keyword">const</span> T&amp;);</div>
 <div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
-<div class="line">    constexpr <span class="keywordtype">bool</span> operator==(<span class="keyword">const</span> T&amp;, <span class="keyword">const</span> expected&lt;T,E&gt;&amp;);</div>
+<div class="line">    constexpr <span class="keywordtype">bool</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a63db4c206ada0cb03a5a1fbe0d626ba7">operator==</a>(<span class="keyword">const</span> T&amp;, <span class="keyword">const</span> expected&lt;T,E&gt;&amp;);</div>
 <div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
-<div class="line">    constexpr <span class="keywordtype">bool</span> operator!=(<span class="keyword">const</span> expected&lt;T,E&gt;&amp;, <span class="keyword">const</span> T&amp;);</div>
+<div class="line">    constexpr <span class="keywordtype">bool</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a45313fa17aa4be05a21363191dacab93">operator!=</a>(<span class="keyword">const</span> expected&lt;T,E&gt;&amp;, <span class="keyword">const</span> T&amp;);</div>
 <div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
-<div class="line">    constexpr <span class="keywordtype">bool</span> operator!=(<span class="keyword">const</span> T&amp;, <span class="keyword">const</span> expected&lt;T,E&gt;&amp;);</div>
+<div class="line">    constexpr <span class="keywordtype">bool</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a45313fa17aa4be05a21363191dacab93">operator!=</a>(<span class="keyword">const</span> T&amp;, <span class="keyword">const</span> expected&lt;T,E&gt;&amp;);</div>
 <div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
 <div class="line">    constexpr <span class="keywordtype">bool</span> operator&lt;(const expected&lt;T,E&gt;&amp;, <span class="keyword">const</span> T&amp;);</div>
 <div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
@@ -287,13 +290,13 @@ expected&lt;T, E&gt;</h1>
 <div class="line"></div>
 <div class="line">  <span class="comment">// X.Z.10, Comparison with unexpected_type&lt;E&gt;</span></div>
 <div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
-<div class="line">    constexpr <span class="keywordtype">bool</span> operator==(<span class="keyword">const</span> expected&lt;T,E&gt;&amp;, <span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;);</div>
+<div class="line">    constexpr <span class="keywordtype">bool</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a63db4c206ada0cb03a5a1fbe0d626ba7">operator==</a>(<span class="keyword">const</span> expected&lt;T,E&gt;&amp;, <span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;);</div>
 <div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
-<div class="line">    constexpr <span class="keywordtype">bool</span> operator==(<span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;, <span class="keyword">const</span> expected&lt;T,E&gt;&amp;);</div>
+<div class="line">    constexpr <span class="keywordtype">bool</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a63db4c206ada0cb03a5a1fbe0d626ba7">operator==</a>(<span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;, <span class="keyword">const</span> expected&lt;T,E&gt;&amp;);</div>
 <div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
-<div class="line">    constexpr <span class="keywordtype">bool</span> operator!=(<span class="keyword">const</span> expected&lt;T,E&gt;&amp;, <span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;);</div>
+<div class="line">    constexpr <span class="keywordtype">bool</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a45313fa17aa4be05a21363191dacab93">operator!=</a>(<span class="keyword">const</span> expected&lt;T,E&gt;&amp;, <span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;);</div>
 <div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
-<div class="line">    constexpr <span class="keywordtype">bool</span> operator!=(<span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;, <span class="keyword">const</span> expected&lt;T,E&gt;&amp;);</div>
+<div class="line">    constexpr <span class="keywordtype">bool</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a45313fa17aa4be05a21363191dacab93">operator!=</a>(<span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;, <span class="keyword">const</span> expected&lt;T,E&gt;&amp;);</div>
 <div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
 <div class="line">    constexpr <span class="keywordtype">bool</span> operator&lt;(const expected&lt;T,E&gt;&amp;, <span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;);</div>
 <div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
@@ -317,16 +320,16 @@ expected&lt;T, E&gt;</h1>
 <div class="line"></div>
 <div class="line">  <span class="comment">// X.Z.12, Factories</span></div>
 <div class="line">  template &lt;class T&gt;</div>
-<div class="line">    constexpr expected&lt;decay_t&lt;T&gt;&gt; make_expected(T&amp;&amp; v);</div>
+<div class="line">    constexpr expected&lt;decay_t&lt;T&gt;&gt; <a class="code" href="group__expected.html#ga276cc35056dccfdbe461c11d8eeb3d93">make_expected</a>(T&amp;&amp; v);</div>
 <div class="line"></div>
 <div class="line"></div>
-<div class="line">  expected&lt;<span class="keywordtype">void</span>&gt; make_expected();</div>
+<div class="line">  expected&lt;<span class="keywordtype">void</span>&gt; <a class="code" href="group__expected.html#ga276cc35056dccfdbe461c11d8eeb3d93">make_expected</a>();</div>
 <div class="line">  template &lt;class T, class E&gt;</div>
-<div class="line">    constexpr expected&lt;T, decay_t&lt;E&gt;&gt; make_expected_from_error(E&amp;&amp; e);</div>
+<div class="line">    constexpr expected&lt;T, decay_t&lt;E&gt;&gt; <a class="code" href="group__expected.html#ga726f6c276fd09c5036f20811239b0c8e">make_expected_from_error</a>(E&amp;&amp; e);</div>
 <div class="line"></div>
 <div class="line"></div>
 <div class="line">  template &lt;class T, class E, class U&gt;</div>
-<div class="line">    constexpr expected&lt;T, E&gt; make_expected_from_error(U&amp;&amp; u);</div>
+<div class="line">    constexpr expected&lt;T, E&gt; <a class="code" href="group__expected.html#ga726f6c276fd09c5036f20811239b0c8e">make_expected_from_error</a>(U&amp;&amp; u);</div>
 <div class="line">  template &lt;class F&gt;</div>
 <div class="line">    constexpr expected&lt;typename result_type&lt;F&gt;::type&gt;</div>
 <div class="line">  make_expected_from_call(F f);</div>
@@ -347,19 +350,19 @@ expected&lt;T, E&gt;</h1>
 <div class="line">    <span class="keyword">class </span>expected&lt;void, E&gt;;</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">// X.Z.6, unexpect tag</span></div>
-<div class="line">  <span class="keyword">using</span> unexpect_t = error_t;  <span class="comment">// Tells basic_monad to instantiate an errored instance</span></div>
+<div class="line">  <span class="keyword">using</span> <a class="code" href="group__expected.html#ga43a5a0da82bcdf70d885e62ca9d5528a">unexpect_t</a> = error_t;  <span class="comment">// Tells basic_monad to instantiate an errored instance</span></div>
 <div class="line"></div>
 <div class="line"></div>
-<div class="line">  constexpr unexpect_t unexpect{<span class="stringliteral">&#39;implementation defined&#39;</span>};</div>
+<div class="line">  constexpr <a class="code" href="group__expected.html#ga43a5a0da82bcdf70d885e62ca9d5528a">unexpect_t</a> <a class="code" href="group__expected.html#ga71d06dbe1034b67b00f3f69839c548ae">unexpect</a>{<span class="stringliteral">&#39;implementation defined&#39;</span>};</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">// X.Z.7, class bad_expected_access</span></div>
 <div class="line">  <span class="keyword">class </span>bad_expected_access;</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">// X.Z.8, Expected relational operators</span></div>
 <div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
-<div class="line">    constexpr <span class="keyword">inline</span> <span class="keywordtype">bool</span> operator==(<span class="keyword">const</span> expected&lt;T,E&gt;&amp;, <span class="keyword">const</span> expected&lt;T,E&gt;&amp;);</div>
+<div class="line">    constexpr <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a63db4c206ada0cb03a5a1fbe0d626ba7">operator==</a>(<span class="keyword">const</span> expected&lt;T,E&gt;&amp;, <span class="keyword">const</span> expected&lt;T,E&gt;&amp;);</div>
 <div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
-<div class="line">    constexpr <span class="keyword">inline</span> <span class="keywordtype">bool</span> operator!=(<span class="keyword">const</span> expected&lt;T,E&gt;&amp;, <span class="keyword">const</span> expected&lt;T,E&gt;&amp;);</div>
+<div class="line">    constexpr <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a45313fa17aa4be05a21363191dacab93">operator!=</a>(<span class="keyword">const</span> expected&lt;T,E&gt;&amp;, <span class="keyword">const</span> expected&lt;T,E&gt;&amp;);</div>
 <div class="line">  <span class="comment">// Other comparison operators not implemented due to</span></div>
 <div class="line">  <span class="comment">// https://akrzemi1.wordpress.com/2014/12/02/a-gotcha-with-optional/</span></div>
 <div class="line"></div>
@@ -397,13 +400,13 @@ expected&lt;T, E&gt;</h1>
 <div class="line"></div>
 <div class="line">  <span class="comment">// X.Z.10, Comparison with unexpected_type&lt;E&gt;</span></div>
 <div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
-<div class="line">    constexpr <span class="keyword">inline</span> <span class="keywordtype">bool</span> operator==(<span class="keyword">const</span> expected&lt;T,E&gt;&amp;, <span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;);</div>
+<div class="line">    constexpr <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a63db4c206ada0cb03a5a1fbe0d626ba7">operator==</a>(<span class="keyword">const</span> expected&lt;T,E&gt;&amp;, <span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;);</div>
 <div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
-<div class="line">    constexpr <span class="keyword">inline</span> <span class="keywordtype">bool</span> operator==(<span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;, <span class="keyword">const</span> expected&lt;T,E&gt;&amp;);</div>
+<div class="line">    constexpr <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a63db4c206ada0cb03a5a1fbe0d626ba7">operator==</a>(<span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;, <span class="keyword">const</span> expected&lt;T,E&gt;&amp;);</div>
 <div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
-<div class="line">    constexpr <span class="keyword">inline</span> <span class="keywordtype">bool</span> operator!=(<span class="keyword">const</span> expected&lt;T,E&gt;&amp;, <span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;);</div>
+<div class="line">    constexpr <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a45313fa17aa4be05a21363191dacab93">operator!=</a>(<span class="keyword">const</span> expected&lt;T,E&gt;&amp;, <span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;);</div>
 <div class="line">  <span class="keyword">template</span> &lt;<span class="keyword">class</span> T, <span class="keyword">class</span> E&gt;</div>
-<div class="line">    constexpr <span class="keyword">inline</span> <span class="keywordtype">bool</span> operator!=(<span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;, <span class="keyword">const</span> expected&lt;T,E&gt;&amp;);</div>
+<div class="line">    constexpr <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a45313fa17aa4be05a21363191dacab93">operator!=</a>(<span class="keyword">const</span> unexpected_type&lt;E&gt;&amp;, <span class="keyword">const</span> expected&lt;T,E&gt;&amp;);</div>
 <div class="line">  <span class="comment">// Other comparison operators not implemented due to</span></div>
 <div class="line">  <span class="comment">// https://akrzemi1.wordpress.com/2014/12/02/a-gotcha-with-optional/</span></div>
 <div class="line"></div>
@@ -432,11 +435,11 @@ expected&lt;T, E&gt;</h1>
 <div class="line">    constexpr inline expected&lt;T, E&gt; make_expected(T&amp;&amp; v);</div>
 <div class="line">  inline expected&lt;<span class="keywordtype">void</span>&gt; make_expected();</div>
 <div class="line">  template &lt;class T, class E&gt;</div>
-<div class="line">    constexpr inline expected&lt;T, E&gt; make_expected_from_error(const E&amp; e);</div>
+<div class="line">    constexpr inline expected&lt;T, E&gt; <a class="code" href="group__expected.html#ga726f6c276fd09c5036f20811239b0c8e">make_expected_from_error</a>(const E&amp; e);</div>
 <div class="line">  template &lt;class T, class E&gt;</div>
-<div class="line">    constexpr inline expected&lt;T, E&gt; make_expected_from_error(E&amp;&amp; e);</div>
+<div class="line">    constexpr inline expected&lt;T, E&gt; <a class="code" href="group__expected.html#ga726f6c276fd09c5036f20811239b0c8e">make_expected_from_error</a>(E&amp;&amp; e);</div>
 <div class="line">  template &lt;class T, class E, class U&gt;</div>
-<div class="line">    constexpr inline expected&lt;T, E&gt; make_expected_from_error(U&amp;&amp; u);</div>
+<div class="line">    constexpr inline expected&lt;T, E&gt; <a class="code" href="group__expected.html#ga726f6c276fd09c5036f20811239b0c8e">make_expected_from_error</a>(U&amp;&amp; u);</div>
 <div class="line">  <span class="comment">// make_expected_from_call() not implemented</span></div>
 <div class="line"></div>
 <div class="line"></div>
@@ -481,11 +484,11 @@ expected&lt;T, E&gt;</h1>
 <div class="line">    constexpr explicit expected(in_place_t, Args&amp;&amp;...);</div>
 <div class="line">  template &lt;class U, class... Args&gt;</div>
 <div class="line">    constexpr explicit expected(in_place_t, initializer_list&lt;U&gt;, Args&amp;&amp;...);</div>
-<div class="line">  constexpr expected(unexpected_type&lt;E&gt; const&amp;);</div>
+<div class="line">  constexpr expected(<a class="code" href="group__expected.html#gaa7f5bc4b5722b0aabfc0cb9d8bc22d51">unexpected_type</a>&lt;E&gt; const&amp;);</div>
 <div class="line">  template &lt;class Err&gt;</div>
-<div class="line">    constexpr expected(unexpected_type&lt;Err&gt; const&amp;);</div>
+<div class="line">    constexpr expected(<a class="code" href="group__expected.html#gaa7f5bc4b5722b0aabfc0cb9d8bc22d51">unexpected_type</a>&lt;Err&gt; const&amp;);</div>
 <div class="line">  template &lt;class... Args&gt;</div>
-<div class="line">    constexpr explicit expected(unexpect_t, Args&amp;&amp;...);</div>
+<div class="line">    constexpr explicit expected(<a class="code" href="group__expected.html#ga43a5a0da82bcdf70d885e62ca9d5528a">unexpect_t</a>, Args&amp;&amp;...);</div>
 <div class="line">  template &lt;class U, class... Args&gt;</div>
 <div class="line">    constexpr explicit expected(unexpect_t, initializer_list&lt;U&gt;, Args&amp;&amp;...);</div>
 <div class="line"></div>
@@ -496,8 +499,8 @@ expected&lt;T, E&gt;</h1>
 <div class="line">  expected&amp; operator=(const expected&amp;);</div>
 <div class="line">  expected&amp; operator=(expected&amp;&amp;) noexcept(see below);</div>
 <div class="line">  template &lt;class U&gt; expected&amp; operator=(U&amp;&amp;);</div>
-<div class="line">    expected&amp; operator=(const unexpected_type&lt;E&gt;&amp;);</div>
-<div class="line">  expected&amp; operator=(unexpected_type&lt;E&gt;&amp;&amp;) noexcept(see below);</div>
+<div class="line">    expected&amp; operator=(const <a class="code" href="group__expected.html#gaa7f5bc4b5722b0aabfc0cb9d8bc22d51">unexpected_type</a>&lt;E&gt;&amp;);</div>
+<div class="line">  expected&amp; operator=(<a class="code" href="group__expected.html#gaa7f5bc4b5722b0aabfc0cb9d8bc22d51">unexpected_type</a>&lt;E&gt;&amp;&amp;) noexcept(see below);</div>
 <div class="line">  template &lt;class... Args&gt;</div>
 <div class="line">    <span class="keywordtype">void</span> emplace(Args&amp;&amp;...);</div>
 <div class="line">  template &lt;class U, class... Args&gt;</div>
@@ -523,7 +526,7 @@ expected&lt;T, E&gt;</h1>
 <div class="line">  E&amp; error() &amp;;</div>
 <div class="line">  constexpr E&amp;&amp; error() &amp;&amp;;</div>
 <div class="line">  constexpr const E&amp;&amp; error() const &amp;&amp;;</div>
-<div class="line">  constexpr unexpected_type&lt;E&gt; get_unexpected() const;</div>
+<div class="line">  constexpr <a class="code" href="group__expected.html#gaa7f5bc4b5722b0aabfc0cb9d8bc22d51">unexpected_type</a>&lt;E&gt; get_unexpected() const;</div>
 <div class="line">  template &lt;class U&gt;</div>
 <div class="line">    constexpr T value_or(U&amp;&amp;) const&amp;;</div>
 <div class="line">  template &lt;class U&gt;</div>
@@ -563,9 +566,9 @@ expected&lt;T, E&gt;</h1>
 <div class="line">    constexpr explicit expected(in_place_t, Args&amp;&amp;...);</div>
 <div class="line">  template &lt;class U, class... Args&gt;</div>
 <div class="line">    constexpr explicit expected(in_place_t, initializer_list&lt;U&gt;, Args&amp;&amp;...);</div>
-<div class="line">  constexpr expected(unexpected_type&lt;E&gt; const&amp;) noexcept(is_nothrow_copy_constructible);</div>
+<div class="line">  constexpr expected(<a class="code" href="group__expected.html#gaa7f5bc4b5722b0aabfc0cb9d8bc22d51">unexpected_type</a>&lt;E&gt; const&amp;) noexcept(is_nothrow_copy_constructible);</div>
 <div class="line">  template &lt;class Err&gt;</div>
-<div class="line">    constexpr expected(unexpected_type&lt;Err&gt; const&amp;) noexcept(is_nothrow_copy_constructible);</div>
+<div class="line">    constexpr expected(<a class="code" href="group__expected.html#gaa7f5bc4b5722b0aabfc0cb9d8bc22d51">unexpected_type</a>&lt;Err&gt; const&amp;) noexcept(is_nothrow_copy_constructible);</div>
 <div class="line"></div>
 <div class="line"></div>
 <div class="line"></div>
@@ -579,8 +582,8 @@ expected&lt;T, E&gt;</h1>
 <div class="line">  expected&amp; operator=(const expected&amp;) noexcept(is_nothrow_copy_assignable);</div>
 <div class="line">  expected&amp; operator=(expected&amp;&amp;) noexcept(is_nothrow_move_assignable);</div>
 <div class="line">  template &lt;class U&gt; expected&amp; operator=(U&amp;&amp;);</div>
-<div class="line">    expected&amp; operator=(const unexpected_type&lt;U&gt;&amp;);</div>
-<div class="line">  expected&amp; operator=(unexpected_type&lt;E&gt;&amp;&amp;) noexcept(see below);</div>
+<div class="line">    expected&amp; operator=(const <a class="code" href="group__expected.html#gaa7f5bc4b5722b0aabfc0cb9d8bc22d51">unexpected_type</a>&lt;U&gt;&amp;);</div>
+<div class="line">  expected&amp; operator=(<a class="code" href="group__expected.html#gaa7f5bc4b5722b0aabfc0cb9d8bc22d51">unexpected_type</a>&lt;E&gt;&amp;&amp;) noexcept(see below);</div>
 <div class="line">  template &lt;class... Args&gt;</div>
 <div class="line">    <span class="keywordtype">void</span> emplace(Args&amp;&amp;...);</div>
 <div class="line">  template &lt;class U, class... Args&gt;</div>
@@ -655,7 +658,7 @@ expected&lt;T, E&gt;</h1>
 <div class="line">    constexpr explicit expected(const expected&lt;T2, E2&gt; &amp;) noexcept(is_nothrow_copy_constructible);</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">// Observers</span></div>
-<div class="line">  constexpr explicit operator boost_lite::tribool::tribool() const noexcept;   <span class="comment">// other if monad empty, false if monad errored/excepted</span></div>
+<div class="line">  constexpr explicit operator boost_lite::<a class="code" href="group__tribool.html#ga9514dbc44e596e2a15372dbf6b594d6f">tribool</a>::<a class="code" href="group__tribool.html#ga9514dbc44e596e2a15372dbf6b594d6f">tribool</a>() const noexcept;   <span class="comment">// other if monad empty, false if monad errored/excepted</span></div>
 <div class="line">  constexpr <span class="keywordtype">bool</span> is_ready() const noexcept;                                    <span class="comment">// i.e. not empty</span></div>
 <div class="line">  constexpr <span class="keywordtype">bool</span> empty() const noexcept;</div>
 <div class="line">  constexpr <span class="keywordtype">bool</span> has_error() const noexcept;</div>

@@ -7,14 +7,30 @@
 
 var indexSectionsWithContent =
 {
-  0: "defhiprs",
-  1: "defhiprs"
+  0: "abcdefghilmnoprstuv",
+  1: "beimorsuv",
+  2: "b",
+  3: "abcefghimorstuv",
+  4: "ehimuv",
+  5: "ceirsuv",
+  6: "lmt",
+  7: "efinotu",
+  8: "ciu",
+  9: "defhiprst"
 };
 
 var indexSectionNames =
 {
   0: "all",
-  1: "pages"
+  1: "classes",
+  2: "namespaces",
+  3: "functions",
+  4: "variables",
+  5: "typedefs",
+  6: "enums",
+  7: "enumvalues",
+  8: "groups",
+  9: "pages"
 };
 
 function convertToId(search)

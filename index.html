@@ -46,6 +46,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li class="current"><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="modules.html"><span>Modules</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
+      <li><a href="annotated.html"><span>Classes</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -84,7 +87,7 @@ $(document).ready(function(){initNavTree('index.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -125,7 +128,7 @@ Description</h1>
 <p>The Outcome library provides an implementation of <code>expected&lt;T, E&gt;</code> (which is on the C++ 20 standardisation track), with the <code>expected&lt;T, E&gt;</code> refinements <code>outcome&lt;T&gt;</code> and <code>result&lt;T&gt;</code>.</p>
 <p>If you are familiar with Swift's error code throws or Rust's <code>Result&lt;T, E&gt;</code>, you will find almost identical semantics in the transports provided here. Outcome even has a <code>BOOST_OUTCOME_TRY</code> macro doing most of the <code>try</code> keyword in Rust and Swift!</p>
 <dl class="section note"><dt>Note</dt><dd>Outcome has not been peer reviewed and is not part of the Boost libraries (yet). It is hoped it will enter the peer review queue in Q1 2017.</dd></dl>
-<div class="fragment"><div class="line"><span class="keyword">namespace </span>bo = BOOST_OUTCOME_V1_NAMESPACE;</div>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span>bo = <a class="code" href="group__config.html#gab113de43db2cd2a4cf1e33b54294944a">BOOST_OUTCOME_V1_NAMESPACE</a>;</div>
 <div class="line"></div>
 <div class="line"><span class="comment">// Returns either an int, an error code or an exception ptr.</span></div>
 <div class="line"><span class="comment">// One might model the error code as a programmer expected</span></div>
