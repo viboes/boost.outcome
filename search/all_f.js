@@ -1,12 +1,5 @@
 var searchData=
 [
-  ['set_5ferror',['set_error',['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#ae9e7052fec846a489822333f61c36f50',1,'boost::outcome::v1_xxx::basic_monad']]],
-  ['set_5fexception',['set_exception',['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a0e7e8869d61ec47a97f043eef35ecfb3',1,'boost::outcome::v1_xxx::basic_monad::set_exception(exception_type v)'],['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a59d963cdef2f990e78fa51b50b0e7c67',1,'boost::outcome::v1_xxx::basic_monad::set_exception(E &amp;&amp;e)']]],
-  ['set_5fstate',['set_state',['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a65399387b0e250a5e0be7f4007610d8e',1,'boost::outcome::v1_xxx::basic_monad']]],
-  ['set_5fvalue',['set_value',['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#afbf46a9c64aef8a3b39d0abe6f3875bc',1,'boost::outcome::v1_xxx::basic_monad::set_value(const value_type &amp;v)'],['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a721ed5dd4e5f3c7f5fea054fa55e6eed',1,'boost::outcome::v1_xxx::basic_monad::set_value(value_type &amp;&amp;v)'],['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a04365e78c3bea78ac1009a9830e8f8f4',1,'boost::outcome::v1_xxx::basic_monad::set_value()']]],
-  ['simple_5fringbuffer_5flog',['simple_ringbuffer_log',['../classringbuffer__log.html#a52ecb44d3ff3334597695422947a64b7',1,'ringbuffer_log']]],
-  ['simple_5fringbuffer_5flog_5fpolicy',['simple_ringbuffer_log_policy',['../structringbuffer__log_1_1simple__ringbuffer__log__policy.html',1,'ringbuffer_log']]],
-  ['support',['Support',['../support.html',1,'']]],
-  ['swap',['swap',['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#aa15484c4e305f7faa02a2ba0d9ae5e96',1,'boost::outcome::v1_xxx::basic_monad']]],
-  ['system_5fcategory',['system_category',['../namespaceboost_1_1outcome_1_1v1__xxx_1_1deatomiced__categories.html#a9bd112823854cf5d6b347f1e14a02807',1,'boost::outcome::v1_xxx::deatomiced_categories']]]
+  ['tribool',['tribool',['../group__tribool.html#ga9514dbc44e596e2a15372dbf6b594d6f',1,'tribool']]],
+  ['true_5f',['true_',['../group__tribool.html#ga790676ea2d3387417da65d362c159db3',1,'tribool::true_(tribool a) noexcept'],['../group__tribool.html#gga9514dbc44e596e2a15372dbf6b594d6fa9c0aa11f455c4d30ab951498e0d597e2',1,'tribool::true_()']]]
 ];

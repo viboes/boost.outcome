@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['monad_5ferrc',['monad_errc',['../namespaceboost_1_1outcome_1_1v1__xxx.html#af5abc43f8d09588556c4c65b53485c0d',1,'boost::outcome::v1_xxx']]]
+  ['tribool',['tribool',['../group__tribool.html#ga9514dbc44e596e2a15372dbf6b594d6f',1,'tribool']]]
 ];

@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['useful_20preprocessor_20macros_20which_20expand_20into_20commonly_20written_20boilerplate',['Useful preprocessor macros which expand into commonly written boilerplate',['../group__macro__helpers.html',1,'']]],
-  ['unexpect',['unexpect',['../group__expected.html#ga71d06dbe1034b67b00f3f69839c548ae',1,'boost::outcome::v1_xxx']]],
-  ['unexpect_5ft',['unexpect_t',['../group__expected.html#ga43a5a0da82bcdf70d885e62ca9d5528a',1,'boost::outcome::v1_xxx']]],
-  ['unexpected_5ftype',['unexpected_type',['../group__expected.html#gaa7f5bc4b5722b0aabfc0cb9d8bc22d51',1,'boost::outcome::v1_xxx']]],
-  ['unique_5fid',['unique_id',['../structringbuffer__log_1_1ringbuffer__log_1_1unique__id.html',1,'ringbuffer_log::ringbuffer_log']]],
-  ['unknown',['unknown',['../group__tribool.html#gaf8f0b985ce1712539b19210313affd98',1,'tribool::unknown(tribool a) noexcept'],['../group__tribool.html#gga9514dbc44e596e2a15372dbf6b594d6faad921d60486366258809553a3db49a4a',1,'tribool::unknown()']]]
+  ['value',['value',['../namespaceboost_1_1outcome_1_1v1__xxx.html#ab1740f6220ea9c91b5fd5a9263c6b316',1,'boost::outcome::v1_xxx']]],
+  ['value_5for',['value_or',['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#ac1ac76326950d134a879a5aae3e33048',1,'boost::outcome::v1_xxx::basic_monad::value_or(value_type &amp;v)&amp;noexcept'],['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#aba642a90ca2974c90c0487f91db417f9',1,'boost::outcome::v1_xxx::basic_monad::value_or(const value_type &amp;v) const &amp;noexcept'],['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#aa6bf79f0053d663f152fd34ecd1695de',1,'boost::outcome::v1_xxx::basic_monad::value_or(value_type &amp;&amp;v)&amp;&amp;noexcept'],['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#a77bfe3ca1cba9a9eff36594bfadf5957',1,'boost::outcome::v1_xxx::basic_monad::value_or(const value_type &amp;&amp;v) const &amp;&amp;noexcept']]],
+  ['value_5fstorage',['value_storage',['../classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html',1,'boost::outcome::v1_xxx']]],
+  ['value_5fstorage_3c_20typename_20implementation_5fpolicy_3a_3avalue_5ftype_2c_20typename_20implementation_5fpolicy_3a_3aerror_5ftype_2c_20typename_20implementation_5fpolicy_3a_3aexception_5ftype_20_3e',['value_storage&lt; typename implementation_policy::value_type, typename implementation_policy::error_type, typename implementation_policy::exception_type &gt;',['../classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html',1,'boost::outcome::v1_xxx']]],
+  ['value_5ft',['value_t',['../structboost_1_1outcome_1_1v1__xxx_1_1value__t.html',1,'boost::outcome::v1_xxx']]],
+  ['value_5ftype',['value_type',['../classboost_1_1outcome_1_1v1__xxx_1_1basic__monad.html#acf7a10f44f0f3321842176d2a58a1e87',1,'boost::outcome::v1_xxx::basic_monad::value_type()'],['../structboost_1_1outcome_1_1v1__xxx_1_1policy_1_1basic__monad__storage.html#a3aaa4cf754dda3d6eb22f7274f90ee19',1,'boost::outcome::v1_xxx::policy::basic_monad_storage::value_type()']]]
 ];

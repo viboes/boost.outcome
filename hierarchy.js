@@ -56,12 +56,9 @@ var hierarchy =
     [ "boost::outcome::v1_xxx::policy::option_policy_base< monad_storage, value_type, error_type, exception_type >", "structboost_1_1outcome_1_1v1__xxx_1_1policy_1_1option__policy__base.html", null ],
     [ "boost::outcome::v1_xxx::policy::result_policy< R >", "structboost_1_1outcome_1_1v1__xxx_1_1policy_1_1result__policy.html", null ],
     [ "boost::outcome::v1_xxx::policy::result_policy_base< monad_storage, value_type, error_type, exception_type >", "structboost_1_1outcome_1_1v1__xxx_1_1policy_1_1result__policy__base.html", null ],
-    [ "ringbuffer_log", "classringbuffer__log.html", null ],
-    [ "ringbuffer_log::simple_ringbuffer_log_policy< Bytes >", "structringbuffer__log_1_1simple__ringbuffer__log__policy.html", null ],
     [ "std::system_error", null, [
       [ "boost::outcome::v1_xxx::monad_error", "classboost_1_1outcome_1_1v1__xxx_1_1monad__error.html", null ]
     ] ],
-    [ "ringbuffer_log::ringbuffer_log< Policy >::unique_id", "structringbuffer__log_1_1ringbuffer__log_1_1unique__id.html", null ],
     [ "boost::outcome::v1_xxx::value_storage< _value_type, _error_type, _exception_type >", "classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html", null ],
     [ "boost::outcome::v1_xxx::value_storage< typename implementation_policy::value_type, typename implementation_policy::error_type, typename implementation_policy::exception_type >", "classboost_1_1outcome_1_1v1__xxx_1_1value__storage.html", null ],
     [ "boost::outcome::v1_xxx::value_t", "structboost_1_1outcome_1_1v1__xxx_1_1value__t.html", null ]

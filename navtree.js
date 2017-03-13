@@ -50,7 +50,6 @@ var NAVTREE =
       [ "bad_expected_access<E>", "md_doc_md_08-expectedsynopsis.html#synopsis_bad_expected_access", null ]
     ] ],
     [ "History and Acknowledgements", "md_doc_md_09-acknowledgements.html", null ],
-    [ "Todo List", "todo.html", null ],
     [ "Modules", "modules.html", "modules" ],
     [ "Namespaces", null, [
       [ "Namespace List", "namespaces.html", "namespaces" ],
@@ -71,8 +70,7 @@ var NAVTREE =
         [ "All", "functions.html", null ],
         [ "Functions", "functions_func.html", null ],
         [ "Variables", "functions_vars.html", null ],
-        [ "Typedefs", "functions_type.html", null ],
-        [ "Enumerations", "functions_enum.html", null ]
+        [ "Typedefs", "functions_type.html", null ]
       ] ]
     ] ]
   ] ]
@@ -81,7 +79,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 ".html",
-"classboost_1_1outcome_1_1v1__xxx_1_1outcome.html#ae8455835eb8adf36b70e50d1bc119686"
+"classboost_1_1outcome_1_1v1__xxx_1_1outcome.html#ae9e7052fec846a489822333f61c36f50"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

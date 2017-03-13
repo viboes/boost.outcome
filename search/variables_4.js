@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['unexpect',['unexpect',['../group__expected.html#ga71d06dbe1034b67b00f3f69839c548ae',1,'boost::outcome::v1_xxx']]]
+  ['value',['value',['../namespaceboost_1_1outcome_1_1v1__xxx.html#ab1740f6220ea9c91b5fd5a9263c6b316',1,'boost::outcome::v1_xxx']]]
 ];
