@@ -441,20 +441,20 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">        filesystem::directory_iterator nit(p.path(), ec);</div>
 <div class="line">        <span class="keywordflow">if</span> (ec)</div>
 <div class="line">          <span class="keywordflow">return</span> outcome::make_errored_result&lt;&gt;(ec);</div>
-<div class="line">        BOOST_OUTCOME_TRY(results, find_regex_in_files(re, std::move(nit), depth + 1));</div>
+<div class="line">        <a class="code" href="group__macro__helpers.html#gaa977bf0b7aded30c781c35f956edc1d7">BOOST_OUTCOME_TRY</a>(results, find_regex_in_files(re, std::move(nit), depth + 1));</div>
 <div class="line">        <span class="comment">// Merge found results from subdirectory into me</span></div>
 <div class="line">        ret.reserve(ret.size() + results.size());</div>
 <div class="line">        std::move(results.begin(), results.end(), std::back_inserter(ret));</div>
 <div class="line">      }</div>
 <div class="line">      <span class="comment">// Try to map the file into memory</span></div>
-<div class="line">      BOOST_OUTCOME_TRY(view, map_file_into_memory(p.path()));</div>
+<div class="line">      <a class="code" href="group__macro__helpers.html#gaa977bf0b7aded30c781c35f956edc1d7">BOOST_OUTCOME_TRY</a>(view, map_file_into_memory(p.path()));</div>
 <div class="line">      <span class="comment">// regex doesn&#39;t have a string_view overload yet ...</span></div>
 <div class="line">      <span class="keywordflow">if</span>(std::regex_search(view.data(), re))</div>
 <div class="line">        ret.push_back(p.path());</div>
 <div class="line">    }</div>
 <div class="line">    <span class="keywordflow">return</span> ret;</div>
 <div class="line">  }</div>
-<div class="line">  BOOST_OUTCOME_CATCH_ALL_EXCEPTION_TO_RESULT</div>
+<div class="line">  <a class="code" href="group__macro__helpers.html#gab76324edce7c10037344911b04100397">BOOST_OUTCOME_CATCH_ALL_EXCEPTION_TO_RESULT</a></div>
 <div class="line">}</div>
 </div><!-- fragment --> </td><td valign="top"><div class="fragment"><div class="line"><span class="keyword">class </span>mapped_string_view : <span class="keyword">public</span> std::string_view</div>
 <div class="line">{</div>
@@ -551,13 +551,13 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">        filesystem::directory_iterator nit(p.path(), ec);</div>
 <div class="line">        <span class="keywordflow">if</span> (ec)</div>
 <div class="line">          <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(ec);</div>
-<div class="line">        BOOST_OUTCOME_TRY(results, find_regex_in_files(re, std::move(nit), depth + 1));</div>
+<div class="line">        <a class="code" href="group__macro__helpers.html#gaa977bf0b7aded30c781c35f956edc1d7">BOOST_OUTCOME_TRY</a>(results, find_regex_in_files(re, std::move(nit), depth + 1));</div>
 <div class="line">        <span class="comment">// Merge found results from subdirectory into me</span></div>
 <div class="line">        ret.reserve(ret.size() + results.size());</div>
 <div class="line">        std::move(results.begin(), results.end(), std::back_inserter(ret));</div>
 <div class="line">      }</div>
 <div class="line">      <span class="comment">// Try to map the file into memory</span></div>
-<div class="line">      BOOST_OUTCOME_TRY(view, map_file_into_memory(p.path()));</div>
+<div class="line">      <a class="code" href="group__macro__helpers.html#gaa977bf0b7aded30c781c35f956edc1d7">BOOST_OUTCOME_TRY</a>(view, map_file_into_memory(p.path()));</div>
 <div class="line">      <span class="comment">// regex doesn&#39;t have a string_view overload yet ...</span></div>
 <div class="line">      <span class="keywordflow">if</span>(std::regex_search(view.data(), re))</div>
 <div class="line">        ret.push_back(p.path());</div>
@@ -639,7 +639,7 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">      <span class="keywordflow">return</span> std::move(f);</div>
 <div class="line">    }</div>
 <div class="line">    <span class="comment">// Catch all STL exception throws and return a corresponding result</span></div>
-<div class="line">    BOOST_OUTCOME_CATCH_ALL_EXCEPTION_TO_RESULT</div>
+<div class="line">    <a class="code" href="group__macro__helpers.html#gab76324edce7c10037344911b04100397">BOOST_OUTCOME_CATCH_ALL_EXCEPTION_TO_RESULT</a></div>
 <div class="line">  }</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* Call the i/o handler in some thread, returning when it completes.</span></div>

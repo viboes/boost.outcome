@@ -524,7 +524,7 @@ The tension between type safety and convenient programming</h1>
 <div class="line">{</div>
 <div class="line">  <span class="comment">// If calling div() fails, return the same error immediately,</span></div>
 <div class="line">  <span class="comment">// else unpack the T into r. REQUIRES type E to be identical!</span></div>
-<div class="line">  BOOST_OUTCOME_TRY(r, div(10.0, y));</div>
+<div class="line">  <a class="code" href="group__macro__helpers.html#gaa977bf0b7aded30c781c35f956edc1d7">BOOST_OUTCOME_TRY</a>(r, div(10.0, y));</div>
 <div class="line">  <span class="keywordflow">if</span> (r &lt; 0.0)</div>
 <div class="line">  {</div>
 <div class="line">    <span class="keywordflow">return</span> outcome::make_unexpected&lt;std::error_code&gt;(MathError2::NegativeSquareRoot);</div>
@@ -750,7 +750,7 @@ The TRY operation</h2>
 <div class="line">  <span class="comment">// If somefunc() returns an E, immediately return an</span></div>
 <div class="line">  <span class="comment">// expected&lt;int, std::error_code&gt; with the same E</span></div>
 <div class="line">  <span class="comment">// as if return make_unexpected(somefunc().error());</span></div>
-<div class="line">  BOOST_OUTCOME_TRY(v, somefunc());</div>
+<div class="line">  <a class="code" href="group__macro__helpers.html#gaa977bf0b7aded30c781c35f956edc1d7">BOOST_OUTCOME_TRY</a>(v, somefunc());</div>
 <div class="line">  <span class="comment">// ... else unpack the T into v as if</span></div>
 <div class="line">  <span class="comment">// std::string v(std::move(somefunc().value());</span></div>
 <div class="line">  <span class="keywordflow">return</span> v.empty() ? 0 : v.size();</div>
