@@ -102,6 +102,20 @@ $(document).ready(function(){initNavTree('md_doc_md_07-faq.html','');});
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="faq"></a> </p>
+<h1><a class="anchor" id="abi_stability"></a>
+Is Outcome safe to use in extern APIs? Does it have a stable ABI?</h1>
+<p>Unlike most Boost libraries, Outcome is able to enforce a stable ABI checked per commit by <a href="https://lvc.github.io/abi-compliance-checker/">the ABI Compliance Checker</a>. All symbols in Outcome are namespaced as follows:</p>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span>boost {</div>
+<div class="line">  <span class="keyword">namespace </span>outcome {</div>
+<div class="line">    <span class="keyword">inline</span> <span class="keyword">namespace </span>_1_std_std {</div>
+<div class="line">      ...</div>
+<div class="line">    }</div>
+<div class="line">  }</div>
+<div class="line">}</div>
+</div><!-- fragment --><p>(the first "std" in "std_std" means this Outcome's unit tests use the C++ 11 STL for atomic, chrono etc; the second "std" means this Outcome uses the C++ 11 STL for <code>std::error_code</code>, <code>std::generic_category()</code> etc. Note Outcome <em>always</em> uses <code>std::exception_ptr</code> as <code>std::current_exception()</code> is much more reliable than <code>boost::current_exception()</code>)</p>
+<p>If a future version of Outcome needs to break ABI, the inline namespace will become 2, 3 and so on.</p>
+<dl class="section warning"><dt>Warning</dt><dd>ABI stability promises ONLY apply to Outcome's refinements <code>outcome&lt;T&gt;</code>, <code>result&lt;T&gt;</code> and <code>option&lt;T&gt;</code>. Until the LEWG Expected proposal is finalised, <code>expected&lt;T, E&gt;</code> comes with no ABI promises at all.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Because Outcome is still pending peer review, the inline namespace is currently regularly permuted to the SHA of a recent commit e.g. <code>inline namespace _v1_std_std_e3bc60d4</code>. If it passes review and enters Boost, it is intended to choose some Boost release thereafter to set the v1 ABI in stone forever. Until then, you can safely mix old and new Outcome editions in the same process as they always have a unique namespace.</dd></dl>
 <hr/>
 <p><br/>
 </p>

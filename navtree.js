@@ -40,6 +40,7 @@ var NAVTREE =
       [ "Example of usage of Outcome's expected<T, E> refinements", "md_doc_md_04-tutorial_c.html#outcome_usage", null ]
     ] ],
     [ "Frequently Asked Questions", "md_doc_md_07-faq.html", [
+      [ "Is Outcome safe to use in extern APIs? Does it have a stable ABI?", "md_doc_md_07-faq.html#abi_stability", null ],
       [ "How do I implement chains of errors to transport errors happening whilst handling another error?", "md_doc_md_07-faq.html#error_chains", null ],
       [ "If outcome<T> is a strict superset of result<T>, why ever use result<T>?", "md_doc_md_07-faq.html#outcome_vs_result", null ],
       [ "Are there some real world code bases using Outcome I can study?", "md_doc_md_07-faq.html#examples_of_use", null ]
@@ -80,7 +81,7 @@ var NAVTREEINDEX =
 [
 ".html",
 "classboost_1_1outcome_1_1v1__xxx_1_1outcome.html#a5224220f6ef2c2f1b3bcbfd9acbfe865",
-"namespacemembers.html"
+"namespaceboost_1_1outcome_1_1v1__xxx_1_1policy.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
