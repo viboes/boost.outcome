@@ -46,6 +46,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="modules.html"><span>Modules</span></a></li>
+      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
+      <li><a href="annotated.html"><span>Classes</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -84,7 +87,7 @@ $(document).ready(function(){initNavTree('md_doc_md_04-tutorial_c.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -126,7 +129,7 @@ $(document).ready(function(){initNavTree('md_doc_md_04-tutorial_c.html','');});
 <h1><a class="anchor" id="error_code_extended"></a>
 Outcome's extended std::error_code</h1>
 <p>A lot of people find <code>std::error_code</code> too constraining and value their custom error types precisely because they can carry <em>payload</em> e.g. a custom string describing exactly the cause of the error, or maybe a backtrace of the exact offending call sequence leading to the error. They therefore reject the restriction to <code>std::error_code</code> as unsuitable for their use case.</p>
-<p>Outcome provides an error_code_extended refinement of <code>std::error_code</code> for exactly this situation. <code>error_code_extended</code> inherits publicly from <code>std::error_code</code>, adding three new member functions: <code>extended_message()</code>, <code>raw_backtrace()</code> and <code>backtrace()</code>. These <em>may</em> provide additional information about the error code like any <code>what()</code> message from the C++ exception the error code was constructed from (if any), or the stack backtrace of the point at which the <code>error_code_extended</code> was constructed.</p>
+<p>Outcome provides an <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1error__code__extended.html">error_code_extended</a> refinement of <code>std::error_code</code> for exactly this situation. <code>error_code_extended</code> inherits publicly from <code>std::error_code</code>, adding three new member functions: <code>extended_message()</code>, <code>raw_backtrace()</code> and <code>backtrace()</code>. These <em>may</em> provide additional information about the error code like any <code>what()</code> message from the C++ exception the error code was constructed from (if any), or the stack backtrace of the point at which the <code>error_code_extended</code> was constructed.</p>
 <div class="fragment"><div class="line"><span class="keyword">class </span>error_code_extended : <span class="keyword">public</span> std::error_code</div>
 <div class="line">{</div>
 <div class="line"><span class="keyword">public</span>:</div>
@@ -204,7 +207,7 @@ Outcome's outcome&lt;T&gt;, result&lt;T&gt; and option&lt;T&gt; refinements</h1>
 <li><code>outcome&lt;T&gt;</code> can be empty, or hold an instance of a type <code>T</code>, or hold an instance of <code>error_code_extended</code>, or hold an instance of <code>std::exception_ptr</code>. This saves you having to wrap an error code into an exception pointer instance, thus also avoiding a memory allocation.</li>
 </ul>
 <p>Implicit conversion is permitted for any less representative form into any more representative form, so <code>option&lt;T&gt;</code> auto converts to a <code>result&lt;T&gt;</code> preserving exact contents, as does <code>result&lt;T&gt;</code> into an <code>outcome&lt;T&gt;</code>. This turns out to be very useful in large C++ codebases where the lowest layers tend to be written using <code>option&lt;T&gt;</code> and <code>result&lt;T&gt;</code>, whilst highest layers tend to be written using <code>outcome&lt;T&gt;</code> and C++ exception throws.</p>
-<p>In Outcome's refinements which we shall call <em>transports</em>, an <em>empty</em> transport is empty, a <em>valued</em> transport contains a <code>T</code>, an <em>errored</em> transport contains an <code>error_code_extended</code> and an <em>excepted</em> transport contains a <code>std::exception_ptr</code>. All transports will throw a monad_error type if you try doing something wrong instead of a <code>bad_expected_access&lt;E&gt;</code>. <code>monad_error</code> subclasses <code>std::system_error</code> with an error code of custom category <code>monad_category()</code>, with corresponding enumeration monad_errc, which can have one of two values:</p>
+<p>In Outcome's refinements which we shall call <em>transports</em>, an <em>empty</em> transport is empty, a <em>valued</em> transport contains a <code>T</code>, an <em>errored</em> transport contains an <code>error_code_extended</code> and an <em>excepted</em> transport contains a <code>std::exception_ptr</code>. All transports will throw a <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1monad__error.html">monad_error</a> type if you try doing something wrong instead of a <code>bad_expected_access&lt;E&gt;</code>. <code>monad_error</code> subclasses <code>std::system_error</code> with an error code of custom category <code>monad_category()</code>, with corresponding enumeration <a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#af5abc43f8d09588556c4c65b53485c0d">monad_errc</a>, which can have one of two values:</p>
 <ul>
 <li><code>monad_errc::no_state</code> means you attempted to fetch a value, error or exception from an empty transport.</li>
 <li><code>monad_errc::exception_present</code> is returned as the error code if you retrieve an error code from an excepted transport.</li>
@@ -218,7 +221,7 @@ Outcome's outcome&lt;T&gt;, result&lt;T&gt; and option&lt;T&gt; refinements</h1>
 <li><code>.exception()</code> returns any <code>std::exception_ptr</code> as you'd expect. If the transport is valued, it returns a default constructed (null) exception pointer. If the transport is errored, it returns an exception pointer to a <code>std::system_error</code> wrapping the error code.</li>
 </ul>
 <p>And finally, if your compiler is in C++ 17 mode or later, transports are marked with the <a href="http://en.cppreference.com/w/cpp/language/attributes"><code>[[nodiscard]]</code></a> attribute. This means the compiler ought to warn if you forget to examine transports returned by functions. If you really mean to throw away a returned transport, make sure you cast it to <code>(void)</code> to tell the compiler you specifically intend to throw it away.</p>
-<p>[1]: Actually the <code>BOOST_OUTCOME_THROW_MONAD_ERROR(ec, monad_error(monad_errc::no_state))</code> macro is executed where <code>ec</code> is the <code>std::error_code</code> contained by the monad. This can be user redefined to do anything, but the default implementation throws a C++ exception of type monad_error with code monad_errc::no_state if C++ exceptions are enabled by the compiler. If they are not, it prints a stack backtrace to stderr and aborts the process.</p>
+<p>[1]: Actually the <code>BOOST_OUTCOME_THROW_MONAD_ERROR(ec, monad_error(monad_errc::no_state))</code> macro is executed where <code>ec</code> is the <code>std::error_code</code> contained by the monad. This can be user redefined to do anything, but the default implementation throws a C++ exception of type <a class="el" href="classboost_1_1outcome_1_1v1__xxx_1_1monad__error.html">monad_error</a> with code <a class="el" href="namespaceboost_1_1outcome_1_1v1__xxx.html#af5abc43f8d09588556c4c65b53485c0d">monad_errc::no_state</a> if C++ exceptions are enabled by the compiler. If they are not, it prints a stack backtrace to stderr and aborts the process.</p>
 <p>[2]: Similarly the <code>BOOST_OUTCOME_THROW_SYSTEM_ERROR(ec, std::system_error(ec))</code> macro is actually executed where <code>ec</code> is the <code>error_code_extended</code> contained by the monad.</p>
 <p>[3]: Similarly the <code>BOOST_OUTCOME_RETHROW_EXCEPTION(e)</code> macro is actually executed where <code>e</code> is the <code>std::exception_ptr</code> contained by the monad.</p>
 <hr/>
@@ -231,7 +234,7 @@ Outcome's helper free functions</h1>
 <div class="line">{</div>
 <div class="line">  ...</div>
 <div class="line">  <span class="keywordflow">if</span>(bad)</div>
-<div class="line">    <span class="keywordflow">return</span> make_errored_result&lt;<span class="comment">/*void&gt;(...);  // Note we didn&#39;t specify &lt;Foo&gt;</span></div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#a6175fc3a5c4bb5ab9f782654e96bb354">make_errored_result</a>&lt;<span class="comment">/*void&gt;(...);  // Note we didn&#39;t specify &lt;Foo&gt;</span></div>
 <div class="line"><span class="comment">  else</span></div>
 <div class="line"><span class="comment">    return Foo(...);</span></div>
 <div class="line"><span class="comment">}</span></div>
@@ -328,7 +331,7 @@ Outcome's helper macros</h1>
 <div class="line"><span class="comment">  return BOOST_OUTCOME_V1_NAMESPACE::make_errored_result&lt;void&gt;(EINVAL, e.what());</span></div>
 <div class="line"><span class="comment">}</span></div>
 </div><!-- fragment --><p>This macro is particularly useful when you are calling into the STL from a noexcept function which returns a <code>result&lt;T&gt;</code> and not an <code>outcome&lt;T&gt;</code>. So long as the code you call only <b>ever</b> will throw STL exception types, using this macro is safe and information loss free. Note that the above sequence does not include a catch all clause, so if you want one of those then use the <code>BOOST_OUTCOME_CATCH_ALL_EXCEPTION_TO_RESULT</code> macro which adds to the end of the catch sequence:</p>
-<div class="fragment"><div class="line">... all the stuff from BOOST_OUTCOME_CATCH_EXCEPTION_TO_RESULT and then ...</div>
+<div class="fragment"><div class="line">... all the stuff from <a class="code" href="group__macro__helpers.html#gaacf14d3429ad0bc72a6ba40e7f283b43">BOOST_OUTCOME_CATCH_EXCEPTION_TO_RESULT</a> and then ...</div>
 <div class="line">catch(...)</div>
 <div class="line">{</div>
 <div class="line">  <span class="keywordflow">return</span> BOOST_OUTCOME_V1_NAMESPACE::make_errored_result&lt;void&gt;(EAGAIN, <span class="stringliteral">&quot;unknown exception&quot;</span>);</div>
@@ -439,20 +442,20 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">        filesystem::directory_iterator nit(p.path(), ec);</div>
 <div class="line">        <span class="keywordflow">if</span> (ec)</div>
 <div class="line">          <span class="keywordflow">return</span> outcome::make_errored_result&lt;&gt;(ec);</div>
-<div class="line">        BOOST_OUTCOME_TRY(results, find_regex_in_files(re, std::move(nit), depth + 1));</div>
+<div class="line">        <a class="code" href="group__macro__helpers.html#gaa977bf0b7aded30c781c35f956edc1d7">BOOST_OUTCOME_TRY</a>(results, find_regex_in_files(re, std::move(nit), depth + 1));</div>
 <div class="line">        <span class="comment">// Merge found results from subdirectory into me</span></div>
 <div class="line">        ret.reserve(ret.size() + results.size());</div>
 <div class="line">        std::move(results.begin(), results.end(), std::back_inserter(ret));</div>
 <div class="line">      }</div>
 <div class="line">      <span class="comment">// Try to map the file into memory</span></div>
-<div class="line">      BOOST_OUTCOME_TRY(view, map_file_into_memory(p.path()));</div>
+<div class="line">      <a class="code" href="group__macro__helpers.html#gaa977bf0b7aded30c781c35f956edc1d7">BOOST_OUTCOME_TRY</a>(view, map_file_into_memory(p.path()));</div>
 <div class="line">      <span class="comment">// regex doesn&#39;t have a string_view overload yet ...</span></div>
 <div class="line">      <span class="keywordflow">if</span>(std::regex_search(view.data(), re))</div>
 <div class="line">        ret.push_back(p.path());</div>
 <div class="line">    }</div>
 <div class="line">    <span class="keywordflow">return</span> ret;</div>
 <div class="line">  }</div>
-<div class="line">  BOOST_OUTCOME_CATCH_ALL_EXCEPTION_TO_RESULT</div>
+<div class="line">  <a class="code" href="group__macro__helpers.html#gab76324edce7c10037344911b04100397">BOOST_OUTCOME_CATCH_ALL_EXCEPTION_TO_RESULT</a></div>
 <div class="line">}</div>
 </div><!-- fragment --> </td><td valign="top"><div class="fragment"><div class="line"><span class="keyword">class </span>mapped_string_view : <span class="keyword">public</span> std::string_view</div>
 <div class="line">{</div>
@@ -483,7 +486,7 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">    <span class="keyword">nullptr</span>, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, <span class="keyword">nullptr</span>);</div>
 <div class="line">  <span class="keywordflow">if</span> (INVALID_HANDLE_VALUE == fh)</div>
 <div class="line">  {</div>
-<div class="line">    <span class="keywordflow">return</span> outcome::make_unexpected(std::error_code(GetLastError(), std::system_category()));</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(std::error_code(GetLastError(), std::system_category()));</div>
 <div class="line">  }</div>
 <div class="line">  BY_HANDLE_FILE_INFORMATION bhfi;</div>
 <div class="line">  memset(&amp;bhfi, 0, <span class="keyword">sizeof</span>(bhfi));</div>
@@ -491,7 +494,7 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">  {</div>
 <div class="line">    ec = GetLastError();</div>
 <div class="line">    CloseHandle(fh);</div>
-<div class="line">    <span class="keywordflow">return</span> outcome::make_unexpected(std::error_code(ec, std::system_category()));</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(std::error_code(ec, std::system_category()));</div>
 <div class="line">  }</div>
 <div class="line">  uint64_t length = ((uint64_t) bhfi.nFileSizeHigh &lt;&lt; 32) | bhfi.nFileSizeLow;</div>
 <div class="line">  mh = CreateFileMapping(fh, <span class="keyword">nullptr</span>, PAGE_READONLY, 0, 0, <span class="keyword">nullptr</span>);</div>
@@ -499,14 +502,14 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">  CloseHandle(fh);</div>
 <div class="line">  <span class="keywordflow">if</span> (INVALID_HANDLE_VALUE == mh)</div>
 <div class="line">  {</div>
-<div class="line">    <span class="keywordflow">return</span> outcome::make_unexpected(std::error_code(ec, std::system_category()));</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(std::error_code(ec, std::system_category()));</div>
 <div class="line">  }</div>
 <div class="line">  <span class="keywordtype">char</span> *addr = (<span class="keywordtype">char</span> *) MapViewOfFile(mh, FILE_MAP_READ, 0, 0, 0);</div>
 <div class="line">  ec = GetLastError();</div>
 <div class="line">  CloseHandle(mh);</div>
 <div class="line">  <span class="keywordflow">if</span> (!addr)</div>
 <div class="line">  {</div>
-<div class="line">    <span class="keywordflow">return</span> outcome::make_unexpected(std::error_code(ec, std::system_category()));</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(std::error_code(ec, std::system_category()));</div>
 <div class="line">  }</div>
 <div class="line">  <span class="keywordflow">return</span> mapped_string_view(addr, (<span class="keywordtype">size_t</span>) length);</div>
 <div class="line"><span class="preprocessor">#else</span></div>
@@ -514,7 +517,7 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">  fh = open(p.c_str(), O_RDONLY);</div>
 <div class="line">  <span class="keywordflow">if</span> (-1 == fh)</div>
 <div class="line">  {</div>
-<div class="line">    <span class="keywordflow">return</span> outcome::make_unexpected(std::error_code(errno, std::system_category()));</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(std::error_code(errno, std::system_category()));</div>
 <div class="line">  }</div>
 <div class="line">  <span class="keyword">struct </span>stat st;</div>
 <div class="line">  memset(&amp;st, 0, <span class="keyword">sizeof</span>(st));</div>
@@ -522,7 +525,7 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">  {</div>
 <div class="line">    ec = errno;</div>
 <div class="line">    close(fh);</div>
-<div class="line">    <span class="keywordflow">return</span> outcome::make_unexpected(std::error_code(ec, std::system_category()));</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(std::error_code(ec, std::system_category()));</div>
 <div class="line">  }</div>
 <div class="line">  uint64_t length = st.st_size;</div>
 <div class="line">  <span class="keywordtype">char</span> *addr = (<span class="keywordtype">char</span> *)mmap(<span class="keyword">nullptr</span>, length, PROT_READ, MAP_SHARED, fh, 0);</div>
@@ -530,7 +533,7 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">  close(fh);</div>
 <div class="line">  <span class="keywordflow">if</span> (!addr)</div>
 <div class="line">  {</div>
-<div class="line">    <span class="keywordflow">return</span> outcome::make_unexpected(std::error_code(ec, std::system_category()));</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(std::error_code(ec, std::system_category()));</div>
 <div class="line">  }</div>
 <div class="line">  <span class="keywordflow">return</span> mapped_string_view(addr, (<span class="keywordtype">size_t</span>)length);</div>
 <div class="line"><span class="preprocessor">#endif</span></div>
@@ -548,14 +551,14 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">        std::error_code ec;</div>
 <div class="line">        filesystem::directory_iterator nit(p.path(), ec);</div>
 <div class="line">        <span class="keywordflow">if</span> (ec)</div>
-<div class="line">          <span class="keywordflow">return</span> outcome::make_unexpected(ec);</div>
-<div class="line">        BOOST_OUTCOME_TRY(results, find_regex_in_files(re, std::move(nit), depth + 1));</div>
+<div class="line">          <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(ec);</div>
+<div class="line">        <a class="code" href="group__macro__helpers.html#gaa977bf0b7aded30c781c35f956edc1d7">BOOST_OUTCOME_TRY</a>(results, find_regex_in_files(re, std::move(nit), depth + 1));</div>
 <div class="line">        <span class="comment">// Merge found results from subdirectory into me</span></div>
 <div class="line">        ret.reserve(ret.size() + results.size());</div>
 <div class="line">        std::move(results.begin(), results.end(), std::back_inserter(ret));</div>
 <div class="line">      }</div>
 <div class="line">      <span class="comment">// Try to map the file into memory</span></div>
-<div class="line">      BOOST_OUTCOME_TRY(view, map_file_into_memory(p.path()));</div>
+<div class="line">      <a class="code" href="group__macro__helpers.html#gaa977bf0b7aded30c781c35f956edc1d7">BOOST_OUTCOME_TRY</a>(view, map_file_into_memory(p.path()));</div>
 <div class="line">      <span class="comment">// regex doesn&#39;t have a string_view overload yet ...</span></div>
 <div class="line">      <span class="keywordflow">if</span>(std::regex_search(view.data(), re))</div>
 <div class="line">        ret.push_back(p.path());</div>
@@ -564,11 +567,11 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">  }</div>
 <div class="line">  <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::bad_alloc &amp;)</div>
 <div class="line">  {</div>
-<div class="line">    <span class="keywordflow">return</span> outcome::make_unexpected(std::make_error_code(std::errc::not_enough_memory));</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(std::make_error_code(std::errc::not_enough_memory));</div>
 <div class="line">  }</div>
 <div class="line">  <span class="keywordflow">catch</span> (...)</div>
 <div class="line">  {</div>
-<div class="line">    <span class="keywordflow">return</span> outcome::make_unexpected(std::make_error_code(std::errc::resource_unavailable_try_again));</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(std::make_error_code(std::errc::resource_unavailable_try_again));</div>
 <div class="line">  }</div>
 <div class="line">}</div>
 </div><!-- fragment -->  </td></tr>
@@ -637,7 +640,7 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">      <span class="keywordflow">return</span> std::move(f);</div>
 <div class="line">    }</div>
 <div class="line">    <span class="comment">// Catch all STL exception throws and return a corresponding result</span></div>
-<div class="line">    BOOST_OUTCOME_CATCH_ALL_EXCEPTION_TO_RESULT</div>
+<div class="line">    <a class="code" href="group__macro__helpers.html#gab76324edce7c10037344911b04100397">BOOST_OUTCOME_CATCH_ALL_EXCEPTION_TO_RESULT</a></div>
 <div class="line">  }</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* Call the i/o handler in some thread, returning when it completes.</span></div>
@@ -657,7 +660,7 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">    <span class="comment">// Note if the result returned by post() was errored it will have</span></div>
 <div class="line">    <span class="comment">// been thrown as a system_error, this will convert it back to its</span></div>
 <div class="line">    <span class="comment">// original error code.</span></div>
-<div class="line">    BOOST_OUTCOME_CATCH_EXCEPTION_TO_RESULT</div>
+<div class="line">    <a class="code" href="group__macro__helpers.html#gaacf14d3429ad0bc72a6ba40e7f283b43">BOOST_OUTCOME_CATCH_EXCEPTION_TO_RESULT</a></div>
 <div class="line">    <span class="keywordflow">catch</span> (...)</div>
 <div class="line">    {</div>
 <div class="line">      <span class="comment">// For any non-STL exception throws, return as an excepted outcome</span></div>
@@ -773,7 +776,7 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">        <span class="comment">// if he throws return the exception thrown</span></div>
 <div class="line">        f(ec, bytes_transferred);</div>
 <div class="line">        <span class="keywordflow">if</span> (ec)</div>
-<div class="line">          <span class="keywordflow">return</span> outcome::make_unexpected(ec);</div>
+<div class="line">          <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(ec);</div>
 <div class="line">        <span class="keywordflow">return</span> {};</div>
 <div class="line">      });</div>
 <div class="line">      <span class="comment">// Fetching the future can throw a STL exception</span></div>
@@ -789,7 +792,7 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">    <span class="keywordflow">catch</span> (...)</div>
 <div class="line">    {</div>
 <div class="line">      <span class="comment">// Return the exception thrown</span></div>
-<div class="line">      <span class="keywordflow">return</span> outcome::make_unexpected(std::current_exception());</div>
+<div class="line">      <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(std::current_exception());</div>
 <div class="line">    }</div>
 <div class="line">  }</div>
 <div class="line"></div>
@@ -810,17 +813,17 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">      <span class="comment">// If the handler succeeded, return success, else return its error code</span></div>
 <div class="line">      <span class="keywordflow">if</span> (v)</div>
 <div class="line">        <span class="keywordflow">return</span> {};</div>
-<div class="line">      <span class="keywordflow">return</span> outcome::make_unexpected(v.error());</div>
+<div class="line">      <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(v.error());</div>
 <div class="line">    }</div>
 <div class="line">    <span class="keywordflow">catch</span> (<span class="keyword">const</span> outcome::bad_expected_access&lt;std::exception_ptr&gt; &amp;e)</div>
 <div class="line">    {</div>
 <div class="line">      <span class="comment">// This called when post() failed internally to do the dispatch</span></div>
-<div class="line">      <span class="keywordflow">return</span> outcome::make_unexpected(outcome::make_unexpected(e.error()));</div>
+<div class="line">      <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(<a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(e.error()));</div>
 <div class="line">    }</div>
 <div class="line">    <span class="keywordflow">catch</span> (...)</div>
 <div class="line">    {</div>
 <div class="line">      <span class="comment">// Return the exception thrown</span></div>
-<div class="line">      <span class="keywordflow">return</span> outcome::make_unexpected(outcome::make_unexpected(std::current_exception()));</div>
+<div class="line">      <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(<a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(std::current_exception()));</div>
 <div class="line">    }</div>
 <div class="line">  }</div>
 <div class="line"></div>
