@@ -41,6 +41,7 @@ var NAVTREE =
     ] ],
     [ "Frequently Asked Questions", "md_doc_md_07-faq.html", [
       [ "Is Outcome safe to use in extern APIs? Does it have a stable ABI?", "md_doc_md_07-faq.html#abi_stability", null ],
+      [ "What is the performance impact of using Outcome in my code?", "md_doc_md_07-faq.html#performance_overhead", null ],
       [ "How do I implement chains of errors to transport errors happening whilst handling another error?", "md_doc_md_07-faq.html#error_chains", null ],
       [ "If outcome<T> is a strict superset of result<T>, why ever use result<T>?", "md_doc_md_07-faq.html#outcome_vs_result", null ],
       [ "Are there some real world code bases using Outcome I can study?", "md_doc_md_07-faq.html#examples_of_use", null ]
