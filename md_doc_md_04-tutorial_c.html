@@ -119,10 +119,10 @@ $(document).ready(function(){initNavTree('md_doc_md_04-tutorial_c.html','');});
 <hr/>
 <p><br/>
 </p>
-<p>In the previous part of this tutorial, we saw how there is a tension between type safety and convenience of programming when using the <code>expected&lt;T, E&gt;</code> transport. Expected as a STL primitive reflects a trade off between those two use cases, and as something which can wear multiple hats it is close to optimal.</p>
+<p>In the previous part of this tutorial, we saw how there is a tension between type safety and convenience of programming when using the <code>expected&lt;T, E&gt;</code> transport (where a transport is a class which <em>transports</em> some other type like a <code>T</code> or an <code>E</code>). Expected as a STL primitive reflects a trade off between those two use cases, and as something which can wear multiple hats it is close to optimal.</p>
 <p>What is presented during this last part of Outcome's tutorial are Outcome's convenience extensions to Expected. We start by assuming that you have no need for type safety in your type <code>E</code>, and furthermore that you only have need for <code>E</code> to be either an error code or an exception pointer <em>and nothing else</em>. Such assumptions, as hopefully demonstrated in the previous part, are not wise for some code bases and use cases for Expected - in those use cases, do not use these convenience extensions because the loss of type safety is too big a trade off.</p>
 <p>Rather, these convenience extensions are ideally suited for low level systems programming and other such use cases where errors exclusively come from outside your code and where therefore enforcing type safety on each particular error type is unnatural. Classic examples of such code bases would be the Networking TS, the Filesystem TS and so on.</p>
-<p>As these refinements are within our control, we can also provide <a class="el" href="md_doc_md_07-faq.html#abi_stability">**ABI stability promises**</a> for these refinements that we can not for <code>expected&lt;T, E&gt;</code>. This lets you use the refinements in your public extern APIs with a guarantee that code compiled with future versions of Outcome will not cause misoperation.</p>
+<p>As these refinements are within our control, we can also provide <a class="el" href="md_doc_md_07-faq.html#abi_stability">ABI stability promises</a> for these refinements that we can not for <code>expected&lt;T, E&gt;</code>. This lets you use the refinements in your public extern APIs with a guarantee that code compiled with future versions of Outcome will not cause misoperation.</p>
 <hr/>
 <p><br/>
 </p>
@@ -172,7 +172,7 @@ Outcome's extended std::error_code</h1>
 <div class="line"></div>
 <div class="line"><span class="comment">// Prints the extended error code, including any extended information if available</span></div>
 <div class="line">inline std::ostream &amp;operator&lt;&lt;(std::ostream &amp;s, const error_code_extended &amp;ec);</div>
-</div><!-- fragment --><p><code>error_code_extended</code> is completely API compatible with <code>std::error_code</code> and all its member functions can be used the same way. You can supply a <code>std::error_code</code> to an extended error code, or else construct an extended error code the same way you would a STL error code. You should note that it is <b>always safe</b> to slice <code>error_code_extended</code> into an <code>std::error_code</code>, so you can safely feed <code>error_code_extended</code> to anything consuming a <code>std::error_code</code>. The important-to-optimisation implicit destructor of <code>std::error_code</code> is retained in <code>error_code_extended</code>.</p>
+</div><!-- fragment --><p><code>error_code_extended</code> is completely API compatible with <code>std::error_code</code> and all its member functions can be used the same way. You can supply a <code>std::error_code</code> to an extended error code, or else construct an extended error code the same way you would a STL error code. You should note that it is <b>always safe</b> to slice <code>error_code_extended</code> into an <code>std::error_code</code>, so you can safely feed <code>error_code_extended</code> to anything consuming a <code>std::error_code</code>. The important-to-optimisation trivial destructor of <code>std::error_code</code> is retained in <code>error_code_extended</code>. The size of <code>error_code_extended</code> is <code>sizeof(std::error_code) + sizeof(size_t)</code>.</p>
 <p>The main big additions are obviously the ability to add a custom string message to an extended error code, this allows the preservation of the original <code>what()</code> message when converting a thrown exception into an extended error code. You can also add two arbitrary unsigned integer codes and most interestingly, a backtrace of the stack at the point of construction. The extended message and backtrace can be later fetched using the new member functions, though note that the storage for these is kept in a statically allocated threadsafe ring buffer and so may vanish at some arbitrary later point when the storage gets recycled. If this happens, <code>extended_message()</code> will return zero characters written, <code>raw_backtrace()</code> will return zero items filled and <code>backtrace()</code> will return a null pointer.</p>
 <p>Because the storage for the extended information may be recycled at any arbitrary future point, you ought to make sure that you copy the extended information as soon as possible after the <code>error_code_extended</code> is constructed. In other words, don't store <code>error_code_extended</code> as-is into say a vector, instead extract the information into a custom struct as soon as you can.</p>
 <dl class="section note"><dt>Note</dt><dd>Construction of an extended error code with extended message or codes takes a worst case maximum of a microsecond on recent hardware. That's a worst case, almost all of the time construction is in the low hundreds of nanoseconds range. Constructing an extended error code with backtrace takes a maximum of about 35 microseconds on a recent Ivy Bridge Intel CPU. <b>No memory allocation</b> is ever performed when constructing an extended error code, latency is always predictable. Construction of an extended error code without using the extended features is no additional overhead over <code>std::error_code</code>.</dd></dl>
@@ -181,7 +181,7 @@ Outcome's extended std::error_code</h1>
 </p>
 <h1><a class="anchor" id="outcome_overview"></a>
 Outcome's outcome&lt;T&gt;, result&lt;T&gt; and option&lt;T&gt; refinements</h1>
-<p>Outcome provides additional refinements of <code>expected&lt;T, E&gt;</code> designed to make your programming life easier if you are willing to accept the hard coding of <code>E</code> to one of <code>error_code_extended</code> or <code>std::exception_ptr</code>. As a rough <b>semantic</b> map onto <code>optional&lt;T&gt;</code>, <code>variant&lt;...&gt;</code> and <code>expected&lt;T, E&gt;</code>:</p>
+<p>Outcome provides additional refinements of <code>expected&lt;T, E&gt;</code> designed to make your programming life easier if you are willing to accept the hard coding of <code>E</code> to one of <code>error_code_extended</code> or <code>std::exception_ptr</code>. For those familiar with the STL transports <code>optional&lt;T&gt;</code>, <code>variant&lt;...&gt;</code> and <code>expected&lt;T, E&gt;</code>, conceptually <code>option&lt;T&gt;</code>, <code>result&lt;T&gt;</code> and <code>outcome&lt;T&gt;</code> could be considered as similar to:</p>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; <span class="keyword">using</span> option = std::optional&lt;T&gt;;</div>
 <div class="line"></div>
 <div class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; <span class="keyword">using</span> result = std::optional&lt;</div>
@@ -240,29 +240,29 @@ Outcome's helper free functions</h1>
 <div class="line"><span class="comment">}</span></div>
 </div><!-- fragment --><p>The full set of free functions is as follows: </p>
 <dl>
-<dt><code>make_(option|result|outcome)(T v)</code> </dt>
+<dt><code>make_[option|result|outcome](T v)</code> </dt>
 <dd>Makes a valued transport with value <code>v</code>. </dd>
-<dt><code>make_(option|result|outcome)&lt;T = void&gt;()</code> </dt>
+<dt><code>make_[option|result|outcome]&lt;T = void&gt;()</code> </dt>
 <dd>Makes a valued transport default constructing a <code>T</code>. </dd>
-<dt><code>make_empty_(option|result|outcome)&lt;T = void&gt;()</code> </dt>
+<dt><code>make_empty_[option|result|outcome]&lt;T = void&gt;()</code> </dt>
 <dd>Makes an empty transport. </dd>
-<dt><code>make_errored_(result|outcome)&lt;T = void&gt;(error_code_extended ec)</code> </dt>
+<dt><code>make_errored_[result|outcome]&lt;T = void&gt;(error_code_extended ec)</code> </dt>
 <dd>Makes an errored transport. </dd>
-<dt><code>make_errored_(result|outcome)&lt;T = void&gt;(int code, const char *extendedmsg = nullptr)</code> </dt>
+<dt><code>make_errored_[result|outcome]&lt;T = void&gt;(int code, const char *extendedmsg = nullptr)</code> </dt>
 <dd>Makes an errored transport with the given error code of generic POSIX category and optionally some extended custom message which is copied into storage as per <code>error_code_extended</code>. This is very convenient for writing: <div class="fragment"><div class="line">result&lt;Foo&gt; somefunction()</div>
 <div class="line">{</div>
 <div class="line">  <span class="keywordflow">if</span>(-1 == open(...))  <span class="comment">// Any POSIX system call setting errno on failure</span></div>
 <div class="line">    <span class="keywordflow">return</span> make_errored_result&lt;&gt;(errno);</div>
 <div class="line">}</div>
 </div><!-- fragment -->  </dd>
-<dt><code>make_errored_(result|outcome)&lt;T = void&gt;(DWORD code, const char *extendedmsg = nullptr)</code> (Windows only) </dt>
+<dt><code>make_errored_[result|outcome]&lt;T = void&gt;(DWORD code, const char *extendedmsg = nullptr)</code> (Windows only) </dt>
 <dd>Makes an errored transport with the given error code of Win32 system category and optionally some extended custom message which is copied into storage as per <code>error_code_extended</code>. This is very convenient for writing: <div class="fragment"><div class="line">result&lt;Foo&gt; somefunction()</div>
 <div class="line">{</div>
 <div class="line">  <span class="keywordflow">if</span>(INVALID_HANDLE_VALUE == CreateFile(...))  <span class="comment">// Any Win32 call setting GetLastError() on failure</span></div>
 <div class="line">    <span class="keywordflow">return</span> make_errored_result&lt;&gt;(GetLastError());</div>
 <div class="line">}</div>
 </div><!-- fragment -->  </dd>
-<dt><code>make_excepted_outcome&lt;T = void&gt;(std::exception_ptr v = std::current_exception())</code> </dt>
+<dt><code>make_exceptional_outcome&lt;T = void&gt;(std::exception_ptr v = std::current_exception())</code> </dt>
 <dd>Makes an excepted transport. This lets you conveniently write: <div class="fragment"><div class="line">outcome&lt;Foo&gt; somefunction()</div>
 <div class="line">{</div>
 <div class="line">  <span class="keywordflow">try</span></div>
@@ -271,13 +271,13 @@ Outcome's helper free functions</h1>
 <div class="line">  }</div>
 <div class="line">  <span class="keywordflow">catch</span>(...)  <span class="comment">// catch all</span></div>
 <div class="line">  {</div>
-<div class="line">    <span class="keywordflow">return</span> make_excepted_outcome&lt;<span class="comment">/*void&gt;(/* std::current_exception() );</span></div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code" href="namespaceboost_1_1outcome_1_1v1__xxx.html#adc7e203492bd1b5ee6f6ea0ae190a95e">make_exceptional_outcome</a>&lt;<span class="comment">/*void&gt;(/* std::current_exception() );</span></div>
 <div class="line"><span class="comment">  }</span></div>
 <div class="line"><span class="comment">}</span></div>
 </div><!-- fragment -->  </dd>
-<dt><code>as_(result|outcome)(option|result)</code> </dt>
+<dt><code>as_[result|outcome](option|result)</code> </dt>
 <dd>Lets you formally annotate an implicit conversion from less representative to more representative. </dd>
-<dt><code>as_void(const (option&lt;T&gt;|result&lt;T&gt;|outcome&lt;T&gt;|expected&lt;T, E&gt;) &amp;)</code> </dt>
+<dt><code>as_void(const [option&lt;T&gt;|result&lt;T&gt;|outcome&lt;T&gt;|expected&lt;T, E&gt;] &amp;)</code> </dt>
 <dd>Returns a copy of any input transport as a void version of the same transport, preserving any empty/errored/excepted state. If the input was valued, the returned copy will be valued <b>void</b>. </dd>
 </dl>
 <hr/>
@@ -352,8 +352,11 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">  <span class="keywordtype">bool</span> _disabled;</div>
 <div class="line"><span class="keyword">public</span>:</div>
 <div class="line">  constexpr mapped_string_view() noexcept : _disabled(true) {}</div>
-<div class="line">  mapped_string_view(<span class="keywordtype">char</span> *s, <span class="keywordtype">size_t</span> l) noexcept : std::string_view(s, l), _disabled(<span class="keyword">false</span>) {}</div>
-<div class="line">  mapped_string_view(mapped_string_view &amp;&amp;o) noexcept : std::string_view(std::move(o)), _disabled(o._disabled) { o._disabled = <span class="keyword">true</span>; }</div>
+<div class="line">  mapped_string_view(<span class="keywordtype">char</span> *s, <span class="keywordtype">size_t</span> l) noexcept :</div>
+<div class="line">    std::string_view(s, l), _disabled(<span class="keyword">false</span>) {}</div>
+<div class="line">  mapped_string_view(mapped_string_view &amp;&amp;o) noexcept :</div>
+<div class="line">    std::string_view(std::move(o)), _disabled(o._disabled)</div>
+<div class="line">    { o._disabled = <span class="keyword">true</span>; }</div>
 <div class="line">  mapped_string_view &amp;operator=(mapped_string_view &amp;&amp;) = <span class="keyword">delete</span>;</div>
 <div class="line">  ~mapped_string_view()</div>
 <div class="line">  {</div>
@@ -367,16 +370,19 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line"><span class="preprocessor"></span>    }</div>
 <div class="line">  }</div>
 <div class="line">};</div>
-<div class="line"><span class="keyword">static</span> outcome::result&lt;mapped_string_view&gt; map_file_into_memory(filesystem::path p) noexcept</div>
+<div class="line"><span class="keyword">static</span> outcome::result&lt;mapped_string_view&gt;</div>
+<div class="line">  map_file_into_memory(filesystem::path p) noexcept</div>
 <div class="line">{</div>
 <div class="line"><span class="preprocessor">#ifdef _WIN32</span></div>
 <div class="line"><span class="preprocessor"></span>  HANDLE fh, mh;</div>
 <div class="line">  DWORD ec;</div>
-<div class="line">  fh = CreateFile(p.c_str(), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,</div>
-<div class="line">    <span class="keyword">nullptr</span>, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, <span class="keyword">nullptr</span>);</div>
+<div class="line">  fh = CreateFile(p.c_str(), GENERIC_READ,</div>
+<div class="line">                  FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,</div>
+<div class="line">                  <span class="keyword">nullptr</span>, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, <span class="keyword">nullptr</span>);</div>
 <div class="line">  <span class="keywordflow">if</span> (INVALID_HANDLE_VALUE == fh)</div>
 <div class="line">  {</div>
 <div class="line">    <span class="keywordflow">return</span> outcome::make_errored_result&lt;&gt;(GetLastError());</div>
+<div class="line">    </div>
 <div class="line">  }</div>
 <div class="line">  BY_HANDLE_FILE_INFORMATION bhfi;</div>
 <div class="line">  memset(&amp;bhfi, 0, <span class="keyword">sizeof</span>(bhfi));</div>
@@ -408,6 +414,7 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">  <span class="keywordflow">if</span> (-1 == fh)</div>
 <div class="line">  {</div>
 <div class="line">    <span class="keywordflow">return</span> outcome::make_errored_result&lt;&gt;(errno);</div>
+<div class="line">    </div>
 <div class="line">  }</div>
 <div class="line">  <span class="keyword">struct </span>stat st;</div>
 <div class="line">  memset(&amp;st, 0, <span class="keyword">sizeof</span>(st));</div>
@@ -416,6 +423,7 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">    ec = errno;</div>
 <div class="line">    close(fh);</div>
 <div class="line">    <span class="keywordflow">return</span> outcome::make_errored_result&lt;&gt;(ec);</div>
+<div class="line">    </div>
 <div class="line">  }</div>
 <div class="line">  uint64_t length = st.st_size;</div>
 <div class="line">  <span class="keywordtype">char</span> *addr = (<span class="keywordtype">char</span> *)mmap(<span class="keyword">nullptr</span>, length, PROT_READ, MAP_SHARED, fh, 0);</div>
@@ -424,12 +432,16 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">  <span class="keywordflow">if</span> (!addr)</div>
 <div class="line">  {</div>
 <div class="line">    <span class="keywordflow">return</span> outcome::make_errored_result(ec);</div>
+<div class="line">    </div>
 <div class="line">  }</div>
 <div class="line">  <span class="keywordflow">return</span> mapped_string_view(addr, (<span class="keywordtype">size_t</span>)length);</div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"><span class="preprocessor"></span>}</div>
 <div class="line"></div>
-<div class="line"><span class="keyword">static</span> outcome::result&lt;std::vector&lt;filesystem::path&gt;&gt; find_regex_in_files(<span class="keyword">const</span> std::regex &amp;re, filesystem::directory_iterator dit, <span class="keywordtype">size_t</span> depth = 0) noexcept</div>
+<div class="line"><span class="keyword">static</span> outcome::result&lt;std::vector&lt;filesystem::path&gt;&gt;</div>
+<div class="line">  find_regex_in_files(<span class="keyword">const</span> std::regex &amp;re,</div>
+<div class="line">                      filesystem::directory_iterator dit,</div>
+<div class="line">                      <span class="keywordtype">size_t</span> depth = 0) noexcept</div>
 <div class="line">{</div>
 <div class="line">  std::vector&lt;filesystem::path&gt; ret;</div>
 <div class="line">  <span class="keywordflow">try</span></div>
@@ -442,10 +454,13 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">        filesystem::directory_iterator nit(p.path(), ec);</div>
 <div class="line">        <span class="keywordflow">if</span> (ec)</div>
 <div class="line">          <span class="keywordflow">return</span> outcome::make_errored_result&lt;&gt;(ec);</div>
-<div class="line">        <a class="code" href="group__macro__helpers.html#gaa977bf0b7aded30c781c35f956edc1d7">BOOST_OUTCOME_TRY</a>(results, find_regex_in_files(re, std::move(nit), depth + 1));</div>
+<div class="line">        <a class="code" href="group__macro__helpers.html#gaa977bf0b7aded30c781c35f956edc1d7">BOOST_OUTCOME_TRY</a>(results, find_regex_in_files(re,</div>
+<div class="line">                                                       std::move(nit),</div>
+<div class="line">                                                       depth + 1));</div>
 <div class="line">        <span class="comment">// Merge found results from subdirectory into me</span></div>
 <div class="line">        ret.reserve(ret.size() + results.size());</div>
-<div class="line">        std::move(results.begin(), results.end(), std::back_inserter(ret));</div>
+<div class="line">        std::move(results.begin(), results.end(),</div>
+<div class="line">                  std::back_inserter(ret));</div>
 <div class="line">      }</div>
 <div class="line">      <span class="comment">// Try to map the file into memory</span></div>
 <div class="line">      <a class="code" href="group__macro__helpers.html#gaa977bf0b7aded30c781c35f956edc1d7">BOOST_OUTCOME_TRY</a>(view, map_file_into_memory(p.path()));</div>
@@ -462,8 +477,11 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">  <span class="keywordtype">bool</span> _disabled;</div>
 <div class="line"><span class="keyword">public</span>:</div>
 <div class="line">  constexpr mapped_string_view() noexcept : _disabled(true) {}</div>
-<div class="line">  mapped_string_view(<span class="keywordtype">char</span> *s, <span class="keywordtype">size_t</span> l) noexcept : std::string_view(s, l), _disabled(<span class="keyword">false</span>) {}</div>
-<div class="line">  mapped_string_view(mapped_string_view &amp;&amp;o) noexcept : std::string_view(std::move(o)), _disabled(o._disabled) { o._disabled = <span class="keyword">true</span>; }</div>
+<div class="line">  mapped_string_view(<span class="keywordtype">char</span> *s, <span class="keywordtype">size_t</span> l) noexcept :</div>
+<div class="line">    std::string_view(s, l), _disabled(<span class="keyword">false</span>) {}</div>
+<div class="line">  mapped_string_view(mapped_string_view &amp;&amp;o) noexcept :</div>
+<div class="line">    std::string_view(std::move(o)), _disabled(o._disabled)</div>
+<div class="line">    { o._disabled = <span class="keyword">true</span>; }</div>
 <div class="line">  mapped_string_view &amp;operator=(mapped_string_view &amp;&amp;) = <span class="keyword">delete</span>;</div>
 <div class="line">  ~mapped_string_view()</div>
 <div class="line">  {</div>
@@ -477,16 +495,19 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line"><span class="preprocessor"></span>    }</div>
 <div class="line">  }</div>
 <div class="line">};</div>
-<div class="line"><span class="keyword">static</span> outcome::expected&lt;mapped_string_view&gt; map_file_into_memory(filesystem::path p) noexcept</div>
+<div class="line"><span class="keyword">static</span> outcome::expected&lt;mapped_string_view&gt;</div>
+<div class="line">  map_file_into_memory(filesystem::path p) noexcept</div>
 <div class="line">{</div>
 <div class="line"><span class="preprocessor">#ifdef _WIN32</span></div>
 <div class="line"><span class="preprocessor"></span>  HANDLE fh, mh;</div>
 <div class="line">  DWORD ec;</div>
-<div class="line">  fh = CreateFile(p.c_str(), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,</div>
-<div class="line">    <span class="keyword">nullptr</span>, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, <span class="keyword">nullptr</span>);</div>
+<div class="line">  fh = CreateFile(p.c_str(),</div>
+<div class="line">                  GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,</div>
+<div class="line">                  <span class="keyword">nullptr</span>, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, <span class="keyword">nullptr</span>);</div>
 <div class="line">  <span class="keywordflow">if</span> (INVALID_HANDLE_VALUE == fh)</div>
 <div class="line">  {</div>
-<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(std::error_code(GetLastError(), std::system_category()));</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(std::error_code(GetLastError(),</div>
+<div class="line">                                                    std::system_category()));</div>
 <div class="line">  }</div>
 <div class="line">  BY_HANDLE_FILE_INFORMATION bhfi;</div>
 <div class="line">  memset(&amp;bhfi, 0, <span class="keyword">sizeof</span>(bhfi));</div>
@@ -517,7 +538,8 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">  fh = open(p.c_str(), O_RDONLY);</div>
 <div class="line">  <span class="keywordflow">if</span> (-1 == fh)</div>
 <div class="line">  {</div>
-<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(std::error_code(errno, std::system_category()));</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(</div>
+<div class="line">      std::error_code(errno, std::system_category()));</div>
 <div class="line">  }</div>
 <div class="line">  <span class="keyword">struct </span>stat st;</div>
 <div class="line">  memset(&amp;st, 0, <span class="keyword">sizeof</span>(st));</div>
@@ -525,7 +547,8 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">  {</div>
 <div class="line">    ec = errno;</div>
 <div class="line">    close(fh);</div>
-<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(std::error_code(ec, std::system_category()));</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(</div>
+<div class="line">      std::error_code(ec, std::system_category()));</div>
 <div class="line">  }</div>
 <div class="line">  uint64_t length = st.st_size;</div>
 <div class="line">  <span class="keywordtype">char</span> *addr = (<span class="keywordtype">char</span> *)mmap(<span class="keyword">nullptr</span>, length, PROT_READ, MAP_SHARED, fh, 0);</div>
@@ -533,13 +556,17 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">  close(fh);</div>
 <div class="line">  <span class="keywordflow">if</span> (!addr)</div>
 <div class="line">  {</div>
-<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(std::error_code(ec, std::system_category()));</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(</div>
+<div class="line">      std::error_code(ec, std::system_category()));</div>
 <div class="line">  }</div>
 <div class="line">  <span class="keywordflow">return</span> mapped_string_view(addr, (<span class="keywordtype">size_t</span>)length);</div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line"><span class="preprocessor"></span>}</div>
 <div class="line"></div>
-<div class="line"><span class="keyword">static</span> outcome::expected&lt;std::vector&lt;filesystem::path&gt;&gt; find_regex_in_files(<span class="keyword">const</span> std::regex &amp;re, filesystem::directory_iterator dit, <span class="keywordtype">size_t</span> depth = 0) noexcept</div>
+<div class="line"><span class="keyword">static</span> outcome::expected&lt;std::vector&lt;filesystem::path&gt;&gt;</div>
+<div class="line">  find_regex_in_files(<span class="keyword">const</span> std::regex &amp;re,</div>
+<div class="line">                      filesystem::directory_iterator dit,</div>
+<div class="line">                      <span class="keywordtype">size_t</span> depth = 0) noexcept</div>
 <div class="line">{</div>
 <div class="line">  std::vector&lt;filesystem::path&gt; ret;</div>
 <div class="line">  <span class="keywordflow">try</span></div>
@@ -552,10 +579,13 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">        filesystem::directory_iterator nit(p.path(), ec);</div>
 <div class="line">        <span class="keywordflow">if</span> (ec)</div>
 <div class="line">          <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(ec);</div>
-<div class="line">        <a class="code" href="group__macro__helpers.html#gaa977bf0b7aded30c781c35f956edc1d7">BOOST_OUTCOME_TRY</a>(results, find_regex_in_files(re, std::move(nit), depth + 1));</div>
+<div class="line">        <a class="code" href="group__macro__helpers.html#gaa977bf0b7aded30c781c35f956edc1d7">BOOST_OUTCOME_TRY</a>(results, find_regex_in_files(re,</div>
+<div class="line">                                                       std::move(nit),</div>
+<div class="line">                                                       depth + 1));</div>
 <div class="line">        <span class="comment">// Merge found results from subdirectory into me</span></div>
 <div class="line">        ret.reserve(ret.size() + results.size());</div>
-<div class="line">        std::move(results.begin(), results.end(), std::back_inserter(ret));</div>
+<div class="line">        std::move(results.begin(), results.end(),</div>
+<div class="line">                  std::back_inserter(ret));</div>
 <div class="line">      }</div>
 <div class="line">      <span class="comment">// Try to map the file into memory</span></div>
 <div class="line">      <a class="code" href="group__macro__helpers.html#gaa977bf0b7aded30c781c35f956edc1d7">BOOST_OUTCOME_TRY</a>(view, map_file_into_memory(p.path()));</div>
@@ -567,11 +597,13 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">  }</div>
 <div class="line">  <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::bad_alloc &amp;)</div>
 <div class="line">  {</div>
-<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(std::make_error_code(std::errc::not_enough_memory));</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(</div>
+<div class="line">      std::make_error_code(std::errc::not_enough_memory));</div>
 <div class="line">  }</div>
 <div class="line">  <span class="keywordflow">catch</span> (...)</div>
 <div class="line">  {</div>
-<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(std::make_error_code(std::errc::resource_unavailable_try_again));</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(</div>
+<div class="line">      std::make_error_code(std::errc::resource_unavailable_try_again));</div>
 <div class="line">  }</div>
 <div class="line">}</div>
 </div><!-- fragment -->  </td></tr>
@@ -587,9 +619,9 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <tr>
 <th>Outcome refinements</th><th>Expected </th></tr>
 <tr>
-<td valign="top"><div class="fragment"><div class="line"><span class="comment">/* This is an implementation of a futures based Executor as proposed by P0443R1</span></div>
-<div class="line"><span class="comment">http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0443r1.html using the</span></div>
-<div class="line"><span class="comment">ASIO/Networking TS io_service as a model.</span></div>
+<td valign="top"><div class="fragment"><div class="line"><span class="comment">/* This is an implementation of a futures based Executor as proposed by</span></div>
+<div class="line"><span class="comment">P0443R1 http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0443r1.html</span></div>
+<div class="line"><span class="comment">using the ASIO/Networking TS io_service as a model.</span></div>
 <div class="line"><span class="comment"></span></div>
 <div class="line"><span class="comment">ASIO propagates exception throws by handlers out of the corresponding run().</span></div>
 <div class="line"><span class="comment">Executors don&#39;t do that, and neither does this implementation.</span></div>
@@ -605,13 +637,16 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">  std::condition_variable _newwork;</div>
 <div class="line"><span class="keyword">public</span>:</div>
 <div class="line"></div>
-<div class="line">  <span class="comment">// Call the i/o handler at some future point in some future thread, returning immediately</span></div>
-<div class="line">  outcome::result&lt;std::future&lt;outcome::outcome&lt;void&gt;&gt;&gt; post(std::function&lt;io_handler&gt; f) noexcept</div>
+<div class="line">  <span class="comment">// Call the i/o handler at some future point in some future thread,</span></div>
+<div class="line">  <span class="comment">// returning immediately</span></div>
+<div class="line">  outcome::result&lt;std::future&lt;outcome::outcome&lt;void&gt;&gt;&gt;</div>
+<div class="line">    post(std::function&lt;io_handler&gt; f) noexcept</div>
 <div class="line">  {</div>
 <div class="line">    <span class="keywordflow">try</span></div>
 <div class="line">    {</div>
 <div class="line">      <span class="comment">// Make a packaged task rebinding the completion handler</span></div>
-<div class="line">      std::packaged_task&lt;outcome::outcome&lt;void&gt;(size_t)&gt; rebound([f = std::move(f)](<span class="keywordtype">size_t</span> bytes_transferred)</div>
+<div class="line">      std::packaged_task&lt;outcome::outcome&lt;void&gt;(size_t)&gt;</div>
+<div class="line">        rebound([f = std::move(f)](<span class="keywordtype">size_t</span> bytes_transferred)</div>
 <div class="line">        -&gt;outcome::outcome&lt;void&gt;</div>
 <div class="line">      {</div>
 <div class="line">        <span class="keywordflow">try</span></div>
@@ -641,12 +676,17 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">    }</div>
 <div class="line">    <span class="comment">// Catch all STL exception throws and return a corresponding result</span></div>
 <div class="line">    <a class="code" href="group__macro__helpers.html#gab76324edce7c10037344911b04100397">BOOST_OUTCOME_CATCH_ALL_EXCEPTION_TO_RESULT</a></div>
+<div class="line">    </div>
+<div class="line">    </div>
+<div class="line">    </div>
 <div class="line">  }</div>
 <div class="line"></div>
 <div class="line">  <span class="comment">/* Call the i/o handler in some thread, returning when it completes.</span></div>
-<div class="line"><span class="comment">  Note that ASIO&#39;s io_service calls this dispatch(), but the Executors proposal calls it execute()</span></div>
+<div class="line"><span class="comment">  Note that ASIO&#39;s io_service calls this dispatch(), but the Executors</span></div>
+<div class="line"><span class="comment">  proposal calls it execute()</span></div>
 <div class="line"><span class="comment">  */</span></div>
-<div class="line">  outcome::outcome&lt;void&gt; execute(std::function&lt;io_handler&gt; f) noexcept</div>
+<div class="line">  outcome::outcome&lt;void&gt;</div>
+<div class="line">    execute(std::function&lt;io_handler&gt; f) noexcept</div>
 <div class="line">  {</div>
 <div class="line">    <span class="keywordflow">try</span></div>
 <div class="line">    {</div>
@@ -666,10 +706,10 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">      <span class="comment">// For any non-STL exception throws, return as an excepted outcome</span></div>
 <div class="line">      <span class="keywordflow">return</span> outcome::make_exceptional_outcome&lt;&gt;();</div>
 <div class="line">    }</div>
+<div class="line"></div>
+<div class="line"></div>
+<div class="line">    </div>
 <div class="line">  }</div>
-<div class="line"></div>
-<div class="line"></div>
-<div class="line"></div>
 <div class="line"></div>
 <div class="line">  <span class="comment">// If there are handlers pending, execute up to one of them</span></div>
 <div class="line">  <span class="keywordtype">size_t</span> run_one() noexcept</div>
@@ -678,7 +718,8 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">    <span class="keywordflow">if</span> (_work.empty())</div>
 <div class="line">      <span class="keywordflow">return</span> 0;</div>
 <div class="line"></div>
-<div class="line">    std::packaged_task&lt;outcome::outcome&lt;void&gt;(size_t)&gt; mywork(std::move(_work.front()));</div>
+<div class="line">    std::packaged_task&lt;outcome::outcome&lt;void&gt;(size_t)&gt;</div>
+<div class="line">      mywork(std::move(_work.front()));</div>
 <div class="line">    _work.pop_front();</div>
 <div class="line">    g.unlock();</div>
 <div class="line">    <span class="comment">// Call the completion handler with some arbitrary bytes_transferred</span></div>
@@ -686,7 +727,8 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">    <span class="keywordflow">return</span> 1;</div>
 <div class="line">  }</div>
 <div class="line"></div>
-<div class="line">  <span class="comment">// If there is no work, sleep until work arrives, else execute as much work as possible</span></div>
+<div class="line">  <span class="comment">// If there is no work, sleep until work arrives, else execute as much</span></div>
+<div class="line">  <span class="comment">// work as possible</span></div>
 <div class="line">  <span class="keywordtype">size_t</span> run() noexcept</div>
 <div class="line">  {</div>
 <div class="line">    {</div>
@@ -716,6 +758,7 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">      <span class="comment">// Call myself again. Note I can simply call value() to</span></div>
 <div class="line">      <span class="comment">// cause the result to throw a system_error with any error code</span></div>
 <div class="line">      ios-&gt;post(std::ref(*<span class="keyword">this</span>)).value();</div>
+<div class="line">      </div>
 <div class="line">    }</div>
 <div class="line">  }</div>
 <div class="line">};</div>
@@ -742,9 +785,9 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">    i.join();</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-</div><!-- fragment --> </td><td valign="top"><div class="fragment"><div class="line"><span class="comment">/* This is an implementation of a futures based Executor as proposed by P0443R1</span></div>
-<div class="line"><span class="comment">http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0443r1.html using the</span></div>
-<div class="line"><span class="comment">ASIO/Networking TS io_service as a model.</span></div>
+</div><!-- fragment --> </td><td valign="top"><div class="fragment"><div class="line"><span class="comment">/* This is an implementation of a futures based Executor as proposed by</span></div>
+<div class="line"><span class="comment">P0443R1 http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0443r1.html</span></div>
+<div class="line"><span class="comment">using the ASIO/Networking TS io_service as a model.</span></div>
 <div class="line"><span class="comment"></span></div>
 <div class="line"><span class="comment">ASIO propagates exception throws by handlers out of the corresponding run().</span></div>
 <div class="line"><span class="comment">Executors don&#39;t do that, and neither does this implementation.</span></div>
@@ -760,13 +803,16 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">  std::condition_variable _newwork;</div>
 <div class="line"><span class="keyword">public</span>:</div>
 <div class="line"></div>
-<div class="line">  <span class="comment">// Call the i/o handler at some future point in some future thread, returning immediately</span></div>
-<div class="line">  outcome::expected&lt;std::future&lt;outcome::expected&lt;void&gt;&gt;, std::exception_ptr&gt; post(std::function&lt;io_handler&gt; f) noexcept</div>
+<div class="line">  <span class="comment">// Call the i/o handler at some future point in some future thread,</span></div>
+<div class="line">  <span class="comment">// returning immediately</span></div>
+<div class="line">  outcome::expected&lt;std::future&lt;outcome::expected&lt;void&gt;&gt;, std::exception_ptr&gt;</div>
+<div class="line">    post(std::function&lt;io_handler&gt; f) noexcept</div>
 <div class="line">  {</div>
 <div class="line">    <span class="keywordflow">try</span></div>
 <div class="line">    {</div>
 <div class="line">      <span class="comment">// Make a packaged task rebinding the completion handler</span></div>
-<div class="line">      std::packaged_task&lt;outcome::expected&lt;void&gt;(size_t)&gt; rebound([f = std::move(f)](<span class="keywordtype">size_t</span> bytes_transferred)</div>
+<div class="line">      std::packaged_task&lt;outcome::expected&lt;void&gt;(size_t)&gt;</div>
+<div class="line">        rebound([f = std::move(f)](<span class="keywordtype">size_t</span> bytes_transferred)</div>
 <div class="line">        -&gt;outcome::expected&lt;void&gt;</div>
 <div class="line">      {</div>
 <div class="line">        <span class="comment">// Note we let exception throws be handled by the packaged_task</span></div>
@@ -778,6 +824,11 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">        <span class="keywordflow">if</span> (ec)</div>
 <div class="line">          <span class="keywordflow">return</span> <a class="code" href="group__expected.html#ga65f63cc3d21288cf48f31096b10c2b0b">outcome::make_unexpected</a>(ec);</div>
 <div class="line">        <span class="keywordflow">return</span> {};</div>
+<div class="line">        </div>
+<div class="line">        </div>
+<div class="line">        </div>
+<div class="line"></div>
+<div class="line">        </div>
 <div class="line">      });</div>
 <div class="line">      <span class="comment">// Fetching the future can throw a STL exception</span></div>
 <div class="line">      std::future&lt;outcome::expected&lt;void&gt;&gt; f(rebound.get_future());</div>
@@ -796,13 +847,12 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">    }</div>
 <div class="line">  }</div>
 <div class="line"></div>
-<div class="line"></div>
-<div class="line"></div>
-<div class="line"></div>
 <div class="line">  <span class="comment">/* Call the i/o handler in some thread, returning when it completes.</span></div>
-<div class="line"><span class="comment">  Note that ASIO&#39;s io_service calls this dispatch(), but the Executors proposal calls it execute()</span></div>
+<div class="line"><span class="comment">  Note that ASIO&#39;s io_service calls this dispatch(), but the Executors</span></div>
+<div class="line"><span class="comment">  proposal calls it execute()</span></div>
 <div class="line"><span class="comment">  */</span></div>
-<div class="line">  outcome::expected&lt;void, outcome::expected&lt;std::error_code, std::exception_ptr&gt;&gt; execute(std::function&lt;io_handler&gt; f) noexcept</div>
+<div class="line">  outcome::expected&lt;void, outcome::expected&lt;std::error_code, std::exception_ptr&gt;&gt;</div>
+<div class="line">    execute(std::function&lt;io_handler&gt; f) noexcept</div>
 <div class="line">  {</div>
 <div class="line">    <span class="keywordflow">try</span></div>
 <div class="line">    {</div>
@@ -834,7 +884,8 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">    <span class="keywordflow">if</span> (_work.empty())</div>
 <div class="line">      <span class="keywordflow">return</span> 0;</div>
 <div class="line"></div>
-<div class="line">    std::packaged_task&lt;outcome::expected&lt;void&gt;(size_t)&gt; mywork(std::move(_work.front()));</div>
+<div class="line">    std::packaged_task&lt;outcome::expected&lt;void&gt;(size_t)&gt;</div>
+<div class="line">      mywork(std::move(_work.front()));</div>
 <div class="line">    _work.pop_front();</div>
 <div class="line">    g.unlock();</div>
 <div class="line">    <span class="comment">// Call the completion handler with some arbitrary bytes_transferred</span></div>
@@ -842,7 +893,8 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">    <span class="keywordflow">return</span> 1;</div>
 <div class="line">  }</div>
 <div class="line"></div>
-<div class="line">  <span class="comment">// If there is no work, sleep until work arrives, else execute as much work as possible</span></div>
+<div class="line">  <span class="comment">// If there is no work, sleep until work arrives, else execute as much</span></div>
+<div class="line">  <span class="comment">// work as possible</span></div>
 <div class="line">  <span class="keywordtype">size_t</span> run() noexcept</div>
 <div class="line">  {</div>
 <div class="line">    {</div>
