@@ -128,64 +128,65 @@ Description</h1>
 <p>The Outcome library provides an implementation of <code>expected&lt;T, E&gt;</code> (which is on the C++ 20 standardisation track), with the <code>expected&lt;T, E&gt;</code> refinements <code>outcome&lt;T&gt;</code> and <code>result&lt;T&gt;</code>.</p>
 <p>If you are familiar with Swift's error code throws or Rust's <code>Result&lt;T, E&gt;</code>, you will find almost identical semantics in the transports provided here. Outcome even has a <a class="el" href="md_doc_md_03-tutorial_b.html#try_operation">BOOST_OUTCOME_TRY</a> macro doing most of the <code>try</code> keyword in Rust and Swift!</p>
 <dl class="section note"><dt>Note</dt><dd>Outcome has not been peer reviewed and is not part of the Boost libraries (yet). It is in the peer review queue awaiting a peer review manager.</dd></dl>
-<div class="fragment"><div class="line"><span class="comment">// Imagine the libraries you depend on each use different</span></div>
-<div class="line"><span class="comment">// mechanisms for returning errors</span></div>
+<div class="fragment"><div class="line"><span class="comment">// Imagine the libraries you depend on each use different mechanisms for returning errors</span></div>
 <div class="line"></div>
 <div class="line"><span class="keyword">namespace </span>outcome = <a class="code" href="group__config.html#gab113de43db2cd2a4cf1e33b54294944a">BOOST_OUTCOME_V1_NAMESPACE</a>;</div>
 <div class="line"></div>
-<div class="line"><span class="comment">// Like the Filesystem and Networking TS, returns errors via</span></div>
-<div class="line"><span class="comment">// lvalue ref to an error_code. Never throws exceptions.</span></div>
-<div class="line"><span class="keyword">auto</span> Library1::fun(std::error_code &amp;) noexcept</div>
-<div class="line">  -&gt; <span class="keywordtype">int</span>;</div>
+<div class="line"><span class="keyword">namespace </span>Library1</div>
+<div class="line">{                                         <span class="comment">// Like the Filesystem and Networking TS,</span></div>
+<div class="line">  <span class="keyword">auto</span> fun(std::error_code &amp;) noexcept    <span class="comment">// returns errors via lvalue ref to an error_code.</span></div>
+<div class="line">    -&gt; <span class="keywordtype">int</span>;                               <span class="comment">// Never throws exceptions.</span></div>
+<div class="line">}</div>
 <div class="line"></div>
-<div class="line"><span class="comment">// Throws some exception on error</span></div>
-<div class="line">auto Library2::fun()</div>
-<div class="line">  -&gt; <span class="keywordtype">int</span>;</div>
-<div class="line"></div>
-<div class="line"><span class="comment">// The Expected proposed for standardisation in C++ 20</span></div>
-<div class="line"><span class="comment">// Returns an int (expected) or some custom error code (unexpected)</span></div>
-<div class="line"><span class="comment">// Never throws exceptions.</span></div>
-<div class="line">auto Library3::fun() noexcept</div>
-<div class="line">  -&gt; outcome::expected&lt;<span class="keywordtype">int</span>, Library3::error_code&gt;;</div>
-<div class="line"></div>
-<div class="line"><span class="comment">// Result is an int (not error) or an outcome::error_code_extended (error)</span></div>
-<div class="line"><span class="comment">// Never throws exceptions.</span></div>
-<div class="line">auto Library4::fun() noexcept</div>
-<div class="line">  -&gt; outcome::result&lt;<span class="keywordtype">int</span>&gt;;</div>
-<div class="line"></div>
+<div class="line">namespace Library2</div>
+<div class="line">{                                         <span class="comment">// Throws some exception on error</span></div>
+<div class="line">  <span class="keyword">auto</span> fun()</div>
+<div class="line">    -&gt; int;</div>
+<div class="line">}</div>
 <div class="line">  </div>
-<div class="line"><span class="comment">// signalling uniform error</span></div>
-<div class="line"><span class="comment">// Outcome is an int, or an outcome::error_code_extended,</span></div>
+<div class="line"><span class="keyword">namespace </span>Library3                        <span class="comment">// The Expected proposed for standardisation in C++ 20</span></div>
+<div class="line">{                                         <span class="comment">// Returns an int (expected) or some custom </span></div>
+<div class="line">  <span class="keyword">auto</span> fun() noexcept                     <span class="comment">// error code (unexpected). Never throws exceptions.</span></div>
+<div class="line">    -&gt; outcome::expected&lt;<span class="keywordtype">int</span>, error_code&gt;; </div>
+<div class="line">}  </div>
+<div class="line">  </div>
+<div class="line">namespace Library4                        <span class="comment">// Result is an int (not error)</span></div>
+<div class="line">{                                         <span class="comment">// or an outcome::error_code_extended (error)</span></div>
+<div class="line">  <span class="keyword">auto</span> fun() noexcept                     <span class="comment">// Never throws exceptions.</span></div>
+<div class="line">    -&gt; outcome::result&lt;<span class="keywordtype">int</span>&gt;;</div>
+<div class="line">}</div>
+<div class="line">  </div>
+<div class="line"><span class="comment">// signalling uniform error Outcome is an int, or an outcome::error_code_extended,</span></div>
 <div class="line"><span class="comment">// or a std::exception_ptr</span></div>
 <div class="line"></div>
-<div class="line">auto my_fun()</div>
+<div class="line">auto my_fun() noexcept</div>
 <div class="line">  -&gt; outcome::outcome&lt;<span class="keywordtype">int</span>&gt;</div>
-<div class="line">{</div>
-<div class="line">  <span class="keywordflow">try</span></div>
-<div class="line">  {</div>
-<div class="line">    std::error_code ec;</div>
+<div class="line">{                                                          <span class="comment">// all noexcept functions which could call</span></div>
+<div class="line">  <span class="keywordflow">try</span> {                                                    <span class="comment">// throwing code should always have their</span></div>
+<div class="line">    std::error_code ec;                                    <span class="comment">// bodies wrapped in a try...catch</span></div>
 <div class="line">    <span class="keywordtype">int</span> i = Library1::fun(ec);</div>
-<div class="line"></div>
 <div class="line">    <span class="keywordflow">if</span> (ec)</div>
-<div class="line">      <span class="keywordflow">return</span> outcome::make_errored_outcome(ec);</div>
-<div class="line"></div>
+<div class="line">      <span class="keywordflow">return</span> outcome::make_errored_outcome(ec);            <span class="comment">// error code returned inside outcome</span></div>
+<div class="line">      </div>
 <div class="line">    <span class="keywordflow">try</span> {</div>
 <div class="line">      i += Library2::fun();</div>
 <div class="line">    }</div>
-<div class="line">    <a class="code" href="group__macro__helpers.html#gaacf14d3429ad0bc72a6ba40e7f283b43">BOOST_OUTCOME_CATCH_EXCEPTION_TO_RESULT</a></div>
-<div class="line"></div>
-<div class="line">    <span class="keywordflow">if</span> (outcome::expected&lt;int, Library3::error_code&gt; rslt1 = Library3::fun())</div>
+<div class="line">    <span class="keywordflow">catch</span> (...) {</div>
+<div class="line">      <span class="keywordflow">return</span> outcome::make_exceptional_outcome&lt;&gt;();        <span class="comment">// exception_ptr returned inside outcome</span></div>
+<div class="line">    }</div>
+<div class="line">    </div>
+<div class="line">    <span class="keywordflow">if</span> (<span class="keyword">auto</span> rslt1 = Library3::fun())</div>
 <div class="line">      i += *rslt1;</div>
 <div class="line">    <span class="keywordflow">else</span></div>
-<div class="line">      <span class="keywordflow">return</span> outcome::make_errored_outcome(rslt1.error());</div>
+<div class="line">      <span class="keywordflow">return</span> outcome::make_errored_outcome(rslt1.error()); <span class="comment">// error code returned inside outcome</span></div>
 <div class="line">   </div>
-<div class="line">    <a class="code" href="group__macro__helpers.html#gaa977bf0b7aded30c781c35f956edc1d7">BOOST_OUTCOME_TRY</a>(rslt2, Library4::fun());</div>
-<div class="line">    <span class="keywordflow">return</span> i + rslt2;</div>
+<div class="line">    <a class="code" href="group__macro__helpers.html#gaa977bf0b7aded30c781c35f956edc1d7">BOOST_OUTCOME_TRY</a>(rslt2, Library4::fun());             <span class="comment">// this may return an outcome with an</span></div>
+<div class="line">                                                           <span class="comment">// error code, iff fun() reports failure</span></div>
+<div class="line"></div>
+<div class="line">    <span class="keywordflow">return</span> i + rslt2;                                      <span class="comment">// return outcome with a value</span></div>
 <div class="line">  }</div>
-<div class="line">  <span class="keywordflow">catch</span>(...)</div>
-<div class="line">  {</div>
-<div class="line">    <span class="comment">// Defaults to constructing from std::current_exception()</span></div>
-<div class="line">    <span class="keywordflow">return</span> outcome::make_exceptional_outcome&lt;&gt;();</div>
+<div class="line">  <span class="keywordflow">catch</span> (...) {</div>
+<div class="line">    <span class="keywordflow">return</span> outcome::make_exceptional_outcome&lt;&gt;();          <span class="comment">// construct from std::current_exception()</span></div>
 <div class="line">  }</div>
 <div class="line">};</div>
 <div class="line"></div>
@@ -194,11 +195,11 @@ Description</h1>
 <div class="line"><span class="keywordtype">int</span> test()</div>
 <div class="line">{</div>
 <div class="line">  <span class="keywordflow">try</span> {</div>
-<div class="line">    <span class="keywordtype">int</span> i = my_fun().value();  <span class="comment">// throws if not valued</span></div>
+<div class="line">    <span class="keywordtype">int</span> i = my_fun().value();                              <span class="comment">// throws if not valued</span></div>
 <div class="line">    <span class="keywordflow">return</span> i;</div>
 <div class="line">  }</div>
-<div class="line">  <span class="keywordflow">catch</span>(std::exception <span class="keyword">const</span>&amp; e) {</div>
-<div class="line">    <span class="keywordflow">return</span> inspect_exception_to_your_liking(e);</div>
+<div class="line">  <span class="keywordflow">catch</span> (std::exception <span class="keyword">const</span>&amp; e) {                        <span class="comment">// e can be used to retrieve</span></div>
+<div class="line">    <span class="keywordflow">return</span> inspect_exception_to_your_liking(e);            <span class="comment">// initial error condition</span></div>
 <div class="line">  }</div>
 <div class="line">}</div>
 </div><!-- fragment --></div></div><!-- contents -->
