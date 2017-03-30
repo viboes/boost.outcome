@@ -116,9 +116,6 @@ $(document).ready(function(){initNavTree('index.html','');});
   </td><td align="center"><a href="https://ci.appveyor.com/project/ned14/boost-outcome/branch/master">Windows CI:</a><div class="image">
 <img src="https://ci.appveyor.com/api/projects/status/roe4dacos4gnlu66/branch/master?svg=true" />
 </div>
-  </td><td align="center"><a href="https://coveralls.io/r/ned14/boost.outcome?branch=master">Coverage:</a><div class="image">
-<img src="https://coveralls.io/repos/ned14/boost.outcome/badge.svg?branch=master" />
-</div>
    </td></tr>
 </table>
 </center><h1><a class="anchor" id="description"></a>
@@ -133,26 +130,26 @@ Description</h1>
 <div class="line"><span class="keyword">namespace </span>outcome = <a class="code" href="group__config.html#gab113de43db2cd2a4cf1e33b54294944a">BOOST_OUTCOME_V1_NAMESPACE</a>;</div>
 <div class="line"></div>
 <div class="line"><span class="keyword">namespace </span>Library1</div>
-<div class="line">{                                         <span class="comment">// Like the Filesystem and Networking TS,</span></div>
-<div class="line">  <span class="keyword">auto</span> fun(std::error_code &amp;) noexcept    <span class="comment">// returns errors via lvalue ref to an error_code.</span></div>
-<div class="line">    -&gt; <span class="keywordtype">int</span>;                               <span class="comment">// Never throws exceptions.</span></div>
+<div class="line">{                                                          <span class="comment">// Like the Filesystem and Networking TS,</span></div>
+<div class="line">  <span class="keyword">auto</span> fun(std::error_code &amp;) noexcept                     <span class="comment">// returns errors via lvalue ref to an error_code.</span></div>
+<div class="line">    -&gt; <span class="keywordtype">int</span>;                                                <span class="comment">// Never throws exceptions.</span></div>
 <div class="line">}</div>
 <div class="line"></div>
 <div class="line">namespace Library2</div>
-<div class="line">{                                         <span class="comment">// Throws some exception on error</span></div>
+<div class="line">{                                                          <span class="comment">// Throws some exception on error</span></div>
 <div class="line">  <span class="keyword">auto</span> fun()</div>
 <div class="line">    -&gt; int;</div>
 <div class="line">}</div>
 <div class="line">  </div>
-<div class="line"><span class="keyword">namespace </span>Library3                        <span class="comment">// The Expected proposed for standardisation in C++ 20</span></div>
-<div class="line">{                                         <span class="comment">// Returns an int (expected) or some custom </span></div>
-<div class="line">  <span class="keyword">auto</span> fun() noexcept                     <span class="comment">// error code (unexpected). Never throws exceptions.</span></div>
+<div class="line"><span class="keyword">namespace </span>Library3                                         <span class="comment">// The Expected proposed for standardisation in C++ 20</span></div>
+<div class="line">{                                                          <span class="comment">// Returns an int (expected) or some custom </span></div>
+<div class="line">  <span class="keyword">auto</span> fun() noexcept                                      <span class="comment">// error code (unexpected). Never throws exceptions.</span></div>
 <div class="line">    -&gt; outcome::expected&lt;<span class="keywordtype">int</span>, error_code&gt;; </div>
 <div class="line">}  </div>
 <div class="line">  </div>
-<div class="line">namespace Library4                        <span class="comment">// Result is an int (not error)</span></div>
-<div class="line">{                                         <span class="comment">// or an outcome::error_code_extended (error)</span></div>
-<div class="line">  <span class="keyword">auto</span> fun() noexcept                     <span class="comment">// Never throws exceptions.</span></div>
+<div class="line">namespace Library4                                         <span class="comment">// Result is an int (not error)</span></div>
+<div class="line">{                                                          <span class="comment">// or an outcome::error_code_extended (error)</span></div>
+<div class="line">  <span class="keyword">auto</span> fun() noexcept                                      <span class="comment">// Never throws exceptions.</span></div>
 <div class="line">    -&gt; outcome::result&lt;<span class="keywordtype">int</span>&gt;;</div>
 <div class="line">}</div>
 <div class="line">  </div>
