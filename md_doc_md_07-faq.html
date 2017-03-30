@@ -101,7 +101,15 @@ $(document).ready(function(){initNavTree('md_doc_md_07-faq.html','');});
 <div class="title">Frequently Asked Questions </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="faq"></a> </p>
+<div class="toc"><h3>Table of Contents</h3>
+<ul><li class="level1"><a href="#abi_stability">Is Outcome safe to use in extern APIs? Does it have a stable ABI?</a></li>
+<li class="level1"><a href="#performance_overhead">What is the performance impact of using Outcome in my code?</a></li>
+<li class="level1"><a href="#error_chains">How do I implement chains of errors to transport errors happening whilst handling another error?</a></li>
+<li class="level1"><a href="#outcome_vs_result">If outcome<T> is a strict superset of result<T>, why ever use result<T>?</a></li>
+<li class="level1"><a href="#examples_of_use">Are there some real world code bases using Outcome I can study?</a></li>
+</ul>
+</div>
+<div class="textblock"><p><a class="anchor" id="faq"></a></p>
 <h1><a class="anchor" id="abi_stability"></a>
 Is Outcome safe to use in extern APIs? Does it have a stable ABI?</h1>
 <p>Unlike most Boost libraries, Outcome is able to enforce a stable ABI checked per commit by <a href="https://lvc.github.io/abi-compliance-checker/">the ABI Compliance Checker</a>. All symbols in Outcome are namespaced as follows:</p>
