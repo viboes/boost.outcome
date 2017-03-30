@@ -657,7 +657,7 @@ Example of usage of Outcome's expected&lt;T, E&gt; refinements</h1>
 <div class="line">          f(ec, bytes_transferred);</div>
 <div class="line">          <span class="keywordflow">if</span> (ec)</div>
 <div class="line">            <span class="keywordflow">return</span> outcome::make_errored_outcome&lt;&gt;(ec);</div>
-<div class="line">          <span class="keywordflow">return</span> outcome::make_ready_outcome();</div>
+<div class="line">          <span class="keywordflow">return</span> outcome::make_valued_outcome();</div>
 <div class="line">        }</div>
 <div class="line">        <span class="keywordflow">catch</span> (...)</div>
 <div class="line">        {</div>
