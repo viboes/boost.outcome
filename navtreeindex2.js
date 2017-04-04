@@ -1,7 +1,8 @@
 var NAVTREEINDEX2 =
 {
-"namespaceboost_1_1outcome_1_1v1__xxx_1_1policy.html":[11,0,0,0,0,1],
+"namespaceboost_1_1outcome_1_1v1__xxx_1_1deatomiced__categories.html":[12,0,0,0,0,0],
 "namespaceboost_1_1outcome_1_1v1__xxx_1_1policy.html":[12,0,0,0,0,1],
+"namespaceboost_1_1outcome_1_1v1__xxx_1_1policy.html":[11,0,0,0,0,1],
 "namespacemembers.html":[11,1,0],
 "namespacemembers_enum.html":[11,1,4],
 "namespacemembers_eval.html":[11,1,5],

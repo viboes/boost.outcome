@@ -19,6 +19,7 @@ var searchData=
   ['boost_5foutcome_5fcatch_5fall_5fexception_5fto_5fresult',['BOOST_OUTCOME_CATCH_ALL_EXCEPTION_TO_RESULT',['../group__macro__helpers.html#gab76324edce7c10037344911b04100397',1,'outcome.hpp']]],
   ['boost_5foutcome_5fcatch_5fexception_5fto_5fresult',['BOOST_OUTCOME_CATCH_EXCEPTION_TO_RESULT',['../group__macro__helpers.html#gaacf14d3429ad0bc72a6ba40e7f283b43',1,'outcome.hpp']]],
   ['boost_5foutcome_5ftry',['BOOST_OUTCOME_TRY',['../group__macro__helpers.html#gaa977bf0b7aded30c781c35f956edc1d7',1,'outcome.hpp']]],
+  ['boost_5foutcome_5ftryv',['BOOST_OUTCOME_TRYV',['../group__macro__helpers.html#gade7d3902158be55ea782f78cb45498a3',1,'outcome.hpp']]],
   ['boost_5foutcome_5funstable_5fversion',['BOOST_OUTCOME_UNSTABLE_VERSION',['../group__config.html#ga6c2679b16be5d07e59eeedb0ca02c9d2',1,'outcome.hpp']]],
   ['boost_5foutcome_5fv1',['BOOST_OUTCOME_V1',['../group__config.html#ga2d9d168bf427341b5e635a05aa720277',1,'outcome.hpp']]],
   ['boost_5foutcome_5fv1_5ferror_5fcode_5fimpl',['BOOST_OUTCOME_V1_ERROR_CODE_IMPL',['../group__config.html#ga323ac8757a62f64bcc20bd496b29a413',1,'outcome.hpp']]],

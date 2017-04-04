@@ -755,7 +755,8 @@ The TRY operation</h2>
 <div class="line">  <span class="comment">// std::string v(std::move(somefunc().value());</span></div>
 <div class="line">  <span class="keywordflow">return</span> v.empty() ? 0 : v.size();</div>
 <div class="line">}</div>
-</div><!-- fragment --><hr/>
+</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>If you wish to <code>try</code> a function call but not unwrap any returned value, use the <code>BOOST_OUTCOME_TRYV(expr)</code> macro instead.</dd></dl>
+<hr/>
 <p><br/>
 </p>
 <h1><a class="anchor" id="expected_payload"></a>

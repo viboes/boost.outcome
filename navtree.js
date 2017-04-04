@@ -82,7 +82,7 @@ var NAVTREEINDEX =
 [
 ".html",
 "classboost_1_1outcome_1_1v1__xxx_1_1outcome.html#a5224220f6ef2c2f1b3bcbfd9acbfe865",
-"namespaceboost_1_1outcome_1_1v1__xxx_1_1policy.html"
+"namespaceboost_1_1outcome_1_1v1__xxx_1_1deatomiced__categories.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
