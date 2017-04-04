@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['other',['other',['../group__tribool.html#gga96b325ee17492934ae84a3c321f5059aa795f3202b17cb6bc3d4b771d8c6c9eaf',1,'boost_lite::_aaef145b::tribool']]]
+  ['other',['other',['../group__tribool.html#gga87b6f5bc56627009be53fc23aa190fdaa795f3202b17cb6bc3d4b771d8c6c9eaf',1,'boost_lite::_faea95cc::tribool']]]
 ];
