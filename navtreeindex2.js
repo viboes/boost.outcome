@@ -1,8 +1,12 @@
 var NAVTREEINDEX2 =
 {
-"namespaceboost_1_1outcome_1_1v1__xxx_1_1deatomiced__categories.html":[12,0,0,0,0,0],
-"namespaceboost_1_1outcome_1_1v1__xxx_1_1policy.html":[12,0,0,0,0,1],
+"namespaceboost_1_1outcome_1_1v1__xxx_1_1deatomiced__categories.html":[11,0,0,0,0,0],
 "namespaceboost_1_1outcome_1_1v1__xxx_1_1policy.html":[11,0,0,0,0,1],
+"namespaceboost_1_1outcome_1_1v1__xxx_1_1policy.html":[12,0,0,0,0,1],
+"namespaceboost__lite.html":[11,0,1],
+"namespaceboost__lite.html":[12,0,1],
+"namespaceboost__lite_1_1__xxx.html":[11,0,1,0],
+"namespaceboost__lite_1_1__xxx.html":[12,0,1,0],
 "namespacemembers.html":[11,1,0],
 "namespacemembers_enum.html":[11,1,4],
 "namespacemembers_eval.html":[11,1,5],
@@ -97,7 +101,7 @@ var NAVTREEINDEX2 =
 "structboost_1_1outcome_1_1v1__xxx_1_1policy_1_1result__policy__base.html#abf23d7e30c240f2590e33f3159f3d648":[12,0,0,0,0,1,3,9],
 "structboost_1_1outcome_1_1v1__xxx_1_1policy_1_1result__policy__base.html#afc2ed2202f837991aee6ee3abaca4be4":[12,0,0,0,0,1,3,11],
 "structboost_1_1outcome_1_1v1__xxx_1_1value__t.html":[12,0,0,0,0,5],
-"structstd_1_1is__error__code__enum_3_01boost_1_1outcome_1_1v1__xxx_1_1monad__errc_01_4.html":[12,0,1,0],
-"structstd_1_1is__error__condition__enum_3_01boost_1_1outcome_1_1v1__xxx_1_1monad__errc_01_4.html":[12,0,1,1],
+"structstd_1_1is__error__code__enum_3_01boost_1_1outcome_1_1v1__xxx_1_1monad__errc_01_4.html":[12,0,2,0],
+"structstd_1_1is__error__condition__enum_3_01boost_1_1outcome_1_1v1__xxx_1_1monad__errc_01_4.html":[12,0,2,1],
 "support.html":[2]
 };

@@ -1,6 +1,6 @@
 var NAVTREEINDEX0 =
 {
-".html":[12,0,1],
+".html":[12,0,2],
 "annotated.html":[12,0],
 "classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access.html":[10,3,1],
 "classboost_1_1outcome_1_1v1__xxx_1_1bad__expected__access.html#a2228b3915bfb049777864f86de770939":[10,3,1,1],
