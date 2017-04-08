@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['tribool',['tribool',['../group__tribool.html#gadda85630644d44712c11d44e14c4b35b',1,'boost_lite::_b4237fa8::tribool']]],
-  ['true_5f',['true_',['../group__tribool.html#gad657e7c328ed1953c1e02330f589f00b',1,'boost_lite::_b4237fa8::tribool::true_(tribool a) noexcept'],['../group__tribool.html#ggadda85630644d44712c11d44e14c4b35ba9c0aa11f455c4d30ab951498e0d597e2',1,'boost_lite::_b4237fa8::tribool::true_()']]]
+  ['tribool',['tribool',['../group__tribool.html#ga9e9d0235dd5ec8ce7db49286916bde0a',1,'boost_lite::_5e7563f4::tribool']]],
+  ['true_5f',['true_',['../group__tribool.html#gadd00923dd84300a568db248d2ed04385',1,'boost_lite::_5e7563f4::tribool::true_(tribool a) noexcept'],['../group__tribool.html#gga9e9d0235dd5ec8ce7db49286916bde0aa9c0aa11f455c4d30ab951498e0d597e2',1,'boost_lite::_5e7563f4::tribool::true_()']]]
 ];
