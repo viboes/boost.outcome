@@ -205,6 +205,7 @@ var NAVTREEINDEX1 =
 "index.html#description":[0],
 "md_doc_md_01-installation.html":[3],
 "md_doc_md_01-installation.html#gitsubrepo":[3,1],
+"md_doc_md_01-installation.html#modular_cmake":[3,3],
 "md_doc_md_01-installation.html#tarball":[3,0],
 "md_doc_md_01-installation.html#unittests":[3,2],
 "md_doc_md_02-tutorial_a.html":[4],
@@ -245,9 +246,8 @@ var NAVTREEINDEX1 =
 "modules.html":[10],
 "namespaceboost.html":[12,0,0],
 "namespaceboost.html":[11,0,0],
-"namespaceboost_1_1outcome.html":[12,0,0,0],
 "namespaceboost_1_1outcome.html":[11,0,0,0],
-"namespaceboost_1_1outcome_1_1v1__xxx.html":[11,0,0,0,0],
+"namespaceboost_1_1outcome.html":[12,0,0,0],
 "namespaceboost_1_1outcome_1_1v1__xxx.html":[12,0,0,0,0],
-"namespaceboost_1_1outcome_1_1v1__xxx_1_1deatomiced__categories.html":[12,0,0,0,0,0]
+"namespaceboost_1_1outcome_1_1v1__xxx.html":[11,0,0,0,0]
 };

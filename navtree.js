@@ -7,7 +7,8 @@ var NAVTREE =
     [ "Installing, building and testing Outcome", "md_doc_md_01-installation.html", [
       [ "Installing via source tarball", "md_doc_md_01-installation.html#tarball", null ],
       [ "Installing via git subrepository into your project's git repository", "md_doc_md_01-installation.html#gitsubrepo", null ],
-      [ "Running the unit test suite", "md_doc_md_01-installation.html#unittests", null ]
+      [ "Running the unit test suite", "md_doc_md_01-installation.html#unittests", null ],
+      [ "Modular CMake build support", "md_doc_md_01-installation.html#modular_cmake", null ]
     ] ],
     [ "Expected<T, E> in Context", "md_doc_md_02-tutorial_a.html", [
       [ "C style error handling: integer returns", "md_doc_md_02-tutorial_a.html#c-style", null ],
