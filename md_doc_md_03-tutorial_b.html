@@ -742,7 +742,7 @@ The tension between type safety and convenient programming</h1>
 <h2><a class="anchor" id="try_operation"></a>
 The TRY operation</h2>
 <p>You may have noted the earlier use of the convenience macro <code>BOOST_OUTCOME_TRY(var, expr)</code> which provides some of the <code>try</code> operator in Swift or Rust. The TRY operation evaluates the expression and if the result returned is an unexpected value, it immediately returns from the current function with the same unexpected value - therefore your type <code>E</code> needs to be identical. If it is an expected value, that value is <em>unwrapped</em> and returned as the result from the TRY operation.</p>
-<p>Unlike the <code>try</code> operator, the macro is not an expression so you can't write statements like <code>if(BOOST_OUTCOME_TRY(var, expr))</code> as you can in Rust or Swift, this is due to a limitation of the C++ language (you can't return from functions in an expression). What you can do is to initialise a variable <code>var</code> on the stack to the unwrapped return value from the expression, so you might write:</p>
+<p>Unlike the <code>try</code> operator, the macro is not an expression so you can't write statements like <code>if(BOOST_OUTCOME_TRY(var, expr))</code> as you can in Rust or Swift, this is due to a limitation of the C++ language (you can't return from functions in an expression) [1]. What you can do is to initialise a variable <code>var</code> on the stack to the unwrapped return value from the expression, so you might write:</p>
 <div class="fragment"><div class="line">expected&lt;std::string, std::error_code&gt; somefunc();</div>
 <div class="line">...</div>
 <div class="line">expected&lt;int, std::error_code&gt; someotherfunc()</div>
@@ -756,6 +756,7 @@ The TRY operation</h2>
 <div class="line">  <span class="keywordflow">return</span> v.empty() ? 0 : v.size();</div>
 <div class="line">}</div>
 </div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>If you wish to <code>try</code> a function call but not unwrap any returned value, use the <code>BOOST_OUTCOME_TRYV(expr)</code> macro instead.</dd></dl>
+<p>[1]: GCC and clang provide a proprietary extension to the language letting you encode a sequence of statements into an expression, so on those compilers only a <code>BOOST_OUTCOME_TRYX(expr)</code> macro behaves exactly like the <code>try</code> operator in Swift or Rust. The <code>BOOST_OUTCOME_TRYX</code> macro is not defined on compilers not supporting that proprietary extension.</p>
 <hr/>
 <p><br/>
 </p>
