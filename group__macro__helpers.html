@@ -110,6 +110,9 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__macro__helpers.html#gade7d3902158be55ea782f78cb45498a3">BOOST_OUTCOME_TRYV</a>(m)&#160;&#160;&#160;...</td></tr>
 <tr class="memdesc:gade7d3902158be55ea782f78cb45498a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">If the monad returned by expression <em>m</em> is empty, erroneous or excepted, propagate that by immediately returning a void immediately. <br/></td></tr>
 <tr class="separator:gade7d3902158be55ea782f78cb45498a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7aad281fe8ff08c0fa46fc2d581f83ea"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__macro__helpers.html#ga7aad281fe8ff08c0fa46fc2d581f83ea">BOOST_OUTCOME_TRYX</a>(m)&#160;&#160;&#160;...</td></tr>
+<tr class="memdesc:ga7aad281fe8ff08c0fa46fc2d581f83ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">If the monad returned by expression <em>m</em> is empty, erroneous or excepted, propagate that by immediately returning a void immediately, else become the unwrapped value as an expression. This makes <code>BOOST_OUTCOME_TRYX(expr)</code> an expression which can be used exactly like the <code>try</code> operator in other languages.  <a href="#ga7aad281fe8ff08c0fa46fc2d581f83ea">More...</a><br/></td></tr>
+<tr class="separator:ga7aad281fe8ff08c0fa46fc2d581f83ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa977bf0b7aded30c781c35f956edc1d7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa977bf0b7aded30c781c35f956edc1d7"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__macro__helpers.html#gaa977bf0b7aded30c781c35f956edc1d7">BOOST_OUTCOME_TRY</a>(v, m)&#160;&#160;&#160;...</td></tr>
 <tr class="memdesc:gaa977bf0b7aded30c781c35f956edc1d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">If the monad returned by expression <em>m</em> is empty, erroneous or excepted, propagate that by immediately returning a void immediately, else return the unwrapped value. <br/></td></tr>
@@ -124,6 +127,26 @@ Macros</h2></td></tr>
 <tr class="separator:gab76324edce7c10037344911b04100397"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ga7aad281fe8ff08c0fa46fc2d581f83ea"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BOOST_OUTCOME_TRYX</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">m</td><td>)</td>
+          <td>&#160;&#160;&#160;...</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>If the monad returned by expression <em>m</em> is empty, erroneous or excepted, propagate that by immediately returning a void immediately, else become the unwrapped value as an expression. This makes <code>BOOST_OUTCOME_TRYX(expr)</code> an expression which can be used exactly like the <code>try</code> operator in other languages. </p>
+<dl class="section note"><dt>Note</dt><dd>This macro makes use of a proprietary extension in GCC and clang and is not portable. The macro is not made available on unsupported compilers, so you can test for its presence using <code>ifdef BOOST_OUTCOME_TRYX</code>. </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
