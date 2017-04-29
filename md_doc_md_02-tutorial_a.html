@@ -224,6 +224,7 @@ of noexcept"</em> which will be described later.</p>
 <div class="line"><span class="comment">// Non-throwing overload</span></div>
 <div class="line"><span class="keyword">extern</span> handle_ref openfile(<span class="keyword">const</span> <span class="keywordtype">char</span> *path, std::error_code &amp;ec) noexcept</div>
 <div class="line">{</div>
+<div class="line">  ec.clear();  <span class="comment">// reset the error code</span></div>
 <div class="line">  <span class="keywordtype">int</span> fd = open(path, O_RDONLY);</div>
 <div class="line">  <span class="keywordflow">if</span>(fd == -1)</div>
 <div class="line">  {</div>
@@ -533,7 +534,7 @@ Short example program using expected&lt;T, E&gt;</h1>
 <div class="line">  </div>
 <div class="line">  MathResult div(<span class="keywordtype">double</span> x, <span class="keywordtype">double</span> y) noexcept</div>
 <div class="line">  {</div>
-<div class="line">    <span class="keywordflow">if</span>(::fabs(y) &lt; FLT_EPSILON)</div>
+<div class="line">    <span class="keywordflow">if</span>(::fabs(y) &lt; DBL_EPSILON)</div>
 <div class="line">    {</div>
 <div class="line">      <span class="comment">// This operation would fail, instead let&#39;s return the reason of</span></div>
 <div class="line">      <span class="comment">// the failure wrapped in E</span></div>
